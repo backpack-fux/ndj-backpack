@@ -1,0 +1,30 @@
+{
+    "editor.tabSize": 2,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.exclude": {
+        "dist/**": true,
+        "**/*.js.map": true
+    },
+    // "files.autoSave": "afterDelay",
+    "terminal.integrated.env.osx": {
+        "GOOGLE_API_KEY": null, // unset GOOGLE_API_KEY
+    },
+    "typescript.referencesCodeLens.enabled": true,
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "tslint.alwaysShowRuleFailuresAsWarnings": true,
+    // "auto-run-command.rules": [
+    //     {
+    //         "condition": "hasFile: wallaby.js",
+    //         "command": "wallaby.start",
+    //         "message": "Running wallaby"
+    //     }
+    // ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.fixAll.eslint": true
+    },
+    "cSpell.words": [
+        "tailwindcss"
+    ]
+}
