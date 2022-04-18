@@ -1,24 +1,41 @@
 import React from 'react';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {Paragraph} from '../text';
 
+const shadow = {
+  shadowColor: '#fff',
+  shadowOffset: {
+    width: 0,
+    height: 5,
+  },
+  shadowOpacity: 0.6,
+  shadowRadius: 1,
+
+  elevation: 5,
+};
+
 export const Card = ({
   children,
-  title,
+  onPress = () => {},
 }: {
   children?: React.ReactNode;
-  title?: string;
+  onPress?: () => void;
 }) => {
   return (
-    <View
-      style={[t.roundedXl, t.bgWhite, t.mB2, t.mT2, t.mL3, t.mR3, t.shadow]}>
-      {!!title && (
-        <View style={[t.p4, t.borderB2, t.borderGray300]}>
-          <Paragraph text={title} size={20} />
-        </View>
-      )}
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={1}
+      style={[
+        t.bgPurple500,
+        t.p4,
+        t.roundedXl,
+        t.border2,
+        t.borderPurple200,
+        t.mB4,
+        shadow,
+      ]}>
       {children}
-    </View>
+    </TouchableOpacity>
   );
 };

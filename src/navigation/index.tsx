@@ -12,26 +12,24 @@ export const AppNavigator = () => {
   return (
     <View style={[t.flex1]}>
       <RootStackNavigator />
-      <View>
-        <View style={styles.rotateMenu}>
-          <RotateMenu
-            girthAngle={100}
-            icons={[
-              <MaterialIcons
-                id={'Home'}
-                name="home"
-                color={colors.white}
-                size={30}
-              />,
-            ]}
-            onSelect={onSelectMenu}
-            defaultIconColor={'gray'}
-            styleIconText={[t.bgTransparent]}
-            iconHideOnTheBackDuration={100}
-            isExpDistCorrection={true}
-            noExpDistCorrectionDegree={20}
-          />
-        </View>
+      <View style={styles.rotateMenu}>
+        <RotateMenu
+          girthAngle={100}
+          icons={[
+            <MaterialIcons
+              id={'Home'}
+              name="home"
+              color={colors.white}
+              size={30}
+            />,
+          ]}
+          onSelect={onSelectMenu}
+          defaultIconColor={'gray'}
+          styleIconText={[t.bgTransparent]}
+          iconHideOnTheBackDuration={100}
+          isExpDistCorrection={true}
+          noExpDistCorrectionDegree={20}
+        />
       </View>
     </View>
   );

@@ -2,9 +2,9 @@ import {SessionTypes} from '@walletconnect/types';
 import {Network} from '.';
 
 export type RootStackParamList = {
-  AuthStack: undefined;
-  MainStack: undefined;
   Splash: undefined;
+  CreateWallet: undefined;
+  WalletStack: undefined;
 };
 
 export type MainStackParamList = {

@@ -4,6 +4,18 @@ import {TouchableOpacity} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {Paragraph} from './text';
 
+const shadow = {
+  shadowColor: colors.secondary,
+  shadowOffset: {
+    width: 0,
+    height: 0,
+  },
+  shadowOpacity: 1,
+  shadowRadius: 6,
+
+  elevation: 6,
+};
+
 export const Button = ({
   disabled,
   text,
@@ -17,11 +29,13 @@ export const Button = ({
     disabled={disabled}
     onPress={onPress}
     style={[
-      disabled ? t.bgGray200 : t.bgPink500,
+      {backgroundColor: colors.button},
+      disabled ? {} : shadow,
+      t.flex1,
       t.h12,
       t.alignCenter,
       t.justifyCenter,
-      t.rounded,
+      t.roundedLg,
     ]}>
     <Paragraph
       text={text}

@@ -12,7 +12,7 @@ export const screenOptions = {
 export const stackOptions = {
   headerShown: true,
   headerTintColor: colors.white,
-  headerTitle: '',
+  headerTitle: 'NDJ Backpack',
   headerBackTitle: '',
   headerTitleStyle: [t.textWhite, t.fontMono],
 };

@@ -8,4 +8,5 @@ export const colors = {
   textGray: '#A9AAB2',
   green: 'green',
   transparent: 'transparent',
+  button: '#A9AAB290',
 };
