@@ -17,12 +17,16 @@ import * as _ from 'lodash';
 //@ts-ignore
 import bip39 from 'react-native-bip39';
 import {colors} from '@app/assets/colors.config';
+import {useRoute} from '@react-navigation/native';
 
 const logo = require('@app/assets/images/logo.png');
 const {width} = Dimensions.get('screen');
 
 export const CreateWalletScreen = () => {
   const dispatch = useDispatch();
+  const route = useRoute();
+  const isAddWalletModal = route.name === 'AddWallet';
+
   const isLoading = useSelector(walletsLoadingSelector);
   const [mnemonic, setMnemonic] = useState<string>('');
   const [newMnemonic, setNewMnemonic] = useState<string>('');
@@ -55,9 +59,9 @@ export const CreateWalletScreen = () => {
   }, [generateMnemonicPhrase]);
 
   return (
-    <BaseScreen isLoading={isLoading}>
+    <BaseScreen isLoading={isLoading} noBottom={isAddWalletModal}>
       <View style={[t.flex1]}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={[t.justifyCenter, t.itemsCenter, t.mB4]}>
             <Image
               source={logo}
@@ -90,14 +94,14 @@ export const CreateWalletScreen = () => {
               multiline={true}
             />
           </Card>
+          <View style={[t.flexRow, t.mT2]}>
+            {!mnemonic ? (
+              <Button text="Create" onPress={onCreate} />
+            ) : (
+              <Button text="Import" disabled={!mnemonic} onPress={onImport} />
+            )}
+          </View>
         </ScrollView>
-      </View>
-      <View style={[t.flexRow]}>
-        {!mnemonic ? (
-          <Button text="Create" onPress={onCreate} />
-        ) : (
-          <Button text="Import" disabled={!mnemonic} onPress={onImport} />
-        )}
       </View>
     </BaseScreen>
   );

@@ -12,7 +12,7 @@ import {
 } from '@react-navigation/native';
 import {RootStackParamList} from '@app/models';
 import {sleep} from '@app/utils';
-import {WalletStackNavigator} from './WalletStackNavigator';
+import {MainStackNavigator} from './MainStackNavigator';
 const Stack = createNativeStackNavigator();
 
 export const RootStackNavigator = () => {
@@ -25,7 +25,7 @@ export const RootStackNavigator = () => {
     }
 
     if (wallets.length) {
-      navigation.dispatch(StackActions.replace('WalletStack'));
+      navigation.dispatch(StackActions.replace('MainStack'));
     } else {
       navigation.dispatch(StackActions.replace('CreateWallet'));
     }
@@ -47,7 +47,7 @@ export const RootStackNavigator = () => {
         options={stackOptions}
         component={CreateWalletScreen}
       />
-      <Stack.Screen name="WalletStack" component={WalletStackNavigator} />
+      <Stack.Screen name="MainStack" component={MainStackNavigator} />
     </Stack.Navigator>
   );
 };

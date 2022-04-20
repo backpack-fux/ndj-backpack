@@ -1,27 +1,45 @@
 import React from 'react';
 import {
   ActivityIndicator,
+  ImageBackground,
   KeyboardAvoidingView,
   SafeAreaView,
   View,
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
+import {useHeaderHeight} from '@react-navigation/elements';
 
 import {colors} from '@app/assets/colors.config';
 import {menuHeight} from '@app/constants';
+const background = require('@app/assets/images/bg.png');
 
 export const BaseScreen = ({
   children,
   isLoading = false,
   noPadding = false,
+  noBottom = false,
 }: {
   children?: React.ReactNode;
   isLoading?: boolean;
   noPadding?: boolean;
+  noBottom?: boolean;
 }) => {
+  const headerHeight = useHeaderHeight();
+
   return (
-    <>
-      <View style={[t.wFull, t.flex1, {paddingBottom: menuHeight * 0.65}]}>
+    <ImageBackground
+      source={background}
+      style={[
+        t.flex1,
+        t.bgPurple500,
+        {marginTop: -headerHeight, paddingTop: headerHeight},
+      ]}>
+      <View
+        style={[
+          t.wFull,
+          t.flex1,
+          {paddingBottom: noBottom ? 0 : menuHeight * 0.55},
+        ]}>
         {isLoading && (
           <View
             style={[
@@ -48,6 +66,6 @@ export const BaseScreen = ({
           </KeyboardAvoidingView>
         </SafeAreaView>
       </View>
-    </>
+    </ImageBackground>
   );
 };

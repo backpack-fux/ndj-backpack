@@ -7,13 +7,15 @@ import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {BaseScreen, Card, Paragraph} from '@app/components';
 import {useSelector} from 'react-redux';
 import {walletsSelector} from '@app/store/wallets/walletsSelector';
-import {Wallet} from '@app/models';
+import {Wallet, WalletStackParamList} from '@app/models';
 import {colors} from '@app/assets/colors.config';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const logo = require('@app/assets/images/logo.png');
 
 export const WalletsScreen = () => {
   const wallets = useSelector(walletsSelector);
+  const navigation = useNavigation<NavigationProp<WalletStackParamList>>();
 
   const renderWallet = ({item}: {item: Wallet}) => {
     return (
@@ -63,9 +65,12 @@ export const WalletsScreen = () => {
       <FlatList
         data={wallets}
         keyExtractor={item => `${item.id}`}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         renderItem={renderWallet}
         ListFooterComponent={
           <TouchableOpacity
+            onPress={() => navigation.navigate('AddWallet')}
             style={[t.flexRow, t.p2, t.itemsCenter, t.justifyCenter]}>
             <MIcon name="plus" size={20} color={colors.white} />
             <Paragraph text="new wallet" />

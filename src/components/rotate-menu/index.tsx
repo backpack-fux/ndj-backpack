@@ -720,7 +720,7 @@ export class RotateMenu extends React.Component<Props, any> {
           styles.menuWrap,
           {
             height:
-              menuSize + ICON_PATH_RADIUS - menuSize / 2 + menuIconSize + 10,
+              menuSize + ICON_PATH_RADIUS - menuSize / 2 + menuIconSize - 100,
           },
         ]}>
         <View

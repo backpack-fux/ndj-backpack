@@ -1,14 +1,15 @@
 import {SessionTypes} from '@walletconnect/types';
-import {Network} from '.';
 
 export type RootStackParamList = {
   Splash: undefined;
   CreateWallet: undefined;
-  WalletStack: undefined;
+  MainStack: undefined;
 };
 
 export type MainStackParamList = {
-  MainBottom: undefined;
+  WalletStack: undefined;
+  AssetStack: undefined;
+  DappStack: undefined;
   SessionApprovalModal: SessionApprovalParams;
   SessionSignModal: {
     event: SessionTypes.RequestEvent;
@@ -26,65 +27,19 @@ export type MainStackParamList = {
     event: SessionTypes.RequestEvent;
     session?: SessionTypes.Settled;
   };
-  TokenDetails: undefined;
-  TokenExplorer: undefined;
   WebView: {
     url: string;
     title?: string;
   };
 };
 
-export type AuthStackParamList = {
-  Welcome: undefined;
-  RecoveryPhrase: undefined;
-  VerifyRecoveryPhrase: undefined;
-  Network: undefined;
-  RestoreWallet?: {network: Network};
-};
-
-export type MainBottomParamList = {
-  WalletStack: undefined;
-  Discover: undefined;
-  SettingsStack: undefined;
-};
-
-export type SendTokenStackParamList = {
-  SelectSendToken: undefined;
-  SendToken: undefined;
-  SendTokenConfirm: undefined;
-};
-
-export type ReceiveTokenStackParamList = {
-  SelectReceiveToken: undefined;
-  ReceiveToken: undefined;
-};
-
 export type WalletStackParamList = {
-  Wallet: undefined;
-  Tokens: undefined;
-  SendTokenStack: undefined;
-  ReceiveTokenStack: undefined;
-};
-
-export type SettingsParamList = {
-  Settings: undefined;
-  WalletList: undefined;
-  WalletRegiser: undefined;
-  WalletConnect: undefined;
-  About: undefined;
-  Security: undefined;
-  General: undefined;
-  Currency: undefined;
-  SetPasscode: undefined;
-  VerifyPasscode: {onVerified?: () => void};
-  AutoLock: undefined;
+  Wallets: undefined;
+  AddWallet: undefined;
 };
 
 export type StackParams = RootStackParamList &
-  AuthStackParamList &
   MainStackParamList &
-  MainBottomParamList &
-  SettingsParamList &
   WalletStackParamList;
 
 export interface SessionApprovalParams {
