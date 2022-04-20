@@ -9,4 +9,5 @@ export const colors = {
   green: 'green',
   transparent: 'transparent',
   button: '#A9AAB290',
+  cardBlack: 'rgba(135, 135, 153, 0.7)',
 };

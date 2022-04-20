@@ -40,7 +40,10 @@ export const BaseScreen = ({
           </View>
         )}
         <SafeAreaView style={[t.flex1]}>
-          <KeyboardAvoidingView style={noPadding ? [t.flex1] : [t.flex1, t.p4]}>
+          <KeyboardAvoidingView
+            style={
+              noPadding ? [t.flex1] : [t.flex1, t.pT4, t.pL4, t.pR4, t.pB0]
+            }>
             {children}
           </KeyboardAvoidingView>
         </SafeAreaView>

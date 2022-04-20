@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Image, ScrollView, TextInput, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
@@ -9,18 +16,18 @@ import {createWallet} from '@app/store/wallets/actions';
 import * as _ from 'lodash';
 //@ts-ignore
 import bip39 from 'react-native-bip39';
+import {colors} from '@app/assets/colors.config';
 
 const logo = require('@app/assets/images/logo.png');
+const {width} = Dimensions.get('screen');
 
 export const CreateWalletScreen = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(walletsLoadingSelector);
   const [mnemonic, setMnemonic] = useState<string>('');
   const [newMnemonic, setNewMnemonic] = useState<string>('');
-  const [isCreate, setIsCreate] = useState(false);
 
   const onChangeMnemonic = (text: string) => {
-    setIsCreate(false);
     setMnemonic(text);
   };
 
@@ -50,15 +57,17 @@ export const CreateWalletScreen = () => {
   return (
     <BaseScreen isLoading={isLoading}>
       <View style={[t.flex1]}>
-        <ScrollView contentContainerStyle={[t.p2]}>
-          <Card onPress={() => setIsCreate(!isCreate)}>
-            <Paragraph text="Create a new multi asset wallet" align="center" />
+        <ScrollView>
+          <View style={[t.justifyCenter, t.itemsCenter, t.mB4]}>
             <Image
               source={logo}
-              style={[t.w20, t.h20, t.selfCenter, t.mT6]}
+              style={[{width: width * 0.5, height: width * 0.5}]}
               resizeMode="contain"
             />
-          </Card>
+            <Text style={[t.text2xl, t.mT4, t.textWhite, t.fontMono]}>
+              New Dao Jones
+            </Text>
+          </View>
           <Card>
             <Paragraph text="Import existing wallet" align="center" />
             <TextInput
@@ -66,7 +75,6 @@ export const CreateWalletScreen = () => {
               value={mnemonic}
               onChangeText={onChangeMnemonic}
               style={[
-                t.bgGray200,
                 t.roundedLg,
                 t.textWhite,
                 t.textCenter,
@@ -76,6 +84,7 @@ export const CreateWalletScreen = () => {
                 t.pL2,
                 t.pR2,
                 t.mT4,
+                {backgroundColor: colors.cardBlack},
                 {fontSize: 16},
               ]}
               multiline={true}
@@ -84,10 +93,11 @@ export const CreateWalletScreen = () => {
         </ScrollView>
       </View>
       <View style={[t.flexRow]}>
-        <Button text="Create" disabled={!isCreate} onPress={onCreate} />
-        <View style={[t.mL4, t.flexRow, t.flex1]}>
+        {!mnemonic ? (
+          <Button text="Create" onPress={onCreate} />
+        ) : (
           <Button text="Import" disabled={!mnemonic} onPress={onImport} />
-        </View>
+        )}
       </View>
     </BaseScreen>
   );
