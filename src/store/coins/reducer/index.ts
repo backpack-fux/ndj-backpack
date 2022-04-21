@@ -40,22 +40,19 @@ export function setTokensReducer(
 
 export function setAccountCoinsReducer(
   state: CoinsReducerType,
-  {payload}: Action<{account: string; coins: Token[]}>,
+  {payload}: Action<Token[]>,
 ) {
   return {
     ...state,
-    accountCoins: {
-      ...state.accountCoins,
-      [payload.account]: payload.coins,
-    },
+    accountCoins: payload,
   };
 }
 
 export function toggleAccountCoinReducer(
   state: CoinsReducerType,
-  {payload}: Action<{account: string; coin: BaseCoin; enabled: boolean}>,
+  {payload}: Action<{coin: BaseCoin; enabled: boolean}>,
 ) {
-  const coins = state.accountCoins[payload.account] || [];
+  const coins = state.accountCoins || [];
 
   const coin = coins.find(
     c => c.contractAddress === payload.coin.contractAddress,
@@ -72,10 +69,7 @@ export function toggleAccountCoinReducer(
 
   return {
     ...state,
-    accountCoins: {
-      ...state.accountCoins,
-      [payload.account]: [...coins],
-    },
+    accountCoins: coins,
   };
 }
 

@@ -28,9 +28,7 @@ import {
 
 export interface CoinsReducerType {
   baseCoins: BaseCoin[];
-  accountCoins: {
-    [account: string]: BaseCoin[];
-  };
+  accountCoins: BaseCoin[];
   tokens: Token[];
   token?: Token;
   transactions: ITransaction[];
@@ -43,7 +41,7 @@ export interface CoinsReducerType {
 
 export const defaultState: CoinsReducerType = {
   baseCoins: [],
-  accountCoins: {},
+  accountCoins: [],
   tokens: [],
   transactions: [],
   isLoadingTransactions: false,

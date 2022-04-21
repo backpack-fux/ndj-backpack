@@ -35,7 +35,7 @@ function* accountCoins({payload}: Action<Wallet>) {
     ? DEFAULT_COINS.filter(coin => coin.network === payload.network)
     : DEFAULT_COINS;
 
-  yield put(setAccountCoins({account: payload.id, coins}));
+  yield put(setAccountCoins(coins));
   yield put(refreshTokens());
 }
 
@@ -55,7 +55,7 @@ function* getTokens({payload}: Action<Wallet>) {
       yield put(setIsLoadingTokens(false));
       return;
     }
-    const walletCoins = state.coins.accountCoins[selectedWallet.id];
+    const walletCoins = state.coins.accountCoins;
 
     if (!walletCoins) {
       yield put(setIsLoadingTokens(false));
@@ -124,7 +124,7 @@ function* getTokens({payload}: Action<Wallet>) {
       });
     }
 
-    yield put(setAccountCoins({account: selectedWallet.id, coins: newCoins}));
+    yield put(setAccountCoins(newCoins));
     yield put(setTokens(tokens));
     yield put(setIsLoadingTokens(false));
   } catch (err) {
@@ -185,6 +185,10 @@ function* getBaseCoins() {
   try {
     yield delay(1000);
     const state: RootState = yield select();
+
+    if (!state.coins.accountCoins.length) {
+      yield put(setAccountCoins(DEFAULT_COINS));
+    }
 
     if (state.coins.baseCoins.length) {
       return;

@@ -14,10 +14,7 @@ export const setBaseCoins = (payload: BaseCoin[]) => {
   };
 };
 
-export const setAccountCoins = (payload: {
-  account: string;
-  coins: BaseCoin[];
-}) => {
+export const setAccountCoins = (payload: BaseCoin[]) => {
   return {
     type: ActionType.SET_ACCOUNT_COINS,
     payload,
@@ -35,7 +32,6 @@ export const addAccountCoin = (payload: {
 };
 
 export const toggleAccountCoin = (payload: {
-  account: string;
   coin: BaseCoin;
   enabled: boolean;
 }) => {
