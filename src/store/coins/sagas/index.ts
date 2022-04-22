@@ -39,84 +39,92 @@ function* accountCoins({payload}: Action<Wallet>) {
   yield put(refreshTokens());
 }
 
+function* getBalances(
+  wallet: Wallet,
+  coins: BaseCoin[],
+  coinDetails: CoinGeckoCoinDetail[],
+) {
+  const tokens: Token[] = [];
+
+  for (const baseCoin of coins) {
+    const detail = coinDetails.find(c => c.id === baseCoin.id);
+    const token: Token = {
+      ...baseCoin,
+      image: detail?.image,
+      price: detail?.current_price,
+      highPrice: detail?.high_24h,
+      lowPrice: detail?.low_24h,
+      priceChange: detail?.price_change_24h,
+      priceChangePercent: detail?.price_change_percentage_24h,
+    };
+    const contractAddress =
+      token.contractAddress !== token.network
+        ? token.contractAddress
+        : undefined;
+    const accountAddress = wallet.wallets.find(
+      w => w.network === token.network,
+    )?.address;
+
+    if (accountAddress) {
+      try {
+        const balance: number = yield WalletService.getBalanceOf(
+          token.network,
+          accountAddress,
+          contractAddress,
+        );
+
+        token.balance = balance;
+      } catch (err) {
+        console.log(
+          'get balance error',
+          token.network,
+          token.contractAddress,
+          err,
+        );
+      }
+    }
+
+    tokens.push(token);
+  }
+
+  yield put(setTokens({account: wallet.id, tokens}));
+}
+
 function* getTokens({payload}: Action<Wallet>) {
   try {
     yield put(setIsLoadingTokens(true));
-    if (payload) {
-      yield put(setTokens([]));
-    }
+
     yield delay(1000);
     const state: RootState = yield select();
-    const selectedWallet = state.wallets.selectedWallet;
+    const wallets = state.wallets.wallets;
     const currency = state.wallets.currency;
-
-    if (!selectedWallet) {
-      yield put(setTokens([]));
-      yield put(setIsLoadingTokens(false));
-      return;
-    }
     const walletCoins = state.coins.accountCoins;
-
-    if (!walletCoins) {
-      yield put(setIsLoadingTokens(false));
-      yield put(setTokens([]));
-      return;
-    }
-
     const enabledCoins = walletCoins.filter(
       c => c.enabled || DEFAULT_COINS.map(d => d.id).includes(c.id),
     );
-    const res: CoinGeckoCoinDetail[] = yield getCoinGeckoDetail(
+
+    if ((!wallets?.length && payload) || !walletCoins?.length) {
+      yield put(setIsLoadingTokens(false));
+      return;
+    }
+
+    const coinDetails: CoinGeckoCoinDetail[] = yield getCoinGeckoDetail(
       enabledCoins,
       currency,
     );
 
-    const tokens: Token[] = [];
+    // if (payload) {
+    //   yield getBalances(payload, enabledCoins, coinDetails);
+    // } else {
 
-    for (const baseCoin of enabledCoins) {
-      const detail = res.find(c => c.id === baseCoin.id);
-      const token: Token = {
-        ...baseCoin,
-        image: detail?.image,
-        price: detail?.current_price,
-        highPrice: detail?.high_24h,
-        lowPrice: detail?.low_24h,
-        priceChange: detail?.price_change_24h,
-        priceChangePercent: detail?.price_change_percentage_24h,
-      };
-      const contractAddress =
-        token.contractAddress !== token.network
-          ? token.contractAddress
-          : undefined;
-      const accountAddress = selectedWallet.wallets.find(
-        wallet => wallet.network === token.network,
-      )?.address;
-
-      if (accountAddress) {
-        try {
-          const balance: number = yield WalletService.getBalanceOf(
-            token.network,
-            accountAddress,
-            contractAddress,
-          );
-
-          token.balance = balance;
-        } catch (err) {
-          console.log(
-            'get balance error',
-            token.network,
-            token.contractAddress,
-            err,
-          );
-        }
-      }
-
-      tokens.push(token);
+    // }
+    for (const wallet of wallets) {
+      yield getBalances(wallet, enabledCoins, coinDetails);
     }
 
     const newCoins: BaseCoin[] = [];
     for (const coin of walletCoins) {
-      const detail = res.find(c => c.id === coin.id);
+      const detail = coinDetails.find(c => c.id === coin.id);
 
       newCoins.push({
         ...coin,
@@ -125,11 +133,9 @@ function* getTokens({payload}: Action<Wallet>) {
     }
 
     yield put(setAccountCoins(newCoins));
-    yield put(setTokens(tokens));
     yield put(setIsLoadingTokens(false));
   } catch (err) {
     console.log(err);
-    yield put(setTokens([]));
     yield put(setIsLoadingTokens(false));
   }
 }
@@ -221,13 +227,14 @@ function* getPriceOfSendToken({payload}: Action<Token>) {
   try {
     yield put(setSendTokenLoading(true));
     const state: RootState = yield select();
+    const selectedWallet = state.wallets.selectedWallet;
     const sendTokenInfo = state.coins.sendTokenInfo;
-    const toekns = state.coins.tokens;
+    const tokens = state.coins.tokens;
 
     const wallet = state.wallets.selectedWallet?.wallets.find(
       e => e.network === payload.network,
     );
-    const token = toekns.find(
+    const token = ((selectedWallet && tokens[selectedWallet.id]) || []).find(
       a => a.contractAddress === payload.contractAddress,
     );
 
@@ -366,10 +373,6 @@ export function* getTransactions({payload}: Action<BaseCoin>) {
   }
 }
 
-export function* cleanTokens() {
-  yield put(setTokens([]));
-}
-
 export function* getBaseCoinsWatcher() {
   yield takeLatest(ActionType.INIT_STORE as any, getBaseCoins);
 }
@@ -388,10 +391,6 @@ export function* getTokensWatcher() {
 
 export function* searchCoinsWatcher() {
   yield takeLatest(ActionType.SEARCH_COINS_REQUEST as any, searchCoins);
-}
-
-export function* cleanTokensWatcher() {
-  yield takeLatest(ActionType.ADD_WALLET as any, cleanTokens);
 }
 
 export function* getPriceOfSendTokenWatcher() {

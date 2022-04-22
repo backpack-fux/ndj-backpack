@@ -16,7 +16,6 @@ import {createWallet} from '@app/store/wallets/actions';
 import * as _ from 'lodash';
 //@ts-ignore
 import bip39 from 'react-native-bip39';
-import {colors} from '@app/assets/colors.config';
 import {useRoute} from '@react-navigation/native';
 
 const logo = require('@app/assets/images/logo.png');
@@ -88,7 +87,7 @@ export const CreateWalletScreen = () => {
                 t.pL2,
                 t.pR2,
                 t.mT4,
-                {backgroundColor: colors.cardBlack},
+                t.bgGray300,
                 {fontSize: 16},
               ]}
               multiline={true}

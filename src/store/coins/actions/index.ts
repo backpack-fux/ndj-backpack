@@ -48,7 +48,7 @@ export const setIsLoadingTokens = (payload: boolean) => {
   };
 };
 
-export const setTokens = (payload: Token[]) => {
+export const setTokens = (payload: {account: string; tokens: Token[]}) => {
   return {
     type: ActionType.SET_TOKENS,
     payload,

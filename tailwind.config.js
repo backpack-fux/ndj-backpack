@@ -10,7 +10,9 @@ module.exports = {
         purple500: colors.primary,
         purple200: colors.primaryLight,
         gray500: colors.textPrimary,
+        gray300: colors.gray,
         gray200: colors.textGray,
+        yellow200: colors.yellow,
       },
       borderRadius: {
         xl: '1rem',

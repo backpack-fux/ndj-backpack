@@ -30,11 +30,13 @@ export function setTokenReducer(
 
 export function setTokensReducer(
   state: CoinsReducerType,
-  {payload}: Action<Token[]>,
+  {payload}: Action<{account: string; tokens: Token[]}>,
 ) {
+  const tokens = state.tokens || {};
+  tokens[payload.account] = payload.tokens;
   return {
     ...state,
-    tokens: payload,
+    tokens,
   };
 }
 

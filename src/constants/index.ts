@@ -23,6 +23,7 @@ export const menuIconRadius = menuSize / 2 + menuIconSize / 2 + 0;
 export const menuHeight =
   menuSize + menuIconRadius - menuSize / 2 + menuIconSize;
 
+export const borderWidth = 1;
 export const ETHERSCAN = {
   mainnet: 'https://api.etherscan.io/api',
   ropsten: 'https://api-ropsten.etherscan.io/api/',
