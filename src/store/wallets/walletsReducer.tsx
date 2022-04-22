@@ -16,7 +16,7 @@ export interface WalletsReducerType {
   loading: boolean;
   mnemonic?: string;
   wallets: Wallet[];
-  selectedWallet?: Wallet;
+  walletId?: string;
   walletSessions: {[id: string]: string[]};
   currency: string;
 }

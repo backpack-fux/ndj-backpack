@@ -8,11 +8,13 @@ import {
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Clipboard from '@react-native-community/clipboard';
 
 import {BaseScreen, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   currencySelector,
+  selectedWalletSelector,
   walletsSelector,
 } from '@app/store/wallets/walletsSelector';
 import {Wallet, WalletStackParamList} from '@app/models';
@@ -23,10 +25,12 @@ import {
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {refreshTokens} from '@app/store/coins/actions';
-import {formatCurrency} from '@app/utils';
+import {formatCurrency, showSnackbar} from '@app/utils';
 import {borderWidth, NetworkName} from '@app/constants';
+import {selectWallet} from '@app/store/wallets/actions';
 
 const logo = require('@app/assets/images/logo.png');
+const toggle = require('@app/assets/images/toggle.png');
 
 export const WalletsScreen = () => {
   const dispatch = useDispatch();
@@ -64,6 +68,8 @@ export const WalletsScreen = () => {
 };
 
 const WalletItem = ({wallet}: {wallet: Wallet}) => {
+  const dispatch = useDispatch();
+  const selectedWallet = useSelector(selectedWalletSelector);
   const tokens = useSelector(tokensSelector);
   const currency = useSelector(currencySelector);
   const [showSeed, setShowSeed] = useState(false);
@@ -77,6 +83,13 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
   const ethAddress = wallet.wallets.find(
     w => w.network === NetworkName.ethereum,
   )?.address;
+
+  const isSelected = selectedWallet?.id === wallet.id;
+
+  const onCopySeed = () => {
+    Clipboard.setString(wallet.mnemonic);
+    showSnackbar('Copied Seed!');
+  };
 
   return (
     <Card>
@@ -93,13 +106,34 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
             numberOfLines={1}
             ellipsizeMode="middle"
           />
+          <TouchableOpacity
+            onPress={() => dispatch(selectWallet(wallet))}
+            style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT2]}>
+            <View style={[t.w4, t.h4]}>
+              <Image
+                source={toggle}
+                style={[
+                  t.w4,
+                  t.h4,
+                  t.selfCenter,
+                  t.flex1,
+                  isSelected ? t.opacity100 : t.opacity50,
+                ]}
+                resizeMode="contain"
+              />
+            </View>
+            <Paragraph
+              text={isSelected ? 'default' : 'set default'}
+              size={12}
+              marginLeft={10}
+            />
+          </TouchableOpacity>
         </View>
-        <View style={[t.flex1]}>
+        <View style={[t.flex1, t.justifyBetween]}>
           <View
             style={[
               t.bgGray300,
               t.roundedLg,
-              t.flex1,
               t.itemsCenter,
               t.justifyCenter,
               t.h8,
@@ -128,7 +162,8 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
       {showSeed && (
         <TouchableOpacity
           style={[t.mT4]}
-          onPress={() => setShowSeed(!showSeed)}>
+          onPress={() => setShowSeed(!showSeed)}
+          onLongPress={onCopySeed}>
           <View style={[t.p2, t.roundedLg, t.borderYellow200, {borderWidth}]}>
             <Paragraph
               text="Seeds are private use them wisely, like you would with any other personal data"

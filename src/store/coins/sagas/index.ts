@@ -29,6 +29,7 @@ import {
 import {DEFAULT_COINS} from '@app/constants/coins';
 import {WalletService} from '@app/services';
 import {showSnackbar} from '@app/utils';
+import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 
 function* accountCoins({payload}: Action<Wallet>) {
   const coins = payload.network
@@ -144,18 +145,10 @@ function* searchCoins({payload}: Action<string>) {
   try {
     const state: RootState = yield select();
     const baseCoins = state.coins.baseCoins;
-    const selectedWallet = state.wallets.selectedWallet;
-
-    if (!selectedWallet) {
-      yield put(searchCoinsResponse([]));
-      return;
-    }
 
     const searchedCoins = baseCoins
       .filter(c =>
-        selectedWallet.network
-          ? c.network === selectedWallet.network
-          : networkList.map(network => network.network).includes(c.network),
+        networkList.map(network => network.network).includes(c.network),
       )
       .filter(
         c =>
@@ -227,11 +220,11 @@ function* getPriceOfSendToken({payload}: Action<Token>) {
   try {
     yield put(setSendTokenLoading(true));
     const state: RootState = yield select();
-    const selectedWallet = state.wallets.selectedWallet;
+    const selectedWallet = selectedWalletSelector(state);
     const sendTokenInfo = state.coins.sendTokenInfo;
     const tokens = state.coins.tokens;
 
-    const wallet = state.wallets.selectedWallet?.wallets.find(
+    const wallet = selectedWallet?.wallets.find(
       e => e.network === payload.network,
     );
     const token = ((selectedWallet && tokens[selectedWallet.id]) || []).find(
@@ -271,7 +264,7 @@ function* getTransferTransaction() {
     yield put(setSendTokenLoading(true));
     const state: RootState = yield select();
     const sendTokenInfo = state.coins.sendTokenInfo;
-    const selectedWallet = state.wallets.selectedWallet;
+    const selectedWallet = selectedWalletSelector(state);
     const privateKey = selectedWallet?.wallets.find(
       wallet => wallet.network === sendTokenInfo.token?.network,
     )?.privateKey;
@@ -314,7 +307,7 @@ function* transferToken() {
     yield put(setSendTokenLoading(true));
     const state: RootState = yield select();
     const sendTokenInfo = state.coins.sendTokenInfo;
-    const selectedWallet = state.wallets.selectedWallet;
+    const selectedWallet = selectedWalletSelector(state);
     const privateKey = selectedWallet?.wallets.find(
       wallet => wallet.network === sendTokenInfo.token?.network,
     )?.privateKey;
@@ -344,7 +337,7 @@ function* transferToken() {
 export function* getTransactions({payload}: Action<BaseCoin>) {
   try {
     const state: RootState = yield select();
-    const selectedWallet = state.wallets.selectedWallet;
+    const selectedWallet = selectedWalletSelector(state);
 
     if (!selectedWallet) {
       return;
@@ -383,7 +376,6 @@ export function* accountCoinsWatcher() {
 
 export function* getTokensWatcher() {
   yield takeLatest(ActionType.INIT_STORE as any, getTokens);
-  yield takeLatest(ActionType.SELECT_WALLET as any, getTokens);
   yield takeLatest(ActionType.SET_CURRENCY as any, getTokens);
   yield takeLatest(ActionType.REFRESH_TOKENS as any, getTokens);
   yield takeLatest(ActionType.TRANSFER_TOKEN_SUCCESS as any, getTokens);

@@ -29,7 +29,7 @@ export function addWalletReducer(
   return {
     ...state,
     wallets: [...state.wallets, payload],
-    selectedWallet: payload,
+    walletId: state.walletId || payload.id,
   };
 }
 
@@ -39,7 +39,7 @@ export function selectWalletReducer(
 ) {
   return {
     ...state,
-    selectedWallet: payload,
+    walletId: payload.id,
   };
 }
 
@@ -58,7 +58,7 @@ export function deleteWalletReducer(
   {payload}: Action<Wallet>,
 ) {
   const wallets: Wallet[] = _.cloneDeep(state.wallets);
-  let selectedWallet = state.selectedWallet;
+  let selectedWalletId = state.walletId;
 
   const index = wallets.findIndex(w => w.id === payload.id);
 
@@ -66,14 +66,14 @@ export function deleteWalletReducer(
     wallets.splice(index, 1);
   }
 
-  if (selectedWallet?.id === payload.id) {
-    selectedWallet = wallets[0];
+  if (selectedWalletId === payload.id) {
+    selectedWalletId = wallets[0].id;
   }
 
   return {
     ...state,
     wallets: [...wallets],
-    selectedWallet,
+    walletId: selectedWalletId,
   };
 }
 

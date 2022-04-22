@@ -3,7 +3,8 @@ import {createSelector} from 'reselect';
 
 const getLoading = (state: RootState) => state.wallets.loading;
 const getMnemonic = (state: RootState) => state.wallets.mnemonic;
-const getSelectedWallet = (state: RootState) => state.wallets.selectedWallet;
+const getSelectedWallet = (state: RootState) =>
+  state.wallets.wallets.find(w => w.id === state.wallets.walletId);
 const getWallets = (state: RootState) => state.wallets.wallets;
 const getWalletSessions = (state: RootState) => state.wallets.walletSessions;
 const getCurrency = (state: RootState) => state.wallets.currency;
