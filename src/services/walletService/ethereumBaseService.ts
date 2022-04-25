@@ -1,26 +1,36 @@
 import {ERC20_ABI, NetworkName} from '@app/constants';
-import {ethers} from 'ethers';
+import * as ethers from 'ethers';
 import WalletService from './walletService';
 import Web3 from 'web3';
 import {TransactionConfig, TransactionReceipt} from 'web3-core';
-import {ITransaction} from '@app/models';
-
+import {ENSInfo, ITransaction} from '@app/models';
+import {JsonRpcProvider} from '@ethersproject/providers';
+import {ConstructorFragment} from 'ethers/lib/utils';
 export default class EthereumBaseService extends WalletService {
   web3: Web3;
+  ethers: JsonRpcProvider;
+  ens: any;
+
   constructor(network: NetworkName, provider: string) {
     super(network);
     WalletService.add(this);
     this.web3 = new Web3(provider);
+    this.ethers = new ethers.providers.InfuraProvider(
+      'homestead',
+      'cd5b0778994b4e34b166f2569a1166c0',
+    );
   }
 
   async generateKeys(mnemonic: string) {
     const wallet = ethers.Wallet.fromMnemonic(mnemonic);
     const {_signingKey} = wallet;
     const res = _signingKey();
+    const ensInfo = await this.getENSInfo(wallet.address);
 
     return {
       address: wallet.address,
       privateKey: res.privateKey,
+      ensInfo,
     };
   }
 
@@ -141,5 +151,20 @@ export default class EthereumBaseService extends WalletService {
     contractAddress?: string,
   ): Promise<ITransaction[]> {
     return [];
+  }
+
+  async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
+    const name = await this.ethers.lookupAddress(address);
+
+    if (!name) {
+      return;
+    }
+
+    const avatar = await this.ethers.getAvatar(address);
+
+    return {
+      name,
+      avatar,
+    };
   }
 }

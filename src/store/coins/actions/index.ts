@@ -55,12 +55,6 @@ export const setTokens = (payload: {account: string; tokens: Token[]}) => {
   };
 };
 
-export const refreshTokens = () => {
-  return {
-    type: ActionType.REFRESH_TOKENS,
-  };
-};
-
 export const setToken = (payload: Token) => {
   return {
     type: ActionType.SET_TOKEN,

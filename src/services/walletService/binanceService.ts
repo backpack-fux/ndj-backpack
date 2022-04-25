@@ -6,7 +6,7 @@ import {BASENUMBER} from '@binance-chain/javascript-sdk/lib/utils';
 import BigNumber from 'bignumber.js';
 
 import WalletService from './walletService';
-import {ITransaction} from '@app/models';
+import {ENSInfo, ITransaction} from '@app/models';
 import moment from 'moment-timezone';
 
 export default class BinanceService extends WalletService {
@@ -202,5 +202,8 @@ export default class BinanceService extends WalletService {
     });
 
     return transactions;
+  }
+  async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
+    return;
   }
 }

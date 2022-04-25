@@ -1,5 +1,12 @@
 import {delay, put, select, takeLatest} from 'redux-saga/effects';
-import {Action, ActionType, RootState, Wallet, WalletKeys} from '@app/models';
+import {
+  Action,
+  ActionType,
+  ENSInfo,
+  RootState,
+  Wallet,
+  WalletKeys,
+} from '@app/models';
 import {addWallet, setLoading} from '../actions';
 import {showSnackbar} from '@app/utils';
 import {NetworkName} from '@app/constants';
@@ -8,6 +15,24 @@ import {WalletService} from '@app/services';
 function* reload() {
   try {
     yield put(setLoading(true));
+
+    yield delay(1000);
+    const state: RootState = yield select();
+    const accounts = state.wallets.wallets;
+
+    for (const account of accounts) {
+      for (const wallet of account.wallets) {
+        try {
+          const ensInfo: ENSInfo = yield WalletService.getENSInfo(
+            wallet.network,
+            wallet.address,
+          );
+          wallet.ensInfo = ensInfo;
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }
   } catch (err: any) {
     showSnackbar(err.message);
   } finally {
@@ -47,6 +72,7 @@ function* createWallet({
 export function* reloadWatcher() {
   yield takeLatest(ActionType.INIT_STORE as any, reload);
   yield takeLatest(ActionType.RELOAD as any, reload);
+  yield takeLatest(ActionType.REFRESH_WALLETS as any, reload);
 }
 
 export function* createWalletWatcher() {

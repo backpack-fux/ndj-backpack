@@ -1,5 +1,5 @@
 import {NetworkName} from '@app/constants';
-import {ITransaction, WalletKeys} from '@app/models';
+import {ENSInfo, ITransaction, WalletKeys} from '@app/models';
 const bip39 = require('bip39');
 
 abstract class WalletService {
@@ -138,14 +138,26 @@ abstract class WalletService {
     if (!service) {
       throw new Error(`Can't get service for ${network}`);
     }
-    console.log('contractAddress', contractAddress);
+
     return service.getTransactions(address, contractAddress);
+  }
+
+  static getENSInfo(network: NetworkName, address: string) {
+    const service = this.getServiceByNetwork(network);
+
+    if (!service) {
+      throw new Error(`Can't get service for ${network}`);
+    }
+
+    return service.getENSInfo(address);
   }
 
   abstract generateKeys(mnemonic: string): Promise<{
     address: string;
     privateKey: string;
+    ensInfo: ENSInfo | null | undefined;
   }>;
+
   abstract getBalance(account: string, address?: string): Promise<number>;
   abstract getTransactions(
     account: string,
@@ -161,6 +173,7 @@ abstract class WalletService {
   abstract sendTransaction(privateKey: string, tx: any): Promise<any>;
   abstract sign(privateKey: string, message: string): Promise<any>;
   abstract signTransaction(privateKey: string, data: any): Promise<any>;
+  abstract getENSInfo(address: string): Promise<ENSInfo | null | undefined>;
 }
 
 export default WalletService;

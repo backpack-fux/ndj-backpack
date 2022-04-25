@@ -16,7 +16,6 @@ import {networkList, NetworkName} from '@app/constants';
 import {
   getTransactionsFailed,
   getTransactionsSuccess,
-  refreshTokens,
   searchCoinsResponse,
   setAccountCoins,
   setBaseCoins,
@@ -30,6 +29,7 @@ import {DEFAULT_COINS} from '@app/constants/coins';
 import {WalletService} from '@app/services';
 import {showSnackbar} from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
+import {refreshWallets} from '@app/store/wallets/actions';
 
 function* accountCoins({payload}: Action<Wallet>) {
   const coins = payload.network
@@ -37,7 +37,7 @@ function* accountCoins({payload}: Action<Wallet>) {
     : DEFAULT_COINS;
 
   yield put(setAccountCoins(coins));
-  yield put(refreshTokens());
+  yield put(refreshWallets());
 }
 
 function* getBalances(
@@ -377,7 +377,7 @@ export function* accountCoinsWatcher() {
 export function* getTokensWatcher() {
   yield takeLatest(ActionType.INIT_STORE as any, getTokens);
   yield takeLatest(ActionType.SET_CURRENCY as any, getTokens);
-  yield takeLatest(ActionType.REFRESH_TOKENS as any, getTokens);
+  yield takeLatest(ActionType.REFRESH_WALLETS as any, getTokens);
   yield takeLatest(ActionType.TRANSFER_TOKEN_SUCCESS as any, getTokens);
 }
 

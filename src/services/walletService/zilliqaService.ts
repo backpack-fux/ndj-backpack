@@ -7,7 +7,7 @@ import {NetworkName} from '@app/constants';
 import WalletService from './walletService';
 import BigNumber from 'bignumber.js';
 import {TxStatus} from '@zilliqa-js/account';
-import {ITransaction} from '@app/models';
+import {ENSInfo, ITransaction} from '@app/models';
 import {AxiosInstance} from '@app/apis/axios';
 
 const MINIMUM_GAS_PRICE = '50';
@@ -310,5 +310,9 @@ export default class ZilliqaService extends WalletService {
     });
 
     return transactions;
+  }
+
+  async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
+    return;
   }
 }

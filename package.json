@@ -51,7 +51,7 @@
     "domain-browser": "^1.2.0",
     "ed25519-hd-key": "^1.2.0",
     "ethereum-qr-code": "^0.3.0",
-    "ethers": "^5.5.3",
+    "ethers": "^5.6.4",
     "events": "^1.1.1",
     "https-browserify": "0.0.1",
     "lodash": "^4.17.21",

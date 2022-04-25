@@ -12,6 +12,7 @@ export enum WalletsActionType {
   SELECT_WALLET = 'WALLETS/SELECT_WALLET',
   SET_WALLET_SESSIONS = 'WALLETS/SET_WALLET_SESSIONS',
   SET_CURRENCY = 'WALLETS/SET_CURRENCY',
+  REFRESH_WALLETS = 'WALLETS/REFRESH_WALLETS',
 }
 
 export interface Wallet {
@@ -26,4 +27,10 @@ export type WalletKeys = {
   network: NetworkName;
   address: string;
   privateKey: string;
+  ensInfo?: ENSInfo;
 };
+
+export interface ENSInfo {
+  name: string;
+  avatar?: string | null;
+}

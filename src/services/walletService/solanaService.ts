@@ -13,7 +13,7 @@ import {
 import * as ed25519 from 'ed25519-hd-key';
 import {Token, TOKEN_PROGRAM_ID} from '@solana/spl-token';
 import * as bip39 from 'bip39';
-import {ITransaction} from '@app/models';
+import {ENSInfo, ITransaction} from '@app/models';
 import {AxiosInstance} from '@app/apis/axios';
 import * as _ from 'lodash';
 
@@ -255,5 +255,9 @@ export default class SolanaService extends WalletService {
     });
 
     return transactions;
+  }
+
+  async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
+    return;
   }
 }

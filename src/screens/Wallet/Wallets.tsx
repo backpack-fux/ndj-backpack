@@ -24,7 +24,7 @@ import {
   isLoadingTokensSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
-import {refreshTokens} from '@app/store/coins/actions';
+import {refreshWallets} from '@app/store/wallets/actions';
 import {formatCurrency, showSnackbar} from '@app/utils';
 import {borderWidth, NetworkName} from '@app/constants';
 import {selectWallet} from '@app/store/wallets/actions';
@@ -49,7 +49,7 @@ export const WalletsScreen = () => {
         refreshControl={
           <RefreshControl
             refreshing={isLoading}
-            onRefresh={() => dispatch(refreshTokens())}
+            onRefresh={() => dispatch(refreshWallets())}
             tintColor={colors.white}
             titleColor={colors.white}
           />

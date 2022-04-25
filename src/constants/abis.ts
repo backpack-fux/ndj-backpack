@@ -1,6 +1,4 @@
-import {AbiItem} from 'web3-utils';
-
-export const ERC20_ABI: AbiItem[] = [
+export const ERC20_ABI: any[] = [
   {
     constant: true,
     inputs: [],

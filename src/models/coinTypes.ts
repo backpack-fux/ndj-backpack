@@ -23,7 +23,6 @@ export enum CoinsActionType {
   SET_TOKENS = 'coins/SET_TOKENS',
   SET_TOKEN = 'coins/SET_TOKEN',
   ADD_TOKEN = 'coins/ADD_TOKEN',
-  REFRESH_TOKENS = 'coins/REFRESH_TOKENS',
   ADD_COIN = 'coins/ADD_COIN',
   SET_BASE_COINS = 'coins/SET_BASE_COINS',
   SET_ACCOUNT_COINS = 'coins/SET_ACCOUNT_COINS',

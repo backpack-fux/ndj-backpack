@@ -74,3 +74,9 @@ export const setCurrency = (payload: string) => {
     payload,
   };
 };
+
+export const refreshWallets = () => {
+  return {
+    type: ActionType.REFRESH_WALLETS,
+  };
+};
