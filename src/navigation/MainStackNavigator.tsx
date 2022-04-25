@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {screenOptions} from './config';
 import {WalletStackNavigator} from './WalletStackNavigator';
 import {AssetStackNavigator} from './AssetStackNavigator';
-import {DappStackNavigator} from './DappStackNavigator copy';
+import {DappStackNavigator} from './DappStackNavigator';
 const Stack = createNativeStackNavigator();
 
 export const MainStackNavigator = () => {
