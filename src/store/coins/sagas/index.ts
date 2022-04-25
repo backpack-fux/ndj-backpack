@@ -350,7 +350,7 @@ export function* getTransactions({payload}: Action<BaseCoin>) {
     if (!wallet) {
       return;
     }
-    console.log(payload);
+
     const transactions: ITransaction[] = yield WalletService.getTransactions(
       payload.network,
       wallet.address,

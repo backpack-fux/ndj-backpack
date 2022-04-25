@@ -1,5 +1,5 @@
-import {delay, put, takeLatest} from 'redux-saga/effects';
-import {Action, ActionType, Wallet, WalletKeys} from '@app/models';
+import {delay, put, select, takeLatest} from 'redux-saga/effects';
+import {Action, ActionType, RootState, Wallet, WalletKeys} from '@app/models';
 import {addWallet, setLoading} from '../actions';
 import {showSnackbar} from '@app/utils';
 import {NetworkName} from '@app/constants';
@@ -21,6 +21,9 @@ function* createWallet({
   yield put(setLoading(true));
   yield delay(1000);
   try {
+    const state: RootState = yield select();
+
+    const accounts = state.wallets.wallets;
     const wallets: WalletKeys[] = yield WalletService.createWallets(
       payload.mnemonic,
       payload.network,
@@ -28,7 +31,7 @@ function* createWallet({
 
     const wallet: Wallet = {
       id: (Math.random() + 1).toString(36).substring(7),
-      name: payload.name || 'Main Wallet',
+      name: payload.name || `Main Wallet ${accounts.length + 1}`,
       network: payload.network,
       mnemonic: payload.mnemonic,
       wallets,
