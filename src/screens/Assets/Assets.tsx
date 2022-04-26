@@ -13,7 +13,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
-import {BaseCoin} from '@app/models';
+import {AssetStackParamList, BaseCoin} from '@app/models';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const shadow = {
   shadowColor: colors.secondary,
@@ -28,8 +29,10 @@ const shadow = {
 };
 
 export const AssetsScreen = () => {
-  const isLoading = useSelector(isLoadingTokensSelector);
   const dispatch = useDispatch();
+  const navigation = useNavigation<NavigationProp<AssetStackParamList>>();
+
+  const isLoading = useSelector(isLoadingTokensSelector);
   const tokens = useSelector(tokensSelector);
   const allTokens = Object.values(tokens).reduce((all, current) => {
     return all.concat(current);
@@ -101,6 +104,7 @@ export const AssetsScreen = () => {
               );
             })}
             <TouchableOpacity
+              onPress={() => navigation.navigate('Tokens')}
               style={[t.mT3, t.flexRow, t.justifyCenter, t.itemsCenter]}>
               <MIcon name="plus" size={20} color={colors.white} />
               <Paragraph

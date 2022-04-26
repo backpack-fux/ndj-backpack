@@ -38,9 +38,15 @@ export type WalletStackParamList = {
   AddWallet: undefined;
 };
 
+export type AssetStackParamList = {
+  Assets: undefined;
+  Tokens: undefined;
+};
+
 export type StackParams = RootStackParamList &
   MainStackParamList &
-  WalletStackParamList;
+  WalletStackParamList &
+  AssetStackParamList;
 
 export interface SessionApprovalParams {
   proposal: SessionTypes.Proposal;
