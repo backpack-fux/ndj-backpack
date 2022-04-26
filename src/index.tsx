@@ -35,7 +35,9 @@ const App = () => {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <GestureHandlerRootView style={[t.wFull, t.hFull]}>
-            <ImageBackground source={background} style={[t.flex1]}>
+            <ImageBackground
+              source={background}
+              style={[t.flex1, t.bgPurple500]}>
               <NavigationContainer
                 ref={NavigationService.navigationRef}
                 onReady={() => {
