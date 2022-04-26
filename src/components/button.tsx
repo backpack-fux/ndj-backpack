@@ -31,8 +31,7 @@ export const Button = ({
     style={[
       {backgroundColor: colors.button},
       disabled ? {} : shadow,
-      t.flex1,
-      t.h12,
+      t.h10,
       t.alignCenter,
       t.justifyCenter,
       t.roundedLg,
