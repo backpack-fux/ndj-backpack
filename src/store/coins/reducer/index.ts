@@ -54,7 +54,7 @@ export function toggleAccountCoinReducer(
   state: CoinsReducerType,
   {payload}: Action<{coin: BaseCoin; enabled: boolean}>,
 ) {
-  const coins = state.accountCoins || [];
+  const coins: BaseCoin[] = Object.assign([], state.accountCoins || []);
 
   const coin = coins.find(
     c => c.contractAddress === payload.coin.contractAddress,
@@ -71,7 +71,7 @@ export function toggleAccountCoinReducer(
 
   return {
     ...state,
-    accountCoins: coins,
+    accountCoins: [...coins],
   };
 }
 

@@ -36,7 +36,7 @@ export const TokensScreen = () => {
   const isSearchingCoins = useSelector(isSearchingCoinsSelector);
 
   const debouncedSearchText = useDebounce(searchText, 500);
-
+  console.log(userCoins);
   const coins = debouncedSearchText
     ? searchedCoins.map(
         s => userCoins.find(w => w.contractAddress === s.contractAddress) || s,
