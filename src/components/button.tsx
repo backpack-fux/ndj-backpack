@@ -36,6 +36,6 @@ export const Button = ({
       t.justifyCenter,
       t.roundedLg,
     ]}>
-    <Paragraph text={text} align="center" color={colors.white} size={18} />
+    <Paragraph text={text} align="center" color={colors.white} size={16} />
   </TouchableOpacity>
 );

@@ -1,4 +1,5 @@
 import {SessionTypes} from '@walletconnect/types';
+import {BaseCoin} from './coinTypes';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -41,6 +42,7 @@ export type WalletStackParamList = {
 export type AssetStackParamList = {
   Assets: undefined;
   Tokens: undefined;
+  Receive: {coin?: BaseCoin};
 };
 
 export type StackParams = RootStackParamList &

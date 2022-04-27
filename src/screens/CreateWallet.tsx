@@ -93,11 +93,15 @@ export const CreateWalletScreen = () => {
               multiline={true}
             />
           </Card>
-          <View style={[t.flexRow, t.mT2]}>
+          <View style={[t.flexRow, t.mT2, t.wFull]}>
             {!mnemonic ? (
-              <Button text="Create" onPress={onCreate} />
+              <View style={[t.wFull]}>
+                <Button text="Create" onPress={onCreate} />
+              </View>
             ) : (
-              <Button text="Import" disabled={!mnemonic} onPress={onImport} />
+              <View style={[t.wFull]}>
+                <Button text="Import" disabled={!mnemonic} onPress={onImport} />
+              </View>
             )}
           </View>
         </ScrollView>

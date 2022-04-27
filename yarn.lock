@@ -10108,7 +10108,7 @@ prompts@^2.0.1, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -10426,6 +10426,13 @@ react-native-crypto@^2.0.1, react-native-crypto@^2.2.0:
     pbkdf2 "3.0.8"
     public-encrypt "^4.0.0"
     randomfill "^1.0.3"
+
+react-native-custom-qr-codes@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-custom-qr-codes/-/react-native-custom-qr-codes-2.0.0.tgz#95fc813e1cbb5190cbdaf2657d361c5220a4feef"
+  integrity sha512-tUQipLzDorDgv/gzuhAISSqCCNOTtM+QveAUTnV1deeEKDAtdfdzY9QJIqLZYmfYvusySpXOK1Sdu9X+6AR2Jg==
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-device-info@^8.5.1:
   version "8.5.1"
