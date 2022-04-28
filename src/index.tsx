@@ -16,7 +16,7 @@ import {colors} from './assets/colors.config';
 import {WalletConnectProvider} from './context/walletconnect';
 import {KeychainProvider} from './context/keychain';
 import {t} from 'react-native-tailwindcss';
-import {AppNavigator} from './navigation';
+import {RootStackNavigator} from './navigation/RootStackNavigator';
 const background = require('@app/assets/images/bg.png');
 
 LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
@@ -61,7 +61,7 @@ const App = () => {
                 }}>
                 <WalletConnectProvider>
                   <KeychainProvider>
-                    <AppNavigator />
+                    <RootStackNavigator />
                   </KeychainProvider>
                 </WalletConnectProvider>
               </NavigationContainer>

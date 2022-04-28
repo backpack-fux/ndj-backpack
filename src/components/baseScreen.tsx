@@ -11,6 +11,7 @@ import {useHeaderHeight} from '@react-navigation/elements';
 
 import {colors} from '@app/assets/colors.config';
 import {menuHeight} from '@app/constants';
+import {Paragraph} from './text';
 const background = require('@app/assets/images/bg.png');
 
 export const BaseScreen = ({
@@ -18,11 +19,13 @@ export const BaseScreen = ({
   isLoading = false,
   noPadding = false,
   noBottom = false,
+  title,
 }: {
   children?: React.ReactNode;
   isLoading?: boolean;
   noPadding?: boolean;
   noBottom?: boolean;
+  title?: string;
 }) => {
   const headerHeight = useHeaderHeight();
 
@@ -40,6 +43,16 @@ export const BaseScreen = ({
           t.flex1,
           {paddingBottom: noBottom ? 0 : menuHeight * 0.55},
         ]}>
+        {!!title && (
+          <Paragraph
+            marginTop={30}
+            marginBottom={20}
+            text={title}
+            font="NicoMoji+"
+            align="center"
+            type="bold"
+          />
+        )}
         {isLoading && (
           <View
             style={[

@@ -15,6 +15,7 @@ interface Props {
   marginBottom?: number;
   numberOfLines?: number;
   ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip';
+  font?: string;
 }
 
 export const Paragraph = ({
@@ -30,6 +31,7 @@ export const Paragraph = ({
   marginBottom = 0,
   numberOfLines,
   ellipsizeMode,
+  font,
 }: Props) => {
   return (
     <Text
@@ -38,6 +40,7 @@ export const Paragraph = ({
       style={{
         fontWeight: type,
         fontSize: size,
+        fontFamily: font,
         textAlign: align,
         color,
         lineHeight,

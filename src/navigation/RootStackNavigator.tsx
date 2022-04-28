@@ -39,15 +39,27 @@ export const RootStackNavigator = () => {
     <Stack.Navigator initialRouteName={'Splash'} screenOptions={screenOptions}>
       <Stack.Screen
         name="Splash"
-        options={stackOptions}
+        options={{
+          ...stackOptions,
+          animation: 'fade',
+        }}
         component={SplashScreen}
       />
       <Stack.Screen
         name="CreateWallet"
-        options={stackOptions}
+        options={{
+          ...stackOptions,
+          animation: 'fade',
+        }}
         component={CreateWalletScreen}
       />
-      <Stack.Screen name="MainStack" component={MainStackNavigator} />
+      <Stack.Screen
+        name="MainStack"
+        options={{
+          animation: 'fade',
+        }}
+        component={MainStackNavigator}
+      />
     </Stack.Navigator>
   );
 };

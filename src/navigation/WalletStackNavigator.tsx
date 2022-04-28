@@ -21,8 +21,8 @@ export const WalletStackNavigator = () => {
         name="AddWallet"
         options={{
           ...stackOptions,
-          headerShown: true,
-          headerTitle: 'Add Wallet',
+          headerShown: false,
+          presentation: 'formSheet',
         }}
         component={CreateWalletScreen}
       />

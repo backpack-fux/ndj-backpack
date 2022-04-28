@@ -164,7 +164,14 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
           style={[t.mT4]}
           onPress={() => setShowSeed(!showSeed)}
           onLongPress={onCopySeed}>
-          <View style={[t.p2, t.roundedLg, t.borderYellow200, {borderWidth}]}>
+          <View
+            style={[
+              t.p2,
+              t.roundedLg,
+              t.borderYellow200,
+              t.bgGray300,
+              {borderWidth},
+            ]}>
             <Paragraph
               text="Seeds are private use them wisely, like you would with any other personal data"
               align="center"
@@ -175,7 +182,7 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
               <Paragraph text="to close seed" />
             </View>
             <View style={[t.flexRow, t.justifyCenter]}>
-              <Paragraph text="long press" type="bold" />
+              <Paragraph text="long press" type="bold" marginRight={5} />
               <Paragraph text="to copy your seed phrase" />
             </View>
           </View>

@@ -22,7 +22,8 @@ export const AssetStackNavigator = () => {
         name="Tokens"
         options={{
           ...stackOptions,
-          headerTitle: 'Asset Management',
+          headerShown: false,
+          presentation: 'formSheet',
         }}
         component={TokensScreen}
       />
