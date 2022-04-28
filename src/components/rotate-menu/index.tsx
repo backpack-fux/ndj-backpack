@@ -38,8 +38,8 @@ export class RotateMenu extends React.Component<Props, any> {
   _wheelNavigator: any;
   INDEX_EXTRACTORS: any = {};
   GIRTH_ANGLE = 120;
-  AMOUNT_OF_ICONS = 5;
-  ICON_POSITION_ANGLE = 120 / 5;
+  AMOUNT_OF_ICONS = 3;
+  ICON_POSITION_ANGLE = 120 / 3;
   STEP_LENGTH_TO_1_ANGLE = 0;
   DIRECTIONS: any;
   CIRCLE_SECTIONS: any;

@@ -154,7 +154,7 @@ export const CreateWalletScreen = () => {
             defaultIconColor={'gray'}
             styleIconText={[t.bgTransparent]}
             iconHideOnTheBackDuration={100}
-            isExpDistCorrection={true}
+            isExpDistCorrection={false}
             noExpDistCorrectionDegree={20}
           />
         </View>

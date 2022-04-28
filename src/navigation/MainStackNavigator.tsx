@@ -50,7 +50,7 @@ export const MainStackNavigator = () => {
       </Stack.Navigator>
       <View style={styles.rotateMenu}>
         <RotateMenu
-          girthAngle={100}
+          girthAngle={140}
           icons={[
             <MaterialCommunityIcons
               id="AssetStack"
@@ -75,8 +75,7 @@ export const MainStackNavigator = () => {
           defaultIconColor={'gray'}
           styleIconText={[t.bgTransparent]}
           iconHideOnTheBackDuration={100}
-          isExpDistCorrection={true}
-          noExpDistCorrectionDegree={20}
+          isExpDistCorrection={false}
         />
       </View>
     </View>

@@ -63,7 +63,7 @@ export const TokensScreen = () => {
   }, [debouncedSearchText]);
 
   return (
-    <BaseScreen noPadding title="Add a custom token" noBottom>
+    <BaseScreen noPadding title="Add a Custom Token" noBottom>
       <View
         style={[t.bgPurple200, t.mT2, t.mL4, t.mR4, t.p2, t.roundedLg, t.mB4]}>
         <TextInput
