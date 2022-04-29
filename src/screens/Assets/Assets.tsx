@@ -130,7 +130,11 @@ export const AssetsScreen = () => {
             />
           </View>
           <View style={[t.flex1, t.mL2]}>
-            <Button text="Send" disabled={!selectedCoin} />
+            <Button
+              text="Send"
+              disabled={!selectedCoin}
+              onPress={() => navigation.navigate('Send', {coin: selectedCoin})}
+            />
           </View>
         </View>
       </View>

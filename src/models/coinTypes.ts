@@ -8,6 +8,7 @@ export interface BaseCoin {
   network: NetworkName;
   image?: string;
   enabled?: boolean;
+  balance?: number;
 }
 
 export interface Token extends BaseCoin {

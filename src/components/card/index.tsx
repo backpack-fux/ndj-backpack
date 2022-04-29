@@ -18,9 +18,11 @@ const shadow = {
 export const Card = ({
   children,
   onPress = () => {},
+  padding,
 }: {
   children?: React.ReactNode;
   onPress?: () => void;
+  padding?: number;
 }) => {
   return (
     <TouchableOpacity
@@ -28,7 +30,7 @@ export const Card = ({
       activeOpacity={1}
       style={[
         t.bgPurple500,
-        t.p4,
+        padding ? {padding} : t.p4,
         t.roundedXl,
         t.border2,
         t.borderPurple200,

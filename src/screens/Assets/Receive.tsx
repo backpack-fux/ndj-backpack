@@ -32,66 +32,54 @@ export const ReceiveScreen = () => {
 
   return (
     <BaseScreen>
-      <View style={[t.flex1]}>
-        <ScrollView
-          contentContainerStyle={[t.itemsCenter, t.justifyCenter]}
-          showsVerticalScrollIndicator={false}>
-          <View
-            style={[
-              t.bgPurple500,
-              t.itemsCenter,
-              t.justifyCenter,
-              t.p2,
-              t.roundedXl,
-            ]}>
-            <QRCode
-              content={wallet?.address}
-              outerEyeStyle="square"
-              innerEyeStyle="circle"
-              codeStyle="circle"
-              logo={logo}
-              logoSize={50}
-              backgroundColor={colors.primary}
-              linearGradient={['rgb(0,255,255)', colors.primaryLight]}
-              gradientDirection={[0, 300, 100, 0]}
+      <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
+        <View
+          style={[
+            t.bgPurple500,
+            t.itemsCenter,
+            t.justifyCenter,
+            t.p2,
+            t.roundedXl,
+          ]}>
+          <QRCode
+            content={wallet?.address}
+            outerEyeStyle="square"
+            innerEyeStyle="circle"
+            codeStyle="circle"
+            logo={logo}
+            logoSize={50}
+            backgroundColor={colors.primary}
+            linearGradient={['rgb(0,255,255)', colors.primaryLight]}
+            gradientDirection={[0, 300, 100, 0]}
+          />
+        </View>
+        <View
+          style={[
+            t.flexRow,
+            shadow,
+            t.bgPurple500,
+            t.pT2,
+            t.pB2,
+            t.pL4,
+            t.pR4,
+            {borderRadius: 20},
+            t.mT2,
+            t.mB4,
+            t.border2,
+            t.borderPurple200,
+            t.itemsCenter,
+          ]}>
+          <Paragraph text={`${coin?.symbol.toUpperCase()} Address: `} />
+          <View style={[t.flex1]}>
+            <Paragraph
+              text={wallet?.address}
+              numberOfLines={1}
+              ellipsizeMode="middle"
             />
           </View>
-          <View
-            style={[
-              t.flexRow,
-              shadow,
-              t.bgPurple500,
-              t.p4,
-              t.roundedXl,
-              t.mT2,
-              t.mB4,
-              t.border2,
-              t.borderPurple200,
-              t.itemsCenter,
-            ]}>
-            <Paragraph text={`${coin?.symbol.toUpperCase()} Address: `} />
-            <View style={[t.flex1]}>
-              <Paragraph
-                text={wallet?.address}
-                numberOfLines={1}
-                ellipsizeMode="middle"
-              />
-            </View>
-            <TouchableOpacity onPress={onCopy}>
-              <Icon name="content-copy" size={20} color={colors.white} />
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
-      <View>
-        <Button text="Back" onPress={() => navigation.goBack()} />
-        <View style={[t.flexRow, t.mT2]}>
-          <View style={[t.flex1]}>
-            <Button text="Tx Details" />
-          </View>
-          <View style={[t.flex1, t.mL2]}>
-            <Button text="Send" />
-          </View>
+          <TouchableOpacity onPress={onCopy}>
+            <Icon name="content-copy" size={20} color={colors.white} />
+          </TouchableOpacity>
         </View>
       </View>
     </BaseScreen>
