@@ -263,7 +263,7 @@ export const SendScreen = () => {
         )}
         <Button
           text="Confirm"
-          disabled={!sendTokenInfo.transaction && insufficientBalance}
+          disabled={!sendTokenInfo.transaction || insufficientBalance}
           onPress={onSendToken}
         />
       </View>
