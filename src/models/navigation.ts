@@ -43,7 +43,7 @@ export type AssetStackParamList = {
   Assets: undefined;
   Tokens: undefined;
   Receive: {coin?: BaseCoin};
-  Send: {coin?: BaseCoin};
+  Send: undefined;
 };
 
 export type StackParams = RootStackParamList &

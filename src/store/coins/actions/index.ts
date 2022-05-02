@@ -76,7 +76,7 @@ export const searchCoinsResponse = (payload: BaseCoin[]) => {
   };
 };
 
-export const selectSendToken = (payload: Token) => {
+export const selectSendToken = (payload: BaseCoin) => {
   return {
     type: ActionType.SELECT_SEND_TOKEN,
     payload,

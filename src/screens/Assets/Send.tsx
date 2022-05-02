@@ -1,8 +1,9 @@
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
-import {AssetStackParamList} from '@app/models';
-import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React, {useState} from 'react';
+import {
+  currencySelector,
+  selectedWalletSelector,
+} from '@app/store/wallets/walletsSelector';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   Image,
@@ -19,21 +20,40 @@ import {RNCamera} from 'react-native-camera';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '@app/assets/colors.config';
 import {sendTokenInfoSelector} from '@app/store/coins/coinsSelector';
-import {updateSendTokenInfo} from '@app/store/coins/actions';
+import {
+  getTransferTransaction,
+  transferTokenRequest,
+  updateSendTokenInfo,
+} from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
+import {useDebounce} from '@app/uses';
+import {formatCurrency, normalizeNumber} from '@app/utils';
 
 const icon = require('@app/assets/images/icon.png');
 
 export const SendScreen = () => {
-  const navigation = useNavigation();
   const dispatch = useDispatch();
   const selectedWallet = useSelector(selectedWalletSelector);
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
-  const route = useRoute<RouteProp<AssetStackParamList, 'Receive'>>();
-  const {coin} = route.params;
-  const wallet = selectedWallet?.wallets.find(w => w.network === coin?.network);
+  const currency = useSelector(currencySelector);
+  const token = sendTokenInfo?.token;
+  const wallet = selectedWallet?.wallets.find(
+    w => w.network === token?.network,
+  );
 
+  const total =
+    (sendTokenInfo?.amount ? Number(sendTokenInfo?.amount) : 0) +
+    (sendTokenInfo?.fee || 0);
+
+  const insufficientBalance =
+    Number(sendTokenInfo.amount || 0) > (sendTokenInfo.balance || 0);
+
+  const [toAddress, setToAddress] = useState('');
+  const [amount, setAmount] = useState('');
   const [openScan, setOpenScan] = useState(false);
+
+  const debouncedToAddress = useDebounce(toAddress, 500);
+  const debouncedToAmount = useDebounce(amount, 500);
 
   const onBarCodeRead = (data: any) => {
     const address = data.replace(/\ethereum:/g, '');
@@ -42,15 +62,18 @@ export const SendScreen = () => {
   };
 
   const onPressMax = () => {
+    const value = (sendTokenInfo?.balance || 0).toString();
+    setAmount(value);
     dispatch(
       updateSendTokenInfo({
         ...sendTokenInfo,
-        amount: (sendTokenInfo?.balance || 0).toString(),
+        amount: value,
       }),
     );
   };
 
   const onUpdateToAccount = (account: string) => {
+    setToAddress(account);
     dispatch(
       updateSendTokenInfo({
         ...sendTokenInfo,
@@ -59,11 +82,12 @@ export const SendScreen = () => {
     );
   };
 
-  const onUpdateAmount = (amount: string) => {
+  const onUpdateAmount = (value: string) => {
+    setAmount(value);
     dispatch(
       updateSendTokenInfo({
         ...sendTokenInfo,
-        amount,
+        amount: value,
       }),
     );
   };
@@ -72,6 +96,8 @@ export const SendScreen = () => {
     const content = await Clipboard.getString();
 
     if (content) {
+      setToAddress(content);
+
       dispatch(
         updateSendTokenInfo({
           ...sendTokenInfo,
@@ -81,8 +107,27 @@ export const SendScreen = () => {
     }
   };
 
+  const onSendToken = () => {
+    dispatch(transferTokenRequest());
+  };
+
+  const onUpdateSendTokenInfo = useCallback(() => {
+    if (
+      debouncedToAddress &&
+      debouncedToAmount &&
+      !isNaN(Number(debouncedToAmount)) &&
+      Number(debouncedToAmount) > 0
+    ) {
+      dispatch(getTransferTransaction());
+    }
+  }, [debouncedToAddress, debouncedToAmount]);
+
+  useEffect(() => {
+    onUpdateSendTokenInfo();
+  }, [onUpdateSendTokenInfo]);
+
   return (
-    <BaseScreen>
+    <BaseScreen isLoading={sendTokenInfo.isLoading}>
       <View style={[t.flex1]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Card padding={10}>
@@ -92,7 +137,7 @@ export const SendScreen = () => {
               <Paragraph text="Asset" marginLeft={10} marginRight={10} />
               <View style={[t.flex1]}>
                 <Paragraph
-                  text={`${coin?.name.toUpperCase()} (${coin?.symbol.toUpperCase()})`}
+                  text={`${token?.name.toUpperCase()} (${token?.symbol.toUpperCase()})`}
                   align="right"
                 />
               </View>
@@ -155,7 +200,9 @@ export const SendScreen = () => {
               <Paragraph text="Gets" marginLeft={10} marginRight={10} />
               <View style={[t.flex1]}>
                 <Paragraph
-                  text={'-'}
+                  text={`${
+                    sendTokenInfo.transaction ? sendTokenInfo.amount || 0 : '-'
+                  } ${token?.symbol.toUpperCase()}`}
                   numberOfLines={1}
                   ellipsizeMode="middle"
                   align="right"
@@ -167,7 +214,14 @@ export const SendScreen = () => {
               <Paragraph text="Network Fee" marginLeft={10} marginRight={10} />
               <View style={[t.flex1]}>
                 <Paragraph
-                  text={'-'}
+                  text={`${
+                    sendTokenInfo.transaction
+                      ? normalizeNumber(sendTokenInfo.fee, 8)
+                      : '-'
+                  } ${token?.symbol.toUpperCase()} (${formatCurrency(
+                    (sendTokenInfo.fee || 0) * (token?.price || 0),
+                    currency,
+                  )})`}
                   numberOfLines={1}
                   ellipsizeMode="middle"
                   align="right"
@@ -182,7 +236,11 @@ export const SendScreen = () => {
               <Paragraph text="Max Total" marginLeft={10} marginRight={10} />
               <View style={[t.flex1]}>
                 <Paragraph
-                  text={'-'}
+                  text={
+                    sendTokenInfo.transaction
+                      ? formatCurrency(total * (token?.price || 0), currency)
+                      : '-'
+                  }
                   numberOfLines={1}
                   ellipsizeMode="middle"
                   align="right"
@@ -193,7 +251,21 @@ export const SendScreen = () => {
         </ScrollView>
       </View>
       <View>
-        <Button text="Confirm" onPress={() => navigation.goBack()} />
+        {insufficientBalance && (
+          <Paragraph
+            color={colors.secondary}
+            size={12}
+            align="center"
+            text={`Insufficient ${
+              sendTokenInfo?.token?.name
+            }(${token?.symbol.toUpperCase()}) balance`}
+          />
+        )}
+        <Button
+          text="Confirm"
+          disabled={!sendTokenInfo.transaction && insufficientBalance}
+          onPress={onSendToken}
+        />
       </View>
       <Modal visible={openScan} animationType="slide">
         <View style={t.flex1}>

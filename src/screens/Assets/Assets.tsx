@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
+import {selectSendToken} from '@app/store/coins/actions';
 import {AssetStackParamList, BaseCoin} from '@app/models';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 
@@ -38,23 +39,34 @@ export const AssetsScreen = () => {
     return all.concat(current);
   }, []);
   let coins = useSelector(accountCoinsSelector);
-  coins = coins.map(coin => {
-    const balance = allTokens
-      .filter(
-        a =>
-          a.id === coin.id &&
-          a.symbol === coin.symbol &&
-          a.network === coin.network,
-      )
-      .map(a => a.balance || 0)
-      .reduce((total, current) => total + current, 0);
-    return {
-      ...coin,
-      balance,
-    };
-  });
+  coins = coins
+    .filter(c => c.enabled)
+    .map(coin => {
+      const balance = allTokens
+        .filter(
+          a =>
+            a.id === coin.id &&
+            a.symbol === coin.symbol &&
+            a.network === coin.network,
+        )
+        .map(a => a.balance || 0)
+        .reduce((total, current) => total + current, 0);
+      return {
+        ...coin,
+        balance,
+      };
+    });
 
   const [selectedCoin, setSelectedCoin] = useState<BaseCoin>();
+
+  const onSend = () => {
+    if (!selectedCoin) {
+      return;
+    }
+
+    dispatch(selectSendToken(selectedCoin));
+    navigation.navigate('Send');
+  };
 
   return (
     <BaseScreen>
@@ -130,11 +142,7 @@ export const AssetsScreen = () => {
             />
           </View>
           <View style={[t.flex1, t.mL2]}>
-            <Button
-              text="Send"
-              disabled={!selectedCoin}
-              onPress={() => navigation.navigate('Send', {coin: selectedCoin})}
-            />
+            <Button text="Send" disabled={!selectedCoin} onPress={onSend} />
           </View>
         </View>
       </View>

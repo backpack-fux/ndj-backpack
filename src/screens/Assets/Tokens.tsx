@@ -1,42 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import {
-  FlatList,
   Image,
   View,
   Switch,
   TextInput,
-  TouchableOpacity,
   ScrollView,
   RefreshControl,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {t} from 'react-native-tailwindcss';
 
 import {colors} from '@app/assets/colors.config';
 import {BaseScreen, Card, Paragraph} from '@app/components';
-import {useDispatch, useSelector} from 'react-redux';
 import {
   accountCoinsSelector,
   isSearchingCoinsSelector,
   searchedCoinsSelector,
 } from '@app/store/coins/coinsSelector';
-import {BaseCoin, WalletStackParamList} from '@app/models';
+import {BaseCoin} from '@app/models';
 import {searchCoinsRequest, toggleAccountCoin} from '@app/store/coins/actions';
 import {useDebounce} from '@app/uses';
 import {networkName} from '@app/constants';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {refreshWallets} from '@app/store/wallets/actions';
 
 const borderBottomWidth = 0.3;
 export const TokensScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation<NavigationProp<WalletStackParamList>>();
   const [searchText, setSearchText] = useState('');
   const userCoins = useSelector(accountCoinsSelector);
   const searchedCoins = useSelector(searchedCoinsSelector);
   const isSearchingCoins = useSelector(isSearchingCoinsSelector);
 
   const debouncedSearchText = useDebounce(searchText, 500);
-  console.log(userCoins);
+
   const coins = debouncedSearchText
     ? searchedCoins.map(
         s => userCoins.find(w => w.contractAddress === s.contractAddress) || s,
