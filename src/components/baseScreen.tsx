@@ -41,7 +41,7 @@ export const BaseScreen = ({
         style={[
           t.wFull,
           t.flex1,
-          {paddingBottom: noBottom ? 0 : menuHeight * 0.55},
+          {paddingBottom: noBottom ? 0 : menuHeight * 0.5},
         ]}>
         {!!title && (
           <Paragraph

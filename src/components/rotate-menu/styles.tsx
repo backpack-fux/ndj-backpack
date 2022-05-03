@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     justifyContent: 'flex-end',
-    marginBottom: -SQUARE_DIMENSIONS.WIDTH * 0.4,
+    marginBottom: -SQUARE_DIMENSIONS.WIDTH * 0.45,
   },
   icon: {
     position: 'absolute',
