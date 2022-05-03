@@ -39,6 +39,7 @@ export interface CoinsReducerType {
   isSearchingCoins: boolean;
   isLoadingTokens: boolean;
   isLoadingTransactions: boolean;
+  isTransactionReached: boolean;
 }
 
 export const defaultState: CoinsReducerType = {
@@ -51,6 +52,7 @@ export const defaultState: CoinsReducerType = {
   isSearchingCoins: false,
   isLoadingTokens: false,
   sendTokenInfo: {},
+  isTransactionReached: false,
 };
 
 export const coinsReducer = createReducer<CoinsReducerType>(defaultState, {

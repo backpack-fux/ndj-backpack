@@ -160,7 +160,9 @@ export default class BinanceService extends WalletService {
 
   async getTransactions(
     account: string,
-    contractAddress?: string,
+    contractAddress: string,
+    page: number,
+    limit: number,
   ): Promise<ITransaction[]> {
     const endTime = new Date().getTime();
     const startTime = endTime - 90 * 24 * 60 * 60 * 1000; // 3 months is the max range
@@ -169,14 +171,14 @@ export default class BinanceService extends WalletService {
       txAsset: contractAddress,
       startTime: startTime,
       endTime: endTime,
-      limit: 10,
+      offset: (page - 1) * limit,
+      limit,
       txType: 'TRANSFER',
     };
     const {data} = await this.httpClient.get('/transactions', {
       params,
     });
 
-    console.log(data);
     const result = data?.tx || [];
 
     if (!result || typeof result === 'string' || !result.length) {
@@ -204,6 +206,8 @@ export default class BinanceService extends WalletService {
     return transactions;
   }
   async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
-    return;
+    return {
+      name: address,
+    };
   }
 }

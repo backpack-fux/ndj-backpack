@@ -263,12 +263,14 @@ export default class ZilliqaService extends WalletService {
 
   async getTransactions(
     address: string,
-    contractAddress?: string,
+    contractAddress: string | undefined,
+    page: number,
+    limit: number,
   ): Promise<ITransaction[]> {
     const network = 'mainnet';
     const params: any = {
       network,
-      page: 1,
+      page,
       type: 'normal',
     };
 
@@ -313,6 +315,8 @@ export default class ZilliqaService extends WalletService {
   }
 
   async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
-    return;
+    return {
+      name: address,
+    };
   }
 }

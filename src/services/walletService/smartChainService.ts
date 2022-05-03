@@ -17,15 +17,20 @@ export default class SmartChainService extends EthereumBaseService {
     super(NetworkName.binanceSmartChain, provider);
   }
 
-  async getTransactions(address: string, contractAddress?: string) {
+  async getTransactions(
+    address: string,
+    contractAddress: string | undefined,
+    page: number,
+    limit: number,
+  ) {
     const params: any = {
       module: 'account',
       action: 'txlist',
       address,
       startblock: 0,
       endblock: 99999999,
-      page: 1,
-      offset: 10,
+      page,
+      offset: limit,
       sort: 'desc',
       apiKey: bscScanApiKey,
     };

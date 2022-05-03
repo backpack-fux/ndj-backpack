@@ -210,12 +210,15 @@ export default class SolanaService extends WalletService {
   }
 
   async getTransactions(
-    account: string,
-    contractAddress?: string,
-  ): Promise<ITransaction[]> {
+    address: string,
+    contractAddress: string | undefined,
+    page: number,
+    limit: number,
+  ) {
     const params = {
-      account,
-      limit: 10,
+      account: address,
+      beforeHash: typeof page === 'string' ? page : undefined,
+      limit,
     };
 
     if (contractAddress) {
@@ -258,6 +261,8 @@ export default class SolanaService extends WalletService {
   }
 
   async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
-    return;
+    return {
+      name: address,
+    };
   }
 }

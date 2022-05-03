@@ -334,7 +334,14 @@ function* transferToken() {
   }
 }
 
-export function* getTransactions({payload}: Action<BaseCoin>) {
+export function* getTransactions({
+  payload,
+}: Action<{
+  token: BaseCoin;
+  page: number;
+  limit: number;
+}>) {
+  const token = payload.token;
   try {
     const state: RootState = yield select();
     const selectedWallet = selectedWalletSelector(state);
@@ -344,7 +351,7 @@ export function* getTransactions({payload}: Action<BaseCoin>) {
     }
 
     const wallet = selectedWallet.wallets.find(
-      w => w.network === payload.network,
+      w => w.network === token.network,
     );
 
     if (!wallet) {
@@ -352,14 +359,16 @@ export function* getTransactions({payload}: Action<BaseCoin>) {
     }
 
     const transactions: ITransaction[] = yield WalletService.getTransactions(
-      payload.network,
+      token.network,
       wallet.address,
-      payload.contractAddress !== payload.network
-        ? payload.contractAddress
+      token.contractAddress !== token.network
+        ? token.contractAddress
         : undefined,
+      payload.page,
+      payload.limit,
     );
 
-    yield put(getTransactionsSuccess(transactions));
+    yield put(getTransactionsSuccess({transactions, page: payload.page}));
   } catch (err: any) {
     showSnackbar(err.message);
     yield put(getTransactionsFailed(err.message));

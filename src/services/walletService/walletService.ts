@@ -74,7 +74,7 @@ abstract class WalletService {
         {
           network,
           ...keys,
-        },
+        } as WalletKeys,
       ];
     }
 
@@ -86,7 +86,7 @@ abstract class WalletService {
       wallets.push({
         ...keys,
         network: service.network,
-      });
+      } as WalletKeys);
     }
 
     return wallets;
@@ -131,7 +131,9 @@ abstract class WalletService {
   static getTransactions(
     network: NetworkName,
     address: string,
-    contractAddress?: string,
+    contractAddress: string | undefined,
+    page: number,
+    limit: number,
   ) {
     const service = this.getServiceByNetwork(network);
 
@@ -139,7 +141,7 @@ abstract class WalletService {
       throw new Error(`Can't get service for ${network}`);
     }
 
-    return service.getTransactions(address, contractAddress);
+    return service.getTransactions(address, contractAddress, page, limit);
   }
 
   static getENSInfo(network: NetworkName, address: string) {
@@ -155,13 +157,15 @@ abstract class WalletService {
   abstract generateKeys(mnemonic: string): Promise<{
     address: string;
     privateKey: string;
-    ensInfo: ENSInfo | null | undefined;
+    ensInfo?: ENSInfo | null;
   }>;
 
   abstract getBalance(account: string, address?: string): Promise<number>;
   abstract getTransactions(
     account: string,
-    contractAddress?: string,
+    contractAddress: string | undefined,
+    page: number,
+    limit: number,
   ): Promise<ITransaction[]>;
   abstract transfer(
     privateKey: string,

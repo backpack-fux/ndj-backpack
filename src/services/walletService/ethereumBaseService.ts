@@ -5,7 +5,7 @@ import Web3 from 'web3';
 import {TransactionConfig, TransactionReceipt} from 'web3-core';
 import {ENSInfo, ITransaction} from '@app/models';
 import {JsonRpcProvider} from '@ethersproject/providers';
-import {ConstructorFragment} from 'ethers/lib/utils';
+
 export default class EthereumBaseService extends WalletService {
   web3: Web3;
   ethers: JsonRpcProvider;
@@ -148,8 +148,11 @@ export default class EthereumBaseService extends WalletService {
 
   async getTransactions(
     account: string,
-    contractAddress?: string,
+    contractAddress: string | undefined,
+    page: number,
+    limit: number,
   ): Promise<ITransaction[]> {
+    console.log(account, contractAddress, page, limit);
     return [];
   }
 

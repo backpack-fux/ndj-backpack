@@ -11,4 +11,5 @@ export const colors = {
   button: '#A9AAB290',
   gray: 'rgba(135, 135, 153, 0.7)',
   yellow: '#FCF601',
+  blue: '#6ADAFE',
 };

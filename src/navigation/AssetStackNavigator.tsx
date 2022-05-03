@@ -6,6 +6,7 @@ import {AssetsScreen} from '@app/screens/Assets/Assets';
 import {TokensScreen} from '@app/screens/Assets/Tokens';
 import {ReceiveScreen} from '@app/screens/Assets/Receive';
 import {SendScreen} from '@app/screens/Assets/Send';
+import {TransactionScreen} from '@app/screens/Assets/Transaction';
 const Stack = createNativeStackNavigator();
 
 export const AssetStackNavigator = () => {
@@ -43,6 +44,14 @@ export const AssetStackNavigator = () => {
           headerTitle: 'Asset Management',
         }}
         component={SendScreen}
+      />
+      <Stack.Screen
+        name="Transaction"
+        options={{
+          ...stackOptions,
+          headerTitle: 'Asset Management',
+        }}
+        component={TransactionScreen}
       />
     </Stack.Navigator>
   );

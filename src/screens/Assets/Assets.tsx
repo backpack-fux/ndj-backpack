@@ -13,7 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
-import {selectSendToken} from '@app/store/coins/actions';
+import {selectSendToken, setToken} from '@app/store/coins/actions';
 import {AssetStackParamList, BaseCoin} from '@app/models';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 
@@ -66,6 +66,15 @@ export const AssetsScreen = () => {
 
     dispatch(selectSendToken(selectedCoin));
     navigation.navigate('Send');
+  };
+
+  const onPressToken = () => {
+    if (!selectedCoin) {
+      return;
+    }
+
+    dispatch(setToken(selectedCoin));
+    navigation.navigate('Transaction');
   };
 
   return (
@@ -130,7 +139,11 @@ export const AssetsScreen = () => {
         </ScrollView>
       </View>
       <View>
-        <Button text="Tx Details" disabled={!selectedCoin} />
+        <Button
+          text="Tx Details"
+          onPress={onPressToken}
+          disabled={!selectedCoin}
+        />
         <View style={[t.flexRow, t.mT2]}>
           <View style={[t.flex1]}>
             <Button

@@ -149,22 +149,33 @@ export function transferTokenSuccessReducer(state: CoinsReducerType) {
   };
 }
 
-export function getTransactionsRequestReducer(state: CoinsReducerType) {
+export function getTransactionsRequestReducer(
+  state: CoinsReducerType,
+  {payload}: Action<{token: BaseCoin; page: number; limit: number}>,
+) {
+  const transactions = payload.page === 1 ? [] : state.transactions;
   return {
     ...state,
     isLoadingTransactions: true,
-    transactions: [],
+    isTransactionReached: false,
+    transactions: [...transactions],
   };
 }
 
 export function getTransactionsSuccessReducer(
   state: CoinsReducerType,
-  {payload}: Action<ITransaction[]>,
+  {payload}: Action<{transactions: ITransaction[]; page: number}>,
 ) {
+  const transactions =
+    payload.page === 1
+      ? payload.transactions
+      : [...state.transactions, ...payload.transactions];
+  const isReached = payload.transactions.length === 0;
   return {
     ...state,
     isLoadingTransactions: false,
-    transactions: payload,
+    isTransactionReached: isReached,
+    transactions: [...transactions],
   };
 }
 

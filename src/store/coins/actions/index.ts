@@ -55,7 +55,7 @@ export const setTokens = (payload: {account: string; tokens: Token[]}) => {
   };
 };
 
-export const setToken = (payload: Token) => {
+export const setToken = (payload: Token | BaseCoin) => {
   return {
     type: ActionType.SET_TOKEN,
     payload,
@@ -115,14 +115,21 @@ export const transferTokenSuccess = () => {
   };
 };
 
-export const getTransactions = (payload: BaseCoin) => {
+export const getTransactions = (payload: {
+  token: BaseCoin;
+  page: number;
+  limit: number;
+}) => {
   return {
     type: ActionType.GET_TRANSACTIONS_REQUEST,
     payload,
   };
 };
 
-export const getTransactionsSuccess = (payload: ITransaction[]) => {
+export const getTransactionsSuccess = (payload: {
+  transactions: ITransaction[];
+  page: number;
+}) => {
   return {
     type: ActionType.GET_TRANSACTIONS_SUCCESS,
     payload,
