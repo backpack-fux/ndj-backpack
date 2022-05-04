@@ -1,20 +1,9 @@
 import {colors} from '@app/assets/colors.config';
+import {shadow} from '@app/constants';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {Paragraph} from './text';
-
-const shadow = {
-  shadowColor: colors.secondary,
-  shadowOffset: {
-    width: 0,
-    height: 0,
-  },
-  shadowOpacity: 1,
-  shadowRadius: 6,
-
-  elevation: 6,
-};
 
 export const Button = ({
   disabled,

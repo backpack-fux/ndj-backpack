@@ -10,13 +10,20 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 
-import {screenOptions} from './config';
+import {screenOptions, stackOptions} from './config';
 import {WalletStackNavigator} from './WalletStackNavigator';
 import {AssetStackNavigator} from './AssetStackNavigator';
 import {DappStackNavigator} from './DappStackNavigator';
 import {RotateMenu} from '@app/components';
 import {colors} from '@app/assets/colors.config';
 import {MainStackParamList} from '@app/models';
+import {
+  SessionApproval,
+  SessionSendTransaction,
+  SessionSign,
+  SessionSignTypedData,
+  SessionUnsuportedMethod,
+} from '@app/screens/Dapps';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +53,56 @@ export const MainStackNavigator = () => {
           name="DappStack"
           options={{animation: 'fade'}}
           component={DappStackNavigator}
+        />
+        <Stack.Screen
+          name="SessionApprovalModal"
+          component={SessionApproval}
+          options={{
+            ...stackOptions,
+            headerShown: false,
+            presentation: 'formSheet',
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="SessionSignModal"
+          component={SessionSign}
+          options={{
+            ...stackOptions,
+            headerShown: false,
+            presentation: 'formSheet',
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="SessionSignTypedDataModal"
+          component={SessionSignTypedData}
+          options={{
+            ...stackOptions,
+            headerShown: false,
+            presentation: 'formSheet',
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="SessionSendTransactionModal"
+          component={SessionSendTransaction}
+          options={{
+            ...stackOptions,
+            headerShown: false,
+            presentation: 'formSheet',
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="SessionUnsuportedMethodModal"
+          component={SessionUnsuportedMethod}
+          options={{
+            ...stackOptions,
+            headerShown: false,
+            presentation: 'formSheet',
+            gestureEnabled: false,
+          }}
         />
       </Stack.Navigator>
       <View style={styles.rotateMenu}>

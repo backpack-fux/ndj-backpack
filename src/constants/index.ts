@@ -1,3 +1,4 @@
+import {colors} from '@app/assets/colors.config';
 import {Dimensions} from 'react-native';
 
 export * from './abis';
@@ -53,3 +54,15 @@ export const autoLockList = [
   {value: 60, label: 'If away for 1 hour'},
   {value: 300, label: 'If away for 5 hours'},
 ];
+
+export const shadow = {
+  shadowColor: colors.secondary,
+  shadowOffset: {
+    width: 0,
+    height: 0,
+  },
+  shadowOpacity: 1,
+  shadowRadius: 6,
+
+  elevation: 6,
+};

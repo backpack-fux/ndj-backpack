@@ -16,18 +16,7 @@ import {refreshWallets} from '@app/store/wallets/actions';
 import {selectSendToken, setToken} from '@app/store/coins/actions';
 import {AssetStackParamList, BaseCoin} from '@app/models';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-
-const shadow = {
-  shadowColor: colors.secondary,
-  shadowOffset: {
-    width: 0,
-    height: 0,
-  },
-  shadowOpacity: 1,
-  shadowRadius: 6,
-
-  elevation: 6,
-};
+import {shadow} from '@app/constants';
 
 export const AssetsScreen = () => {
   const dispatch = useDispatch();
