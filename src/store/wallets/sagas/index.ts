@@ -7,7 +7,7 @@ import {
   Wallet,
   WalletKeys,
 } from '@app/models';
-import {addWallet, setLoading} from '../actions';
+import {addWallet, setLoading, setWallets} from '../actions';
 import {showSnackbar} from '@app/utils';
 import {NetworkName} from '@app/constants';
 import {WalletService} from '@app/services';
@@ -19,8 +19,8 @@ function* reload() {
     yield delay(1000);
     const state: RootState = yield select();
     const accounts = state.wallets.wallets;
-
-    for (const account of accounts) {
+    const wallets: Wallet[] = [...accounts];
+    for (const account of wallets) {
       for (const wallet of account.wallets) {
         try {
           const ensInfo: ENSInfo = yield WalletService.getENSInfo(
@@ -33,6 +33,7 @@ function* reload() {
         }
       }
     }
+    yield put(setWallets(wallets));
   } catch (err: any) {
     showSnackbar(err.message);
   } finally {

@@ -157,17 +157,8 @@ export default class EthereumBaseService extends WalletService {
   }
 
   async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
-    const name = await this.ethers.lookupAddress(address);
-
-    if (!name) {
-      return;
-    }
-
-    const avatar = await this.ethers.getAvatar(address);
-
     return {
-      name,
-      avatar,
+      name: address,
     };
   }
 }

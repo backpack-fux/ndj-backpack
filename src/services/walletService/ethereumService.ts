@@ -1,6 +1,6 @@
 import {AxiosInstance} from '@app/apis/axios';
 import {ETHERSCAN, NetworkName} from '@app/constants';
-import {ITransaction} from '@app/models';
+import {ENSInfo, ITransaction} from '@app/models';
 import EthereumBaseService from './ethereumBaseService';
 
 const provider =
@@ -68,5 +68,22 @@ export default class EthereumService extends EthereumBaseService {
     });
 
     return transactions;
+  }
+
+  async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
+    const name = await this.ethers.lookupAddress(address);
+
+    if (!name) {
+      return {
+        name: address,
+      };
+    }
+
+    const avatar = await this.ethers.getAvatar(address);
+
+    return {
+      name,
+      avatar,
+    };
   }
 }

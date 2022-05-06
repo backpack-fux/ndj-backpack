@@ -91,18 +91,66 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
     showSnackbar('Copied Seed!');
   };
 
+  const topTokens = tokenList
+    .filter(a => a.balance && a.balance > 0)
+    .sort((a, b) =>
+      (a.balance || 0) * (a.price || 0) > (b.balance || 0) * (b.price || 0)
+        ? -1
+        : 1,
+    )
+    .slice(0, 3);
+
+  const ethWallet = wallet.wallets.find(
+    w => w.network === NetworkName.ethereum,
+  );
+  const ensName =
+    ethWallet?.ensInfo?.name && ethWallet?.ensInfo?.name !== ethWallet.address
+      ? ethWallet?.ensInfo?.name
+      : null;
+  const ensAvatar = ethWallet?.ensInfo?.avatar;
+
   return (
     <Card>
       <Paragraph text={wallet.name} align="center" type="bold" />
       <View style={[t.flexRow, t.mT4, t.itemsCenter]}>
         <View style={[t.w40, t.pL8, t.pR8]}>
-          <Image
-            source={logo}
-            style={[t.w16, t.h16, t.selfCenter, t.flex1]}
-            resizeMode="contain"
-          />
+          <View style={[t.h16, t.flexRow, t.itemsCenter, t.justifyCenter]}>
+            {ensAvatar ? (
+              <Image
+                source={{uri: ensAvatar}}
+                style={[t.w16, t.h16, t.selfCenter, t.flex1]}
+                resizeMode="contain"
+              />
+            ) : topTokens.length ? (
+              <View style={[t.h16, {width: 64 + (topTokens.length - 1) * 25}]}>
+                {topTokens.reverse().map((token, index) => (
+                  <Image
+                    key={token.id}
+                    source={{uri: token.image}}
+                    style={[
+                      {right: index * 25},
+                      t.absolute,
+                      t.w16,
+                      t.h16,
+                      t.selfCenter,
+                      t.flex1,
+                      t.roundedFull,
+                      t.bgWhite,
+                    ]}
+                    resizeMode="contain"
+                  />
+                ))}
+              </View>
+            ) : (
+              <Image
+                source={logo}
+                style={[t.w16, t.h16, t.selfCenter, t.flex1]}
+                resizeMode="contain"
+              />
+            )}
+          </View>
           <Paragraph
-            text={ethAddress}
+            text={ensName || ethAddress}
             numberOfLines={1}
             ellipsizeMode="middle"
           />
