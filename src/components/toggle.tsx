@@ -1,3 +1,5 @@
+import {colors} from '@app/assets/colors.config';
+import {shadow} from '@app/constants';
 import React, {useEffect, useRef} from 'react';
 import {Animated, Image, TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
@@ -22,7 +24,7 @@ export const Toggle = ({
   useEffect(() => {
     Animated.timing(left, {
       toValue: value ? width - toggleSize + 1 : -1,
-      duration: 500,
+      duration: 200,
       useNativeDriver: false,
     }).start();
   }, [value, left]);
@@ -37,7 +39,8 @@ export const Toggle = ({
         onPress={() => onChange(!value)}>
         <View
           style={[
-            t.bgPurple500,
+            {backgroundColor: colors.button},
+            !value ? {} : shadow,
             {borderWidth: border},
             value ? t.borderWhite : t.borderGray200,
             {width},

@@ -61,6 +61,8 @@ export const DappsScreen = () => {
                       style={[
                         t.flexRow,
                         t.itemsCenter,
+                        t.mT1,
+                        t.mB1,
                         t.p1,
                         t.pL2,
                         t.pR2,
