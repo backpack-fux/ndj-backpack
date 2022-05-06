@@ -91,6 +91,8 @@ export const AssetsScreen = () => {
                   style={[
                     t.flexRow,
                     t.itemsCenter,
+                    t.mT1,
+                    t.mT1,
                     t.p1,
                     t.pL2,
                     t.pR2,

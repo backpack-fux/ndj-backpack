@@ -81,8 +81,9 @@ export default class BinanceService extends WalletService {
 
     const amountBig = new BigNumber(amount);
     const amountString = Number(amountBig.multipliedBy(BASENUMBER).toString());
-    const res = await this.httpClient.get(`/account/${fromAddress}/sequence`);
-    const sequence = res.data.sequence || 0;
+    // const res = await this.httpClient.get(`/account/${fromAddress}/sequence`);
+    // const sequence = res.data.sequence || 0;
+    const sequence = 0;
 
     const accCode = crypto.decodeAddress(fromAddress);
     const toAccCode = crypto.decodeAddress(toAccount);

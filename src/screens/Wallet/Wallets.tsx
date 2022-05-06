@@ -9,6 +9,7 @@ import {
 import {t} from 'react-native-tailwindcss';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Clipboard from '@react-native-community/clipboard';
+import * as _ from 'lodash';
 
 import {BaseScreen, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
@@ -26,8 +27,9 @@ import {
 } from '@app/store/coins/coinsSelector';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {formatCurrency, showSnackbar} from '@app/utils';
-import {borderWidth, NetworkName} from '@app/constants';
+import {borderWidth, networkList, NetworkName} from '@app/constants';
 import {selectWallet} from '@app/store/wallets/actions';
+import {useWalletConnect} from '@app/context/walletconnect';
 
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
@@ -68,6 +70,7 @@ export const WalletsScreen = () => {
 };
 
 const WalletItem = ({wallet}: {wallet: Wallet}) => {
+  const {sessions} = useWalletConnect();
   const dispatch = useDispatch();
   const selectedWallet = useSelector(selectedWalletSelector);
   const tokens = useSelector(tokensSelector);
@@ -108,6 +111,18 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
       ? ethWallet?.ensInfo?.name
       : null;
   const ensAvatar = ethWallet?.ensInfo?.avatar;
+
+  const accounts = wallet.wallets.map(w => {
+    const chain = networkList.find(n => n.network === w.network)?.chain;
+    return `${chain}:${w.address}`;
+  });
+
+  const walletSessions = sessions.filter(session => {
+    const sessionAccounts = session.state.accounts.filter(d =>
+      accounts.includes(d),
+    );
+    return sessionAccounts.length > 0;
+  });
 
   return (
     <Card>
@@ -201,7 +216,11 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
             <View style={[t.itemsCenter]}>
               <Paragraph text="dApps" align="center" />
               <View style={[t.flexRow, t.itemsCenter]}>
-                <Paragraph text="0" type="bold" align="center" />
+                <Paragraph
+                  text={walletSessions.length}
+                  type="bold"
+                  align="center"
+                />
               </View>
             </View>
           </View>
