@@ -11,7 +11,7 @@ export type MainStackParamList = {
   WalletStack: undefined;
   AssetStack: undefined;
   DappStack: undefined;
-  SessionApprovalModal: SessionApprovalParams;
+  SessionApprovalModal: {proposal: SessionTypes.Proposal};
   SessionSignModal: {
     event: SessionTypes.RequestEvent;
     session?: SessionTypes.Settled;
@@ -34,6 +34,10 @@ export type MainStackParamList = {
   };
 };
 
+export type DappStackParamList = {
+  DappDetails: {session: SessionTypes.Settled};
+};
+
 export type WalletStackParamList = {
   Wallets: undefined;
   AddWallet: undefined;
@@ -50,8 +54,5 @@ export type AssetStackParamList = {
 export type StackParams = RootStackParamList &
   MainStackParamList &
   WalletStackParamList &
-  AssetStackParamList;
-
-export interface SessionApprovalParams {
-  proposal: SessionTypes.Proposal;
-}
+  AssetStackParamList &
+  DappStackParamList;

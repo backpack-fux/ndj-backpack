@@ -13,9 +13,12 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {showSnackbar} from '@app/utils';
 import {EIP155_SIGNING_METHODS} from '@app/constants/EIP155Data';
 
+const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
+
 export interface WalletConnectContextProps {
   client?: WalletConnectClient;
   sessions: SessionTypes.Settled[];
+  enabledTransactionTopics: {[topic: string]: boolean};
   onAcceptSessionProposal: (
     proposal: SessionTypes.Proposal,
     accounts: string[],
@@ -25,13 +28,16 @@ export interface WalletConnectContextProps {
     message?: string,
   ) => void;
   onDisconnect: (topic: string) => void;
+  onToggleTransactionEnable: (topic: string, value: boolean) => void;
 }
 
 export const WalletConnectContext = createContext<WalletConnectContextProps>({
   sessions: [],
+  enabledTransactionTopics: {},
   onAcceptSessionProposal: () => {},
   onRejectSessionProposal: () => {},
   onDisconnect: () => {},
+  onToggleTransactionEnable: () => {},
 });
 
 export const useWalletConnect = () => {
@@ -46,6 +52,9 @@ export const WalletConnectProvider = (props: {
   const navigation = useNavigation<NavigationProp<MainStackParamList>>();
   const [client, setClient] = useState<WalletConnectClient>();
   const [sessions, setSessions] = useState<SessionTypes.Settled[]>([]);
+  const [enabledTransactionTopics, setEnabledTransactionTopics] = useState<{
+    [topic: string]: boolean;
+  }>({});
 
   const initClient = async () => {
     const wClient = await WalletConnectClient.init({
@@ -99,6 +108,28 @@ export const WalletConnectProvider = (props: {
       message: 'Owner ended session',
     };
     client?.disconnect({topic, reason});
+  };
+
+  const onToggleTransactionEnable = (topic: string, value: boolean) => {
+    const data = {
+      ...enabledTransactionTopics,
+      [topic]: value,
+    };
+    AsyncStorage.setItem(ENABLED_TRANSACTION_TOPICS, JSON.stringify(data));
+    setEnabledTransactionTopics(data);
+  };
+
+  const syncTransactionEnableTopics = async () => {
+    const res = await AsyncStorage.getItem(ENABLED_TRANSACTION_TOPICS);
+    const data = res ? JSON.parse(res) : {};
+    const result: any = {};
+
+    for (const session of sessions) {
+      result[session.topic] = data[session.topic] || false;
+    }
+
+    AsyncStorage.setItem(ENABLED_TRANSACTION_TOPICS, JSON.stringify(data));
+    setEnabledTransactionTopics(result);
   };
 
   const onSyncSessions = () => {
@@ -162,6 +193,10 @@ export const WalletConnectProvider = (props: {
   }, [client]);
 
   useEffect(() => {
+    syncTransactionEnableTopics();
+  }, [sessions]);
+
+  useEffect(() => {
     client?.on(CLIENT_EVENTS.session.proposal, onSessionApproval);
     client?.on(CLIENT_EVENTS.session.created, onSessionCreated);
     client?.on(CLIENT_EVENTS.session.request, onSessionRequest);
@@ -184,9 +219,11 @@ export const WalletConnectProvider = (props: {
       value={{
         client,
         sessions,
+        enabledTransactionTopics,
         onRejectSessionProposal,
         onAcceptSessionProposal,
         onDisconnect,
+        onToggleTransactionEnable,
       }}>
       {props.children}
     </WalletConnectContext.Provider>

@@ -19,7 +19,7 @@ import Web3 from 'web3';
 const borderBottomWidth = 0.3;
 
 export const SessionSendTransaction = () => {
-  const {client} = useWalletConnect();
+  const {client, enabledTransactionTopics} = useWalletConnect();
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const route =
@@ -65,8 +65,14 @@ export const SessionSendTransaction = () => {
   useEffect(() => {
     if (!session) {
       onReject();
+
+      return;
     }
-  }, [wallets, session]);
+
+    if (!enabledTransactionTopics[session.topic]) {
+      onReject();
+    }
+  }, [wallets, session, enabledTransactionTopics]);
 
   if (!session || !event) {
     return <></>;

@@ -2,7 +2,9 @@ import {colors} from '@app/assets/colors.config';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {shadow} from '@app/constants';
 import {useWalletConnect} from '@app/context/walletconnect';
+import {DappStackParamList} from '@app/models';
 import {showSnackbar} from '@app/utils';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {Image, Modal, SafeAreaView, ScrollView, View} from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
@@ -12,6 +14,7 @@ import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const DappsScreen = () => {
+  const navigation = useNavigation<NavigationProp<DappStackParamList>>();
   const {client, sessions, onDisconnect} = useWalletConnect();
   const [openScan, setOpenScan] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string>();
@@ -24,6 +27,20 @@ export const DappsScreen = () => {
     showSnackbar('WalletConnect: connecting may take a few seconds');
     setOpenScan(false);
     await client?.pair({uri});
+  };
+
+  const onDetails = async () => {
+    if (!selectedTopic) {
+      return;
+    }
+
+    const session = sessions.find(s => s.topic === selectedTopic);
+
+    if (!session) {
+      return;
+    }
+
+    navigation.navigate('DappDetails', {session});
   };
 
   return (
@@ -81,7 +98,11 @@ export const DappsScreen = () => {
             />
           </View>
           <View style={[t.flex1, t.mL2]}>
-            <Button text="Details" disabled={!selectedTopic} />
+            <Button
+              text="Details"
+              onPress={onDetails}
+              disabled={!selectedTopic}
+            />
           </View>
         </View>
       </View>

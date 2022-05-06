@@ -3,6 +3,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {screenOptions, stackOptions} from './config';
 import {DappsScreen} from '@app/screens/Dapps/DappsScreen';
+import {DappDetailScreen} from '@app/screens/Dapps/DappDetails';
+
 const Stack = createNativeStackNavigator();
 
 export const DappStackNavigator = () => {
@@ -15,6 +17,14 @@ export const DappStackNavigator = () => {
           headerTitle: 'dApp Management',
         }}
         component={DappsScreen}
+      />
+      <Stack.Screen
+        name="DappDetails"
+        options={{
+          ...stackOptions,
+          headerTitle: 'dApp Management',
+        }}
+        component={DappDetailScreen}
       />
     </Stack.Navigator>
   );
