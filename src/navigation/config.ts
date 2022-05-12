@@ -14,5 +14,5 @@ export const stackOptions = {
   headerTintColor: colors.white,
   headerTitle: 'NDJ Backpack',
   headerBackTitle: '',
-  headerTitleStyle: [t.textWhite, t.fontMono],
+  headerTitleStyle: [t.textWhite, {fontFamily: 'Montserrat'}],
 };

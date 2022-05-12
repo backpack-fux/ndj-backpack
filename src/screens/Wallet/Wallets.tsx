@@ -33,6 +33,18 @@ import {useWalletConnect} from '@app/context/walletconnect';
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
 
+const boxShadow = {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+
+  elevation: 5,
+};
+
 export const WalletsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigationProp<WalletStackParamList>>();
@@ -156,11 +168,12 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
   };
 
   return (
-    <Card>
+    <Card borderColor={isSelected ? colors.secondary : colors.primaryLight}>
       <Paragraph text={wallet.name} align="center" type="bold" />
       <View style={[t.flexRow, t.mT4, t.itemsCenter]}>
-        <View style={[t.w40, t.pL8, t.pR8]}>
-          <View style={[t.h16, t.flexRow, t.itemsCenter, t.justifyCenter]}>
+        <View style={[t.mR10, t.itemsCenter]}>
+          <View
+            style={[t.h16, t.flexRow, t.mB1, t.itemsCenter, t.justifyCenter]}>
             {ensAvatar ? (
               <Image
                 source={{uri: ensAvatar}}
@@ -182,6 +195,7 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
                       t.flex1,
                       t.roundedFull,
                       t.bgWhite,
+                      boxShadow,
                     ]}
                     resizeMode="contain"
                   />
@@ -190,16 +204,18 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
             ) : (
               <Image
                 source={logo}
-                style={[t.w16, t.h16, t.selfCenter, t.flex1]}
+                style={[t.w16, t.h16]}
                 resizeMode="contain"
               />
             )}
           </View>
-          <Paragraph
-            text={ensName || ethAddress}
-            numberOfLines={1}
-            ellipsizeMode="middle"
-          />
+          <View style={[{width: 100}, t.selfCenter]}>
+            <Paragraph
+              text={ensName || ethAddress}
+              numberOfLines={1}
+              ellipsizeMode="middle"
+            />
+          </View>
           <TouchableOpacity
             onPress={() => dispatch(selectWallet(wallet))}
             style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT2]}>
@@ -286,7 +302,13 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
           </View>
           <View
             style={[t.p2, t.mT2, t.roundedLg, t.borderPink500, {borderWidth}]}>
-            <Paragraph text={wallet.mnemonic} align="center" lineHeight={24} />
+            <Paragraph
+              text={wallet.mnemonic}
+              font="Montserrat"
+              letterSpacing={3.5}
+              align="center"
+              lineHeight={24}
+            />
           </View>
         </TouchableOpacity>
       )}

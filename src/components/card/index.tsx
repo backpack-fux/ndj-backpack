@@ -1,3 +1,4 @@
+import {colors} from '@app/assets/colors.config';
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
@@ -17,12 +18,14 @@ const shadow = {
 
 export const Card = ({
   children,
+  borderColor = colors.primaryLight,
   onPress = () => {},
   padding,
 }: {
   children?: React.ReactNode;
   onPress?: () => void;
   padding?: number;
+  borderColor?: string;
 }) => {
   return (
     <TouchableOpacity
@@ -33,7 +36,7 @@ export const Card = ({
         padding ? {padding} : t.p4,
         t.roundedXl,
         t.border2,
-        t.borderPurple200,
+        {borderColor},
         t.mB4,
         shadow,
       ]}>
