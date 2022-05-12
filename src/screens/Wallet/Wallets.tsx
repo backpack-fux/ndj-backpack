@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -9,7 +9,6 @@ import {
 import {t} from 'react-native-tailwindcss';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Clipboard from '@react-native-community/clipboard';
-import * as _ from 'lodash';
 
 import {BaseScreen, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
@@ -38,12 +37,18 @@ export const WalletsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigationProp<WalletStackParamList>>();
   const wallets = useSelector(walletsSelector);
+  const selectedWallet = useSelector(selectedWalletSelector);
   const isLoading = useSelector(isLoadingTokensSelector);
+
+  const walletList = useMemo(
+    () => wallets.sort(a => (a.id === selectedWallet?.id ? -1 : 1)),
+    [wallets, selectedWallet],
+  );
 
   return (
     <BaseScreen>
       <FlatList
-        data={wallets}
+        data={walletList}
         keyExtractor={item => `${item.id}`}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -77,52 +82,78 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
   const currency = useSelector(currencySelector);
   const [showSeed, setShowSeed] = useState(false);
 
-  const tokenList = tokens[wallet.id] || [];
-  const totalBalance = tokenList.reduce(
-    (total, token) => total + (token.price || 0) * (token.balance || 0),
-    0,
+  const tokenList = useMemo(() => tokens[wallet.id] || [], [tokens, wallet]);
+
+  const totalBalance = useMemo(
+    () =>
+      tokenList.reduce(
+        (total, token) => total + (token.price || 0) * (token.balance || 0),
+        0,
+      ),
+    [tokenList],
   );
 
-  const ethAddress = wallet.wallets.find(
-    w => w.network === NetworkName.ethereum,
-  )?.address;
+  const ethAddress = useMemo(
+    () => wallet.wallets.find(w => w.network === NetworkName.ethereum)?.address,
+    [wallet],
+  );
 
-  const isSelected = selectedWallet?.id === wallet.id;
+  const isSelected = useMemo(
+    () => selectedWallet?.id === wallet.id,
+    [selectedWallet, wallet],
+  );
+
+  const topTokens = useMemo(
+    () =>
+      tokenList
+        .filter(a => a.balance && a.balance > 0)
+        .sort((a, b) =>
+          (a.balance || 0) * (a.price || 0) > (b.balance || 0) * (b.price || 0)
+            ? -1
+            : 1,
+        )
+        .slice(0, 3),
+    [tokenList],
+  );
+
+  const ethWallet = useMemo(
+    () => wallet.wallets.find(w => w.network === NetworkName.ethereum),
+    [wallet],
+  );
+  const ensName = useMemo(
+    () =>
+      ethWallet?.ensInfo?.name && ethWallet?.ensInfo?.name !== ethWallet.address
+        ? ethWallet?.ensInfo?.name
+        : null,
+    [ethWallet],
+  );
+
+  const ensAvatar = useMemo(() => ethWallet?.ensInfo?.avatar, [ethWallet]);
+
+  const accounts = useMemo(
+    () =>
+      wallet.wallets.map(w => {
+        const chain = networkList.find(n => n.network === w.network)?.chain;
+        return `${chain}:${w.address}`;
+      }),
+    [wallet],
+  );
+
+  const walletSessions = useMemo(
+    () =>
+      sessions.filter(session => {
+        const sessionAccounts = session.state.accounts.filter(d =>
+          accounts.includes(d),
+        );
+        return sessionAccounts.length > 0;
+      }),
+    [sessions],
+  );
 
   const onCopySeed = () => {
     Clipboard.setString(wallet.mnemonic);
     showSnackbar('Copied Seed!');
   };
-
-  const topTokens = tokenList
-    .filter(a => a.balance && a.balance > 0)
-    .sort((a, b) =>
-      (a.balance || 0) * (a.price || 0) > (b.balance || 0) * (b.price || 0)
-        ? -1
-        : 1,
-    )
-    .slice(0, 3);
-
-  const ethWallet = wallet.wallets.find(
-    w => w.network === NetworkName.ethereum,
-  );
-  const ensName =
-    ethWallet?.ensInfo?.name && ethWallet?.ensInfo?.name !== ethWallet.address
-      ? ethWallet?.ensInfo?.name
-      : null;
-  const ensAvatar = ethWallet?.ensInfo?.avatar;
-
-  const accounts = wallet.wallets.map(w => {
-    const chain = networkList.find(n => n.network === w.network)?.chain;
-    return `${chain}:${w.address}`;
-  });
-
-  const walletSessions = sessions.filter(session => {
-    const sessionAccounts = session.state.accounts.filter(d =>
-      accounts.includes(d),
-    );
-    return sessionAccounts.length > 0;
-  });
 
   return (
     <Card>
@@ -217,7 +248,7 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
               <Paragraph text="dApps" align="center" />
               <View style={[t.flexRow, t.itemsCenter]}>
                 <Paragraph
-                  text={walletSessions.length}
+                  text={walletSessions.length.toString()}
                   type="bold"
                   align="center"
                 />

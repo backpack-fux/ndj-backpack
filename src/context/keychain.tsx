@@ -1,4 +1,3 @@
-import {SettingsParamList} from '@app/models';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {
   createContext,
