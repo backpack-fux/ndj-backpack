@@ -146,7 +146,12 @@ function* searchCoins({payload}: Action<string>) {
     const state: RootState = yield select();
     const baseCoins = state.coins.baseCoins;
 
+    const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
+      coin.name.toLowerCase().includes(payload.toLowerCase()),
+    );
+
     const searchedCoins = baseCoins
+      .filter(c => !searchedDefaultCoins.map(d => d.id).includes(c.id))
       .filter(c =>
         networkList.map(network => network.network).includes(c.network),
       )
@@ -157,15 +162,17 @@ function* searchCoins({payload}: Action<string>) {
       )
       .slice(0, 100);
 
-    if (!searchCoins.length) {
+    const result = searchedDefaultCoins.concat(searchedCoins);
+
+    if (!result.length) {
       yield put(searchCoinsResponse([]));
       return;
     }
 
-    const res: CoinGeckoCoinDetail[] = yield getCoinGeckoDetail(searchedCoins);
+    const res: CoinGeckoCoinDetail[] = yield getCoinGeckoDetail(result);
 
     const newCoins: BaseCoin[] = [];
-    for (const coin of searchedCoins) {
+    for (const coin of result) {
       const detail = res.find(c => c.id === coin.id);
 
       newCoins.push({
