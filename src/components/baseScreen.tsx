@@ -48,7 +48,7 @@ export const BaseScreen = ({
             marginTop={30}
             marginBottom={20}
             text={title}
-            font="NicoMoji+"
+            font="Montserrat"
             align="center"
             type="bold"
           />

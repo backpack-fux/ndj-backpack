@@ -4,6 +4,7 @@ import {
   ITransaction,
   SendTokenInfo,
   Token,
+  Wallet,
 } from '@app/models';
 import {CoinsReducerType} from '../coinsReducer';
 
@@ -183,5 +184,20 @@ export function getTransactionsFailedReducer(state: CoinsReducerType) {
   return {
     ...state,
     isLoadingTransactions: false,
+  };
+}
+
+export function deleteTokensFromWalletReducer(
+  state: CoinsReducerType,
+  {payload}: Action<Wallet>,
+) {
+  const tokens = {
+    ...state.tokens,
+  };
+
+  delete tokens[payload.id];
+  return {
+    ...state,
+    tokens,
   };
 }

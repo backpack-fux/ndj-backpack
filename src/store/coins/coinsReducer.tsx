@@ -24,6 +24,7 @@ import {
   getTransactionsRequestReducer,
   getTransactionsSuccessReducer,
   getTransactionsFailedReducer,
+  deleteTokensFromWalletReducer,
 } from './reducer';
 
 export interface CoinsReducerType {
@@ -71,4 +72,5 @@ export const coinsReducer = createReducer<CoinsReducerType>(defaultState, {
   [ActionType.GET_TRANSACTIONS_REQUEST]: getTransactionsRequestReducer,
   [ActionType.GET_TRANSACTIONS_SUCCESS]: getTransactionsSuccessReducer,
   [ActionType.GET_TRANSACTIONS_FAILED]: getTransactionsFailedReducer,
+  [ActionType.DELETE_WALLET]: deleteTokensFromWalletReducer,
 });

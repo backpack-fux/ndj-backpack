@@ -6,3 +6,4 @@ export * from './button';
 export * from './passcodeField';
 export * from './rotate-menu';
 export * from './toggle';
+export * from './qrCode';

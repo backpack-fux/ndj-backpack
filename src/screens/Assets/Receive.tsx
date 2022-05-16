@@ -1,11 +1,10 @@
-import {BaseScreen, Button, Card, Paragraph} from '@app/components';
+import {BaseScreen, QRCode, Paragraph} from '@app/components';
 import {AssetStackParamList} from '@app/models';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {RouteProp, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {QRCode} from 'react-native-custom-qr-codes';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {colors} from '@app/assets/colors.config';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -15,7 +14,6 @@ import {showSnackbar} from '@app/utils';
 const logo = require('@app/assets/images/logo.png');
 
 export const ReceiveScreen = () => {
-  const navigation = useNavigation();
   const selectedWallet = useSelector(selectedWalletSelector);
   const route = useRoute<RouteProp<AssetStackParamList, 'Receive'>>();
   const {coin} = route.params;
@@ -43,7 +41,7 @@ export const ReceiveScreen = () => {
           ]}>
           <QRCode
             content={wallet?.address}
-            outerEyeStyle="square"
+            outerEyeStyle="rounded"
             innerEyeStyle="circle"
             codeStyle="circle"
             logo={logo}

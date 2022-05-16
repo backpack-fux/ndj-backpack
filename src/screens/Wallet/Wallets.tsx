@@ -1,5 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   RefreshControl,
@@ -7,10 +8,10 @@ import {
   View,
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Clipboard from '@react-native-community/clipboard';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
-import {BaseScreen, Card, Paragraph} from '@app/components';
+import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   currencySelector,
@@ -24,7 +25,8 @@ import {
   isLoadingTokensSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
-import {refreshWallets} from '@app/store/wallets/actions';
+import {deleteWallet, refreshWallets} from '@app/store/wallets/actions';
+
 import {formatCurrency, showSnackbar} from '@app/utils';
 import {borderWidth, networkList, NetworkName} from '@app/constants';
 import {selectWallet} from '@app/store/wallets/actions';
@@ -57,31 +59,65 @@ export const WalletsScreen = () => {
     [wallets, selectedWallet],
   );
 
+  const onDelete = () => {
+    if (!selectedWallet) {
+      return;
+    }
+
+    ReactNativeHapticFeedback.trigger('impactHeavy');
+
+    Alert.alert(
+      'Delete Wallet',
+      'Are you sure to delete the selected wallet?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes, Delete',
+          onPress: () => dispatch(deleteWallet(selectedWallet)),
+        },
+      ],
+    );
+  };
+
+  const onAddWallet = () => {
+    ReactNativeHapticFeedback.trigger('impactHeavy');
+    navigation.navigate('AddWallet');
+  };
+
   return (
     <BaseScreen>
-      <FlatList
-        data={walletList}
-        keyExtractor={item => `${item.id}`}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => <WalletItem wallet={item} />}
-        refreshControl={
-          <RefreshControl
-            refreshing={isLoading}
-            onRefresh={() => dispatch(refreshWallets())}
-            tintColor={colors.white}
-            titleColor={colors.white}
+      <View style={[t.flex1]}>
+        <FlatList
+          data={walletList}
+          keyExtractor={item => `${item.id}`}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => <WalletItem wallet={item} />}
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoading}
+              onRefresh={() => dispatch(refreshWallets())}
+              tintColor={colors.white}
+              titleColor={colors.white}
+            />
+          }
+        />
+      </View>
+      <View style={[t.flexRow, t.mT2]}>
+        <View style={[t.flex1]}>
+          <Button text="Add Wallet" onPress={onAddWallet} />
+        </View>
+        <View style={[t.flex1, t.mL2]}>
+          <Button
+            text="Delete Wallet"
+            onPress={onDelete}
+            disabled={!selectedWallet}
           />
-        }
-        ListFooterComponent={
-          <TouchableOpacity
-            onPress={() => navigation.navigate('AddWallet')}
-            style={[t.flexRow, t.p2, t.itemsCenter, t.justifyCenter]}>
-            <MIcon name="plus" size={20} color={colors.white} />
-            <Paragraph text="new wallet" />
-          </TouchableOpacity>
-        }
-      />
+        </View>
+      </View>
     </BaseScreen>
   );
 };
