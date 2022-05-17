@@ -40,12 +40,36 @@ export function drawPiece(
       length - y === 7 ||
       length - x === 7
     ) {
-      return drawOuterEyePiece(x, y, modules, pieceProperties, props);
+      const outerEyePiece = drawOuterEyePiece(
+        x,
+        y,
+        modules,
+        pieceProperties,
+        props,
+      );
+
+      return {
+        outerEyePiece,
+      };
     } else {
       //If part of Inner Eye
-      return drawInnerEyePiece(x, y, modules, pieceProperties, props);
+      const innerEyePiece = drawInnerEyePiece(
+        x,
+        y,
+        modules,
+        pieceProperties,
+        props,
+      );
+
+      return {
+        innerEyePiece,
+      };
     }
   } else {
-    return drawCentrePiece(x, y, modules, pieceProperties, props);
+    const centrePiece = drawCentrePiece(x, y, modules, pieceProperties, props);
+
+    return {
+      centrePiece,
+    };
   }
 }

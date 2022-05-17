@@ -4,7 +4,7 @@ import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {TouchableOpacity, View} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {colors} from '@app/assets/colors.config';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -12,6 +12,18 @@ import Clipboard from '@react-native-community/clipboard';
 import {showSnackbar} from '@app/utils';
 
 const logo = require('@app/assets/images/logo.png');
+
+const shadowQrCode = {
+  shadowColor: '#fff',
+  shadowOffset: {
+    width: 0,
+    height: 9,
+  },
+  shadowOpacity: 0.5,
+  shadowRadius: 12.35,
+
+  elevation: 19,
+};
 
 export const ReceiveScreen = () => {
   const selectedWallet = useSelector(selectedWalletSelector);
@@ -38,18 +50,22 @@ export const ReceiveScreen = () => {
             t.justifyCenter,
             t.p2,
             t.roundedXl,
+            shadowQrCode,
           ]}>
           <QRCode
             content={wallet?.address}
             outerEyeStyle="rounded"
             innerEyeStyle="circle"
             codeStyle="circle"
-            logo={logo}
+            // logo={logo}
             logoSize={50}
             backgroundColor={colors.primary}
-            linearGradient={['rgb(0,255,255)', colors.primaryLight]}
-            gradientDirection={[0, 300, 100, 0]}
+            outerEyeColor="rgb(255,0,196)"
+            innerEyeColor="rgb(0,255,139)"
+            linearGradient={['rgb(115,44,249)', 'rgb(88,207,252)']}
+            gradientDirection={[160, 70, 50, 220]}
           />
+          <Image source={logo} style={[t.w12, t.h12, t.absolute, t.z10]} />
         </View>
         <View
           style={[
@@ -61,7 +77,7 @@ export const ReceiveScreen = () => {
             t.pL4,
             t.pR4,
             {borderRadius: 20},
-            t.mT2,
+            t.mT8,
             t.mB4,
             t.border2,
             t.borderPurple200,

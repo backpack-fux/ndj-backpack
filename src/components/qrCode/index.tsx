@@ -26,6 +26,8 @@ interface Props {
   size: number;
   padding: number;
   color: string;
+  innerEyeColor?: string;
+  outerEyeColor?: string;
   linearGradient: string[];
   gradientDirection: number[];
   backgroundColor: string;
@@ -58,6 +60,7 @@ export class QRCode extends PureComponent<Props> {
   //Returns an array of SVG Elements that represent the pieces of the QR Code
   getPieces() {
     var qr = generateQRCode(this.props);
+    var logoSize = this.props.logoSize || 100;
 
     var modules = qr.qrcode.modules;
 
@@ -65,12 +68,23 @@ export class QRCode extends PureComponent<Props> {
     var length = modules.length;
     var xsize = size / (length + 2 * this.props.padding);
     var ysize = size / (length + 2 * this.props.padding);
-    var logoX = this.props.size / 2 - this.props.logoSize / 2;
-    var logoY = this.props.size / 2 - this.props.logoSize / 2;
-    var logoSize = this.props.logoSize;
+    var logoX = this.props.size / 2 - logoSize / 2;
+    var logoY = this.props.size / 2 - logoSize / 2;
 
-    var pieces = [];
-    var nonPieces = [];
+    const innerEyePieces = [];
+    const outerEyePieces = [];
+    const centrePieces = [];
+
+    const innerEyeNonPieces = [];
+    const outerEyeNonPieces = [];
+    const centreNonPieces = [];
+
+    const outerEyeRoundedPieces = [];
+    const outerEyePiecesGroup: any = {
+      1: [],
+      2: [],
+      3: [],
+    };
 
     //Add the SVG element of each piece in the body of the QR Code
     for (var y = 0; y < length; y++) {
@@ -92,12 +106,61 @@ export class QRCode extends PureComponent<Props> {
 
         if (!this.props.logo || (this.props.logo && !overlapsWithLogo)) {
           if (module) {
-            pieces.push(this.getPiece(x, y, modules));
+            const {innerEyePiece, outerEyePiece, centrePiece} = this.getPiece(
+              x,
+              y,
+              modules,
+            );
+            innerEyePiece && innerEyePieces.push(innerEyePiece);
+            outerEyePiece && outerEyePieces.push(outerEyePiece);
+            centrePiece && centrePieces.push(centrePiece);
+
+            if (outerEyePiece) {
+              if (x < 7 && y < 7) {
+                outerEyePiecesGroup[1].push(outerEyePiece);
+              } else if (x > modules.length - 8 && y < 7) {
+                outerEyePiecesGroup[2].push(outerEyePiece);
+              } else if (x < 7 && y > modules.length - 8) {
+                outerEyePiecesGroup[3].push(outerEyePiece);
+              } else {
+              }
+            }
           } else {
-            nonPieces.push(this.getPiece(x, y, modules));
+            const {innerEyePiece, outerEyePiece, centrePiece} = this.getPiece(
+              x,
+              y,
+              modules,
+            );
+
+            innerEyePiece && innerEyeNonPieces.push(innerEyePiece);
+            outerEyePiece && outerEyeNonPieces.push(outerEyePiece);
+            centrePiece && centreNonPieces.push(centrePiece);
           }
         }
       }
+    }
+
+    const {color, innerEyeColor, outerEyeColor, outerEyeStyle} = this.props;
+    for (const index of Object.keys(outerEyePiecesGroup)) {
+      const pieces = outerEyePiecesGroup[index];
+      const width = pieces[0].props.width;
+      const minX = Math.min(...pieces.map((p: any) => p.props.x));
+      const maxX = Math.max(...pieces.map((p: any) => p.props.x));
+      const minY = Math.min(...pieces.map((p: any) => p.props.y));
+      const maxY = Math.max(...pieces.map((p: any) => p.props.y));
+
+      outerEyeRoundedPieces.push(
+        <Rect
+          x={minX + width / 2}
+          y={minY + width / 2}
+          width={maxX - minX}
+          height={maxY - minY}
+          strokeWidth={width}
+          stroke={outerEyeColor || color || 'white'}
+          fill="transparent"
+          rx={10}
+        />,
+      );
     }
 
     if (this.props.backgroundImage) {
@@ -124,12 +187,35 @@ export class QRCode extends PureComponent<Props> {
               height: this.props.size,
               width: this.props.size,
             }}>
+            {outerEyeStyle === 'rounded' && outerEyeRoundedPieces}
             <Defs>
-              <ClipPath id="clip">{nonPieces}</ClipPath>
+              <ClipPath id="inner">{innerEyePieces}</ClipPath>
+              {outerEyeStyle !== 'rounded' && (
+                <ClipPath id="outer">{outerEyePieces}</ClipPath>
+              )}
+              <ClipPath id="centre">{centrePieces}</ClipPath>
             </Defs>
             <Rect
-              clipPath="url(#clip)"
-              fill="white"
+              clipPath="url(#inner)"
+              fill={innerEyeColor || color || 'white'}
+              x={0}
+              y={0}
+              height="100%"
+              width="100%"
+            />
+            {outerEyeStyle !== 'rounded' && (
+              <Rect
+                clipPath="url(#outer)"
+                x={0}
+                y={0}
+                height="100%"
+                width="100%"
+                fill={outerEyeColor || color || 'white'}
+              />
+            )}
+            <Rect
+              clipPath="url(#centre)"
+              fill={color || 'white'}
               x={0}
               y={0}
               height="100%"
@@ -147,8 +233,13 @@ export class QRCode extends PureComponent<Props> {
               height: this.props.size,
               width: this.props.size,
             }}>
+            {outerEyeStyle === 'rounded' && outerEyeRoundedPieces}
             <Defs>
-              <ClipPath id="clip">{pieces}</ClipPath>
+              <ClipPath id="inner">{innerEyePieces}</ClipPath>
+              {outerEyeStyle !== 'rounded' && (
+                <ClipPath id="outer">{outerEyePieces}</ClipPath>
+              )}
+              <ClipPath id="centre">{centrePieces}</ClipPath>
               <LinearGradient
                 id="grad"
                 x1={this.props.gradientDirection[0]}
@@ -168,12 +259,30 @@ export class QRCode extends PureComponent<Props> {
               </LinearGradient>
             </Defs>
             <Rect
-              clipPath="url(#clip)"
+              clipPath="url(#centre)"
               x={0}
               y={0}
               height="100%"
               width="100%"
               fill="url(#grad)"
+            />
+            {outerEyeStyle !== 'rounded' && (
+              <Rect
+                clipPath="url(#outer)"
+                x={0}
+                y={0}
+                height="100%"
+                width="100%"
+                fill={outerEyeColor || color || 'white'}
+              />
+            )}
+            <Rect
+              clipPath="url(#inner)"
+              x={0}
+              y={0}
+              height="100%"
+              width="100%"
+              fill={innerEyeColor || 'url(#grad)'}
             />
           </Svg>
           {this.displayLogo()}
@@ -188,16 +297,39 @@ export class QRCode extends PureComponent<Props> {
               height: this.props.size,
               width: this.props.size,
             }}>
+            {outerEyeStyle === 'rounded' && outerEyeRoundedPieces}
             <Defs>
-              <ClipPath id="clip">{pieces}</ClipPath>
+              <ClipPath id="inner">{innerEyePieces}</ClipPath>
+              {outerEyeStyle !== 'rounded' && (
+                <ClipPath id="outer">{outerEyePieces}</ClipPath>
+              )}
+              <ClipPath id="centre">{centrePieces}</ClipPath>
             </Defs>
             <Rect
-              clipPath="url(#clip)"
+              clipPath="url(#inner)"
               x={0}
               y={0}
               height="100%"
               width="100%"
-              fill={this.props.color}
+              fill={innerEyeColor || color || 'white'}
+            />
+            {outerEyeStyle !== 'rounded' && (
+              <Rect
+                clipPath="url(#outer)"
+                x={0}
+                y={0}
+                height="100%"
+                width="100%"
+                fill={outerEyeColor || color || 'white'}
+              />
+            )}
+            <Rect
+              clipPath="url(#centre)"
+              x={0}
+              y={0}
+              height="100%"
+              width="100%"
+              fill={color || 'white'}
             />
           </Svg>
           {this.displayLogo()}
