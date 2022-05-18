@@ -5,6 +5,8 @@ import {
 } from '@app/store/wallets/walletsSelector';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import queryString from 'querystring';
+
 import {
   Image,
   Modal,
@@ -56,8 +58,30 @@ export const SendScreen = () => {
   const debouncedToAmount = useDebounce(amount, 500);
 
   const onBarCodeRead = (data: any) => {
-    const address = data.replace(/\ethereum:/g, '');
-    onUpdateToAccount(address);
+    const dataArray = data.split('?');
+    const addressData = dataArray[0];
+    const query = dataArray[1];
+    const addressArray = addressData && addressData.split(':');
+    const address =
+      addressArray.length === 1 ? addressArray[0] : addressArray[1];
+    let sendAmount: any = null;
+
+    if (query) {
+      const params = queryString.parse(query);
+
+      if (params.amount) {
+        sendAmount = params.amount as string;
+      }
+    }
+
+    if (address && sendAmount) {
+      onUpdateAccountWithAmount(address, sendAmount);
+    } else if (address) {
+      onUpdateToAccount(address);
+    } else if (sendAmount) {
+      onUpdateAmount(sendAmount);
+    }
+
     setOpenScan(false);
   };
 
@@ -68,6 +92,18 @@ export const SendScreen = () => {
       updateSendTokenInfo({
         ...sendTokenInfo,
         amount: value,
+      }),
+    );
+  };
+
+  const onUpdateAccountWithAmount = (account: string, amount: string) => {
+    setToAddress(account);
+    setAmount(amount);
+    dispatch(
+      updateSendTokenInfo({
+        ...sendTokenInfo,
+        toAccount: account,
+        amount,
       }),
     );
   };

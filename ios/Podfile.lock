@@ -339,6 +339,8 @@ PODS:
   - RNScreens (3.13.0):
     - React-Core
     - React-RCTImage
+  - RNShare (7.4.1):
+    - React-Core
   - RNSnackbar (2.4.0):
     - React-Core
   - RNSVG (9.6.4):
@@ -399,6 +401,7 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -502,6 +505,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSnackbar:
     :path: "../node_modules/react-native-snackbar"
   RNSVG:
@@ -563,6 +568,7 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: 4085973f5a38b40d3c6793a3ee5724773eae045e
   RNReanimated: e2aa4bd584ae7be93469c98ef8ac5f2a0d5146d1
   RNScreens: aa12070b21c1d6011b3627a0b1d09b627232b070
+  RNShare: 2074af48908436c310847c6c47ebb6129db1dc89
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSVG: a53a5de0d90ec96a6502cc3a4534dfcc0c130622
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4

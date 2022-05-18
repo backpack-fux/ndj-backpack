@@ -1,14 +1,17 @@
+import React, {useMemo, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {Alert, Image, TouchableOpacity, View} from 'react-native';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import Share from 'react-native-share';
+import {t} from 'react-native-tailwindcss';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Clipboard from '@react-native-community/clipboard';
+
 import {BaseScreen, QRCode, Paragraph} from '@app/components';
 import {AssetStackParamList} from '@app/models';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
-import {RouteProp, useRoute} from '@react-navigation/native';
-import React from 'react';
-import {useSelector} from 'react-redux';
-import {Image, TouchableOpacity, View} from 'react-native';
-import {t} from 'react-native-tailwindcss';
 import {colors} from '@app/assets/colors.config';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Clipboard from '@react-native-community/clipboard';
 import {showSnackbar} from '@app/utils';
 
 const logo = require('@app/assets/images/logo.png');
@@ -28,9 +31,13 @@ const shadowQrCode = {
 export const ReceiveScreen = () => {
   const selectedWallet = useSelector(selectedWalletSelector);
   const route = useRoute<RouteProp<AssetStackParamList, 'Receive'>>();
+  const [amount, setAmount] = useState(0);
   const {coin} = route.params;
   const wallet = selectedWallet?.wallets.find(w => w.network === coin?.network);
-
+  const content = useMemo(
+    () => `${wallet?.address}${amount ? `?amount=${amount}` : ''}`,
+    [wallet, amount],
+  );
   const onCopy = () => {
     if (!wallet) {
       return;
@@ -38,6 +45,41 @@ export const ReceiveScreen = () => {
 
     Clipboard.setString(wallet.address);
     showSnackbar('Copied Address!');
+  };
+
+  const onSetAmount = () => {
+    Alert.prompt(
+      'Enter Amount',
+      '',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: (value: any) => {
+            if (value) {
+              setAmount(value);
+            }
+          },
+        },
+      ],
+      'plain-text',
+      '',
+      'decimal-pad',
+    );
+  };
+
+  const onShare = () => {
+    const title = `My Public Address to Receive${
+      amount ? ` ${amount}` : ''
+    } ${coin?.symbol?.toUpperCase()}`;
+    Share.open({
+      title,
+      message: content,
+    });
   };
 
   return (
@@ -53,7 +95,7 @@ export const ReceiveScreen = () => {
             shadowQrCode,
           ]}>
           <QRCode
-            content={wallet?.address}
+            content={content}
             outerEyeStyle="rounded"
             innerEyeStyle="circle"
             codeStyle="circle"
@@ -91,10 +133,51 @@ export const ReceiveScreen = () => {
               ellipsizeMode="middle"
             />
           </View>
-          <TouchableOpacity onPress={onCopy}>
-            <Icon name="content-copy" size={20} color={colors.white} />
-          </TouchableOpacity>
         </View>
+      </View>
+      <View style={[t.flexRow, t.justifyEvenly, t.mT4]}>
+        <TouchableOpacity onPress={onCopy} style={[t.itemsCenter]}>
+          <View
+            style={[
+              t.w12,
+              t.h12,
+              t.bgPink500,
+              t.justifyCenter,
+              t.itemsCenter,
+              t.roundedFull,
+            ]}>
+            <Icon name="content-copy" size={20} color={colors.white} />
+          </View>
+          <Paragraph text="Copy" align="center" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onSetAmount} style={[t.itemsCenter]}>
+          <View
+            style={[
+              t.w12,
+              t.h12,
+              t.bgPink500,
+              t.justifyCenter,
+              t.itemsCenter,
+              t.roundedFull,
+            ]}>
+            <MIcon name="tag" size={20} color={colors.white} />
+          </View>
+          <Paragraph text="Set Amount" align="center" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onShare} style={[t.itemsCenter]}>
+          <View
+            style={[
+              t.w12,
+              t.h12,
+              t.bgPink500,
+              t.justifyCenter,
+              t.itemsCenter,
+              t.roundedFull,
+            ]}>
+            <MIcon name="share" size={25} color={colors.white} />
+          </View>
+          <Paragraph text="Share" align="center" />
+        </TouchableOpacity>
       </View>
     </BaseScreen>
   );
