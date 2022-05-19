@@ -92,7 +92,7 @@ export const CreateWalletScreen = () => {
             <KeyboardAvoidingView
               style={[t.flex1]}
               behavior="position"
-              keyboardVerticalOffset={100}>
+              keyboardVerticalOffset={150}>
               <View style={[t.justifyCenter, t.itemsCenter, t.mB4]}>
                 <Image
                   source={logo}

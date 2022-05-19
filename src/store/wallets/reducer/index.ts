@@ -67,7 +67,7 @@ export function deleteWalletReducer(
   }
 
   if (selectedWalletId === payload.id) {
-    selectedWalletId = wallets[0].id;
+    selectedWalletId = wallets[0]?.id;
   }
 
   return {

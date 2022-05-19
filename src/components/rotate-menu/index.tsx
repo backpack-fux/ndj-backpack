@@ -403,6 +403,10 @@ export class RotateMenu extends React.Component<Props, any> {
   }
 
   defineAxesCoordinatesOnLayoutDisplacement = () => {
+    if (!this._wheelNavigator) {
+      return;
+    }
+
     this._wheelNavigator.measure(
       (
         x: number,
@@ -713,12 +717,14 @@ export class RotateMenu extends React.Component<Props, any> {
     let {onSelect, style = {}, styleIconText = {}, disable} = this.props;
     const {ICON_PATH_RADIUS} = this.state;
     const panHandlers = disable ? {} : this._panResponder.panHandlers;
+
     return (
       <Animated.View
         {...panHandlers}
         style={[
           styles.menuWrap,
           {
+            opacity: !ICON_PATH_RADIUS ? 0 : 1,
             height:
               menuSize + ICON_PATH_RADIUS - menuSize / 2 + menuIconSize - 100,
           },
@@ -755,7 +761,12 @@ export class RotateMenu extends React.Component<Props, any> {
           <View
             style={[styles.wheel]}
             ref={component => (this._wheelNavigator = component)}
-            onLayout={this.defineAxesCoordinatesOnLayoutDisplacement}>
+            onLayout={() =>
+              setTimeout(
+                () => this.defineAxesCoordinatesOnLayoutDisplacement(),
+                100,
+              )
+            }>
             <Animated.View
               style={this.rotateOnInputPixelDistanceMatchingRadianShift()}>
               <RadialGradient
