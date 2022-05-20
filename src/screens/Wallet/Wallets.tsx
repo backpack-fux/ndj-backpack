@@ -218,7 +218,7 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
               />
             ) : topTokens.length ? (
               <View style={[t.h16, {width: 64 + (topTokens.length - 1) * 25}]}>
-                {topTokens.reverse().map((token, index) => (
+                {topTokens.map((token, index) => (
                   <Image
                     key={token.id}
                     source={{uri: token.image}}
