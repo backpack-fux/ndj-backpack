@@ -255,19 +255,21 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
           <TouchableOpacity
             onPress={() => dispatch(selectWallet(wallet))}
             style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT2]}>
-            <View style={[t.w4, t.h4]}>
-              <Image
-                source={toggle}
-                style={[
-                  t.w4,
-                  t.h4,
-                  t.selfCenter,
-                  t.flex1,
-                  isSelected ? t.opacity100 : t.opacity50,
-                ]}
-                resizeMode="contain"
-              />
-            </View>
+            {isSelected && (
+              <View style={[t.w4, t.h4]}>
+                <Image
+                  source={toggle}
+                  style={[
+                    t.w4,
+                    t.h4,
+                    t.selfCenter,
+                    t.flex1,
+                    isSelected ? t.opacity100 : t.opacity50,
+                  ]}
+                  resizeMode="contain"
+                />
+              </View>
+            )}
             <Paragraph
               text={isSelected ? 'default' : 'set default'}
               size={12}
