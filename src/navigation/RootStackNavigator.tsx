@@ -24,9 +24,9 @@ export const RootStackNavigator = () => {
       await sleep(1500);
     }
 
-    if (wallets.length) {
+    if (wallets.length && route?.name !== 'Wallets') {
       navigation.dispatch(StackActions.replace('MainStack'));
-    } else {
+    } else if (!wallets.length && route?.name !== 'CreateWallet') {
       navigation.dispatch(StackActions.replace('CreateWallet'));
     }
   };

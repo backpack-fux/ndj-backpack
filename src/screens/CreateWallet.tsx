@@ -78,6 +78,12 @@ export const CreateWalletScreen = () => {
   }, []);
 
   useEffect(() => {
+    navigation.setOptions({
+      gestureEnabled: !isLoading,
+    });
+  }, [isLoading]);
+
+  useEffect(() => {
     generateMnemonicPhrase();
   }, [generateMnemonicPhrase]);
 
