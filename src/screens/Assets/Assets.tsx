@@ -1,3 +1,16 @@
+import React, {useState} from 'react';
+import {Image, RefreshControl, TouchableOpacity, View} from 'react-native';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import {ScrollView} from 'react-native-gesture-handler';
+import {t} from 'react-native-tailwindcss';
+import {useDispatch, useSelector} from 'react-redux';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+
+import {colors} from '@app/assets/colors.config';
+import {refreshWallets} from '@app/store/wallets/actions';
+import {selectSendToken, setToken} from '@app/store/coins/actions';
+import {AssetStackParamList, BaseCoin} from '@app/models';
+import {shadow} from '@app/constants';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
   accountCoinsSelector,
@@ -5,17 +18,6 @@ import {
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {normalizeNumber} from '@app/utils';
-import React, {useState} from 'react';
-import {Image, RefreshControl, TouchableOpacity, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {t} from 'react-native-tailwindcss';
-import {useDispatch, useSelector} from 'react-redux';
-import {colors} from '@app/assets/colors.config';
-import {refreshWallets} from '@app/store/wallets/actions';
-import {selectSendToken, setToken} from '@app/store/coins/actions';
-import {AssetStackParamList, BaseCoin} from '@app/models';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {shadow} from '@app/constants';
 
 export const AssetsScreen = () => {
   const dispatch = useDispatch();
@@ -63,6 +65,11 @@ export const AssetsScreen = () => {
 
     dispatch(setToken(selectedCoin));
     navigation.navigate('Transaction');
+  };
+
+  const onOpenAddToken = () => {
+    ReactNativeHapticFeedback.trigger('impactHeavy');
+    navigation.navigate('Receive', {coin: selectedCoin});
   };
 
   return (
@@ -137,9 +144,7 @@ export const AssetsScreen = () => {
           <View style={[t.flex1]}>
             <Button
               text="Receive"
-              onPress={() =>
-                navigation.navigate('Receive', {coin: selectedCoin})
-              }
+              onPress={onOpenAddToken}
               disabled={!selectedCoin}
             />
           </View>
