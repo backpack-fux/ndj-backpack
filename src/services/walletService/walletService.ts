@@ -155,9 +155,7 @@ abstract class WalletService {
   }
 
   static switchNetwork(chain: 'mainnet' | 'testnet') {
-    console.log('this.serviceArray', this.serviceArray.length);
     for (const service of this.serviceArray) {
-      console.log(service.network, chain, '=--------------');
       service.switchNetwork(chain);
     }
   }
