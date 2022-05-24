@@ -130,15 +130,11 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
   const currency = useSelector(currencySelector);
   const [showSeed, setShowSeed] = useState(false);
 
-  const tokenList = useMemo(() => tokens[wallet.id] || [], [tokens, wallet]);
+  const tokenList = tokens[wallet.id];
 
-  const totalBalance = useMemo(
-    () =>
-      tokenList.reduce(
-        (total, token) => total + (token.price || 0) * (token.balance || 0),
-        0,
-      ),
-    [tokenList],
+  const totalBalance = tokenList.reduce(
+    (total, token) => total + (token.price || 0) * (token.balance || 0),
+    0,
   );
 
   const ethAddress = useMemo(
