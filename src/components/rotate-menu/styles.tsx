@@ -30,6 +30,8 @@ export const styles = StyleSheet.create({
     height: SQUARE_DIMENSIONS.WIDTH * 0.08,
     // backgroundColor: colors.background,
     alignItems: 'center',
+    borderRadius: 3,
+    justifyContent: 'center',
     // justifyContent: 'center',
     // borderRadius: SQUARE_DIMENSIONS.WIDTH * 0.08,
   },

@@ -369,14 +369,18 @@ export class RotateMenu extends React.Component<Props, any> {
         : RotateMenu.DEFAULT_ICON(defaultIconColor);
     };
 
-    return icons.map((propIcon, index, array) => ({
-      id: getId(propIcon),
-      title: getTitle(propIcon),
-      isShown: true,
-      index: getIndex(index, array),
-      el: getEl(propIcon),
-      position: new Animated.ValueXY(),
-    }));
+    return icons.map((propIcon, index, array) => {
+      return {
+        id: getId(propIcon),
+        title: getTitle(propIcon),
+        isShown: true,
+        styles: propIcon.props.style || {},
+        index: getIndex(index, array),
+        marginLeft: propIcon.marginLeft,
+        el: getEl(propIcon),
+        position: new Animated.ValueXY(),
+      };
+    });
   }
 
   rotateOnInputPixelDistanceMatchingRadianShift() {
@@ -715,7 +719,7 @@ export class RotateMenu extends React.Component<Props, any> {
 
   render() {
     let {onSelect, style = {}, styleIconText = {}, disable} = this.props;
-    const {ICON_PATH_RADIUS} = this.state;
+    const {ICON_PATH_RADIUS, currentSnappedIcon} = this.state;
     const panHandlers = disable ? {} : this._panResponder.panHandlers;
 
     return (
@@ -752,6 +756,7 @@ export class RotateMenu extends React.Component<Props, any> {
               />
               <Icons
                 icons={this.state.icons}
+                current={currentSnappedIcon?.id}
                 onPress={onSelect}
                 styleIconText={styleIconText}
               />

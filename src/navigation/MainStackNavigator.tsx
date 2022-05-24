@@ -113,6 +113,7 @@ export const MainStackNavigator = () => {
               id="AssetStack"
               name="close-box"
               color={colors.white}
+              style={{marginLeft: 0.1}}
               size={30}
             />,
             <Ionicons
@@ -120,12 +121,14 @@ export const MainStackNavigator = () => {
               name="ios-wallet"
               color={colors.white}
               size={30}
+              style={{marginLeft: 2}}
             />,
             <Ionicons
               id="DappStack"
               name="md-cube"
               color={colors.white}
               size={30}
+              style={{marginLeft: 1.2}}
             />,
           ]}
           onSelect={onSelectMenu}

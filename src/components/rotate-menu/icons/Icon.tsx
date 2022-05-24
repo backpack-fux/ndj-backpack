@@ -1,3 +1,5 @@
+import {colors} from '@app/assets/colors.config';
+import {shadow} from '@app/constants';
 import React from 'react';
 import {
   Animated,
@@ -11,11 +13,12 @@ import {styles} from '../styles';
 
 interface Props {
   icon: any;
+  current?: string;
   onPress: (id: any) => void;
   styleIconText?: StyleProp<TextStyle>;
 }
 
-export const Icon = ({icon, onPress, styleIconText}: Props) => {
+export const Icon = ({icon, current, onPress, styleIconText}: Props) => {
   return (
     <TouchableWithoutFeedback>
       <Animated.View
@@ -26,7 +29,13 @@ export const Icon = ({icon, onPress, styleIconText}: Props) => {
           // getIconsTransformDynamicStyles(),
         ]}>
         {icon.isShown && (
-          <View style={styles.iconContainer}>
+          <View
+            style={[
+              styles.iconContainer,
+              current === icon.id ? {backgroundColor: colors.button} : {},
+              current === icon.id ? shadow : {},
+              icon.styles || {},
+            ]}>
             {icon.el}
             {/* <Text style={[styles.iconText, styleIconText]}>{icon.title}</Text> */}
           </View>

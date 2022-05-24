@@ -69,7 +69,7 @@ export const AssetsScreen = () => {
 
   const onOpenAddToken = () => {
     ReactNativeHapticFeedback.trigger('impactHeavy');
-    navigation.navigate('Receive', {coin: selectedCoin});
+    navigation.navigate('Tokens');
   };
 
   return (
@@ -127,10 +127,7 @@ export const AssetsScreen = () => {
       <View>
         <View style={[t.flexRow, t.mT2]}>
           <View style={[t.flex1]}>
-            <Button
-              text="Add a Token"
-              onPress={() => navigation.navigate('Tokens')}
-            />
+            <Button text="Add a Token" onPress={onOpenAddToken} />
           </View>
           <View style={[t.flex1, t.mL2]}>
             <Button
@@ -144,7 +141,9 @@ export const AssetsScreen = () => {
           <View style={[t.flex1]}>
             <Button
               text="Receive"
-              onPress={onOpenAddToken}
+              onPress={() =>
+                navigation.navigate('Receive', {coin: selectedCoin})
+              }
               disabled={!selectedCoin}
             />
           </View>
