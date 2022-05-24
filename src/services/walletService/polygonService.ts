@@ -1,17 +1,27 @@
 import {AxiosInstance} from '@app/apis/axios';
 import {NetworkName, POLYGONSCAN} from '@app/constants';
 import {ITransaction} from '@app/models';
+import Web3 from 'web3';
 import EthereumBaseService from './ethereumBaseService';
 
 const provider =
   'https://matic.getblock.io/mainnet/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3';
 
 const polygonScanApiKey = 'RZ1XJFWNRYS1I89VDZFEFD8DHM32YS273X';
-const polygonScanApi = POLYGONSCAN.mainnet;
 
 export default class PolygonService extends EthereumBaseService {
+  polygonScanApi = POLYGONSCAN.mainnet;
   constructor() {
     super(NetworkName.polygon, provider);
+  }
+
+  switchNetwork(chain: 'mainnet' | 'testnet') {
+    this.polygonScanApi =
+      chain === 'mainnet' ? POLYGONSCAN.mainnet : POLYGONSCAN.testnet;
+    const web3Provider = `https://matic.getblock.io/${chain}/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3`;
+
+    this.chain = chain;
+    this.web3 = new Web3(web3Provider);
   }
 
   async getTransactions(
@@ -38,7 +48,7 @@ export default class PolygonService extends EthereumBaseService {
       params.action = 'tokentx';
     }
 
-    const res = await AxiosInstance.get(`${polygonScanApi}`, {
+    const res = await AxiosInstance.get(`${this.polygonScanApi}`, {
       params,
     });
 
@@ -64,7 +74,9 @@ export default class PolygonService extends EthereumBaseService {
         index: item.transactionIndex,
         type: item.from.toLowerCase() === address.toLowerCase() ? 'out' : 'in',
         status: item.status,
-        url: `https://polygonscan.com/tx/${item.hash}`,
+        url: `https://${
+          this.chain === 'testnet' ? 'mumbai.' : ''
+        }polygonscan.com/tx/${item.hash}`,
       });
     });
 

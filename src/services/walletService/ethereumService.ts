@@ -1,17 +1,31 @@
 import {AxiosInstance} from '@app/apis/axios';
 import {ETHERSCAN, NetworkName} from '@app/constants';
 import {ENSInfo, ITransaction} from '@app/models';
+import Web3 from 'web3';
 import EthereumBaseService from './ethereumBaseService';
 
 const provider =
   'https://eth.getblock.io/mainnet/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3';
 
+const testnetProvider =
+  'https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
+
 const etherscanApiKey = 'I39JN6BK9Q2FDWZIG3U5EDF2XDI12X97M4';
-const etherScanApi = ETHERSCAN.mainnet;
 
 export default class EthereumService extends EthereumBaseService {
+  etherScanApi = ETHERSCAN.mainnet;
+
   constructor() {
     super(NetworkName.ethereum, provider);
+  }
+
+  switchNetwork(chain: 'mainnet' | 'testnet') {
+    this.etherScanApi =
+      chain === 'mainnet' ? ETHERSCAN.mainnet : ETHERSCAN.kovan;
+    const web3Provider = chain === 'mainnet' ? provider : testnetProvider;
+
+    this.chain = chain;
+    this.web3 = new Web3(web3Provider);
   }
 
   async getTransactions(
@@ -38,7 +52,7 @@ export default class EthereumService extends EthereumBaseService {
       params.action = 'tokentx';
     }
 
-    const {data} = await AxiosInstance.get(`${etherScanApi}`, {
+    const {data} = await AxiosInstance.get(`${this.etherScanApi}`, {
       params,
     });
 
@@ -63,7 +77,9 @@ export default class EthereumService extends EthereumBaseService {
         index: item.transactionIndex,
         type: item.from.toLowerCase() === address.toLowerCase() ? 'out' : 'in',
         status: item.status,
-        url: `https://etherscan.io/tx/${item.hash}`,
+        url: `https://${
+          this.chain === 'testnet' ? 'kovan.' : ''
+        }etherscan.io/tx/${item.hash}`,
       });
     });
 

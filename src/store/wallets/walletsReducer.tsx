@@ -19,6 +19,7 @@ export interface WalletsReducerType {
   walletId?: string;
   walletSessions: {[id: string]: string[]};
   currency: string;
+  network: 'mainnet' | 'testnet';
 }
 
 export const defaultState: WalletsReducerType = {
@@ -26,6 +27,7 @@ export const defaultState: WalletsReducerType = {
   wallets: [],
   walletSessions: {},
   currency: 'usd',
+  network: 'mainnet',
 };
 
 export const walletsReducer = createReducer<WalletsReducerType>(defaultState, {

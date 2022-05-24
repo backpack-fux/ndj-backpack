@@ -9,12 +9,6 @@ export const setLoading = (payload: boolean) => {
   };
 };
 
-export const reload = () => {
-  return {
-    type: ActionType.RELOAD,
-  };
-};
-
 export const setMnemonic = (payload: string) => {
   return {
     type: ActionType.SET_MNEMONIC,

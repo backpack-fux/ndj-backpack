@@ -154,6 +154,14 @@ abstract class WalletService {
     return service.getENSInfo(address);
   }
 
+  static switchNetwork(chain: 'mainnet' | 'testnet') {
+    console.log('this.serviceArray', this.serviceArray.length);
+    for (const service of this.serviceArray) {
+      console.log(service.network, chain, '=--------------');
+      service.switchNetwork(chain);
+    }
+  }
+
   abstract generateKeys(mnemonic: string): Promise<{
     address: string;
     privateKey: string;
@@ -178,6 +186,7 @@ abstract class WalletService {
   abstract sign(privateKey: string, message: string): Promise<any>;
   abstract signTransaction(privateKey: string, data: any): Promise<any>;
   abstract getENSInfo(address: string): Promise<ENSInfo | null | undefined>;
+  abstract switchNetwork(chain: 'mainnet' | 'testnet'): void;
 }
 
 export default WalletService;

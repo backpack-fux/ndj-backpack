@@ -18,6 +18,10 @@ function* reload() {
 
     yield delay(1000);
     const state: RootState = yield select();
+    const network = state.wallets.network;
+
+    WalletService.switchNetwork(network);
+
     const accounts = state.wallets.wallets;
     const wallets: Wallet[] = [...accounts];
     for (const account of wallets) {
@@ -72,7 +76,6 @@ function* createWallet({
 
 export function* reloadWatcher() {
   yield takeLatest(ActionType.INIT_STORE as any, reload);
-  yield takeLatest(ActionType.RELOAD as any, reload);
   yield takeLatest(ActionType.REFRESH_WALLETS as any, reload);
 }
 

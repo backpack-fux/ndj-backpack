@@ -7,6 +7,7 @@ import {ENSInfo, ITransaction} from '@app/models';
 import {JsonRpcProvider} from '@ethersproject/providers';
 
 export default class EthereumBaseService extends WalletService {
+  chain: 'mainnet' | 'testnet' = 'mainnet';
   web3: Web3;
   ethers: JsonRpcProvider;
   ens: any;
@@ -19,6 +20,10 @@ export default class EthereumBaseService extends WalletService {
       'homestead',
       'cd5b0778994b4e34b166f2569a1166c0',
     );
+  }
+
+  switchNetwork(chain: 'mainnet' | 'testnet'): void {
+    console.log(chain);
   }
 
   async generateKeys(mnemonic: string) {

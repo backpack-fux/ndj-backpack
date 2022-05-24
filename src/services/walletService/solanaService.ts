@@ -20,6 +20,7 @@ import * as _ from 'lodash';
 const solscanApi = 'https://public-api.solscan.io';
 
 export default class SolanaService extends WalletService {
+  chain: 'mainnet' | 'testnet' = 'mainnet';
   decimals = 9;
   connection: Connection;
   constructor() {
@@ -27,6 +28,13 @@ export default class SolanaService extends WalletService {
     WalletService.add(this);
     this.connection = new Connection(
       clusterApiUrl('mainnet-beta'),
+      'confirmed',
+    );
+  }
+
+  switchNetwork(chain: 'mainnet' | 'testnet') {
+    this.connection = new Connection(
+      clusterApiUrl(chain === 'mainnet' ? 'mainnet-beta' : 'testnet'),
       'confirmed',
     );
   }
@@ -253,7 +261,9 @@ export default class SolanaService extends WalletService {
         value: item.lamport / LAMPORTS_PER_SOL,
         hash: item.txHash,
         nonce: item.nonce,
-        url: `https://solscan.io/tx/${item.txHash}`,
+        url: `https://solscan.io/tx/${item.txHash}${
+          this.chain === 'testnet' ? '?cluster=testnet' : ''
+        }`,
       });
     });
 

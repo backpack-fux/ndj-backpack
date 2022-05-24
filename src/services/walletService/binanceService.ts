@@ -11,7 +11,7 @@ import moment from 'moment-timezone';
 
 export default class BinanceService extends WalletService {
   baseURL = 'https://dex.binance.org';
-  net = 'mainnet';
+  chain: 'testnet' | 'mainnet' = 'mainnet';
 
   // baseURL = 'https://testnet-dex.binance.org';
   // net = 'mainnet';
@@ -23,11 +23,17 @@ export default class BinanceService extends WalletService {
     WalletService.add(this);
 
     this.bnbClient = new BncClient(this.baseURL);
-    this.bnbClient.chooseNetwork(this.net as 'testnet' | 'mainnet');
+    this.bnbClient.chooseNetwork(this.chain as 'testnet' | 'mainnet');
     this.httpClient = axios.create({
       baseURL: this.baseURL + '/api/v1',
     });
     this.bnbClient.initChain();
+  }
+
+  switchNetwork(chain: 'mainnet' | 'testnet') {
+    this.chain = chain;
+    // ToDo: need to generate key again in testnet
+    // this.bnbClient.chooseNetwork(this.chain);
   }
 
   async generateKeys(mnemonic: string) {

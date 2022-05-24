@@ -13,7 +13,6 @@ import {AxiosInstance} from '@app/apis/axios';
 const MINIMUM_GAS_PRICE = '50';
 const CHAIN_ID = 1; // 1 for Main Net, 333 for Test Net
 const MSG_VERSION = 1; // current msgVersion
-const VERSION = zilUntils.bytes.pack(CHAIN_ID, MSG_VERSION);
 
 const zilliqa = new Zilliqa('https://api.zilliqa.com/');
 const viewblockUrl = 'https://api.viewblock.io/v2/zilliqa';
@@ -21,9 +20,20 @@ const viewblockKey =
   '501e39bde52f73754f62189ac6bab347881a392878d4855c9a9d0cdc1562cfd1';
 
 export default class ZilliqaService extends WalletService {
+  chain: 'mainnet' | 'testnet' = 'mainnet';
+  zilApi: number;
   constructor() {
     super(NetworkName.zilliqa);
     WalletService.add(this);
+    this.zilApi = zilUntils.bytes.pack(CHAIN_ID, MSG_VERSION);
+  }
+
+  switchNetwork(chain: 'mainnet' | 'testnet') {
+    this.chain = chain;
+    this.zilApi = zilUntils.bytes.pack(
+      chain === 'mainnet' ? 1 : 333,
+      MSG_VERSION,
+    );
   }
 
   initWallet(privateKey: string): void {
@@ -122,7 +132,7 @@ export default class ZilliqaService extends WalletService {
 
     const transaction = zilliqa.transactions.new(
       {
-        version: VERSION,
+        version: this.zilApi,
         toAddr: zcrypto.fromBech32Address(toAccount),
         amount: new zilUntils.BN(
           zilUntils.units.toQa(String(amount), zilUntils.units.Units.Zil),
@@ -167,7 +177,7 @@ export default class ZilliqaService extends WalletService {
       };
 
       const txPayload = {
-        version: VERSION,
+        version: this.zilApi,
         amount: '0',
         gasPrice: this.toQaFromZil(gasPrice).toString(), // Minimum gasPrice varies. Check the `GetMinimumGasPrice` on the blockchain
         gasLimit: gasLimit.toString(),
@@ -192,7 +202,7 @@ export default class ZilliqaService extends WalletService {
     const txParams: any = {
       ...txPayload,
       toAddr: zcrypto.normaliseAddress(txPayload.toAddr),
-      version: VERSION,
+      version: this.zilApi,
       amount: new zilUntils.BN(txPayload.amount),
       gasPrice: new zilUntils.BN(txPayload.gasPrice),
       gasLimit: zilUntils.Long.fromValue(txPayload.gasLimit),
@@ -267,9 +277,8 @@ export default class ZilliqaService extends WalletService {
     page: number,
     limit: number,
   ): Promise<ITransaction[]> {
-    const network = 'mainnet';
     const params: any = {
-      network,
+      network: this.chain,
       page,
       type: 'normal',
     };
@@ -307,7 +316,7 @@ export default class ZilliqaService extends WalletService {
         value: +this.fromQa(item.value),
         hash: item.hash,
         nonce: item.nonce,
-        url: `https://viewblock.io/zilliqa/tx/${item.hash}?network=${network}`,
+        url: `https://viewblock.io/zilliqa/tx/${item.hash}?network=${this.chain}`,
       });
     });
 

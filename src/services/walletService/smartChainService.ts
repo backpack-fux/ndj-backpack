@@ -1,20 +1,26 @@
 import {AxiosInstance} from '@app/apis/axios';
 import {BSCSCAN, NetworkName} from '@app/constants';
 import {ITransaction} from '@app/models';
+import Web3 from 'web3';
 import EthereumBaseService from './ethereumBaseService';
 
 const provider =
   'https://bsc.getblock.io/mainnet/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3';
 
-// const providerTest =
-//   'https://bsc.getblock.io/testnet/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3';
-
 const bscScanApiKey = 'SCSVGE76D5BYC94RI6F6AA3B8FPR5371RN';
-const bscScanApi = BSCSCAN.mainnet;
 
 export default class SmartChainService extends EthereumBaseService {
+  bscScanApi = BSCSCAN.mainnet;
   constructor() {
     super(NetworkName.binanceSmartChain, provider);
+  }
+
+  switchNetwork(chain: 'mainnet' | 'testnet') {
+    this.bscScanApi = chain === 'mainnet' ? BSCSCAN.mainnet : BSCSCAN.testnet;
+    const web3Provider = `https://bsc.getblock.io/${chain}/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3`;
+
+    this.chain = chain;
+    this.web3 = new Web3(web3Provider);
   }
 
   async getTransactions(
@@ -41,7 +47,7 @@ export default class SmartChainService extends EthereumBaseService {
       params.action = 'tokentx';
     }
 
-    const {data} = await AxiosInstance.get(`${bscScanApi}`, {
+    const {data} = await AxiosInstance.get(`${this.bscScanApi}`, {
       params,
     });
 
@@ -66,7 +72,9 @@ export default class SmartChainService extends EthereumBaseService {
         index: item.transactionIndex,
         type: item.from.toLowerCase() === address.toLowerCase() ? 'out' : 'in',
         status: item.status,
-        url: `https://bscscan.com/tx/${item.hash}`,
+        url: `https://${
+          this.chain === 'testnet' ? 'testnet.' : ''
+        }bscscan.com/tx/${item.hash}`,
       });
     });
 
