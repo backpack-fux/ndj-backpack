@@ -2,7 +2,6 @@ import {fork} from 'redux-saga/effects';
 import {
   accountCoinsWatcher,
   getTokensWatcher,
-  getBaseCoinsWatcher,
   searchCoinsWatcher,
   getPriceOfSendTokenWatcher,
   transferTokenWatcher,
@@ -11,7 +10,6 @@ import {
 } from './sagas';
 
 export default [
-  fork(getBaseCoinsWatcher),
   fork(accountCoinsWatcher),
   fork(getTokensWatcher),
   fork(searchCoinsWatcher),

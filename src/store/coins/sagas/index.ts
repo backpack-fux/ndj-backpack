@@ -3,22 +3,21 @@ import {
   ActionType,
   BaseCoin,
   Token,
-  CoinGeckoCoin,
   CoinGeckoCoinDetail,
   RootState,
   Wallet,
   Action,
   ITransaction,
+  CoinGeckoCoin,
 } from '@app/models';
-import {getCoinGeckoCoinList, getCoinGeckoDetail} from '@app/apis';
 import * as _ from 'lodash';
+import {getCoinGeckoCoinList, getCoinGeckoDetail} from '@app/apis';
 import {networkList, NetworkName} from '@app/constants';
 import {
   getTransactionsFailed,
   getTransactionsSuccess,
   searchCoinsResponse,
   setAccountCoins,
-  setBaseCoins,
   setIsLoadingTokens,
   setSendTokenLoading,
   setTokens,
@@ -32,6 +31,12 @@ import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {refreshWallets} from '@app/store/wallets/actions';
 
 function* accountCoins({payload}: Action<Wallet>) {
+  const state: RootState = yield select();
+
+  if (state.coins.accountCoins.length) {
+    return;
+  }
+
   const coins = payload.network
     ? DEFAULT_COINS.filter(coin => coin.network === payload.network)
     : DEFAULT_COINS;
@@ -143,8 +148,24 @@ function* getTokens({payload}: Action<Wallet>) {
 
 function* searchCoins({payload}: Action<string>) {
   try {
-    const state: RootState = yield select();
-    const baseCoins = state.coins.baseCoins;
+    const coins: CoinGeckoCoin[] = yield getCoinGeckoCoinList();
+    const baseCoins: BaseCoin[] = [];
+
+    for (const coin of coins) {
+      if (_.isEmpty(coin.platforms)) {
+        continue;
+      }
+
+      for (const network of Object.keys(coin.platforms)) {
+        baseCoins.push({
+          id: coin.id,
+          name: coin.name,
+          symbol: coin.symbol,
+          contractAddress: coin.platforms[network],
+          network: network as NetworkName,
+        });
+      }
+    }
 
     const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
       coin.name.toLowerCase().includes(payload.toLowerCase()),
@@ -185,42 +206,6 @@ function* searchCoins({payload}: Action<string>) {
   } catch (err) {
     yield put(searchCoinsResponse([]));
   }
-}
-
-function* getBaseCoins() {
-  try {
-    yield delay(1000);
-    const state: RootState = yield select();
-
-    if (!state.coins.accountCoins.length) {
-      yield put(setAccountCoins(DEFAULT_COINS));
-    }
-
-    if (state.coins.baseCoins.length) {
-      return;
-    }
-
-    const coins: CoinGeckoCoin[] = yield getCoinGeckoCoinList();
-    const baseCoins: BaseCoin[] = [];
-
-    for (const coin of coins) {
-      if (_.isEmpty(coin.platforms)) {
-        continue;
-      }
-
-      for (const network of Object.keys(coin.platforms)) {
-        baseCoins.push({
-          id: coin.id,
-          name: coin.name,
-          symbol: coin.symbol,
-          contractAddress: coin.platforms[network],
-          network: network as NetworkName,
-        });
-      }
-    }
-
-    yield put(setBaseCoins(baseCoins));
-  } catch (err) {}
 }
 
 function* getPriceOfSendToken({payload}: Action<Token>) {
@@ -380,10 +365,6 @@ export function* getTransactions({
     showSnackbar(err.message);
     yield put(getTransactionsFailed(err.message));
   }
-}
-
-export function* getBaseCoinsWatcher() {
-  yield takeLatest(ActionType.INIT_STORE as any, getBaseCoins);
 }
 
 export function* accountCoinsWatcher() {

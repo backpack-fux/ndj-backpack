@@ -9,7 +9,6 @@ import {
 import {createReducer} from '@app/store/createReducer';
 // redux
 import {
-  setBaseCoinsReducer,
   setTokensReducer,
   setAccountCoinsReducer,
   toggleAccountCoinReducer,
@@ -28,7 +27,6 @@ import {
 } from './reducer';
 
 export interface CoinsReducerType {
-  baseCoins: BaseCoin[];
   accountCoins: BaseCoin[];
   tokens: {
     [account: string]: Token[];
@@ -44,7 +42,6 @@ export interface CoinsReducerType {
 }
 
 export const defaultState: CoinsReducerType = {
-  baseCoins: [],
   accountCoins: [],
   tokens: {},
   transactions: [],
@@ -57,7 +54,6 @@ export const defaultState: CoinsReducerType = {
 };
 
 export const coinsReducer = createReducer<CoinsReducerType>(defaultState, {
-  [ActionType.SET_BASE_COINS]: setBaseCoinsReducer,
   [ActionType.SET_IS_LOADING_TOKENS]: setIsLoadingTokensReducer,
   [ActionType.SET_TOKENS]: setTokensReducer,
   [ActionType.SET_TOKEN]: setTokenReducer,

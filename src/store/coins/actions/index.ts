@@ -7,13 +7,6 @@ import {
   Token,
 } from '@app/models';
 
-export const setBaseCoins = (payload: BaseCoin[]) => {
-  return {
-    type: ActionType.SET_BASE_COINS,
-    payload,
-  };
-};
-
 export const setAccountCoins = (payload: BaseCoin[]) => {
   return {
     type: ActionType.SET_ACCOUNT_COINS,

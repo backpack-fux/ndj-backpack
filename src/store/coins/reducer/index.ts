@@ -8,16 +8,6 @@ import {
 } from '@app/models';
 import {CoinsReducerType} from '../coinsReducer';
 
-export function setBaseCoinsReducer(
-  state: CoinsReducerType,
-  {payload}: Action<BaseCoin[]>,
-) {
-  return {
-    ...state,
-    baseCoins: payload,
-  };
-}
-
 export function setTokenReducer(
   state: CoinsReducerType,
   {payload}: Action<Token>,
