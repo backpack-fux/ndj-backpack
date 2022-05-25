@@ -10,6 +10,7 @@ import {
   setMnemonicReducer,
   setWalletSessionsReducer,
   setCurrencyReducer,
+  switchNetworkReducer,
 } from './reducer';
 
 export interface WalletsReducerType {
@@ -38,4 +39,5 @@ export const walletsReducer = createReducer<WalletsReducerType>(defaultState, {
   [ActionType.DELETE_WALLET]: deleteWalletReducer,
   [ActionType.SET_WALLET_SESSIONS]: setWalletSessionsReducer,
   [ActionType.SET_CURRENCY]: setCurrencyReducer,
+  [ActionType.SWITCH_NETWORK]: switchNetworkReducer,
 });

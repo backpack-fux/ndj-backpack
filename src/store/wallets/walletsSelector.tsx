@@ -8,6 +8,7 @@ const getSelectedWallet = (state: RootState) =>
 const getWallets = (state: RootState) => state.wallets.wallets;
 const getWalletSessions = (state: RootState) => state.wallets.walletSessions;
 const getCurrency = (state: RootState) => state.wallets.currency;
+const getNetwork = (state: RootState) => state.wallets.network;
 
 export const walletsLoadingSelector = createSelector(
   getLoading,
@@ -33,5 +34,7 @@ export const currencySelector = createSelector(
   getCurrency,
   currency => currency || 'usd',
 );
+
+export const networkSelector = createSelector(getNetwork, network => network);
 
 export const walletsSelector = createSelector(getWallets, wallets => wallets);

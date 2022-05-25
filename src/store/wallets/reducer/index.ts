@@ -1,6 +1,7 @@
 import {Action, Wallet} from '@app/models';
 import {WalletsReducerType} from '../walletsReducer';
 import _ from 'lodash';
+import {WalletService} from '@app/services';
 
 export function setLoadingReducer(
   state: WalletsReducerType,
@@ -94,5 +95,16 @@ export function setCurrencyReducer(
   return {
     ...state,
     currency: payload,
+  };
+}
+
+export function switchNetworkReducer(
+  state: WalletsReducerType,
+  {payload}: Action<'mainnet' | 'testnet'>,
+) {
+  WalletService.switchNetwork(payload);
+  return {
+    ...state,
+    network: payload,
   };
 }

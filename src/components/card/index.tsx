@@ -21,11 +21,13 @@ export const Card = ({
   borderColor = colors.primaryLight,
   onPress = () => {},
   padding,
+  full,
 }: {
   children?: React.ReactNode;
   onPress?: () => void;
   padding?: number;
   borderColor?: string;
+  full?: boolean;
 }) => {
   return (
     <TouchableOpacity
@@ -39,6 +41,7 @@ export const Card = ({
         {borderColor},
         t.mB4,
         shadow,
+        full ? t.flex1 : {},
       ]}>
       {children}
     </TouchableOpacity>

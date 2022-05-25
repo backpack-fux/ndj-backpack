@@ -376,6 +376,7 @@ export function* getTokensWatcher() {
   yield takeLatest(ActionType.SET_CURRENCY as any, getTokens);
   yield takeLatest(ActionType.REFRESH_WALLETS as any, getTokens);
   yield takeLatest(ActionType.TRANSFER_TOKEN_SUCCESS as any, getTokens);
+  yield takeLatest(ActionType.SWITCH_NETWORK as any, getTokens);
 }
 
 export function* searchCoinsWatcher() {

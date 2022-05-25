@@ -74,3 +74,10 @@ export const refreshWallets = () => {
     type: ActionType.REFRESH_WALLETS,
   };
 };
+
+export const switchNetwork = (payload: 'mainnet' | 'testnet') => {
+  return {
+    type: ActionType.SWITCH_NETWORK,
+    payload,
+  };
+};

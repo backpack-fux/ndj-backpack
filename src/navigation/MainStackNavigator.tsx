@@ -24,6 +24,7 @@ import {
   SessionSignTypedData,
   SessionUnsuportedMethod,
 } from '@app/screens/Dapps';
+import {SettingsScreen} from '@app/screens/Settings';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +54,15 @@ export const MainStackNavigator = () => {
           name="DappStack"
           options={{animation: 'fade'}}
           component={DappStackNavigator}
+        />
+        <Stack.Screen
+          name="Settings"
+          options={{
+            animation: 'fade',
+            ...stackOptions,
+            headerTitle: 'Backpack Settings',
+          }}
+          component={SettingsScreen}
         />
         <Stack.Screen
           name="SessionApprovalModal"
@@ -129,6 +139,12 @@ export const MainStackNavigator = () => {
               color={colors.white}
               size={30}
               style={{marginLeft: 1.2}}
+            />,
+            <Ionicons
+              id="Settings"
+              name="settings-outline"
+              color={colors.white}
+              size={30}
             />,
           ]}
           onSelect={onSelectMenu}
