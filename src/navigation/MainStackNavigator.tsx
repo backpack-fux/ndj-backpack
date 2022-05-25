@@ -119,6 +119,12 @@ export const MainStackNavigator = () => {
         <RotateMenu
           girthAngle={140}
           icons={[
+            <Ionicons
+              id="Settings"
+              name="settings-outline"
+              color={colors.white}
+              size={30}
+            />,
             <MaterialCommunityIcons
               id="AssetStack"
               name="close-box"
@@ -139,12 +145,6 @@ export const MainStackNavigator = () => {
               color={colors.white}
               size={30}
               style={{marginLeft: 1.2}}
-            />,
-            <Ionicons
-              id="Settings"
-              name="settings-outline"
-              color={colors.white}
-              size={30}
             />,
           ]}
           onSelect={onSelectMenu}

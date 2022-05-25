@@ -617,6 +617,11 @@ export class RotateMenu extends React.Component<Props, any> {
     currentIconAngle =
       this.adjustCurrentIconAngleExponentially(currentIconAngle);
 
+    if (currentIconAngle > 220 && currentIconAngle < 310) {
+      this.setIconDisplayState(icon.id, true);
+    } else {
+      this.setIconDisplayState(icon.id, false);
+    }
     return {
       top:
         this.state.XY_AXES_COORDINATES.Y -
@@ -647,13 +652,13 @@ export class RotateMenu extends React.Component<Props, any> {
       index * this.ICON_POSITION_ANGLE;
 
     if (currentAngle < 270 - this.GIRTH_ANGLE / 2) {
-      this.hideIconWhileMovingBehindCircle(id);
+      // this.hideIconWhileMovingBehindCircle(id);
       this.INDEX_EXTRACTORS[id] += this.GIRTH_ANGLE;
       return currentAngle + this.GIRTH_ANGLE;
     }
 
     if (currentAngle > 270 + this.GIRTH_ANGLE / 2) {
-      this.hideIconWhileMovingBehindCircle(id);
+      // this.hideIconWhileMovingBehindCircle(id);
       this.INDEX_EXTRACTORS[id] -= this.GIRTH_ANGLE;
       return currentAngle - this.GIRTH_ANGLE;
     }
