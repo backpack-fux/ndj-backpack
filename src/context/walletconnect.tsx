@@ -12,6 +12,7 @@ import {MainStackParamList} from '@app/models';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {showSnackbar} from '@app/utils';
 import {EIP155_SIGNING_METHODS} from '@app/constants/EIP155Data';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
 
@@ -139,6 +140,8 @@ export const WalletConnectProvider = (props: {
   };
 
   const onSessionApproval = useCallback((proposal: SessionTypes.Proposal) => {
+    ReactNativeHapticFeedback.trigger('impactHeavy');
+
     navigation?.navigate('SessionApprovalModal', {proposal});
   }, []);
 
@@ -154,6 +157,7 @@ export const WalletConnectProvider = (props: {
       const {topic, request} = event;
       const {method} = request;
       const session = await client?.session?.get(topic);
+      ReactNativeHapticFeedback.trigger('impactHeavy');
 
       switch (method) {
         case EIP155_SIGNING_METHODS.ETH_SIGN:

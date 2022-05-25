@@ -70,3 +70,9 @@ export const networkList: Network[] = [
     explorer: 'https://viewblock.io/zilliqa/address',
   },
 ];
+
+export const availableTestNetworks = [
+  NetworkName.ethereum,
+  NetworkName.polygon,
+  NetworkName.binanceSmartChain,
+];

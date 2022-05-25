@@ -12,7 +12,7 @@ import {
 } from '@app/models';
 import * as _ from 'lodash';
 import {getCoinGeckoCoinList, getCoinGeckoDetail} from '@app/apis';
-import {networkList, NetworkName} from '@app/constants';
+import {availableTestNetworks, networkList, NetworkName} from '@app/constants';
 import {
   getTransactionsFailed,
   getTransactionsSuccess,
@@ -103,11 +103,18 @@ function* getTokens({payload}: Action<Wallet>) {
     yield delay(1000);
     const state: RootState = yield select();
     const wallets = state.wallets.wallets;
+    const network = state.wallets.network;
     const currency = state.wallets.currency;
     const walletCoins = state.coins.accountCoins;
-    const enabledCoins = walletCoins.filter(
+    let enabledCoins = walletCoins.filter(
       c => c.enabled || DEFAULT_COINS.map(d => d.id).includes(c.id),
     );
+
+    if (network === 'testnet') {
+      enabledCoins = enabledCoins.filter(coin =>
+        availableTestNetworks.includes(coin.network),
+      );
+    }
 
     if ((!wallets?.length && payload) || !walletCoins?.length) {
       yield put(setIsLoadingTokens(false));
@@ -148,6 +155,8 @@ function* getTokens({payload}: Action<Wallet>) {
 
 function* searchCoins({payload}: Action<string>) {
   try {
+    const state: RootState = yield select();
+    const network = state.wallets.network;
     const coins: CoinGeckoCoin[] = yield getCoinGeckoCoinList();
     const baseCoins: BaseCoin[] = [];
 
@@ -156,13 +165,13 @@ function* searchCoins({payload}: Action<string>) {
         continue;
       }
 
-      for (const network of Object.keys(coin.platforms)) {
+      for (const platform of Object.keys(coin.platforms)) {
         baseCoins.push({
           id: coin.id,
           name: coin.name,
           symbol: coin.symbol,
-          contractAddress: coin.platforms[network],
-          network: network as NetworkName,
+          contractAddress: coin.platforms[platform],
+          network: platform as NetworkName,
         });
       }
     }
@@ -183,7 +192,13 @@ function* searchCoins({payload}: Action<string>) {
       )
       .slice(0, 100);
 
-    const result = searchedDefaultCoins.concat(searchedCoins);
+    let result = searchedDefaultCoins.concat(searchedCoins);
+
+    if (network === 'testnet') {
+      result = result.filter(coin =>
+        availableTestNetworks.includes(coin.network),
+      );
+    }
 
     if (!result.length) {
       yield put(searchCoinsResponse([]));

@@ -205,7 +205,11 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
 
   return (
     <Card borderColor={isSelected ? colors.secondary : colors.primaryLight}>
-      <Paragraph text={wallet.name} align="center" type="bold" />
+      <Paragraph
+        text={`${wallet.name}${network === 'testnet' ? ' (Testnet)' : ''}`}
+        align="center"
+        type="bold"
+      />
       <View style={[t.flexRow, t.mT4, t.itemsCenter]}>
         <View style={[t.mR10, t.itemsCenter]}>
           <View

@@ -10,7 +10,7 @@ import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {selectSendToken, setToken} from '@app/store/coins/actions';
 import {AssetStackParamList, BaseCoin} from '@app/models';
-import {shadow} from '@app/constants';
+import {availableTestNetworks, shadow} from '@app/constants';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
   accountCoinsSelector,
@@ -18,6 +18,7 @@ import {
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {normalizeNumber} from '@app/utils';
+import {networkSelector} from '@app/store/wallets/walletsSelector';
 
 export const AssetsScreen = () => {
   const dispatch = useDispatch();
@@ -25,10 +26,16 @@ export const AssetsScreen = () => {
 
   const isLoading = useSelector(isLoadingTokensSelector);
   const tokens = useSelector(tokensSelector);
+  const network = useSelector(networkSelector);
+
   const allTokens = Object.values(tokens).reduce((all, current) => {
     return all.concat(current);
   }, []);
   let coins = useSelector(accountCoinsSelector);
+
+  if (network === 'testnet') {
+    coins = coins.filter(coin => availableTestNetworks.includes(coin.network));
+  }
   coins = coins
     .filter(c => c.enabled)
     .map(coin => {
