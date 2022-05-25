@@ -102,8 +102,15 @@ export const formatCurrency = (value: number, currency: string) => {
   }${val}`;
 };
 
-export const getNetworkByChain = (chain: string) => {
-  return networkList.find(n => n.chain === chain)?.network;
+export const getNetworkByChain = (chain: string, network: string) => {
+  return networkList.find(
+    item =>
+      `${item.chain}${
+        item?.chainId && item.chainId[network]
+          ? `:${item.chainId[network]}`
+          : ''
+      }` === chain,
+  )?.network;
 };
 
 export const getPrivateKeyByNetworkAndAddress = (

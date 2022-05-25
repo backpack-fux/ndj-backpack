@@ -1,7 +1,10 @@
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {MainStackParamList} from '@app/models';
-import {walletsSelector} from '@app/store/wallets/walletsSelector';
+import {
+  networkSelector,
+  walletsSelector,
+} from '@app/store/wallets/walletsSelector';
 import {
   approveEIP155Request,
   rejectEIP155Request,
@@ -20,6 +23,7 @@ const borderBottomWidth = 0.3;
 
 export const SessionSendTransaction = () => {
   const {client, enabledTransactionTopics} = useWalletConnect();
+  const network = useSelector(networkSelector);
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const route =
@@ -42,7 +46,7 @@ export const SessionSendTransaction = () => {
     if (event) {
       try {
         setIsLoading(true);
-        const response = await approveEIP155Request(event, wallets);
+        const response = await approveEIP155Request(event, wallets, network);
         await client?.respond({
           topic: event.topic,
           response,

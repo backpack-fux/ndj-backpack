@@ -1,7 +1,10 @@
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {MainStackParamList} from '@app/models';
-import {walletsSelector} from '@app/store/wallets/walletsSelector';
+import {
+  networkSelector,
+  walletsSelector,
+} from '@app/store/wallets/walletsSelector';
 import {
   approveEIP155Request,
   rejectEIP155Request,
@@ -23,8 +26,9 @@ export const SessionSign = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<MainStackParamList, 'SessionSignModal'>>();
   const wallets = useSelector(walletsSelector);
-  const {event, session} = route.params;
+  const network = useSelector(networkSelector);
 
+  const {event, session} = route.params;
   const onReject = () => {
     if (client && event) {
       const response = rejectEIP155Request(event.request);
@@ -39,7 +43,7 @@ export const SessionSign = () => {
   const onConfirm = async () => {
     if (event) {
       try {
-        const response = await approveEIP155Request(event, wallets);
+        const response = await approveEIP155Request(event, wallets, network);
         await client?.respond({
           topic: event.topic,
           response,

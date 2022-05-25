@@ -15,6 +15,7 @@ import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   currencySelector,
+  networkSelector,
   selectedWalletSelector,
   walletsSelector,
 } from '@app/store/wallets/walletsSelector';
@@ -129,6 +130,7 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
   const tokens = useSelector(tokensSelector);
   const currency = useSelector(currencySelector);
   const [showSeed, setShowSeed] = useState(false);
+  const network = useSelector(networkSelector);
 
   const tokenList = tokens[wallet.id] || [];
 
@@ -177,8 +179,10 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
   const accounts = useMemo(
     () =>
       wallet.wallets.map(w => {
-        const chain = networkList.find(n => n.network === w.network)?.chain;
-        return `${chain}:${w.address}`;
+        const item = networkList.find(n => n.network === w.network);
+        return `${item?.chain}${
+          item?.chainId && item.chainId[network] ? `:${item?.chainId}` : ''
+        }:${w.address}`;
       }),
     [wallet],
   );

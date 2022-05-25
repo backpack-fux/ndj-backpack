@@ -14,12 +14,13 @@ import {
 export async function approveEIP155Request(
   event: RequestEvent,
   wallets: Wallet[],
+  network: string,
 ): Promise<any> {
   const {method, params, id} = event.request;
   const {chainId} = event;
-  const network = chainId && getNetworkByChain(chainId);
+  const networkName = chainId && getNetworkByChain(chainId, network);
   const privateKey = getPrivateKeyByParams(wallets, params);
-  const service = network && WalletService.getServiceByNetwork(network);
+  const service = networkName && WalletService.getServiceByNetwork(networkName);
 
   if (!service || !privateKey) {
     throw new Error(ERROR.MISSING_OR_INVALID.format().message);

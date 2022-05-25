@@ -9,7 +9,10 @@ import {useWalletConnect} from '@app/context/walletconnect';
 import {MainStackParamList} from '@app/models';
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {useSelector} from 'react-redux';
-import {walletsSelector} from '@app/store/wallets/walletsSelector';
+import {
+  networkSelector,
+  walletsSelector,
+} from '@app/store/wallets/walletsSelector';
 import {getNetworkByChain, showSnackbar} from '@app/utils';
 import {NetworkName, networkName} from '@app/constants';
 import * as _ from 'lodash';
@@ -20,6 +23,7 @@ export const SessionApproval = () => {
   const route =
     useRoute<RouteProp<MainStackParamList, 'SessionApprovalModal'>>();
   const wallets = useSelector(walletsSelector);
+  const network = useSelector(networkSelector);
   const [selectedAddresses, setSelectedAddresses] = useState<string[]>([]);
 
   const navigation = useNavigation();
@@ -30,7 +34,7 @@ export const SessionApproval = () => {
   const {blockchain, jsonrpc} = permissions;
   const availableChains = blockchain.chains
     .map(c => ({
-      network: getNetworkByChain(c),
+      network: getNetworkByChain(c, network),
       chain: c,
     }))
     .filter(c => c.network);

@@ -6,7 +6,10 @@ import {Card} from './Card';
 import {networkName} from '@app/constants';
 import {getNetworkByChain} from '@app/utils';
 import {useSelector} from 'react-redux';
-import {walletsSelector} from '@app/store/wallets/walletsSelector';
+import {
+  networkSelector,
+  walletsSelector,
+} from '@app/store/wallets/walletsSelector';
 
 const borderBottomWidth = 0.3;
 
@@ -19,8 +22,9 @@ export const RequestDetail = ({
   chainId?: string;
   protocol: string;
 }) => {
-  const network = chainId && getNetworkByChain(chainId);
   const wallets = useSelector(walletsSelector);
+  const currentNetwork = useSelector(networkSelector);
+  const network = chainId && getNetworkByChain(chainId, currentNetwork);
 
   const availableWallets = network
     ? wallets.filter(
