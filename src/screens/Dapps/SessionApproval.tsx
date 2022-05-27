@@ -13,7 +13,7 @@ import {
   networkSelector,
   walletsSelector,
 } from '@app/store/wallets/walletsSelector';
-import {getNetworkByChain, showSnackbar} from '@app/utils';
+import {getNetworkByChain, showNetworkName, showSnackbar} from '@app/utils';
 import {NetworkName, networkName} from '@app/constants';
 import * as _ from 'lodash';
 import {Card} from './components';
@@ -152,7 +152,10 @@ export const SessionApproval = () => {
                   />
                   <View style={[t.flex1, t.flexRow, t.mL2, t.selfCenter]}>
                     <Paragraph
-                      text={`${networkName[w.network]}: `}
+                      text={`${networkName[w.network]}${showNetworkName(
+                        w.network,
+                        network,
+                      )}: `}
                       type="bold"
                     />
                     <View style={[t.flex1]}>

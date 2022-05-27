@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {Card} from './Card';
 import {networkName} from '@app/constants';
-import {getNetworkByChain} from '@app/utils';
+import {getNetworkByChain, showNetworkName} from '@app/utils';
 import {useSelector} from 'react-redux';
 import {
   networkSelector,
@@ -49,7 +49,13 @@ export const RequestDetail = ({
           <View style={[t.flex1]}>
             <Paragraph text="Blockchain:" marginRight={10} />
           </View>
-          <Paragraph align="right" text={networkName[network]} />
+          <Paragraph
+            align="right"
+            text={`${networkName[network]}${showNetworkName(
+              network,
+              currentNetwork,
+            )}`}
+          />
         </View>
       )}
       {address && (

@@ -17,7 +17,7 @@ import {
   isLoadingTokensSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
-import {normalizeNumber} from '@app/utils';
+import {normalizeNumber, showNetworkName} from '@app/utils';
 import {networkSelector} from '@app/store/wallets/walletsSelector';
 
 export const AssetsScreen = () => {
@@ -118,7 +118,12 @@ export const AssetsScreen = () => {
                     style={[t.w8, t.h8, t.roundedFull, t.bgWhite, t.mR2]}
                   />
                   <View style={[t.flex1]}>
-                    <Paragraph text={coin.name} />
+                    <Paragraph
+                      text={`${coin.name}${showNetworkName(
+                        coin.network,
+                        network,
+                      )}`}
+                    />
                   </View>
                   <Paragraph
                     text={`${normalizeNumber(

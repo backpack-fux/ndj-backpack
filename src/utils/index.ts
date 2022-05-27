@@ -1,6 +1,6 @@
 import Snackbar from 'react-native-snackbar';
 import {colors} from '@app/assets/colors.config';
-import {networkList} from '@app/constants';
+import {networkList, NetworkName} from '@app/constants';
 import {News, Wallet} from '@app/models';
 import numeral from 'numeral';
 import {Dimensions} from 'react-native';
@@ -166,3 +166,28 @@ export const mapDecryptNews = ({
   image: custom_fields.featured_image_url as string,
   description: custom_fields.yoast.metadesc as string,
 });
+
+export const showNetworkName = (
+  network: NetworkName,
+  chain: 'testnet' | 'mainnet',
+) => {
+  if (chain === 'mainnet') {
+    return '';
+  }
+
+  let name = ' - Testnet';
+
+  switch (network) {
+    case NetworkName.ethereum:
+      name = ' - Kovan';
+      break;
+    case NetworkName.polygon:
+      name = ' - Mumbai';
+      break;
+
+    default:
+      break;
+  }
+
+  return name;
+};
