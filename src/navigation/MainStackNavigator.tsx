@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
@@ -25,15 +25,25 @@ import {
   SessionUnsuportedMethod,
 } from '@app/screens/Dapps';
 import {SettingsScreen} from '@app/screens/Settings';
+import {useKeychain} from '@app/context/keychain';
+import {SetPasscodeScreen} from '@app/screens/SetPasscode';
+import {VerifyPasscodeScreen} from '@app/screens/VerifyPasscode';
 
 const Stack = createNativeStackNavigator();
 
 export const MainStackNavigator = () => {
   const navigation = useNavigation<NavigationProp<MainStackParamList>>();
+  const {enabled} = useKeychain();
 
   const onSelectMenu = (name: any) => {
     navigation.dispatch(StackActions.replace(name));
   };
+
+  useEffect(() => {
+    if (enabled) {
+      navigation.navigate('VerifyPasscode', {});
+    }
+  }, []);
 
   return (
     <View style={[t.flex1]}>
@@ -112,6 +122,25 @@ export const MainStackNavigator = () => {
             headerShown: false,
             presentation: 'formSheet',
             gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="SetPasscode"
+          options={{
+            ...stackOptions,
+            presentation: 'formSheet',
+            headerShown: false,
+          }}
+          component={SetPasscodeScreen}
+        />
+        <Stack.Screen
+          name="VerifyPasscode"
+          component={VerifyPasscodeScreen}
+          options={{
+            presentation: 'fullScreenModal',
+            gestureEnabled: false,
+            fullScreenGestureEnabled: false,
+            animation: 'none',
           }}
         />
       </Stack.Navigator>
