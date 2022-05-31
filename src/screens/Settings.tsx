@@ -142,7 +142,7 @@ export const SettingsScreen = () => {
                 t.roundedLg,
               ]}>
               <Paragraph
-                text={enabled ? 'Turn off Biometric' : 'Turn on Biometric'}
+                text={enabled ? 'Turn off' : 'Turn on'}
                 align="center"
                 color={colors.white}
                 size={16}

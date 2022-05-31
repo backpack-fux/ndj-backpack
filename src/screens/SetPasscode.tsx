@@ -45,7 +45,7 @@ export const SetPasscodeScreen = () => {
       setIsVerify(false);
       ReactNativeHapticFeedback.trigger('impactHeavy');
     }
-  }, [verifyValue, value]);
+  }, [verifyValue, value, onSetPasscode]);
 
   return (
     <BaseScreen noBottom>

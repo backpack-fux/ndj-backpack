@@ -1,6 +1,7 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -67,17 +68,23 @@ export const KeychainProvider = (props: {
     }
   };
 
-  const onSetPasscode = async (value: string) => {
-    setPasscode(value);
-    setEnabled(true);
+  const onSetPasscode = useCallback(
+    async (value: string) => {
+      setPasscode(value);
+      setEnabled(true);
 
-    await resetGenericPassword({
-      accessControl: ACCESS_CONTROL.BIOMETRY_ANY,
-    });
-    if (biometryType) {
-      await setDeviceBiometry(value);
-    }
-  };
+      await resetGenericPassword({
+        accessControl: ACCESS_CONTROL.BIOMETRY_ANY,
+      });
+
+      console.log('biometryType=======', biometryType);
+
+      if (biometryType) {
+        await setDeviceBiometry(value);
+      }
+    },
+    [biometryType],
+  );
 
   const authorizeDeviceBiometry = async () => {
     try {
@@ -103,6 +110,7 @@ export const KeychainProvider = (props: {
     await setGenericPassword(NDJ_PASSCODE, code, {
       accessControl: ACCESS_CONTROL.BIOMETRY_ANY,
     });
+    setEnabledBiometry(true);
     await AsyncStorage.setItem(NDJ_PASSCODE, code);
     await AsyncStorage.setItem(NDJ_BIOMETRY, 'true');
   };
