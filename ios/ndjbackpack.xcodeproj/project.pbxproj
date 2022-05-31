@@ -45,7 +45,6 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ndjbackpack/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ndjbackpack/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ndjbackpack/main.m; sourceTree = "<group>"; };
-		15C091ED284488E600314528 /* ndjbackpack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ndjbackpack.entitlements; path = ndjbackpack/ndjbackpack.entitlements; sourceTree = "<group>"; };
 		1C668806834D4568B09BD695 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		1D0AE47A65C8663E3B452821 /* Pods-ndjbackpack-ndjbackpackTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack-ndjbackpackTests.release.xcconfig"; path = "Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests.release.xcconfig"; sourceTree = "<group>"; };
 		1DEDA8BF089B489481997224 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -66,6 +65,7 @@
 		A0A9B399DCFC488C8129A5B1 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../src/assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		ABFE59519B596E51CEFDCCC0 /* libPods-ndjbackpack-ndjbackpackTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ndjbackpack-ndjbackpackTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9E98404E5541C9A4F65796 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Thin.ttf"; path = "../src/assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; };
+		AF6336B5284469AF00527645 /* ndjbackpack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ndjbackpack.entitlements; path = ndjbackpack/ndjbackpack.entitlements; sourceTree = "<group>"; };
 		B2A711E483904FAAA7E9EC8B /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		BADCDF65C4F0464B94FDABF6 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		C0A881CF5CF3F2B244570E2A /* Pods-ndjbackpack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack.debug.xcconfig"; path = "Target Support Files/Pods-ndjbackpack/Pods-ndjbackpack.debug.xcconfig"; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 		13B07FAE1A68108700A75B9A /* ndjbackpack */ = {
 			isa = PBXGroup;
 			children = (
-				15C091ED284488E600314528 /* ndjbackpack.entitlements */,
+				AF6336B5284469AF00527645 /* ndjbackpack.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -519,7 +519,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ndjbackpack/ndjbackpack.entitlements;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 3WDBKH8R9G;
+				DEVELOPMENT_TEAM = FWJ939Z7T9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ndjbackpack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -548,7 +548,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ndjbackpack/ndjbackpack.entitlements;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 3WDBKH8R9G;
+				DEVELOPMENT_TEAM = FWJ939Z7T9;
 				INFOPLIST_FILE = ndjbackpack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

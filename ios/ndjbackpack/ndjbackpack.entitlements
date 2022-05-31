@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>jxndao.com</string>
+		<string>applinks:jxndao.com</string>
 	</array>
 </dict>
 </plist>
