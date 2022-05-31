@@ -32,7 +32,9 @@ export const Icon = ({icon, current, onPress, styleIconText}: Props) => {
           <View
             style={[
               styles.iconContainer,
-              current === icon.id ? {backgroundColor: colors.button} : {},
+              current === icon.id
+                ? {backgroundColor: colors.button}
+                : {backgroundColor: colors.primary},
               current === icon.id ? shadow : {},
               icon.styles || {},
             ]}>

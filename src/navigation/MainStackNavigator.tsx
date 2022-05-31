@@ -29,6 +29,11 @@ import {useKeychain} from '@app/context/keychain';
 import {SetPasscodeScreen} from '@app/screens/SetPasscode';
 import {VerifyPasscodeScreen} from '@app/screens/VerifyPasscode';
 
+import AssetsIcon from '@app/assets/icons/assets.svg';
+import DappsIcon from '@app/assets/icons/dapps.svg';
+import WalletsIcon from '@app/assets/icons/wallets.svg';
+import SettingsIcon from '@app/assets/icons/settings.svg';
+
 const Stack = createNativeStackNavigator();
 
 export const MainStackNavigator = () => {
@@ -148,33 +153,10 @@ export const MainStackNavigator = () => {
         <RotateMenu
           girthAngle={140}
           icons={[
-            <Ionicons
-              id="Settings"
-              name="settings-outline"
-              color={colors.white}
-              size={30}
-            />,
-            <MaterialCommunityIcons
-              id="AssetStack"
-              name="close-box"
-              color={colors.white}
-              style={{marginLeft: 0.1}}
-              size={30}
-            />,
-            <Ionicons
-              id="WalletStack"
-              name="ios-wallet"
-              color={colors.white}
-              size={30}
-              style={{marginLeft: 2}}
-            />,
-            <Ionicons
-              id="DappStack"
-              name="md-cube"
-              color={colors.white}
-              size={30}
-              style={{marginLeft: 1.2}}
-            />,
+            <SettingsIcon id="Settings" />,
+            <AssetsIcon id="AssetStack" />,
+            <WalletsIcon id="WalletStack" />,
+            <DappsIcon id="DappStack" />,
           ]}
           onSelect={onSelectMenu}
           defaultIconColor={'gray'}
