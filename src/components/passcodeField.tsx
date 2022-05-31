@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text} from 'react-native';
 import {
   CodeField,
@@ -65,6 +65,12 @@ export const PasscodeField = ({
       </Text>
     );
   };
+
+  useEffect(() => {
+    if (ref && autoFocus && !value) {
+      ref.current?.focus();
+    }
+  }, [autoFocus, ref, value]);
 
   return (
     <CodeField
