@@ -11,9 +11,11 @@ import {
   setWalletSessionsReducer,
   setCurrencyReducer,
   switchNetworkReducer,
+  setReadyReducer,
 } from './reducer';
 
 export interface WalletsReducerType {
+  ready: boolean;
   loading: boolean;
   mnemonic?: string;
   wallets: Wallet[];
@@ -24,6 +26,7 @@ export interface WalletsReducerType {
 }
 
 export const defaultState: WalletsReducerType = {
+  ready: false,
   loading: false,
   wallets: [],
   walletSessions: {},
@@ -40,4 +43,5 @@ export const walletsReducer = createReducer<WalletsReducerType>(defaultState, {
   [ActionType.SET_WALLET_SESSIONS]: setWalletSessionsReducer,
   [ActionType.SET_CURRENCY]: setCurrencyReducer,
   [ActionType.SWITCH_NETWORK]: switchNetworkReducer,
+  [ActionType.READY]: setReadyReducer,
 });

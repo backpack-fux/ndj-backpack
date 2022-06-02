@@ -7,7 +7,7 @@ import {
   Wallet,
   WalletKeys,
 } from '@app/models';
-import {addWallet, setLoading, setWallets} from '../actions';
+import {addWallet, setLoading, setReadyApp, setWallets} from '../actions';
 import {showSnackbar} from '@app/utils';
 import {NetworkName} from '@app/constants';
 import {WalletService} from '@app/services';
@@ -21,6 +21,8 @@ function* reload() {
     const network = state.wallets.network;
 
     WalletService.switchNetwork(network);
+
+    yield put(setReadyApp());
 
     const accounts = state.wallets.wallets;
     const wallets: Wallet[] = [...accounts];

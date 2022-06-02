@@ -81,3 +81,9 @@ export const switchNetwork = (payload: 'mainnet' | 'testnet') => {
     payload,
   };
 };
+
+export const setReadyApp = () => {
+  return {
+    type: ActionType.READY,
+  };
+};

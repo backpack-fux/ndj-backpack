@@ -108,3 +108,10 @@ export function switchNetworkReducer(
     network: payload,
   };
 }
+
+export function setReadyReducer(state: WalletsReducerType) {
+  return {
+    ...state,
+    ready: true,
+  };
+}

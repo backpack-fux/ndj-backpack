@@ -136,14 +136,17 @@ export const KeychainProvider = (props: {
       return;
     }
 
-    if (appState.current.match(/background/) && nextAppState.match(/active/)) {
+    if (
+      appState.current.match(/background|inactive/) &&
+      nextAppState.match(/active/)
+    ) {
       const lockedTimeString = await AsyncStorage.getItem(NDJ_LOCKED_TIME);
       const now = moment();
       const lockedTimeMoment = lockedTimeString
         ? moment.unix(Number(lockedTimeString))
         : moment();
       const minutes = moment.duration(now.diff(lockedTimeMoment)).asMinutes();
-      console.log('minutes', minutes);
+
       if (minutes >= autoLockTime) {
         verifyPasscode();
       }

@@ -4,6 +4,7 @@ export enum WalletsActionType {
   INIT_STORE = 'persist/REHYDRATE',
   RELOAD = 'RELOAD',
   LOADING = 'LOADING',
+  READY = 'READY',
   SET_MNEMONIC = 'wallets/MNEMONIC',
   CREATE_WALLET = 'wallets/CREATE_WALLET',
   ADD_WALLET = 'wallets/ADD_WALLET',
