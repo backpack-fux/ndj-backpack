@@ -165,7 +165,9 @@ export const SendScreen = () => {
   return (
     <BaseScreen isLoading={sendTokenInfo.isLoading}>
       <View style={[t.flex1]}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          keyboardDismissMode="on-drag">
           <Card padding={10}>
             <Paragraph text="Send" align="center" marginBottom={10} />
             <View style={[t.flexRow, t.p2, t.itemsCenter]}>

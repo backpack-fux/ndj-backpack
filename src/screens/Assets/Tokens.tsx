@@ -72,6 +72,7 @@ export const TokensScreen = () => {
       </View>
       <ScrollView
         contentContainerStyle={[t.pL4, t.pR4]}
+        keyboardDismissMode="on-drag"
         refreshControl={
           <RefreshControl
             refreshing={isSearchingCoins}
