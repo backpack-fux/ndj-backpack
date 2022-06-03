@@ -94,7 +94,9 @@ export const CreateWalletScreen = () => {
         noBottom={isAddWalletModal}
         title={isAddWalletModal ? 'Add Wallet' : ''}>
         <View style={[t.flex1]}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            keyboardDismissMode="on-drag">
             <KeyboardAvoidingView
               style={[t.flex1]}
               behavior="position"
