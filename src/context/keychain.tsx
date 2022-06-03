@@ -17,23 +17,24 @@ import {
 } from 'react-native-keychain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AppState, AppStateStatus} from 'react-native';
-import moment from 'moment-timezone';
+import {VerifyPasscodeModal} from '@app/components/verifyPasscodeModal';
+import {MainStackParamList} from '@app/models';
 
 const NDJ_PASSCODE = 'NDJ_PASSCODE';
 const NDJ_BIOMETRY = 'NDJ_BIOMETRY';
-const NDJ_LOCKED_TIME = 'NDJ_LOCKED_TIME';
 const NDJ_AUTO_LOCK_TIME = 'NDJ_AUTO_LOCK_TIME';
 export interface KeychainContextProps {
   enabledBiometry: boolean;
   passcode?: string;
   biometryType?: string;
   enabled: boolean;
-  toggleKeychain: (value: boolean) => void;
+  toggleKeychain: () => void;
   onSetPasscode: (value: string) => void;
   authorizeDeviceBiometry: () => Promise<boolean>;
   autoLockTime: number;
   onSetAutoLockTime: (value: number) => void;
-  verifyPasscode: (callback?: () => void) => void;
+  verifyPasscode: (callback?: string) => void;
+  setNewPasscord: () => void;
 }
 
 export const KeychainContext = createContext<KeychainContextProps>(
@@ -50,23 +51,22 @@ export const KeychainProvider = (props: {
   children: React.ReactChild[] | React.ReactChild;
 }) => {
   const appState = useRef(AppState.currentState);
-  const navigation = useNavigation<NavigationProp<SettingsParamList>>();
+  const navigation = useNavigation<NavigationProp<MainStackParamList>>();
   const [enabled, setEnabled] = useState(false);
   const [enabledBiometry, setEnabledBiometry] = useState(false);
   const [passcode, setPasscode] = useState<string>();
   const [autoLockTime, setAutoLockTime] = useState(0);
   const [biometryType, setBiometryType] = useState<BIOMETRY_TYPE>();
+  const [showVerify, setShowVerify] = useState(false);
+  const [verifyCallback, setVerifyCallback] = useState<string>();
 
-  const toggleKeychain = (value: boolean) => {
-    if (value) {
-      navigation.navigate('SetPasscode');
+  const toggleKeychain = useCallback(() => {
+    if (enabled) {
+      verifyPasscode('disable');
     } else {
-      setEnabled(false);
-      setPasscode(undefined);
-      setAutoLockTime(0);
-      clearDeviceBiometry();
+      navigation.navigate('SetPasscode');
     }
-  };
+  }, [enabled]);
 
   const onSetPasscode = useCallback(
     async (value: string) => {
@@ -77,14 +77,19 @@ export const KeychainProvider = (props: {
         accessControl: ACCESS_CONTROL.BIOMETRY_ANY,
       });
 
-      console.log('biometryType=======', biometryType);
-
       if (biometryType) {
         await setDeviceBiometry(value);
       }
     },
     [biometryType],
   );
+
+  const turnOffKeychain = () => {
+    setEnabled(false);
+    setPasscode(undefined);
+    setAutoLockTime(0);
+    clearDeviceBiometry();
+  };
 
   const authorizeDeviceBiometry = async () => {
     try {
@@ -115,6 +120,10 @@ export const KeychainProvider = (props: {
     await AsyncStorage.setItem(NDJ_BIOMETRY, 'true');
   };
 
+  const setNewPasscord = () => {
+    verifyPasscode('newPasscode');
+  };
+
   const checkDeviceAvailability = async () => {
     const passcodeRes = await AsyncStorage.getItem(NDJ_PASSCODE);
     const biometryRes = await AsyncStorage.getItem(NDJ_BIOMETRY);
@@ -132,32 +141,13 @@ export const KeychainProvider = (props: {
   };
 
   const onChangeAppStatus = async (nextAppState: AppStateStatus) => {
-    if (!enabled) {
-      return;
-    }
-
     if (
-      appState.current.match(/background|inactive/) &&
-      nextAppState.match(/active/)
+      nextAppState.match(/background|inactive/) &&
+      appState.current.match(/active/) &&
+      !showVerify
     ) {
-      const lockedTimeString = await AsyncStorage.getItem(NDJ_LOCKED_TIME);
-      const now = moment();
-      const lockedTimeMoment = lockedTimeString
-        ? moment.unix(Number(lockedTimeString))
-        : moment();
-      const minutes = moment.duration(now.diff(lockedTimeMoment)).asMinutes();
-
-      if (minutes >= autoLockTime) {
-        verifyPasscode();
-      }
-    } else if (
-      nextAppState.match(/background/) &&
-      appState.current.match(/active/)
-    ) {
-      const now = moment().unix();
-      await AsyncStorage.setItem(NDJ_LOCKED_TIME, now.toString());
-    } else if (nextAppState.match(/inactive/)) {
-      // navigation && navigation.navigate('SplashScreen');
+      setShowVerify(true);
+      setVerifyCallback(undefined);
     }
 
     appState.current = nextAppState;
@@ -168,10 +158,25 @@ export const KeychainProvider = (props: {
     AsyncStorage.setItem(NDJ_AUTO_LOCK_TIME, value.toString());
   };
 
-  const verifyPasscode = (callback?: () => void) => {
-    navigation.navigate('VerifyPasscode', {
-      onVerified: callback,
-    });
+  const verifyPasscode = (callback?: string) => {
+    console.log('callback', callback);
+    setShowVerify(true);
+    setVerifyCallback(callback);
+  };
+
+  const onVerifiedPasscord = () => {
+    setShowVerify(false);
+    console.log('verifyCallback', verifyCallback);
+    switch (verifyCallback) {
+      case 'disable':
+        turnOffKeychain();
+        break;
+      case 'newPasscode':
+        navigation.navigate('SetPasscode');
+        break;
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
@@ -184,7 +189,7 @@ export const KeychainProvider = (props: {
     return () => {
       subscription.remove();
     };
-  }, [enabled, autoLockTime, appState]);
+  }, [appState, showVerify]);
 
   return (
     <KeychainContext.Provider
@@ -196,10 +201,14 @@ export const KeychainProvider = (props: {
         biometryType,
         toggleKeychain,
         onSetPasscode,
+        setNewPasscord,
         authorizeDeviceBiometry,
         onSetAutoLockTime,
         verifyPasscode,
       }}>
+      {showVerify && (
+        <VerifyPasscodeModal onVerified={() => onVerifiedPasscord()} />
+      )}
       {props.children}
     </KeychainContext.Provider>
   );

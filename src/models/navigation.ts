@@ -11,7 +11,6 @@ export type MainStackParamList = {
   WalletStack: undefined;
   AssetStack: undefined;
   DappStack: undefined;
-  VerifyPasscode: {onVerified?: () => void};
   SetPasscode: undefined;
   SessionApprovalModal: {proposal: SessionTypes.Proposal};
   SessionSignModal: {

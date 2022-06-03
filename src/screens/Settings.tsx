@@ -2,10 +2,8 @@ import {colors} from '@app/assets/colors.config';
 import {BaseScreen, Card, Paragraph} from '@app/components';
 import {shadow} from '@app/constants';
 import {useKeychain} from '@app/context/keychain';
-import {MainStackParamList} from '@app/models';
 import {switchNetwork} from '@app/store/wallets/actions';
 import {networkSelector} from '@app/store/wallets/walletsSelector';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
@@ -15,31 +13,11 @@ import {useDispatch, useSelector} from 'react-redux';
 export const SettingsScreen = () => {
   const dispatch = useDispatch();
   const network = useSelector(networkSelector);
-  const navigation = useNavigation<NavigationProp<MainStackParamList>>();
   const [selectedSetting, setSelectedSetting] = useState<string>('network');
-  const {enabled, toggleKeychain} = useKeychain();
+  const {enabled, toggleKeychain, setNewPasscord} = useKeychain();
 
   const onChangeNetwork = (payload: 'mainnet' | 'testnet') => {
     dispatch(switchNetwork(payload));
-  };
-
-  const onToggleBiometric = () => {
-    if (enabled) {
-      navigation.navigate('VerifyPasscode', {
-        onVerified: () => toggleKeychain(false),
-      });
-    } else {
-      navigation.navigate('SetPasscode');
-    }
-  };
-
-  const onSetNewPasscord = () => {
-    navigation.navigate('VerifyPasscode', {
-      onVerified: () => {
-        navigation.goBack();
-        navigation.navigate('SetPasscode');
-      },
-    });
   };
 
   return (
@@ -131,7 +109,7 @@ export const SettingsScreen = () => {
         {selectedSetting === 'fingerprint' && (
           <View style={[t.flexRow]}>
             <TouchableOpacity
-              onPress={() => onToggleBiometric()}
+              onPress={() => toggleKeychain()}
               style={[
                 {backgroundColor: colors.button},
                 enabled ? shadow : {},
@@ -150,7 +128,7 @@ export const SettingsScreen = () => {
             </TouchableOpacity>
             <TouchableOpacity
               disabled={!enabled}
-              onPress={() => onSetNewPasscord()}
+              onPress={() => setNewPasscord()}
               style={[
                 {backgroundColor: colors.button},
                 t.mL2,

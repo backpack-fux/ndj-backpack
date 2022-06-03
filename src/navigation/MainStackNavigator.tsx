@@ -2,8 +2,6 @@ import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StyleSheet, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   NavigationProp,
   StackActions,
@@ -27,7 +25,6 @@ import {
 import {SettingsScreen} from '@app/screens/Settings';
 import {useKeychain} from '@app/context/keychain';
 import {SetPasscodeScreen} from '@app/screens/SetPasscode';
-import {VerifyPasscodeScreen} from '@app/screens/VerifyPasscode';
 
 import AssetsIcon from '@app/assets/icons/assets.svg';
 import DappsIcon from '@app/assets/icons/dapps.svg';
@@ -38,7 +35,7 @@ const Stack = createNativeStackNavigator();
 
 export const MainStackNavigator = () => {
   const navigation = useNavigation<NavigationProp<MainStackParamList>>();
-  const {enabled} = useKeychain();
+  const {enabled, verifyPasscode} = useKeychain();
 
   const onSelectMenu = (name: any) => {
     navigation.dispatch(StackActions.replace(name));
@@ -46,7 +43,7 @@ export const MainStackNavigator = () => {
 
   useEffect(() => {
     if (enabled) {
-      navigation.navigate('VerifyPasscode', {});
+      verifyPasscode();
     }
   }, []);
 
@@ -137,16 +134,6 @@ export const MainStackNavigator = () => {
             headerShown: false,
           }}
           component={SetPasscodeScreen}
-        />
-        <Stack.Screen
-          name="VerifyPasscode"
-          component={VerifyPasscodeScreen}
-          options={{
-            presentation: 'fullScreenModal',
-            gestureEnabled: false,
-            fullScreenGestureEnabled: false,
-            animation: 'none',
-          }}
         />
       </Stack.Navigator>
       <View style={styles.rotateMenu}>

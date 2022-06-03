@@ -2,7 +2,7 @@ import {BaseScreen, Paragraph, PasscodeField} from '@app/components';
 import {useKeychain} from '@app/context/keychain';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, TouchableOpacity, View} from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {t} from 'react-native-tailwindcss';
 
@@ -59,7 +59,9 @@ export const SetPasscodeScreen = () => {
           <Paragraph text="Set Passcode" size={18} type="bold" align="center" />
         </View>
       </View>
-      <ScrollView>
+      <KeyboardAvoidingView
+        style={[t.flex1, t.itemsCenter, t.justifyCenter]}
+        behavior="position">
         {isVerify ? (
           <>
             <Paragraph
@@ -91,7 +93,7 @@ export const SetPasscodeScreen = () => {
             />
           </>
         )}
-      </ScrollView>
+      </KeyboardAvoidingView>
     </BaseScreen>
   );
 };
