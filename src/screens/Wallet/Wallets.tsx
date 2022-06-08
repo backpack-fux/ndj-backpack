@@ -181,7 +181,9 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
       wallet.wallets.map(w => {
         const item = networkList.find(n => n.network === w.network);
         return `${item?.chain}${
-          item?.chainId && item.chainId[network] ? `:${item?.chainId}` : ''
+          item?.chainId && item.chainId[network]
+            ? `:${item?.chainId[network]}`
+            : ''
         }:${w.address}`;
       }),
     [wallet],
@@ -189,11 +191,13 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
 
   const walletSessions = useMemo(
     () =>
-      sessions.filter(session => {
-        const sessionAccounts = session.state.accounts.filter(d =>
-          accounts.includes(d),
-        );
-        return sessionAccounts.length > 0;
+      sessions.filter((session: any) => {
+        const sessionAccounts = (Object.values(session.namespaces) as any)
+          .reduce((a: string, p: any) => {
+            return [...a, ...p.accounts];
+          }, [])
+          .filter((d: string) => accounts.includes(d));
+        return sessionAccounts?.length > 0;
       }),
     [sessions],
   );

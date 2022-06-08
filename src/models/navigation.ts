@@ -1,4 +1,4 @@
-import {SessionTypes} from '@walletconnect/types';
+import {SignClientTypes} from '@walletconnect/types';
 import {BaseCoin} from './coinTypes';
 
 export type RootStackParamList = {
@@ -12,7 +12,9 @@ export type MainStackParamList = {
   AssetStack: undefined;
   DappStack: undefined;
   SetPasscode: undefined;
-  SessionApprovalModal: {proposal: SessionTypes.Proposal};
+  SessionApprovalModal: {
+    proposal: SignClientTypes.EventArguments['session_proposal'];
+  };
   SessionSignModal: {
     event: SessionTypes.RequestEvent;
     session?: SessionTypes.Settled;

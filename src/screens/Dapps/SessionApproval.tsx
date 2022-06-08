@@ -28,11 +28,18 @@ export const SessionApproval = () => {
 
   const navigation = useNavigation();
   const {proposal} = route.params;
-  const {proposer, permissions} = proposal;
+  const {params} = proposal;
+  const {proposer, requiredNamespaces} = params;
+
   const {metadata} = proposer;
   const icon = metadata.icons[0];
-  const {blockchain, jsonrpc} = permissions;
-  const availableChains = blockchain.chains
+  let methods: string[] = [];
+
+  const availableChains = Object.values(requiredNamespaces)
+    .reduce((chains: string[], values: any) => {
+      methods = [...methods, ...values.methods];
+      return [...chains, ...values.chains];
+    }, [])
     .map(c => ({
       network: getNetworkByChain(c, network),
       chain: c,
@@ -117,7 +124,7 @@ export const SessionApproval = () => {
         </Card>
         <Card>
           <Paragraph text="Chains:" color={colors.textGray} />
-          <Paragraph text={jsonrpc.methods.join(', ')} />
+          <Paragraph text={methods.join(', ')} />
         </Card>
 
         {availableWallets.map(wallet => (

@@ -6,28 +6,24 @@ import React, {
   useState,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import WalletConnectClient, {CLIENT_EVENTS} from '@walletconnect/client';
-import {SessionTypes} from '@walletconnect/types';
 import {MainStackParamList} from '@app/models';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {showSnackbar} from '@app/utils';
 import {EIP155_SIGNING_METHODS} from '@app/constants/EIP155Data';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import SignClient from '@walletconnect/sign-client';
+import {SessionTypes, SignClientTypes} from '@walletconnect/types';
+import {COSMOS_SIGNING_METHODS} from '@app/constants/COSMOSData';
+import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
 
 export interface WalletConnectContextProps {
-  client?: WalletConnectClient;
-  sessions: SessionTypes.Settled[];
+  client?: SignClient;
+  sessions: any[];
   enabledTransactionTopics: {[topic: string]: boolean};
-  onAcceptSessionProposal: (
-    proposal: SessionTypes.Proposal,
-    accounts: string[],
-  ) => void;
-  onRejectSessionProposal: (
-    proposal: SessionTypes.Proposal,
-    message?: string,
-  ) => void;
+  onAcceptSessionProposal: (proposal: any, accounts: string[]) => void;
+  onRejectSessionProposal: (proposal: any, message?: string) => void;
   onDisconnect: (topic: string) => void;
   onToggleTransactionEnable: (topic: string, value: boolean) => void;
 }
@@ -51,15 +47,14 @@ export const WalletConnectProvider = (props: {
   children: React.ReactChild[] | React.ReactChild;
 }) => {
   const navigation = useNavigation<NavigationProp<MainStackParamList>>();
-  const [client, setClient] = useState<WalletConnectClient>();
-  const [sessions, setSessions] = useState<SessionTypes.Settled[]>([]);
+  const [client, setClient] = useState<SignClient>();
+  const [sessions, setSessions] = useState<any[]>([]);
   const [enabledTransactionTopics, setEnabledTransactionTopics] = useState<{
     [topic: string]: boolean;
   }>({});
 
   const initClient = async () => {
-    const wClient = await WalletConnectClient.init({
-      controller: true,
+    const wClient = await SignClient.init({
       projectId: 'f17194a7efd15ee24623a532ccff7c77',
       relayUrl: 'wss://relay.walletconnect.com',
       metadata: {
@@ -68,39 +63,57 @@ export const WalletConnectProvider = (props: {
         url: '#',
         icons: ['https://walletconnect.com/walletconnect-logo.png'],
       },
-      storageOptions: {
-        asyncStorage: AsyncStorage as any,
-      },
+      // storageOptions: {
+      //   asyncStorage: AsyncStorage as any,
+      // },
     });
 
     setClient(wClient);
   };
 
+  const onSessionProposal = useCallback(
+    (proposal: SignClientTypes.EventArguments['session_proposal']) => {
+      ReactNativeHapticFeedback.trigger('impactHeavy');
+      navigation?.navigate('SessionApprovalModal', {proposal});
+    },
+    [],
+  );
+
   const onAcceptSessionProposal = async (
-    proposal: SessionTypes.Proposal,
+    proposal: SignClientTypes.EventArguments['session_proposal'],
     accounts: string[],
   ) => {
-    const {proposer} = proposal;
-    const {metadata} = proposer;
-    const response = {
-      state: {
-        accounts,
-      },
-      metadata,
-    };
+    const {id, params} = proposal;
+    const {requiredNamespaces, relays} = params;
 
-    await client?.approve({proposal, response});
+    const namespaces: SessionTypes.Namespaces = {};
+    Object.keys(requiredNamespaces).forEach(key => {
+      namespaces[key] = {
+        accounts,
+        methods: requiredNamespaces[key].methods,
+        events: requiredNamespaces[key].events,
+      };
+    });
+
+    const res = await client?.approve({
+      id,
+      relayProtocol: relays[0].protocol,
+      namespaces,
+    });
+    await res?.acknowledged();
+
+    setSessions(client?.session.values || []);
   };
 
   const onRejectSessionProposal = async (
-    proposal: SessionTypes.Proposal,
+    proposal: SignClientTypes.EventArguments['session_proposal'],
     errorMessage?: string,
   ) => {
-    const reason = {
-      code: errorMessage ? 0 : 1601,
-      message: errorMessage || 'Session proposal not approved',
-    };
-    await client?.reject({proposal, reason});
+    // const reason = {
+    //   code: errorMessage ? 0 : 1601,
+    //   message: errorMessage || 'Session proposal not approved',
+    // };
+    // await client?.reject({proposal, reason});
   };
 
   const onDisconnect = (topic: string) => {
@@ -139,57 +152,56 @@ export const WalletConnectProvider = (props: {
     setSessions(values);
   };
 
-  const onSessionApproval = useCallback((proposal: SessionTypes.Proposal) => {
-    ReactNativeHapticFeedback.trigger('impactHeavy');
-
-    navigation?.navigate('SessionApprovalModal', {proposal});
-  }, []);
-
-  const onSessionCreated = useCallback((session: SessionTypes.Created) => {
+  const onSessionCreated = useCallback((session: any) => {
     showSnackbar(`Connected ${session.self.metadata.name} successfully`);
   }, []);
 
-  /******************************************************************************
-   * 3. Open request handling modal based on method that was used
-   *****************************************************************************/
   const onSessionRequest = useCallback(
-    async (event: SessionTypes.RequestEvent) => {
-      const {topic, request} = event;
-      const {method} = request;
-      const session = await client?.session?.get(topic);
-      ReactNativeHapticFeedback.trigger('impactHeavy');
+    async (event: SignClientTypes.EventArguments['session_request']) => {
+      const {topic, params} = event;
+      const {request} = params;
+      const session = client?.session.get(topic);
+      console.log(request);
+      console.log(session);
+      // switch (request.method) {
+      //   case EIP155_SIGNING_METHODS.ETH_SIGN:
+      //   case EIP155_SIGNING_METHODS.PERSONAL_SIGN:
+      //     return navigation.navigate('SessionSignModal', {
+      //       event,
+      //       session,
+      //     });
 
-      switch (method) {
-        case EIP155_SIGNING_METHODS.ETH_SIGN:
-        case EIP155_SIGNING_METHODS.PERSONAL_SIGN:
-          return navigation.navigate('SessionSignModal', {
-            event,
-            session,
-          });
+      //   case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA:
+      //   case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V3:
+      //   case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V4:
+      //     return navigation.navigate('SessionSignTypedDataModal', {
+      //       event,
+      //       session,
+      //     });
 
-        case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA:
-        case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V3:
-        case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V4:
-          return navigation.navigate('SessionSignTypedDataModal', {
-            event,
-            session,
-          });
+      //   case EIP155_SIGNING_METHODS.ETH_SEND_TRANSACTION:
+      //   case EIP155_SIGNING_METHODS.ETH_SIGN_TRANSACTION:
+      //     return navigation.navigate('SessionSendTransactionModal', {
+      //       event,
+      //       session,
+      //     });
 
-        case EIP155_SIGNING_METHODS.ETH_SEND_TRANSACTION:
-        case EIP155_SIGNING_METHODS.ETH_SIGN_TRANSACTION:
-          return navigation.navigate('SessionSendTransactionModal', {
-            event,
-            session,
-          });
+      //   case COSMOS_SIGNING_METHODS.COSMOS_SIGN_DIRECT:
+      //   case COSMOS_SIGNING_METHODS.COSMOS_SIGN_AMINO:
+      //     break; // Todo
 
-        default:
-          return navigation.navigate('SessionUnsuportedMethodModal', {
-            event,
-            session,
-          });
-      }
+      //   case SOLANA_SIGNING_METHODS.SOLANA_SIGN_MESSAGE:
+      //   case SOLANA_SIGNING_METHODS.SOLANA_SIGN_TRANSACTION:
+      //     break; // Todo
+
+      //   default:
+      //     return navigation.navigate('SessionUnsuportedMethodModal', {
+      //       event,
+      //       session,
+      //     });
+      // }
     },
-    [client],
+    [],
   );
 
   useEffect(() => {
@@ -201,18 +213,20 @@ export const WalletConnectProvider = (props: {
   }, [sessions]);
 
   useEffect(() => {
-    client?.on(CLIENT_EVENTS.session.proposal, onSessionApproval);
-    client?.on(CLIENT_EVENTS.session.created, onSessionCreated);
-    client?.on(CLIENT_EVENTS.session.request, onSessionRequest);
-    client?.on(CLIENT_EVENTS.session.sync, onSyncSessions);
+    client?.on('session_proposal', onSessionProposal);
+    client?.on('session_request', onSessionRequest);
+    client?.on('session_event', (data: any) => {
+      console.log(data);
+    });
 
     return () => {
-      client?.removeListener(CLIENT_EVENTS.session.proposal, onSessionApproval);
-      client?.removeListener(CLIENT_EVENTS.session.created, onSessionCreated);
-      client?.removeListener(CLIENT_EVENTS.session.request, onSessionRequest);
-      client?.removeListener(CLIENT_EVENTS.session.sync, onSyncSessions);
+      client?.removeListener('session_proposal', onSessionProposal);
+      client?.removeListener('session_request', onSessionRequest);
+      client?.removeListener('session_event', (data: any) => {
+        console.log(data);
+      });
     };
-  }, [client, onSessionApproval, onSessionCreated, onSessionRequest]);
+  }, [client, onSessionProposal, onSessionCreated, onSessionRequest]);
 
   useEffect(() => {
     initClient();
