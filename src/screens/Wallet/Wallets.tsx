@@ -181,7 +181,9 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
       wallet.wallets.map(w => {
         const item = networkList.find(n => n.network === w.network);
         return `${item?.chain}${
-          item?.chainId && item.chainId[network] ? `:${item?.chainId}` : ''
+          item?.chainId && item.chainId[network]
+            ? `:${item?.chainId[network]}`
+            : ''
         }:${w.address}`;
       }),
     [wallet],
