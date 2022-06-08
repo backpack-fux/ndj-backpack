@@ -143,6 +143,17 @@ export default class EthereumBaseService extends WalletService {
     return res.signature;
   }
 
+  async signTypedData(
+    privateKey: string,
+    domain: any,
+    types: any,
+    data: any,
+  ): Promise<any> {
+    const wallet = new ethers.Wallet(privateKey);
+
+    return wallet._signTypedData(domain, types, data);
+  }
+
   async signTransaction(privateKey: string, data: TransactionConfig) {
     const account = this.web3.eth.accounts.privateKeyToAccount(privateKey);
 

@@ -29,10 +29,10 @@ export const SessionSignTypedData = () => {
   const network = useSelector(networkSelector);
 
   const {event, session} = route.params;
-
+  console.log(session);
   const onReject = () => {
     if (client && event) {
-      const response = rejectEIP155Request(event.request);
+      const response = rejectEIP155Request(event);
       client.respond({
         topic: event.topic,
         response,
@@ -50,7 +50,7 @@ export const SessionSignTypedData = () => {
           response,
         });
       } catch (err) {
-        const response = rejectEIP155Request(event.request);
+        const response = rejectEIP155Request(event);
         client?.respond({
           topic: event.topic,
           response,
@@ -71,9 +71,11 @@ export const SessionSignTypedData = () => {
     return <></>;
   }
 
-  const {params} = event.request;
-  const message = getSignParamsMessage(params);
-  const address = getSignParamsAddress(params);
+  // Get required request data
+  const {params} = event;
+  const {request, chainId} = params;
+  const message = getSignParamsMessage(request.params);
+  const address = getSignParamsAddress(request.params);
 
   return (
     <BaseScreen noBottom title="Signature Request" onBack={onReject}>
@@ -81,7 +83,7 @@ export const SessionSignTypedData = () => {
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail
           address={address}
-          chainId={event.chainId}
+          chainId={chainId}
           protocol={session.relay.protocol}
         />
         <Card>

@@ -1,4 +1,4 @@
-import {SignClientTypes} from '@walletconnect/types';
+import {SessionTypes, SignClientTypes} from '@walletconnect/types';
 import {BaseCoin} from './coinTypes';
 
 export type RootStackParamList = {
@@ -16,20 +16,20 @@ export type MainStackParamList = {
     proposal: SignClientTypes.EventArguments['session_proposal'];
   };
   SessionSignModal: {
-    event: SessionTypes.RequestEvent;
-    session?: SessionTypes.Settled;
+    event: SignClientTypes.EventArguments['session_request'];
+    session?: SessionTypes.Struct;
   };
   SessionSignTypedDataModal: {
-    event: SessionTypes.RequestEvent;
-    session?: SessionTypes.Settled;
+    event: SignClientTypes.EventArguments['session_request'];
+    session?: SessionTypes.Struct;
   };
   SessionSendTransactionModal: {
-    event: SessionTypes.RequestEvent;
-    session?: SessionTypes.Settled;
+    event: SignClientTypes.EventArguments['session_request'];
+    session?: SessionTypes.Struct;
   };
   SessionUnsuportedMethodModal: {
-    event: SessionTypes.RequestEvent;
-    session?: SessionTypes.Settled;
+    event: SignClientTypes.EventArguments['session_request'];
+    session?: SessionTypes.Struct;
   };
   WebView: {
     url: string;
@@ -38,7 +38,7 @@ export type MainStackParamList = {
 };
 
 export type DappStackParamList = {
-  DappDetails: {session: SessionTypes.Settled};
+  DappDetails: {session: SessionTypes.Struct};
 };
 
 export type WalletStackParamList = {

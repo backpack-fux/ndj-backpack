@@ -202,6 +202,18 @@ export default class SolanaService extends WalletService {
     const wallet = Keypair.fromSecretKey(new Uint8Array(key));
     console.log(wallet, message);
   }
+
+  async signTypedData(
+    privateKey: string,
+    domain: any,
+    types: any,
+    data: any,
+  ): Promise<any> {
+    const key = privateKey?.split(',').map(v => Number(v)) || [];
+    const wallet = Keypair.fromSecretKey(new Uint8Array(key));
+    console.log(wallet, domain, types, data);
+  }
+
   async signTransaction(privateKey: string, data: any): Promise<string> {
     const key = privateKey?.split(',').map(v => Number(v)) || [];
     const wallet = Keypair.fromSecretKey(new Uint8Array(key));

@@ -89,7 +89,7 @@ export const WalletConnectProvider = (props: {
     const namespaces: SessionTypes.Namespaces = {};
     Object.keys(requiredNamespaces).forEach(key => {
       namespaces[key] = {
-        accounts,
+        accounts: accounts.filter(account => account.startsWith(key)),
         methods: requiredNamespaces[key].methods,
         events: requiredNamespaces[key].events,
       };
@@ -109,11 +109,11 @@ export const WalletConnectProvider = (props: {
     proposal: SignClientTypes.EventArguments['session_proposal'],
     errorMessage?: string,
   ) => {
-    // const reason = {
-    //   code: errorMessage ? 0 : 1601,
-    //   message: errorMessage || 'Session proposal not approved',
-    // };
-    // await client?.reject({proposal, reason});
+    const reason = {
+      code: errorMessage ? 0 : 1601,
+      message: errorMessage || 'Session proposal not approved',
+    };
+    await client?.reject({id: proposal.id, reason});
   };
 
   const onDisconnect = (topic: string) => {
@@ -161,47 +161,46 @@ export const WalletConnectProvider = (props: {
       const {topic, params} = event;
       const {request} = params;
       const session = client?.session.get(topic);
-      console.log(request);
-      console.log(session);
-      // switch (request.method) {
-      //   case EIP155_SIGNING_METHODS.ETH_SIGN:
-      //   case EIP155_SIGNING_METHODS.PERSONAL_SIGN:
-      //     return navigation.navigate('SessionSignModal', {
-      //       event,
-      //       session,
-      //     });
 
-      //   case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA:
-      //   case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V3:
-      //   case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V4:
-      //     return navigation.navigate('SessionSignTypedDataModal', {
-      //       event,
-      //       session,
-      //     });
+      switch (request.method) {
+        case EIP155_SIGNING_METHODS.ETH_SIGN:
+        case EIP155_SIGNING_METHODS.PERSONAL_SIGN:
+          return navigation.navigate('SessionSignModal', {
+            event,
+            session,
+          });
 
-      //   case EIP155_SIGNING_METHODS.ETH_SEND_TRANSACTION:
-      //   case EIP155_SIGNING_METHODS.ETH_SIGN_TRANSACTION:
-      //     return navigation.navigate('SessionSendTransactionModal', {
-      //       event,
-      //       session,
-      //     });
+        case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA:
+        case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V3:
+        case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V4:
+          return navigation.navigate('SessionSignTypedDataModal', {
+            event,
+            session,
+          });
 
-      //   case COSMOS_SIGNING_METHODS.COSMOS_SIGN_DIRECT:
-      //   case COSMOS_SIGNING_METHODS.COSMOS_SIGN_AMINO:
-      //     break; // Todo
+        case EIP155_SIGNING_METHODS.ETH_SEND_TRANSACTION:
+        case EIP155_SIGNING_METHODS.ETH_SIGN_TRANSACTION:
+          return navigation.navigate('SessionSendTransactionModal', {
+            event,
+            session,
+          });
 
-      //   case SOLANA_SIGNING_METHODS.SOLANA_SIGN_MESSAGE:
-      //   case SOLANA_SIGNING_METHODS.SOLANA_SIGN_TRANSACTION:
-      //     break; // Todo
+        case COSMOS_SIGNING_METHODS.COSMOS_SIGN_DIRECT:
+        case COSMOS_SIGNING_METHODS.COSMOS_SIGN_AMINO:
+          break; // Todo
 
-      //   default:
-      //     return navigation.navigate('SessionUnsuportedMethodModal', {
-      //       event,
-      //       session,
-      //     });
-      // }
+        case SOLANA_SIGNING_METHODS.SOLANA_SIGN_MESSAGE:
+        case SOLANA_SIGNING_METHODS.SOLANA_SIGN_TRANSACTION:
+          break; // Todo
+
+        default:
+          return navigation.navigate('SessionUnsuportedMethodModal', {
+            event,
+            session,
+          });
+      }
     },
-    [],
+    [client],
   );
 
   useEffect(() => {
@@ -216,14 +215,22 @@ export const WalletConnectProvider = (props: {
     client?.on('session_proposal', onSessionProposal);
     client?.on('session_request', onSessionRequest);
     client?.on('session_event', (data: any) => {
+      console.log('session_event============================');
       console.log(data);
+    });
+    client?.on('session_delete', () => {
+      setSessions(client?.session.values || []);
     });
 
     return () => {
       client?.removeListener('session_proposal', onSessionProposal);
       client?.removeListener('session_request', onSessionRequest);
       client?.removeListener('session_event', (data: any) => {
+        console.log('session_event============================');
         console.log(data);
+      });
+      client?.removeListener('session_delete', () => {
+        setSessions(client?.session.values || []);
       });
     };
   }, [client, onSessionProposal, onSessionCreated, onSessionRequest]);

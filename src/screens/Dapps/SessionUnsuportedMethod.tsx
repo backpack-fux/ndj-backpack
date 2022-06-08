@@ -19,7 +19,7 @@ export const SessionUnsuportedMethod = () => {
 
   const onReject = () => {
     if (client && event) {
-      const response = rejectEIP155Request(event.request);
+      const response = rejectEIP155Request(event);
       client.respond({
         topic: event.topic,
         response,
@@ -38,19 +38,18 @@ export const SessionUnsuportedMethod = () => {
     return <></>;
   }
 
-  const {method} = event.request;
+  // Get required request data
+  const {params} = event;
+  const {request, chainId} = params;
 
   return (
     <BaseScreen noBottom title="Unsupported Method" onBack={onReject}>
       <ScrollView>
         <DappInfo metadata={session?.peer.metadata} />
-        <RequestDetail
-          chainId={event.chainId}
-          protocol={session.relay.protocol}
-        />
+        <RequestDetail chainId={chainId} protocol={session.relay.protocol} />
         <Card>
           <Paragraph text="Method:" color={colors.textGray} />
-          <Paragraph text={method} />
+          <Paragraph text={request.method} />
         </Card>
       </ScrollView>
     </BaseScreen>

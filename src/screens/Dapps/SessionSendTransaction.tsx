@@ -30,10 +30,10 @@ export const SessionSendTransaction = () => {
     useRoute<RouteProp<MainStackParamList, 'SessionSendTransactionModal'>>();
   const wallets = useSelector(walletsSelector);
   const {event, session} = route.params;
-
+  console.log('session', session);
   const onReject = () => {
     if (client && event) {
-      const response = rejectEIP155Request(event.request);
+      const response = rejectEIP155Request(event);
       client.respond({
         topic: event.topic,
         response,
@@ -53,7 +53,7 @@ export const SessionSendTransaction = () => {
         });
       } catch (err) {
         console.log(err);
-        const response = rejectEIP155Request(event.request);
+        const response = rejectEIP155Request(event);
         client?.respond({
           topic: event.topic,
           response,
@@ -82,9 +82,11 @@ export const SessionSendTransaction = () => {
     return <></>;
   }
 
-  const {params} = event.request;
-  const transaction = params[0];
+  // Get required request data
+  const {params} = event;
+  const {request, chainId} = params;
 
+  const transaction = request.params[0];
   const fee = Web3.utils
     .toBN(Web3.utils.hexToNumber(transaction.gasPrice))
     .mul(Web3.utils.toBN(Web3.utils.hexToNumber(transaction.gasLimit)));
@@ -104,7 +106,7 @@ export const SessionSendTransaction = () => {
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail
           address={transaction.from}
-          chainId={event.chainId}
+          chainId={chainId}
           protocol={session.relay.protocol}
         />
         <Card>

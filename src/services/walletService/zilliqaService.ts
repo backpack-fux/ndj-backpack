@@ -266,6 +266,17 @@ export default class ZilliqaService extends WalletService {
     this.initWallet(privateKey);
     console.log(message);
   }
+
+  async signTypedData(
+    privateKey: string,
+    domain: any,
+    types: any,
+    data: any,
+  ): Promise<any> {
+    this.initWallet(privateKey);
+    console.log(domain, types, data);
+  }
+
   async signTransaction(privateKey: string, data: any): Promise<any> {
     this.initWallet(privateKey);
     console.log(data);
@@ -282,6 +293,8 @@ export default class ZilliqaService extends WalletService {
       page,
       type: 'normal',
     };
+
+    console.log(limit);
 
     if (contractAddress) {
       params.type = 'tokens';

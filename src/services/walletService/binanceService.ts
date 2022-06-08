@@ -160,6 +160,17 @@ export default class BinanceService extends WalletService {
     this.bnbClient.setPrivateKey(privateKey);
     console.log(message);
   }
+
+  async signTypedData(
+    privateKey: string,
+    domain: any,
+    types: any,
+    data: any,
+  ): Promise<any> {
+    this.bnbClient.setPrivateKey(privateKey);
+    console.log(domain, types, data);
+  }
+
   async signTransaction(privateKey: string, data: any): Promise<any> {
     this.bnbClient.setPrivateKey(privateKey);
     console.log(data);

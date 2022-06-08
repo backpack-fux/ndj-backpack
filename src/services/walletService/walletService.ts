@@ -182,6 +182,12 @@ abstract class WalletService {
 
   abstract sendTransaction(privateKey: string, tx: any): Promise<any>;
   abstract sign(privateKey: string, message: string): Promise<any>;
+  abstract signTypedData(
+    privateKey: string,
+    domain: any,
+    types: any,
+    data: any,
+  ): Promise<any>;
   abstract signTransaction(privateKey: string, data: any): Promise<any>;
   abstract getENSInfo(address: string): Promise<ENSInfo | null | undefined>;
   abstract switchNetwork(chain: 'mainnet' | 'testnet'): void;
