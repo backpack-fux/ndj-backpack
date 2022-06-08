@@ -13,7 +13,7 @@ export const DappDetailScreen = () => {
     useWalletConnect();
 
   const {session} = route.params;
-
+  console.log(session);
   const disconnect = () => {
     onDisconnect(session.topic);
     navigation.goBack();

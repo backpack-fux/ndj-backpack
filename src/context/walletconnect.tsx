@@ -15,6 +15,7 @@ import SignClient from '@walletconnect/sign-client';
 import {SessionTypes, SignClientTypes} from '@walletconnect/types';
 import {COSMOS_SIGNING_METHODS} from '@app/constants/COSMOSData';
 import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
+import {ERROR} from '@walletconnect/utils';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
 
@@ -63,9 +64,6 @@ export const WalletConnectProvider = (props: {
         url: '#',
         icons: ['https://walletconnect.com/walletconnect-logo.png'],
       },
-      // storageOptions: {
-      //   asyncStorage: AsyncStorage as any,
-      // },
     });
 
     setClient(wClient);
@@ -116,12 +114,10 @@ export const WalletConnectProvider = (props: {
     await client?.reject({id: proposal.id, reason});
   };
 
-  const onDisconnect = (topic: string) => {
-    const reason = {
-      code: 0,
-      message: 'Owner ended session',
-    };
-    client?.disconnect({topic, reason});
+  const onDisconnect = async (topic: string) => {
+    await client?.disconnect({topic, reason: ERROR.USER_DISCONNECTED.format()});
+
+    setSessions(client?.session.values || []);
   };
 
   const onToggleTransactionEnable = (topic: string, value: boolean) => {
@@ -144,12 +140,6 @@ export const WalletConnectProvider = (props: {
 
     AsyncStorage.setItem(ENABLED_TRANSACTION_TOPICS, JSON.stringify(data));
     setEnabledTransactionTopics(result);
-  };
-
-  const onSyncSessions = () => {
-    const values = client?.session.values || [];
-
-    setSessions(values);
   };
 
   const onSessionCreated = useCallback((session: any) => {
@@ -214,10 +204,7 @@ export const WalletConnectProvider = (props: {
   useEffect(() => {
     client?.on('session_proposal', onSessionProposal);
     client?.on('session_request', onSessionRequest);
-    client?.on('session_event', (data: any) => {
-      console.log('session_event============================');
-      console.log(data);
-    });
+    client?.on('session_event', (data: any) => {});
     client?.on('session_delete', () => {
       setSessions(client?.session.values || []);
     });
@@ -225,10 +212,7 @@ export const WalletConnectProvider = (props: {
     return () => {
       client?.removeListener('session_proposal', onSessionProposal);
       client?.removeListener('session_request', onSessionRequest);
-      client?.removeListener('session_event', (data: any) => {
-        console.log('session_event============================');
-        console.log(data);
-      });
+      client?.removeListener('session_event', (data: any) => {});
       client?.removeListener('session_delete', () => {
         setSessions(client?.session.values || []);
       });
