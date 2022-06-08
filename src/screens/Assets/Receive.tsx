@@ -1,20 +1,19 @@
 import React, {useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
-import {Alert, Image, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, View, Dimensions} from 'react-native';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import Share from 'react-native-share';
 import {t} from 'react-native-tailwindcss';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Clipboard from '@react-native-community/clipboard';
 
-import {BaseScreen, QRCode, Paragraph} from '@app/components';
+import {BaseScreen, QRCode, Paragraph, Button} from '@app/components';
 import {AssetStackParamList} from '@app/models';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {colors} from '@app/assets/colors.config';
 import {showSnackbar} from '@app/utils';
 
 const logo = require('@app/assets/images/logo.png');
+let width = Dimensions.get('window').width;
 
 const shadowQrCode = {
   shadowColor: '#fff',
@@ -101,6 +100,7 @@ export const ReceiveScreen = () => {
             codeStyle="circle"
             // logo={logo}
             logoSize={50}
+            size={width * 0.6}
             backgroundColor={colors.primary}
             outerEyeColor="rgb(255,0,196)"
             innerEyeColor="rgb(0,255,139)"
@@ -135,49 +135,23 @@ export const ReceiveScreen = () => {
           </View>
         </View>
       </View>
-      <View style={[t.flexRow, t.justifyEvenly, t.mT4]}>
-        <TouchableOpacity onPress={onCopy} style={[t.itemsCenter]}>
-          <View
-            style={[
-              t.w12,
-              t.h12,
-              t.bgPink500,
-              t.justifyCenter,
-              t.itemsCenter,
-              t.roundedFull,
-            ]}>
-            <Icon name="content-copy" size={20} color={colors.white} />
+      <View style={[t.mT4]}>
+        <Button
+          text={
+            amount
+              ? `Receive ${amount} ${coin?.symbol.toUpperCase()}`
+              : 'Set Amount'
+          }
+          onPress={onSetAmount}
+        />
+        <View style={[t.flexRow, t.mT2]}>
+          <View style={[t.flex1]}>
+            <Button text="Copy" onPress={() => onCopy} />
           </View>
-          <Paragraph text="Copy" align="center" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onSetAmount} style={[t.itemsCenter]}>
-          <View
-            style={[
-              t.w12,
-              t.h12,
-              t.bgPink500,
-              t.justifyCenter,
-              t.itemsCenter,
-              t.roundedFull,
-            ]}>
-            <MIcon name="tag" size={20} color={colors.white} />
+          <View style={[t.flex1, t.mL2]}>
+            <Button text="Share" onPress={onShare} />
           </View>
-          <Paragraph text="Set Amount" align="center" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onShare} style={[t.itemsCenter]}>
-          <View
-            style={[
-              t.w12,
-              t.h12,
-              t.bgPink500,
-              t.justifyCenter,
-              t.itemsCenter,
-              t.roundedFull,
-            ]}>
-            <MIcon name="share" size={25} color={colors.white} />
-          </View>
-          <Paragraph text="Share" align="center" />
-        </TouchableOpacity>
+        </View>
       </View>
     </BaseScreen>
   );

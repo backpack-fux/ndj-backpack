@@ -2,7 +2,7 @@ import {BaseScreen, Paragraph, PasscodeField} from '@app/components';
 import {useKeychain} from '@app/context/keychain';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {KeyboardAvoidingView, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {t} from 'react-native-tailwindcss';
 
@@ -48,17 +48,10 @@ export const SetPasscodeScreen = () => {
   }, [verifyValue, value, onSetPasscode]);
 
   return (
-    <BaseScreen noBottom>
-      <View style={[t.flexRow, t.mB4]}>
-        <TouchableOpacity
-          style={[t.absolute, t.left0, t.z10, t.p2]}
-          onPress={() => navigation.goBack()}>
-          <Paragraph text="Cancel" type="bold" />
-        </TouchableOpacity>
-        <View style={[t.flex1, t.mT2]}>
-          <Paragraph text="Set Passcode" size={18} type="bold" align="center" />
-        </View>
-      </View>
+    <BaseScreen
+      noBottom
+      title="Set Passcode"
+      onBack={() => navigation.goBack()}>
       <KeyboardAvoidingView
         style={[t.flex1, t.itemsCenter, t.justifyCenter]}
         behavior="position">

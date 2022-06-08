@@ -2,12 +2,13 @@ import React from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
-  KeyboardAvoidingView,
   SafeAreaView,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {useHeaderHeight} from '@react-navigation/elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {colors} from '@app/assets/colors.config';
 import {menuHeight} from '@app/constants';
@@ -20,12 +21,14 @@ export const BaseScreen = ({
   noPadding = false,
   noBottom = false,
   title,
+  onBack,
 }: {
   children?: React.ReactNode;
   isLoading?: boolean;
   noPadding?: boolean;
   noBottom?: boolean;
   title?: string;
+  onBack?: () => void;
 }) => {
   const headerHeight = useHeaderHeight();
 
@@ -44,14 +47,25 @@ export const BaseScreen = ({
           {paddingBottom: noBottom ? 0 : menuHeight * 0.5},
         ]}>
         {!!title && (
-          <Paragraph
-            marginTop={30}
-            marginBottom={20}
-            text={title}
-            font="Montserrat"
-            align="center"
-            type="bold"
-          />
+          <View style={[t.flexRow, t.mT2, t.mB2, t.itemsCenter]}>
+            {onBack && (
+              <TouchableOpacity style={[t.p2, t.mL2]} onPress={onBack}>
+                <Icon
+                  name="keyboard-arrow-down"
+                  color={colors.white}
+                  size={40}
+                />
+              </TouchableOpacity>
+            )}
+            <View style={[t.flex1, t.mR10]}>
+              <Paragraph
+                text={title}
+                font="Montserrat"
+                align="center"
+                type="bold"
+              />
+            </View>
+          </View>
         )}
         {isLoading && (
           <View

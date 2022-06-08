@@ -22,9 +22,11 @@ import {searchCoinsRequest, toggleAccountCoin} from '@app/store/coins/actions';
 import {useDebounce} from '@app/uses';
 import {networkName} from '@app/constants';
 import {refreshWallets} from '@app/store/wallets/actions';
+import {useNavigation} from '@react-navigation/native';
 
 const borderBottomWidth = 0.3;
 export const TokensScreen = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('');
   const userCoins = useSelector(accountCoinsSelector);
@@ -59,7 +61,11 @@ export const TokensScreen = () => {
   }, [debouncedSearchText]);
 
   return (
-    <BaseScreen noPadding title="Add a Custom Token" noBottom>
+    <BaseScreen
+      noPadding
+      title="Add a Custom Token"
+      noBottom
+      onBack={() => navigation.goBack()}>
       <View
         style={[t.bgPurple200, t.mT2, t.mL4, t.mR4, t.p2, t.roundedLg, t.mB4]}>
         <TextInput

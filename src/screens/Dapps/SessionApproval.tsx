@@ -9,13 +9,13 @@ import {useWalletConnect} from '@app/context/walletconnect';
 import {MainStackParamList} from '@app/models';
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {useSelector} from 'react-redux';
+import _ from 'lodash';
 import {
   networkSelector,
   walletsSelector,
 } from '@app/store/wallets/walletsSelector';
 import {getNetworkByChain, showNetworkName, showSnackbar} from '@app/utils';
 import {NetworkName, networkName} from '@app/constants';
-import * as _ from 'lodash';
 import {Card} from './components';
 
 export const SessionApproval = () => {
@@ -37,7 +37,10 @@ export const SessionApproval = () => {
 
   const availableChains = Object.values(requiredNamespaces)
     .reduce((chains: string[], values: any) => {
-      methods = [...methods, ...values.methods];
+      methods = _.uniq([
+        ...methods,
+        ...values.methods.map((method: string) => _.startCase(method)),
+      ]);
       return [...chains, ...values.chains];
     }, [])
     .map(c => ({
@@ -87,17 +90,7 @@ export const SessionApproval = () => {
   }, [availableWallets]);
 
   return (
-    <BaseScreen noBottom>
-      <View style={[t.flexRow, t.mB4]}>
-        <TouchableOpacity
-          style={[t.absolute, t.left0, t.z10, t.p2]}
-          onPress={onReject}>
-          <Paragraph text="Cancel" type="bold" />
-        </TouchableOpacity>
-        <View style={[t.flex1, t.mT2]}>
-          <Paragraph text="Confirm" size={18} type="bold" align="center" />
-        </View>
-      </View>
+    <BaseScreen noBottom title="Confirm" onBack={onReject}>
       <ScrollView>
         {icon && (
           <Image
@@ -123,8 +116,12 @@ export const SessionApproval = () => {
           />
         </Card>
         <Card>
-          <Paragraph text="Chains:" color={colors.textGray} />
-          <Paragraph text={methods.join(', ')} />
+          <Paragraph text="Methods:" color={colors.textGray} />
+          <View>
+            {methods.map((method, index) => (
+              <Paragraph text={`${index + 1}. ${method}`} />
+            ))}
+          </View>
         </Card>
 
         {availableWallets.map(wallet => (
