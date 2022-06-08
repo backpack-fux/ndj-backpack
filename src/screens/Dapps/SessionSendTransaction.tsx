@@ -12,7 +12,7 @@ import {
 import {convertHexToUtf8} from '@app/utils/HelperUtil';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {useSelector} from 'react-redux';
 import {Card, DappInfo, RequestDetail} from './components';
@@ -95,22 +95,11 @@ export const SessionSendTransaction = () => {
   const data = convertHexToUtf8(transaction.data);
 
   return (
-    <BaseScreen isLoading={isLoading} noBottom>
-      <View style={[t.flexRow, t.mB4]}>
-        <TouchableOpacity
-          style={[t.absolute, t.left0, t.z10, t.p2]}
-          onPress={onReject}>
-          <Paragraph text="Cancel" type="bold" />
-        </TouchableOpacity>
-        <View style={[t.flex1, t.mT2]}>
-          <Paragraph
-            text="Sign / Send Transaction"
-            size={18}
-            type="bold"
-            align="center"
-          />
-        </View>
-      </View>
+    <BaseScreen
+      isLoading={isLoading}
+      noBottom
+      title="Sign / Send Transaction"
+      onBack={() => onReject()}>
       <ScrollView>
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail

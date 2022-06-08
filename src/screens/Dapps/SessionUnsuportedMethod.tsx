@@ -5,8 +5,7 @@ import {walletsSelector} from '@app/store/wallets/walletsSelector';
 import {rejectEIP155Request} from '@app/utils/EIP155RequestHandlerUtil';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
-import {t} from 'react-native-tailwindcss';
+import {ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
 import {Card, DappInfo, RequestDetail} from './components';
 import {colors} from '@app/assets/colors.config';
@@ -42,22 +41,7 @@ export const SessionUnsuportedMethod = () => {
   const {method} = event.request;
 
   return (
-    <BaseScreen noBottom>
-      <View style={[t.flexRow, t.mB4]}>
-        <TouchableOpacity
-          style={[t.absolute, t.left0, t.z10, t.p2]}
-          onPress={onReject}>
-          <Paragraph text="Cancel" type="bold" />
-        </TouchableOpacity>
-        <View style={[t.flex1, t.mT2]}>
-          <Paragraph
-            text="Unsupported Method"
-            size={18}
-            type="bold"
-            align="center"
-          />
-        </View>
-      </View>
+    <BaseScreen noBottom title="Unsupported Method" onBack={onReject}>
       <ScrollView>
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail

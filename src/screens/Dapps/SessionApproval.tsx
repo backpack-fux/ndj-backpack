@@ -80,17 +80,7 @@ export const SessionApproval = () => {
   }, [availableWallets]);
 
   return (
-    <BaseScreen noBottom>
-      <View style={[t.flexRow, t.mB4]}>
-        <TouchableOpacity
-          style={[t.absolute, t.left0, t.z10, t.p2]}
-          onPress={onReject}>
-          <Paragraph text="Cancel" type="bold" />
-        </TouchableOpacity>
-        <View style={[t.flex1, t.mT2]}>
-          <Paragraph text="Confirm" size={18} type="bold" align="center" />
-        </View>
-      </View>
+    <BaseScreen noBottom title="Confirm" onBack={onReject}>
       <ScrollView>
         {icon && (
           <Image
@@ -116,7 +106,7 @@ export const SessionApproval = () => {
           />
         </Card>
         <Card>
-          <Paragraph text="Chains:" color={colors.textGray} />
+          <Paragraph text="Methods:" color={colors.textGray} />
           <Paragraph text={jsonrpc.methods.join(', ')} />
         </Card>
 

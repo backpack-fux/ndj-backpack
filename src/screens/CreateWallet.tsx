@@ -92,7 +92,8 @@ export const CreateWalletScreen = () => {
       <BaseScreen
         isLoading={isLoading}
         noBottom={isAddWalletModal}
-        title={isAddWalletModal ? 'Add Wallet' : ''}>
+        title={isAddWalletModal ? 'Add Wallet' : ''}
+        onBack={() => navigation.goBack()}>
         <View style={[t.flex1]}>
           <ScrollView
             showsVerticalScrollIndicator={false}
