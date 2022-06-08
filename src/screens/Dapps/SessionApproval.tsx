@@ -9,13 +9,13 @@ import {useWalletConnect} from '@app/context/walletconnect';
 import {MainStackParamList} from '@app/models';
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {useSelector} from 'react-redux';
+import _ from 'lodash';
 import {
   networkSelector,
   walletsSelector,
 } from '@app/store/wallets/walletsSelector';
 import {getNetworkByChain, showNetworkName, showSnackbar} from '@app/utils';
 import {NetworkName, networkName} from '@app/constants';
-import * as _ from 'lodash';
 import {Card} from './components';
 
 export const SessionApproval = () => {
@@ -46,6 +46,8 @@ export const SessionApproval = () => {
     w =>
       w.wallets.filter(c => availableNetworks.includes(c.network)).length > 0,
   );
+
+  const methods = _.uniq(jsonrpc.methods).map(method => _.startCase(method));
 
   const onConnect = async () => {
     onAcceptSessionProposal(proposal, selectedAddresses);
@@ -107,7 +109,11 @@ export const SessionApproval = () => {
         </Card>
         <Card>
           <Paragraph text="Methods:" color={colors.textGray} />
-          <Paragraph text={jsonrpc.methods.join(', ')} />
+          <View>
+            {methods.map((method, index) => (
+              <Paragraph text={`${index + 1}. ${method}`} />
+            ))}
+          </View>
         </Card>
 
         {availableWallets.map(wallet => (
