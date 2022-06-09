@@ -103,16 +103,14 @@ export const WalletConnectProvider = (props: {
     setSessions(client?.session.values || []);
   };
 
-  const onRejectSessionProposal = async (
-    proposal: SignClientTypes.EventArguments['session_proposal'],
-    errorMessage?: string,
-  ) => {
-    const reason = {
-      code: errorMessage ? 0 : 1601,
-      message: errorMessage || 'Session proposal not approved',
+  const onRejectSessionProposal = useCallback(() => {
+    async (proposal: SignClientTypes.EventArguments['session_proposal']) => {
+      await client?.reject({
+        id: proposal.id,
+        reason: ERROR.JSONRPC_REQUEST_METHOD_REJECTED.format(),
+      });
     };
-    await client?.reject({id: proposal.id, reason});
-  };
+  }, []);
 
   const onDisconnect = async (topic: string) => {
     await client?.disconnect({topic, reason: ERROR.USER_DISCONNECTED.format()});

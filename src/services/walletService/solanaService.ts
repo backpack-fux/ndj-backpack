@@ -18,6 +18,7 @@ import * as bip39 from 'bip39';
 import {ENSInfo, ITransaction} from '@app/models';
 import {AxiosInstance} from '@app/apis/axios';
 import * as _ from 'lodash';
+import SolanaWallet, {SolanaSignTransaction} from 'solana-wallet';
 
 const solscanApi = 'https://public-api.solscan.io';
 
@@ -222,17 +223,27 @@ export default class SolanaService extends WalletService {
     console.log(wallet, domain, types, data);
   }
 
-  async signTransaction(privateKey: string, data: any): Promise<string> {
+  async signTransaction(
+    privateKey: string,
+    data: {
+      feePayer: SolanaSignTransaction['feePayer'];
+      recentBlockhash: SolanaSignTransaction['recentBlockhash'];
+      instructions: SolanaSignTransaction['instructions'];
+      partialSignatures?: SolanaSignTransaction['partialSignatures'];
+    },
+  ): Promise<string> {
     const key = privateKey?.split(',').map(v => Number(v)) || [];
     const wallet = Keypair.fromSecretKey(new Uint8Array(key));
 
-    const transaction = new Transaction(data);
+    // @ts-ignore
+    const solanaWallet = new SolanaWallet(wallet.secretKey);
 
-    const signature = await sendAndConfirmTransaction(
-      this.connection,
-      transaction,
-      [wallet],
-    );
+    const {signature} = await solanaWallet.signTransaction(data.feePayer, {
+      feePayer: data.feePayer,
+      instructions: data.instructions,
+      recentBlockhash: data.recentBlockhash,
+      partialSignatures: data.partialSignatures ?? [],
+    });
 
     return signature;
   }

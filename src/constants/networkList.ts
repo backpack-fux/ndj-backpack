@@ -49,8 +49,8 @@ export const networkList: Network[] = [
     network: NetworkName.binanceSmartChain,
     currency: 'BNB',
     Icon: BinanceIcon,
-    chain: 'bep20',
-    chainId: {mainnet: 1, testnet: 97},
+    chain: 'eip155',
+    chainId: {mainnet: 56, testnet: 97},
     explorer: 'https://bscscan.com/address',
   },
   {
