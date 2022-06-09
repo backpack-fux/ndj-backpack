@@ -30,6 +30,7 @@ import AssetsIcon from '@app/assets/icons/assets.svg';
 import DappsIcon from '@app/assets/icons/dapps.svg';
 import WalletsIcon from '@app/assets/icons/wallets.svg';
 import SettingsIcon from '@app/assets/icons/settings.svg';
+import {SessionSignSolana} from '@app/screens/Dapps/SessionSignSolana';
 
 const Stack = createNativeStackNavigator();
 
@@ -109,6 +110,16 @@ export const MainStackNavigator = () => {
         <Stack.Screen
           name="SessionSendTransactionModal"
           component={SessionSendTransaction}
+          options={{
+            ...stackOptions,
+            headerShown: false,
+            presentation: 'formSheet',
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="SessionSignSolanaModal"
+          component={SessionSignSolana}
           options={{
             ...stackOptions,
             headerShown: false,

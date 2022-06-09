@@ -31,6 +31,10 @@ export type MainStackParamList = {
     event: SignClientTypes.EventArguments['session_request'];
     session?: SessionTypes.Struct;
   };
+  SessionSignSolanaModal: {
+    event: SignClientTypes.EventArguments['session_request'];
+    session?: SessionTypes.Struct;
+  };
   WebView: {
     url: string;
     title?: string;

@@ -181,7 +181,10 @@ export const WalletConnectProvider = (props: {
 
         case SOLANA_SIGNING_METHODS.SOLANA_SIGN_MESSAGE:
         case SOLANA_SIGNING_METHODS.SOLANA_SIGN_TRANSACTION:
-          break; // Todo
+          return navigation.navigate('SessionSignSolanaModal', {
+            event,
+            session,
+          });
 
         default:
           return navigation.navigate('SessionUnsuportedMethodModal', {

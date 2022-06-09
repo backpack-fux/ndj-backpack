@@ -58,7 +58,11 @@ export const networkList: Network[] = [
     network: NetworkName.solana,
     currency: 'SOL',
     Icon: SolanaIcon,
-    chain: 'sol',
+    chain: 'solana',
+    chainId: {
+      mainnet: '4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ',
+      testnet: '8E9rvCKLFQia2Y35HXjjpWzj8weVo44K',
+    },
     explorer: 'https://solscan.io/account',
   },
   {

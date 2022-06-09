@@ -93,6 +93,20 @@ export function getPrivateKeyByParams(wallets: Wallet[], params: any) {
   return null;
 }
 
+export function getAddressByParams(wallets: Wallet[], params: any) {
+  const paramsString = JSON.stringify(params);
+
+  for (const account of wallets) {
+    for (const wallet of account.wallets) {
+      if (paramsString.includes(wallet.address)) {
+        return wallet.address;
+      }
+    }
+  }
+
+  return null;
+}
+
 /**
  * Check if chain is part of EIP155 standard
  */

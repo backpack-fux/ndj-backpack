@@ -5,7 +5,7 @@ export interface Network {
   network: NetworkName;
   currency: string;
   Icon: any;
-  chainId?: {[network: string]: number};
+  chainId?: {[network: string]: number | string};
   chain: string;
   explorer: string;
 }

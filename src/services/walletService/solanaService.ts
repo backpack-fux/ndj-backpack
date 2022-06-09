@@ -10,6 +10,8 @@ import {
   SystemProgram,
   sendAndConfirmTransaction,
 } from '@solana/web3.js';
+import bs58 from 'bs58';
+import nacl from 'tweetnacl';
 import * as ed25519 from 'ed25519-hd-key';
 import {Token, TOKEN_PROGRAM_ID} from '@solana/spl-token';
 import * as bip39 from 'bip39';
@@ -200,7 +202,13 @@ export default class SolanaService extends WalletService {
   async sign(privateKey: string, message: string): Promise<any> {
     const key = privateKey?.split(',').map(v => Number(v)) || [];
     const wallet = Keypair.fromSecretKey(new Uint8Array(key));
-    console.log(wallet, message);
+    const signature = nacl.sign.detached(
+      bs58.decode(message),
+      wallet.secretKey,
+    );
+    const bs58Signature = bs58.encode(signature);
+
+    return {signature: bs58Signature};
   }
 
   async signTypedData(
