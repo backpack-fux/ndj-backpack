@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   Alert,
   FlatList,
@@ -32,6 +32,7 @@ import {formatCurrency, showSnackbar} from '@app/utils';
 import {borderWidth, networkList, NetworkName} from '@app/constants';
 import {selectWallet} from '@app/store/wallets/actions';
 import {useWalletConnect} from '@app/context/walletconnect';
+import {useDeepLinkURL} from "../../utils/DeepLinkUtil";
 
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
@@ -50,15 +51,34 @@ const boxShadow = {
 
 export const WalletsScreen = () => {
   const dispatch = useDispatch();
+  const {client} = useWalletConnect();
   const navigation = useNavigation<NavigationProp<WalletStackParamList>>();
   const wallets = useSelector(walletsSelector);
   const selectedWallet = useSelector(selectedWalletSelector);
   const isLoading = useSelector(isLoadingTokensSelector);
+  const {linkedURL, resetURL} = useDeepLinkURL();
+
+  useEffect(() => {
+    if (linkedURL) {
+      onBarCodeRead(linkedURL);
+    }
+  }, [linkedURL, resetURL, client]);
 
   const walletList = useMemo(
     () => wallets.sort(a => (a.id === selectedWallet?.id ? -1 : 1)),
     [wallets, selectedWallet],
   );
+
+  const onBarCodeRead = async (uri: string) => {
+    if (!uri.startsWith('wc:')) {
+      return showSnackbar('WalletConnect: invalid QR code');
+    }
+    if (client) {
+      showSnackbar('WalletConnect: connecting may take a few seconds');
+      await client.pair({uri});
+      resetURL();
+    }
+  };
 
   const onDelete = () => {
     if (!selectedWallet) {
