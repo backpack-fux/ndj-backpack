@@ -79,4 +79,5 @@ export const availableTestNetworks = [
   NetworkName.ethereum,
   NetworkName.polygon,
   NetworkName.binanceSmartChain,
+  NetworkName.zilliqa,
 ];

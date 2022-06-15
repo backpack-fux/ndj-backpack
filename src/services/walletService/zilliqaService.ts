@@ -14,7 +14,6 @@ const MINIMUM_GAS_PRICE = '50';
 const CHAIN_ID = 1; // 1 for Main Net, 333 for Test Net
 const MSG_VERSION = 1; // current msgVersion
 
-const zilliqa = new Zilliqa('https://api.zilliqa.com/');
 const viewblockUrl = 'https://api.viewblock.io/v2/zilliqa';
 const viewblockKey =
   '501e39bde52f73754f62189ac6bab347881a392878d4855c9a9d0cdc1562cfd1';
@@ -22,10 +21,12 @@ const viewblockKey =
 export default class ZilliqaService extends WalletService {
   chain: 'mainnet' | 'testnet' = 'mainnet';
   zilApi: number;
+  zilliqa: Zilliqa;
   constructor() {
     super(NetworkName.zilliqa);
     WalletService.add(this);
     this.zilApi = zilUntils.bytes.pack(CHAIN_ID, MSG_VERSION);
+    this.zilliqa = new Zilliqa('https://api.zilliqa.com/');
   }
 
   switchNetwork(chain: 'mainnet' | 'testnet') {
@@ -34,24 +35,29 @@ export default class ZilliqaService extends WalletService {
       chain === 'mainnet' ? 1 : 333,
       MSG_VERSION,
     );
+    this.zilliqa = new Zilliqa(
+      chain === 'mainnet'
+        ? 'https://api.zilliqa.com/'
+        : 'https://dev-api.zilliqa.com',
+    );
   }
 
   initWallet(privateKey: string): void {
     const address = zcrypto.getAddressFromPrivateKey(privateKey);
-    const account = zilliqa.wallet.accounts[address];
+    const account = this.zilliqa.wallet.accounts[address];
 
     if (!account) {
-      zilliqa.wallet.addByPrivateKey(privateKey);
+      this.zilliqa.wallet.addByPrivateKey(privateKey);
     }
 
-    zilliqa.wallet.setDefault(address);
+    this.zilliqa.wallet.setDefault(address);
   }
 
   async generateKeys(mnemonic: string) {
-    const address = zilliqa.wallet.addByMnemonic(mnemonic, 0);
-    zilliqa.wallet.setDefault(address);
+    const address = this.zilliqa.wallet.addByMnemonic(mnemonic, 0);
+    this.zilliqa.wallet.setDefault(address);
 
-    const account = zilliqa.wallet.defaultAccount;
+    const account = this.zilliqa.wallet.defaultAccount;
 
     if (!account) {
       throw new Error('Can not register an zilliqa account');
@@ -66,7 +72,7 @@ export default class ZilliqaService extends WalletService {
   async getBalance(account: string, address?: string) {
     let balance = 0;
     try {
-      const balanceObj = await zilliqa.blockchain.getBalance(
+      const balanceObj = await this.zilliqa.blockchain.getBalance(
         zcrypto.fromBech32Address(address || account),
       );
       const qnBalance = balanceObj?.result?.balance ?? 0;
@@ -110,12 +116,12 @@ export default class ZilliqaService extends WalletService {
   }
 
   async transferZil(toAccount: string, amount: number) {
-    if (!zilliqa.wallet.defaultAccount?.address) {
+    if (!this.zilliqa.wallet.defaultAccount?.address) {
       throw new Error('Please init your wallet');
     }
 
     const fromAddress = zcrypto.toBech32Address(
-      zilliqa.wallet.defaultAccount.address,
+      this.zilliqa.wallet.defaultAccount.address,
     );
     const {gasLimit, gasPrice} = await this.getMinimumGasPrice();
     const fee = gasLimit * gasPrice;
@@ -130,7 +136,7 @@ export default class ZilliqaService extends WalletService {
       );
     }
 
-    const transaction = zilliqa.transactions.new(
+    const transaction = this.zilliqa.transactions.new(
       {
         version: this.zilApi,
         toAddr: zcrypto.fromBech32Address(toAccount),
@@ -208,17 +214,20 @@ export default class ZilliqaService extends WalletService {
       gasLimit: zilUntils.Long.fromValue(txPayload.gasLimit),
     };
 
-    return zilliqa.transactions.new(txParams, txPayload.toDs, false);
+    return this.zilliqa.transactions.new(txParams, txPayload.toDs, false);
   }
 
   async sendTransaction(privateKey: string, tx: any): Promise<void> {
     this.initWallet(privateKey);
-    const signedTx = await zilliqa.wallet.sign(tx, false);
+    const signedTx = await this.zilliqa.wallet.sign(tx, false);
 
-    const response = await zilliqa.provider.send(RPCMethod.CreateTransaction, {
-      ...signedTx.txParams,
-      priority: signedTx.toDS,
-    });
+    const response = await this.zilliqa.provider.send(
+      RPCMethod.CreateTransaction,
+      {
+        ...signedTx.txParams,
+        priority: signedTx.toDS,
+      },
+    );
 
     if (response.error || !response.result) {
       throw response.error;
@@ -237,7 +246,7 @@ export default class ZilliqaService extends WalletService {
   }
 
   async getMinimumGasPrice() {
-    const gasprice = await zilliqa.blockchain.getMinimumGasPrice();
+    const gasprice = await this.zilliqa.blockchain.getMinimumGasPrice();
     return {
       gasPrice: Number(this.fromQa(gasprice.result)),
       gasLimit: Number(MINIMUM_GAS_PRICE),
@@ -250,7 +259,7 @@ export default class ZilliqaService extends WalletService {
   }
 
   async getZRC2MinimumGasPrice() {
-    const gasprice = await zilliqa.blockchain.getMinimumGasPrice();
+    const gasprice = await this.zilliqa.blockchain.getMinimumGasPrice();
     return {
       gasPrice: Number(this.fromQa(gasprice.result)),
       gasLimit: 9000,
