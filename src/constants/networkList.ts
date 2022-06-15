@@ -80,4 +80,5 @@ export const availableTestNetworks = [
   NetworkName.polygon,
   NetworkName.binanceSmartChain,
   NetworkName.zilliqa,
+  NetworkName.solana,
 ];

@@ -224,6 +224,7 @@ function* searchCoins({payload}: Action<string>) {
 }
 
 function* getPriceOfSendToken({payload}: Action<Token>) {
+  console.log('getPriceOfSendToken');
   try {
     yield put(setSendTokenLoading(true));
     const state: RootState = yield select();
