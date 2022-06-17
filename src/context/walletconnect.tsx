@@ -5,9 +5,12 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import {Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {MainStackParamList} from '@app/models';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import * as queryString from 'query-string';
+
+import {MainStackParamList} from '@app/models';
 import {showSnackbar} from '@app/utils';
 import {EIP155_SIGNING_METHODS} from '@app/constants/EIP155Data';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
@@ -18,6 +21,8 @@ import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
 import {ERROR} from '@walletconnect/utils';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
+
+const linkingURLs = ['wc://wc', 'ndj-backpack://wc', 'https://jxndao.com/wc'];
 
 export interface WalletConnectContextProps {
   client?: SignClient;
@@ -53,6 +58,7 @@ export const WalletConnectProvider = (props: {
   const [enabledTransactionTopics, setEnabledTransactionTopics] = useState<{
     [topic: string]: boolean;
   }>({});
+  const [deepLinkUri, setDeepLinkUri] = useState<string>();
 
   const initClient = async () => {
     const wClient = await SignClient.init({
@@ -61,13 +67,66 @@ export const WalletConnectProvider = (props: {
       metadata: {
         name: 'NDJ Wallet',
         description: 'NDJ Wallet',
-        url: '#',
+        url: 'https://jxndao.com',
         icons: ['https://walletconnect.com/walletconnect-logo.png'],
       },
     });
 
     setClient(wClient);
   };
+
+  useEffect(() => {
+    const getUrlAsync = async () => {
+      const url = await Linking.getInitialURL();
+      if (url) {
+        onOpenDeepLink(url);
+      }
+    };
+
+    Linking.addEventListener('url', ({url}: {url: string}) =>
+      onOpenDeepLink(url),
+    );
+    getUrlAsync();
+  }, []);
+
+  const onOpenDeepLink = (url: string) => {
+    if (url.startsWith('wc:')) {
+      setDeepLinkUri(url);
+      return;
+    }
+
+    const data = queryString.parseUrl(url);
+    const urlWithUri = `${data.url}?uri=`;
+
+    if (!linkingURLs.includes(data.url)) {
+      return;
+    }
+
+    const urlParam = url.replace(urlWithUri, '');
+
+    if (!urlParam?.startsWith('wc:')) {
+      return showSnackbar('WalletConnect: invalid QR code');
+    }
+
+    setDeepLinkUri(urlParam);
+  };
+
+  useEffect(() => {
+    if (!deepLinkUri) {
+      return;
+    }
+
+    if (!client) {
+      return;
+    }
+
+    if (!deepLinkUri.startsWith('wc:')) {
+      showSnackbar('WalletConnect: invalid QR code');
+    } else {
+      client?.pair({uri: deepLinkUri});
+      setDeepLinkUri('');
+    }
+  }, [deepLinkUri, client]);
 
   const onSessionProposal = useCallback(
     (proposal: SignClientTypes.EventArguments['session_proposal']) => {
