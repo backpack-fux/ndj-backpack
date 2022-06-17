@@ -10,10 +10,12 @@ import {Paragraph} from './text';
 export const Button = ({
   disabled,
   text,
+  color,
   onPress = () => {},
 }: {
   text: string;
   disabled?: boolean;
+  color?: string;
   onPress?: () => void;
 }) => {
   const onPressButton = () => {
@@ -26,7 +28,7 @@ export const Button = ({
       disabled={disabled}
       onPress={onPressButton}
       style={[
-        {backgroundColor: colors.button},
+        {backgroundColor: color || colors.button},
         disabled ? {} : shadow,
         t.h10,
         t.alignCenter,

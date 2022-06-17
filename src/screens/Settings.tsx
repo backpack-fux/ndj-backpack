@@ -73,8 +73,11 @@ export const SettingsScreen = () => {
             <TouchableOpacity
               onPress={() => onChangeNetwork('testnet')}
               style={[
-                {backgroundColor: colors.button},
-                network === 'testnet' ? shadow : {},
+                {
+                  backgroundColor:
+                    network === 'testnet' ? colors.secondary : colors.button,
+                },
+                shadow,
                 t.flex1,
                 t.h10,
                 t.alignCenter,
@@ -91,9 +94,12 @@ export const SettingsScreen = () => {
             <TouchableOpacity
               onPress={() => onChangeNetwork('mainnet')}
               style={[
-                {backgroundColor: colors.button},
+                {
+                  backgroundColor:
+                    network === 'mainnet' ? colors.secondary : colors.button,
+                },
                 t.mL2,
-                network === 'mainnet' ? shadow : {},
+                shadow,
                 t.flex1,
                 t.h10,
                 t.alignCenter,
@@ -114,8 +120,8 @@ export const SettingsScreen = () => {
             <TouchableOpacity
               onPress={() => toggleKeychain()}
               style={[
-                {backgroundColor: colors.button},
-                enabled ? shadow : {},
+                {backgroundColor: enabled ? colors.secondary : colors.button},
+                shadow,
                 t.flex1,
                 t.h10,
                 t.alignCenter,

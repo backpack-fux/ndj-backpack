@@ -142,6 +142,7 @@ export const ReceiveScreen = () => {
               ? `Receive ${amount} ${coin?.symbol.toUpperCase()}`
               : 'Set Amount'
           }
+          color={amount && colors.secondary}
           onPress={onSetAmount}
         />
         <View style={[t.flexRow, t.mT2]}>
