@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import Clipboard from '@react-native-community/clipboard';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
@@ -65,8 +64,6 @@ export const WalletsScreen = () => {
       return;
     }
 
-    ReactNativeHapticFeedback.trigger('impactHeavy');
-
     Alert.alert(
       'Delete Wallet',
       'Are you sure to delete the selected wallet?',
@@ -84,7 +81,6 @@ export const WalletsScreen = () => {
   };
 
   const onAddWallet = () => {
-    ReactNativeHapticFeedback.trigger('impactHeavy');
     navigation.navigate('AddWallet');
   };
 

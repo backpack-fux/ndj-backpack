@@ -146,7 +146,7 @@ export const ReceiveScreen = () => {
         />
         <View style={[t.flexRow, t.mT2]}>
           <View style={[t.flex1]}>
-            <Button text="Copy" onPress={() => onCopy} />
+            <Button text="Copy" onPress={onCopy} />
           </View>
           <View style={[t.flex1, t.mL2]}>
             <Button text="Share" onPress={onShare} />

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Image, RefreshControl, TouchableOpacity, View} from 'react-native';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {ScrollView} from 'react-native-gesture-handler';
 import {t} from 'react-native-tailwindcss';
 import {useDispatch, useSelector} from 'react-redux';
@@ -75,7 +74,6 @@ export const AssetsScreen = () => {
   };
 
   const onOpenAddToken = () => {
-    ReactNativeHapticFeedback.trigger('impactHeavy');
     navigation.navigate('Tokens');
   };
 

@@ -6,6 +6,7 @@ import {switchNetwork} from '@app/store/wallets/actions';
 import {networkSelector} from '@app/store/wallets/walletsSelector';
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,6 +18,8 @@ export const SettingsScreen = () => {
   const {enabled, toggleKeychain, setNewPasscord} = useKeychain();
 
   const onChangeNetwork = (payload: 'mainnet' | 'testnet') => {
+    ReactNativeHapticFeedback.trigger('impactHeavy');
+
     dispatch(switchNetwork(payload));
   };
 
