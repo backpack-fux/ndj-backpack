@@ -11,6 +11,7 @@ import {
   setWalletSessionsReducer,
   setCurrencyReducer,
   switchNetworkReducer,
+  renameWalletReducer,
   setReadyReducer,
 } from './reducer';
 
@@ -43,5 +44,6 @@ export const walletsReducer = createReducer<WalletsReducerType>(defaultState, {
   [ActionType.SET_WALLET_SESSIONS]: setWalletSessionsReducer,
   [ActionType.SET_CURRENCY]: setCurrencyReducer,
   [ActionType.SWITCH_NETWORK]: switchNetworkReducer,
+  [ActionType.RENAME_WALLET]: renameWalletReducer,
   [ActionType.READY]: setReadyReducer,
 });

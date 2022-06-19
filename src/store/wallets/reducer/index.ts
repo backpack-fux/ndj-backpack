@@ -115,3 +115,19 @@ export function setReadyReducer(state: WalletsReducerType) {
     ready: true,
   };
 }
+
+export function renameWalletReducer(
+  state: WalletsReducerType,
+  {payload}: Action<{id: string; name: string}>,
+) {
+  const wallets = [...state.wallets];
+  const wallet = wallets.find(w => w.id === payload.id);
+  if (wallet) {
+    wallet.name = payload.name;
+  }
+
+  return {
+    ...state,
+    wallets,
+  };
+}

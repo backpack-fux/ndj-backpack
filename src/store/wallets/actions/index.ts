@@ -87,3 +87,10 @@ export const setReadyApp = () => {
     type: ActionType.READY,
   };
 };
+
+export const renameWallet = (payload: {id: string; name: string}) => {
+  return {
+    type: ActionType.RENAME_WALLET,
+    payload,
+  };
+};

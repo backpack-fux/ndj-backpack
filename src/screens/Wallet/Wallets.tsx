@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import Clipboard from '@react-native-community/clipboard';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
@@ -25,7 +26,11 @@ import {
   isLoadingTokensSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
-import {deleteWallet, refreshWallets} from '@app/store/wallets/actions';
+import {
+  deleteWallet,
+  refreshWallets,
+  renameWallet,
+} from '@app/store/wallets/actions';
 
 import {formatCurrency, showSnackbar} from '@app/utils';
 import {borderWidth, networkList, NetworkName} from '@app/constants';
@@ -199,18 +204,52 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
   );
 
   const onCopySeed = () => {
+    ReactNativeHapticFeedback.trigger('impactHeavy');
     Clipboard.setString(wallet.mnemonic);
     showSnackbar('Copied Seed!');
   };
 
+  const onRenameWallet = () => {
+    ReactNativeHapticFeedback.trigger('impactHeavy');
+
+    Alert.prompt(
+      'Rename Wallet',
+      '',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Rename',
+          onPress: (value: any) => {
+            if (value) {
+              dispatch(renameWallet({id: wallet.id, name: value}));
+            }
+          },
+        },
+      ],
+      'plain-text',
+      wallet.name,
+    );
+  };
+
+  const onSelectWallet = () => {
+    ReactNativeHapticFeedback.trigger('impactHeavy');
+    dispatch(selectWallet(wallet));
+  };
+
   return (
     <Card borderColor={isSelected ? colors.secondary : colors.primaryLight}>
-      <Paragraph
-        text={`${wallet.name}${network === 'testnet' ? ' (Testnet)' : ''}`}
-        align="center"
-        type="bold"
-      />
-      <View style={[t.flexRow, t.mT4, t.itemsCenter]}>
+      <TouchableOpacity onLongPress={onRenameWallet} style={[t.pT1, t.pB2]}>
+        <Paragraph
+          text={`${wallet.name}${network === 'testnet' ? ' (Testnet)' : ''}`}
+          align="center"
+          type="bold"
+        />
+      </TouchableOpacity>
+      <View style={[t.flexRow, t.mT2, t.itemsCenter]}>
         <View style={[t.mR10, t.itemsCenter]}>
           <View
             style={[t.h16, t.flexRow, t.mB1, t.itemsCenter, t.justifyCenter]}>
@@ -257,7 +296,7 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => dispatch(selectWallet(wallet))}
+            onPress={() => onSelectWallet()}
             style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT2]}>
             {isSelected && (
               <View style={[t.w4, t.h4]}>

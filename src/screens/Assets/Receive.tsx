@@ -57,7 +57,7 @@ export const ReceiveScreen = () => {
           style: 'cancel',
         },
         {
-          text: 'OK',
+          text: 'Ok',
           onPress: (value: any) => {
             if (value) {
               setAmount(value);
