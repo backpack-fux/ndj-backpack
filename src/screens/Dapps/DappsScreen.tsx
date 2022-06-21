@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const DappsScreen = () => {
   const navigation = useNavigation<NavigationProp<DappStackParamList>>();
-  const {client, sessions, onDisconnect} = useWalletConnect();
+  const {sessions, onDisconnect, onPairing} = useWalletConnect();
   const [openScan, setOpenScan] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string>();
 
@@ -26,7 +26,7 @@ export const DappsScreen = () => {
 
     showSnackbar('WalletConnect: connecting may take a few seconds');
     setOpenScan(false);
-    await client?.pair({uri});
+    onPairing(uri);
   };
 
   const onDetails = async () => {

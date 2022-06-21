@@ -32,6 +32,7 @@ export interface WalletConnectContextProps {
   onRejectSessionProposal: (proposal: any, message?: string) => void;
   onDisconnect: (topic: string) => void;
   onToggleTransactionEnable: (topic: string, value: boolean) => void;
+  onPairing: (uri: string) => void;
 }
 
 export const WalletConnectContext = createContext<WalletConnectContextProps>({
@@ -41,6 +42,7 @@ export const WalletConnectContext = createContext<WalletConnectContextProps>({
   onRejectSessionProposal: () => {},
   onDisconnect: () => {},
   onToggleTransactionEnable: () => {},
+  onPairing: () => {},
 });
 
 export const useWalletConnect = () => {
@@ -59,6 +61,7 @@ export const WalletConnectProvider = (props: {
     [topic: string]: boolean;
   }>({});
   const [deepLinkUri, setDeepLinkUri] = useState<string>();
+  const [pairingTopic, setParingTopic] = useState<string>();
 
   const initClient = async () => {
     const wClient = await SignClient.init({
@@ -128,12 +131,23 @@ export const WalletConnectProvider = (props: {
     }
   }, [deepLinkUri, client]);
 
+  const onPairing = useCallback(
+    async (uri: string) => {
+      const res = await client?.pair({uri});
+      setParingTopic(res?.topic);
+    },
+    [client],
+  );
+
   const onSessionProposal = useCallback(
     (proposal: SignClientTypes.EventArguments['session_proposal']) => {
+      if (proposal.params.pairingTopic === pairingTopic) {
+        setParingTopic('');
+      }
       ReactNativeHapticFeedback.trigger('impactHeavy');
       navigation?.navigate('SessionApprovalModal', {proposal});
     },
-    [],
+    [pairingTopic],
   );
 
   const onAcceptSessionProposal = async (
@@ -254,6 +268,20 @@ export const WalletConnectProvider = (props: {
   );
 
   useEffect(() => {
+    let timeout: any;
+    if (pairingTopic) {
+      timeout = setTimeout(() => {
+        showSnackbar('WalletConnect: failed connect');
+        setParingTopic('');
+      }, 15000);
+    }
+
+    return () => {
+      timeout && clearTimeout(timeout);
+    };
+  }, [pairingTopic]);
+
+  useEffect(() => {
     setSessions(client?.session.values || []);
   }, [client]);
 
@@ -289,6 +317,7 @@ export const WalletConnectProvider = (props: {
         client,
         sessions,
         enabledTransactionTopics,
+        onPairing,
         onRejectSessionProposal,
         onAcceptSessionProposal,
         onDisconnect,
