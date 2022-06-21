@@ -159,7 +159,6 @@ export const KeychainProvider = (props: {
   };
 
   const verifyPasscode = (callback?: string) => {
-    console.log('callback', callback);
     setShowVerify(true);
     setVerifyCallback(callback);
   };

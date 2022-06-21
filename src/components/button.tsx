@@ -4,7 +4,7 @@ import {TouchableOpacity} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 
 import {colors} from '@app/assets/colors.config';
-import {shadow} from '@app/constants';
+import {borderWidth} from '@app/constants';
 import {Paragraph} from './text';
 
 export const Button = ({
@@ -28,8 +28,10 @@ export const Button = ({
       disabled={disabled}
       onPress={onPressButton}
       style={[
-        {backgroundColor: color || colors.button},
-        disabled ? {} : shadow,
+        {
+          backgroundColor: disabled ? colors.transparent : color || colors.gray,
+        },
+        disabled && {borderWidth, borderColor: colors.gray},
         t.h10,
         t.alignCenter,
         t.justifyCenter,

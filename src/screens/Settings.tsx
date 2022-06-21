@@ -1,12 +1,10 @@
 import {colors} from '@app/assets/colors.config';
-import {BaseScreen, Card, Paragraph} from '@app/components';
-import {shadow} from '@app/constants';
+import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useKeychain} from '@app/context/keychain';
 import {switchNetwork} from '@app/store/wallets/actions';
 import {networkSelector} from '@app/store/wallets/walletsSelector';
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,8 +16,6 @@ export const SettingsScreen = () => {
   const {enabled, toggleKeychain, setNewPasscord} = useKeychain();
 
   const onChangeNetwork = (payload: 'mainnet' | 'testnet') => {
-    ReactNativeHapticFeedback.trigger('impactHeavy');
-
     dispatch(switchNetwork(payload));
   };
 
@@ -39,9 +35,8 @@ export const SettingsScreen = () => {
               t.pR2,
               t.roundedLg,
               selectedSetting === 'network'
-                ? {backgroundColor: colors.button}
+                ? {backgroundColor: colors.secondary}
                 : {},
-              selectedSetting === 'network' ? shadow : {},
             ]}>
             <Icon name="sync" size={30} color={colors.white} />
             <Paragraph marginLeft={10} text="Switch Networks" />
@@ -58,9 +53,8 @@ export const SettingsScreen = () => {
               t.pR2,
               t.roundedLg,
               selectedSetting === 'fingerprint'
-                ? {backgroundColor: colors.button}
+                ? {backgroundColor: colors.secondary}
                 : {},
-              selectedSetting === 'fingerprint' ? shadow : {},
             ]}>
             <Icon name="fingerprint" size={30} color={colors.white} />
             <Paragraph marginLeft={10} text="PIN & Biometrics" />
@@ -70,91 +64,38 @@ export const SettingsScreen = () => {
       <View style={[t.mT10]}>
         {selectedSetting === 'network' && (
           <View style={[t.flexRow]}>
-            <TouchableOpacity
-              onPress={() => onChangeNetwork('testnet')}
-              style={[
-                {
-                  backgroundColor:
-                    network === 'testnet' ? colors.secondary : colors.button,
-                },
-                shadow,
-                t.flex1,
-                t.h10,
-                t.alignCenter,
-                t.justifyCenter,
-                t.roundedLg,
-              ]}>
-              <Paragraph
+            <View style={[t.flex1]}>
+              <Button
                 text="Testnets"
-                align="center"
-                color={colors.white}
-                size={16}
+                onPress={() => onChangeNetwork('testnet')}
+                color={network === 'testnet' ? colors.secondary : colors.gray}
               />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => onChangeNetwork('mainnet')}
-              style={[
-                {
-                  backgroundColor:
-                    network === 'mainnet' ? colors.secondary : colors.button,
-                },
-                t.mL2,
-                shadow,
-                t.flex1,
-                t.h10,
-                t.alignCenter,
-                t.justifyCenter,
-                t.roundedLg,
-              ]}>
-              <Paragraph
+            </View>
+            <View style={[t.flex1, t.mL2]}>
+              <Button
                 text="Mainnets"
-                align="center"
-                color={colors.white}
-                size={16}
+                onPress={() => onChangeNetwork('mainnet')}
+                color={network === 'mainnet' ? colors.secondary : colors.gray}
               />
-            </TouchableOpacity>
+            </View>
           </View>
         )}
         {selectedSetting === 'fingerprint' && (
           <View style={[t.flexRow]}>
-            <TouchableOpacity
-              onPress={() => toggleKeychain()}
-              style={[
-                {backgroundColor: enabled ? colors.secondary : colors.button},
-                shadow,
-                t.flex1,
-                t.h10,
-                t.alignCenter,
-                t.justifyCenter,
-                t.roundedLg,
-              ]}>
-              <Paragraph
+            <View style={[t.flex1]}>
+              <Button
+                onPress={() => toggleKeychain()}
                 text={enabled ? 'Turn off' : 'Turn on'}
-                align="center"
-                color={colors.white}
-                size={16}
+                color={enabled ? colors.secondary : colors.gray}
               />
-            </TouchableOpacity>
-            <TouchableOpacity
-              disabled={!enabled}
-              onPress={() => setNewPasscord()}
-              style={[
-                {backgroundColor: colors.button},
-                t.mL2,
-                enabled ? shadow : {},
-                t.flex1,
-                t.h10,
-                t.alignCenter,
-                t.justifyCenter,
-                t.roundedLg,
-              ]}>
-              <Paragraph
+            </View>
+            <View style={[t.flex1, t.mL2]}>
+              <Button
+                onPress={() => setNewPasscord()}
                 text="Set New PIN"
-                align="center"
-                color={colors.white}
-                size={16}
+                disabled={!enabled}
               />
-            </TouchableOpacity>
+            </View>
           </View>
         )}
       </View>

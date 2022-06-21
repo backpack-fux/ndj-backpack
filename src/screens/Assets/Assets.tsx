@@ -9,7 +9,7 @@ import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {selectSendToken, setToken} from '@app/store/coins/actions';
 import {AssetStackParamList, BaseCoin} from '@app/models';
-import {availableTestNetworks, shadow} from '@app/constants';
+import {availableTestNetworks} from '@app/constants';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
   accountCoinsSelector,
@@ -108,8 +108,7 @@ export const AssetsScreen = () => {
                     t.pL2,
                     t.pR2,
                     t.roundedLg,
-                    isSelected ? {backgroundColor: colors.button} : {},
-                    isSelected ? shadow : {},
+                    isSelected ? {backgroundColor: colors.secondary} : {},
                   ]}>
                   <Image
                     source={{uri: coin.image}}

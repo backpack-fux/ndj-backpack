@@ -39,7 +39,7 @@ export const Toggle = ({
         onPress={() => onChange(!value)}>
         <View
           style={[
-            {backgroundColor: colors.button},
+            {backgroundColor: colors.gray},
             !value ? {} : shadow,
             {borderWidth: border},
             value ? t.borderWhite : t.borderGray200,

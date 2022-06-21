@@ -1,6 +1,5 @@
 import {colors} from '@app/assets/colors.config';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
-import {shadow} from '@app/constants';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {DappStackParamList} from '@app/models';
 import {showSnackbar} from '@app/utils';
@@ -67,8 +66,7 @@ export const DappsScreen = () => {
                         t.pL2,
                         t.pR2,
                         t.roundedLg,
-                        isSelected ? {backgroundColor: colors.button} : {},
-                        isSelected ? shadow : {},
+                        isSelected ? {backgroundColor: colors.secondary} : {},
                       ]}>
                       <Image
                         source={{uri: icon}}

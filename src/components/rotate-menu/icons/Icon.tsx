@@ -33,9 +33,8 @@ export const Icon = ({icon, current, onPress, styleIconText}: Props) => {
             style={[
               styles.iconContainer,
               current === icon.id
-                ? {backgroundColor: colors.button}
+                ? {backgroundColor: colors.secondary}
                 : {backgroundColor: colors.primary},
-              current === icon.id ? shadow : {},
               icon.styles || {},
             ]}>
             {icon.el}
