@@ -26,6 +26,7 @@ export const networkList: Network[] = [
     currency: 'ETH',
     Icon: EthereumIcon,
     explorer: 'https://etherscan.io/address',
+    layer: 1,
   },
   {
     name: 'Polygon',
@@ -35,6 +36,7 @@ export const networkList: Network[] = [
     Icon: PolygonIcon,
     chain: 'eip155',
     explorer: 'https://polygonscan.com/address',
+    layer: 2,
   },
   {
     name: 'BNB',
@@ -43,6 +45,7 @@ export const networkList: Network[] = [
     Icon: BinanceIcon,
     chain: 'bep2',
     explorer: 'https://explorer.binance.org/address',
+    layer: 1,
   },
   {
     name: 'Smart Chain',
@@ -52,6 +55,7 @@ export const networkList: Network[] = [
     chain: 'eip155',
     chainId: {mainnet: 56, testnet: 97},
     explorer: 'https://bscscan.com/address',
+    layer: 1,
   },
   {
     name: 'Solana',
@@ -64,6 +68,7 @@ export const networkList: Network[] = [
       testnet: '8E9rvCKLFQia2Y35HXjjpWzj8weVo44K',
     },
     explorer: 'https://solscan.io/account',
+    layer: 1,
   },
   {
     name: 'Zilliqa',
@@ -72,6 +77,7 @@ export const networkList: Network[] = [
     Icon: ZilliqaIcon,
     chain: 'zip',
     explorer: 'https://viewblock.io/zilliqa/address',
+    layer: 1,
   },
 ];
 

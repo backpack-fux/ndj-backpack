@@ -8,4 +8,5 @@ export interface Network {
   chainId?: {[network: string]: number | string};
   chain: string;
   explorer: string;
+  layer: number;
 }

@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Image, ScrollView, TouchableOpacity, View} from 'react-native';
+import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '@app/assets/colors.config';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {MainStackParamList} from '@app/models';
-import {BaseScreen, Button, Paragraph} from '@app/components';
+import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useSelector} from 'react-redux';
 import _ from 'lodash';
 import {
@@ -15,8 +14,7 @@ import {
   walletsSelector,
 } from '@app/store/wallets/walletsSelector';
 import {getNetworkByChain, showNetworkName, showSnackbar} from '@app/utils';
-import {NetworkName, networkName} from '@app/constants';
-import {Card} from './components';
+import {networkList, NetworkName, networkName} from '@app/constants';
 
 export const SessionApproval = () => {
   const {onAcceptSessionProposal, onRejectSessionProposal} = useWalletConnect();
@@ -25,6 +23,7 @@ export const SessionApproval = () => {
   const wallets = useSelector(walletsSelector);
   const network = useSelector(networkSelector);
   const [selectedAddresses, setSelectedAddresses] = useState<string[]>([]);
+  const [techMode, setTechMode] = useState(false);
 
   const navigation = useNavigation();
   const {proposal} = route.params;
@@ -32,15 +31,11 @@ export const SessionApproval = () => {
   const {proposer, requiredNamespaces} = params;
 
   const {metadata} = proposer;
-  const icon = metadata.icons[0];
   let methods: string[] = [];
 
   const availableChains = Object.values(requiredNamespaces)
     .reduce((chains: string[], values: any) => {
-      methods = _.uniq([
-        ...methods,
-        ...values.methods.map((method: string) => _.startCase(method)),
-      ]);
+      methods = _.uniq([...methods, ...values.methods]);
       return [...chains, ...values.chains];
     }, [])
     .map(c => ({
@@ -51,6 +46,13 @@ export const SessionApproval = () => {
   const availableNetworks = availableChains.map(
     c => c.network,
   ) as NetworkName[];
+
+  const availableLayers = _.groupBy(
+    networkList
+      .filter(item => availableNetworks.includes(item.network))
+      .map(item => ({network: item.network, layer: item.layer})),
+    'layer',
+  );
 
   const availableWallets = wallets.filter(
     w =>
@@ -90,115 +92,225 @@ export const SessionApproval = () => {
   }, [availableWallets]);
 
   return (
-    <BaseScreen noBottom title="Confirm" onBack={onReject}>
+    <BaseScreen noBottom title="Social Contract" onBack={onReject}>
       <ScrollView>
-        {icon && (
-          <Image
-            source={{uri: icon}}
-            style={[t.w10, t.h10, t.selfCenter, t.mB4]}
-          />
-        )}
-        <Paragraph
-          text={`${metadata.name} wants to connect to your wallets`}
-          type="bold"
-          marginLeft={20}
-          marginRight={20}
-          size={20}
-          lineHeight={25}
-          align="center"
-          marginBottom={10}
-        />
-        <Paragraph text={metadata.url} align="center" color={colors.textGray} />
-        <Card>
-          <Paragraph text="Chains:" color={colors.textGray} />
-          <Paragraph
-            text={availableNetworks.map(n => networkName[n]).join(', ')}
-          />
-        </Card>
-        <Card>
-          <Paragraph text="Methods:" color={colors.textGray} />
-          <View>
-            {methods.map((method, index) => (
-              <Paragraph text={`${index + 1}. ${method}`} />
-            ))}
-          </View>
-        </Card>
-
-        {availableWallets.map(wallet => (
-          <Card key={wallet.id}>
-            <Paragraph text={wallet.name} color={colors.textGray} />
-            {wallet.wallets.map(w => {
-              const chain = availableChains.find(
-                c => c.network === w.network,
-              )?.chain;
-
-              if (!chain) {
-                return <></>;
-              }
-
-              const isChecked = selectedAddresses.includes(
-                `${chain}:${w.address}`,
-              );
-
-              return (
-                <TouchableOpacity
-                  key={`${chain}:${w.address}`}
-                  style={[t.flexRow, t.alignCenter]}
-                  onPress={() => onSelectAddress(`${chain}:${w.address}`)}>
-                  <MIcon
-                    name={
-                      isChecked
-                        ? 'checkbox-intermediate'
-                        : 'checkbox-blank-outline'
-                    }
-                    size={35}
-                    color={isChecked ? colors.secondary : colors.textGray}
-                  />
-                  <View style={[t.flex1, t.flexRow, t.mL2, t.selfCenter]}>
-                    <Paragraph
-                      text={`${networkName[w.network]}${showNetworkName(
-                        w.network,
-                        network,
-                      )}: `}
-                      type="bold"
-                    />
-                    <View style={[t.flex1]}>
-                      <Paragraph text={w.address} numberOfLines={1} />
-                    </View>
+        {techMode ? (
+          <Card>
+            <Paragraph
+              text="Connection"
+              align="center"
+              marginBottom={15}
+              size={18}
+            />
+            <View style={[t.flexRow]}>
+              <Paragraph text="Connect To" marginRight={5} />
+              <View style={[t.flex1, t.justifyCenter]}>
+                <Paragraph
+                  text={metadata.url}
+                  color={colors.blue}
+                  numberOfLines={1}
+                />
+              </View>
+            </View>
+            <Paragraph
+              text="Chians"
+              align="center"
+              marginTop={10}
+              marginBottom={15}
+              size={18}
+            />
+            <View style={[t.flexRow, t.justifyAround]}>
+              {Object.keys(availableLayers).map(layer => (
+                <View key={layer} style={[t.flex1, t.itemsCenter]}>
+                  <View>
+                    <Paragraph text={`Layer ${layer}`} />
+                    {availableLayers[layer].map(item => (
+                      <Paragraph
+                        key={item.network}
+                        text={`• ${networkName[item.network]}`}
+                      />
+                    ))}
                   </View>
-                </TouchableOpacity>
-              );
-            })}
-          </Card>
-        ))}
+                </View>
+              ))}
+            </View>
+            <Paragraph
+              text="Chian Methods"
+              align="center"
+              marginTop={10}
+              marginBottom={15}
+              size={18}
+            />
+            <View style={[t.flexRow, t.flexWrap]}>
+              {methods.map(method => (
+                <Paragraph key={method} text={`${method}, `} />
+              ))}
+            </View>
+            <Paragraph
+              text="Wallets"
+              align="center"
+              marginTop={10}
+              marginBottom={15}
+              size={18}
+            />
+            <View>
+              {availableWallets.map(wallet => (
+                <>
+                  {wallet.wallets.map(w => {
+                    const chain = availableChains.find(
+                      c => c.network === w.network,
+                    )?.chain;
 
-        <View style={[t.pL4, t.pR4, t.mT4, t.mB4]}>
-          <View style={[t.flexRow, t.alignCenter]}>
-            <Icon name="md-wallet-outline" size={20} color={colors.white} />
+                    if (!chain) {
+                      return <></>;
+                    }
+
+                    const isChecked = selectedAddresses.includes(
+                      `${chain}:${w.address}`,
+                    );
+
+                    const networkItem = networkList.find(
+                      item => item.network === w.network,
+                    );
+
+                    return (
+                      <TouchableOpacity
+                        key={`${chain}:${w.address}${wallet.network}`}
+                        style={[t.flexRow, t.alignCenter]}
+                        onPress={() =>
+                          onSelectAddress(`${chain}:${w.address}`)
+                        }>
+                        <MIcon
+                          name={
+                            isChecked
+                              ? 'checkbox-intermediate'
+                              : 'checkbox-blank-outline'
+                          }
+                          size={35}
+                          color={isChecked ? colors.secondary : colors.textGray}
+                        />
+                        <View style={[t.flex1, t.mL2, t.flexRow, t.selfCenter]}>
+                          <View style={[t.w24]}>
+                            <Paragraph
+                              text={w.address}
+                              numberOfLines={1}
+                              ellipsizeMode="middle"
+                            />
+                          </View>
+                          <Paragraph
+                            marginLeft={5}
+                            text={networkItem?.currency.toUpperCase()}
+                          />
+                          <Paragraph
+                            text="via"
+                            marginLeft={5}
+                            marginRight={5}
+                          />
+                          <Paragraph
+                            text={`${networkName[w.network]}${showNetworkName(
+                              w.network,
+                              network,
+                            )}`}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </>
+              ))}
+            </View>
+          </Card>
+        ) : (
+          <Card>
+            <Paragraph text="Why" align="center" marginBottom={15} size={18} />
             <Paragraph
-              marginLeft={10}
-              text="View your wallet balance an activity"
+              text="This is like the sign outside a store telling you No Shoes No Shirt No Service, this is a social agreement to kick off commerce"
+              marginBottom={10}
             />
-          </View>
-          <View style={[t.flexRow, t.alignCenter]}>
-            <Icon
-              name="shield-checkmark-outline"
-              size={20}
-              color={colors.white}
+            <Paragraph text="Where" align="center" marginBottom={15} />
+            <View style={[t.flexRow]}>
+              <Paragraph text="UI from" marginRight={5} />
+              <View style={[t.flex1, t.justifyCenter]}>
+                <Paragraph
+                  text={metadata.url}
+                  color={colors.blue}
+                  numberOfLines={1}
+                />
+              </View>
+            </View>
+            <Paragraph
+              text="How"
+              align="center"
+              marginTop={10}
+              marginBottom={15}
             />
             <Paragraph
-              marginLeft={10}
-              text="Request approval for transactions"
+              text="Choosing a wallet is like choosing which card to pay with. So choose which wallet(s) to connect with"
+              marginBottom={10}
             />
-          </View>
-        </View>
+            <View>
+              {availableWallets.map(wallet => (
+                <>
+                  {wallet.wallets.map(w => {
+                    const chain = availableChains.find(
+                      c => c.network === w.network,
+                    )?.chain;
+
+                    if (!chain) {
+                      return <></>;
+                    }
+
+                    const isChecked = selectedAddresses.includes(
+                      `${chain}:${w.address}`,
+                    );
+
+                    return (
+                      <TouchableOpacity
+                        key={`${chain}:${w.address}${wallet.network}`}
+                        style={[t.flexRow, t.alignCenter]}
+                        onPress={() =>
+                          onSelectAddress(`${chain}:${w.address}`)
+                        }>
+                        <MIcon
+                          name={
+                            isChecked
+                              ? 'checkbox-intermediate'
+                              : 'checkbox-blank-outline'
+                          }
+                          size={35}
+                          color={isChecked ? colors.secondary : colors.textGray}
+                        />
+                        <View style={[t.flex1, t.mL2, t.flexRow, t.selfCenter]}>
+                          <Paragraph
+                            text={`${wallet.name} using ${
+                              networkName[w.network]
+                            }${showNetworkName(w.network, network)}`}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </>
+              ))}
+            </View>
+          </Card>
+        )}
       </ScrollView>
-      <View style={[t.mB4, t.mT2]}>
-        <Button
-          disabled={!selectedAddresses.length}
-          text="Connect"
-          onPress={onConnect}
-        />
+      <View style={[t.mB4, t.mT2, t.flexRow]}>
+        <View style={[t.flex1]}>
+          <Button
+            color={techMode ? colors.secondary : colors.gray}
+            text={techMode ? 'View Normal' : 'View Technicals'}
+            onPress={() => setTechMode(!techMode)}
+          />
+        </View>
+        <View style={[t.flex1, t.mL2]}>
+          <Button
+            disabled={!selectedAddresses.length}
+            text="Connect"
+            onPress={onConnect}
+          />
+        </View>
       </View>
     </BaseScreen>
   );
