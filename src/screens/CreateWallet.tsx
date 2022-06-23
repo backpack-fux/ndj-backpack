@@ -157,6 +157,7 @@ export const CreateWalletScreen = () => {
         <View style={styles.rotateMenu}>
           <RotateMenu
             girthAngle={100}
+            disable={true}
             icons={[
               <MaterialIcons
                 id={'Home'}

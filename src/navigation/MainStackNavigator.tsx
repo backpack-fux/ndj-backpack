@@ -151,10 +151,10 @@ export const MainStackNavigator = () => {
         <RotateMenu
           girthAngle={140}
           icons={[
-            <SettingsIcon id="Settings" />,
-            <AssetsIcon id="AssetStack" />,
-            <WalletsIcon id="WalletStack" />,
-            <DappsIcon id="DappStack" />,
+            <SettingsIcon id="Settings" title="Settings" />,
+            <AssetsIcon id="AssetStack" title="Assets" />,
+            <WalletsIcon id="WalletStack" title="Wallets" />,
+            <DappsIcon id="DappStack" title="dApps" />,
           ]}
           onSelect={onSelectMenu}
           defaultIconColor={'gray'}

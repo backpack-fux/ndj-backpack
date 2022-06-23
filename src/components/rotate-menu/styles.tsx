@@ -22,12 +22,37 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  // iconContainer: {
+  //   position: 'absolute',
+  //   top: -((SQUARE_DIMENSIONS.WIDTH * 0.08) / 2),
+  //   left: 0,
+  //   width: SQUARE_DIMENSIONS.WIDTH * 0.08,
+  //   height: SQUARE_DIMENSIONS.WIDTH * 0.08,
+  //   // backgroundColor: colors.background,
+  //   alignItems: 'center',
+  //   borderRadius: 3,
+  //   justifyContent: 'center',
+  //   // justifyContent: 'center',
+  //   // borderRadius: SQUARE_DIMENSIONS.WIDTH * 0.08,
+  // },
+  // iconText: {
+  //   color: '#fff',
+  //   fontSize: 20,
+  //   flex: 0,
+  //   width: SQUARE_DIMENSIONS.WIDTH * 0.4,
+  //   left: -(
+  //     SQUARE_DIMENSIONS.WIDTH * 0.2 -
+  //     (SQUARE_DIMENSIONS.WIDTH * 0.09) / 2
+  //   ),
+  //   textAlign: 'center',
+  //   textTransform: 'capitalize',
+  // },
   iconContainer: {
     position: 'absolute',
-    top: -((SQUARE_DIMENSIONS.WIDTH * 0.08) / 2),
-    left: 0,
-    width: SQUARE_DIMENSIONS.WIDTH * 0.08,
-    height: SQUARE_DIMENSIONS.WIDTH * 0.08,
+    top: -12,
+    left: -15,
+    width: 70,
+    height: 24,
     // backgroundColor: colors.background,
     alignItems: 'center',
     borderRadius: 3,
@@ -37,13 +62,13 @@ export const styles = StyleSheet.create({
   },
   iconText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 14,
     flex: 0,
     width: SQUARE_DIMENSIONS.WIDTH * 0.4,
-    left: -(
-      SQUARE_DIMENSIONS.WIDTH * 0.2 -
-      (SQUARE_DIMENSIONS.WIDTH * 0.09) / 2
-    ),
+    // left: -(
+    //   SQUARE_DIMENSIONS.WIDTH * 0.2 -
+    //   (SQUARE_DIMENSIONS.WIDTH * 0.09) / 2
+    // ),
     textAlign: 'center',
     textTransform: 'capitalize',
   },

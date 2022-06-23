@@ -35,10 +35,10 @@ export const Icon = ({icon, current, onPress, styleIconText}: Props) => {
               current === icon.id
                 ? {backgroundColor: colors.secondary}
                 : {backgroundColor: colors.primary},
-              icon.styles || {},
+              // icon.styles || {},
             ]}>
-            {icon.el}
-            {/* <Text style={[styles.iconText, styleIconText]}>{icon.title}</Text> */}
+            {/* {icon.el} */}
+            <Text style={[styles.iconText, styleIconText]}>{icon.title}</Text>
           </View>
         )}
       </Animated.View>
