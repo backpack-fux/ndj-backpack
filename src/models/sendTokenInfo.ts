@@ -10,4 +10,6 @@ export interface SendTokenInfo {
   isTransferred?: boolean;
   balance?: number;
   transaction?: any;
+  status?: string;
+  date?: Date;
 }

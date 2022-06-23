@@ -1,14 +1,11 @@
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
-import {
-  currencySelector,
-  selectedWalletSelector,
-} from '@app/store/wallets/walletsSelector';
+import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import React, {useCallback, useEffect, useState} from 'react';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import queryString from 'querystring';
 
 import {
-  Image,
   Modal,
   SafeAreaView,
   ScrollView,
@@ -19,33 +16,27 @@ import {
 import {t} from 'react-native-tailwindcss';
 import Clipboard from '@react-native-community/clipboard';
 import {RNCamera} from 'react-native-camera';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '@app/assets/colors.config';
 import {sendTokenInfoSelector} from '@app/store/coins/coinsSelector';
 import {
   getTransferTransaction,
+  setToken,
   transferTokenRequest,
   updateSendTokenInfo,
 } from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
 import {useDebounce} from '@app/uses';
-import {formatCurrency, normalizeNumber} from '@app/utils';
-
-const icon = require('@app/assets/images/icon.png');
+import {normalizeNumber} from '@app/utils';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {AssetStackParamList} from '@app/models';
+import moment from 'moment-timezone';
 
 export const SendScreen = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation<NavigationProp<AssetStackParamList>>();
   const selectedWallet = useSelector(selectedWalletSelector);
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
-  const currency = useSelector(currencySelector);
   const token = sendTokenInfo?.token;
-  const wallet = selectedWallet?.wallets.find(
-    w => w.network === token?.network,
-  );
-
-  const total =
-    (sendTokenInfo?.amount ? Number(sendTokenInfo?.amount) : 0) +
-    (sendTokenInfo?.fee || 0);
 
   const insufficientBalance =
     Number(sendTokenInfo.amount || 0) > (sendTokenInfo.balance || 0);
@@ -53,6 +44,7 @@ export const SendScreen = () => {
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
   const [openScan, setOpenScan] = useState(false);
+  const [focusSendAddress, setFocusSendAddress] = useState(false);
 
   const debouncedToAddress = useDebounce(toAddress, 500);
   const debouncedToAmount = useDebounce(amount, 500);
@@ -92,6 +84,9 @@ export const SendScreen = () => {
       updateSendTokenInfo({
         ...sendTokenInfo,
         amount: value,
+        isTransferred: false,
+        status: undefined,
+        date: undefined,
       }),
     );
   };
@@ -104,6 +99,9 @@ export const SendScreen = () => {
         ...sendTokenInfo,
         toAccount: account,
         amount,
+        isTransferred: false,
+        status: undefined,
+        date: undefined,
       }),
     );
   };
@@ -114,6 +112,9 @@ export const SendScreen = () => {
       updateSendTokenInfo({
         ...sendTokenInfo,
         toAccount: account,
+        isTransferred: false,
+        status: undefined,
+        date: undefined,
       }),
     );
   };
@@ -124,6 +125,9 @@ export const SendScreen = () => {
       updateSendTokenInfo({
         ...sendTokenInfo,
         amount: value,
+        isTransferred: false,
+        status: undefined,
+        date: undefined,
       }),
     );
   };
@@ -138,6 +142,9 @@ export const SendScreen = () => {
         updateSendTokenInfo({
           ...sendTokenInfo,
           toAccount: content,
+          isTransferred: false,
+          status: undefined,
+          date: undefined,
         }),
       );
     }
@@ -145,6 +152,15 @@ export const SendScreen = () => {
 
   const onSendToken = () => {
     dispatch(transferTokenRequest());
+  };
+
+  const onTransaction = () => {
+    if (!token) {
+      return;
+    }
+
+    dispatch(setToken(token));
+    navigation.navigate('Transaction');
   };
 
   const onUpdateSendTokenInfo = useCallback(() => {
@@ -169,121 +185,111 @@ export const SendScreen = () => {
           showsVerticalScrollIndicator={false}
           keyboardDismissMode="on-drag">
           <Card padding={10}>
-            <Paragraph text="Send" align="center" marginBottom={10} />
-            <View style={[t.flexRow, t.p2, t.itemsCenter]}>
-              <Image style={[t.w6, t.h6]} source={icon} />
-              <Paragraph text="Asset" marginLeft={10} marginRight={10} />
-              <View style={[t.flex1]}>
-                <Paragraph
-                  text={`${token?.name.toUpperCase()} (${token?.symbol.toUpperCase()})`}
-                  align="right"
-                />
+            <Paragraph
+              text={selectedWallet?.name}
+              color={colors.blue}
+              align="center"
+              marginBottom={10}
+            />
+            <View style={[t.flexRow]}>
+              <View style={[t.flex1, t.mL4, t.itemsCenter]}>
+                <Paragraph text="Send To" align="center" marginBottom={5} />
+                {focusSendAddress ? (
+                  <View style={[t.h5, t.justifyCenter]}>
+                    <TextInput
+                      placeholder="Send to address"
+                      autoFocus
+                      onBlur={() => setFocusSendAddress(false)}
+                      placeholderTextColor={colors.textGray}
+                      value={sendTokenInfo.toAccount}
+                      onChangeText={value => onUpdateToAccount(value)}
+                      style={[t.flex1, t.textWhite, {fontSize: 16}]}
+                    />
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    style={[t.h5, t.justifyCenter]}
+                    onPress={() => setFocusSendAddress(true)}>
+                    <Paragraph
+                      text={sendTokenInfo.toAccount || 'Send to address'}
+                      numberOfLines={1}
+                      color={
+                        sendTokenInfo.toAccount ? colors.white : colors.textGray
+                      }
+                      ellipsizeMode="middle"
+                    />
+                  </TouchableOpacity>
+                )}
+                <View style={[t.flexRow, t.mT2]}>
+                  <TouchableOpacity style={[t.itemsCenter]} onPress={onPaste}>
+                    <Paragraph text="Paste" size={13} />
+                    <Icon name="content-paste" size={22} color={colors.white} />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[t.itemsCenter, t.mL4]}
+                    onPress={() => setOpenScan(true)}>
+                    <Paragraph text="Scan" size={13} />
+                    <Icon name="scan-helper" size={20} color={colors.white} />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            <View style={[t.flexRow, t.p2, t.itemsCenter]}>
-              <Image style={[t.w6, t.h6]} source={icon} />
-              <Paragraph text="From" marginLeft={10} marginRight={10} />
-              <View style={[t.flex1]}>
-                <Paragraph
-                  text={wallet?.address}
-                  numberOfLines={1}
-                  ellipsizeMode="middle"
-                  align="right"
-                />
-              </View>
-            </View>
-            <View style={[t.flexRow, t.p2, t.itemsCenter]}>
-              <Image style={[t.w6, t.h6]} source={icon} />
-              <Paragraph text="To" marginLeft={10} marginRight={10} />
-              <View style={[t.flex1, t.flexRow]}>
-                <TextInput
-                  placeholder=""
-                  placeholderTextColor={colors.textGray}
-                  value={sendTokenInfo.toAccount}
-                  onChangeText={value => onUpdateToAccount(value)}
-                  style={[t.flex1, t.textWhite, {fontSize: 16}]}
-                />
-                <TouchableOpacity onPress={onPaste} style={[t.pL2, t.pR2]}>
-                  <Paragraph text="Paste" type="bold" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setOpenScan(true)}
-                  style={[t.pL2, t.itemsCenter, t.justifyCenter]}>
-                  <Icon name="scan-helper" size={20} color={colors.white} />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={[t.flexRow, t.p2, t.itemsCenter]}>
-              <Image style={[t.w6, t.h6]} source={icon} />
-              <Paragraph text="Send Amount" marginLeft={10} marginRight={10} />
-              <View style={[t.flex1, t.flexRow, t.itemsCenter]}>
-                <TextInput
-                  value={sendTokenInfo.amount}
-                  onChangeText={value => onUpdateAmount(value)}
-                  placeholder={sendTokenInfo?.token?.symbol.toUpperCase()}
-                  keyboardType="decimal-pad"
-                  placeholderTextColor={colors.textGray}
-                  style={[t.flex1, t.textWhite, t.textRight]}
-                />
-                <TouchableOpacity onPress={onPressMax} style={[t.pL2]}>
-                  <Paragraph text="Max" type="bold" />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Card>
-          <Card padding={10}>
-            <Paragraph text="Receiver" align="center" marginBottom={10} />
-            <View style={[t.flexRow, t.p2, t.itemsCenter]}>
-              <Image style={[t.w6, t.h6]} source={icon} />
-              <Paragraph text="Gets" marginLeft={10} marginRight={10} />
-              <View style={[t.flex1]}>
-                <Paragraph
-                  text={`${
-                    sendTokenInfo.transaction ? sendTokenInfo.amount || 0 : '-'
-                  } ${token?.symbol.toUpperCase()}`}
-                  numberOfLines={1}
-                  ellipsizeMode="middle"
-                  align="right"
-                />
-              </View>
-            </View>
-            <View style={[t.flexRow, t.p2, t.itemsCenter]}>
-              <Image style={[t.w6, t.h6]} source={icon} />
-              <Paragraph text="Network Fee" marginLeft={10} marginRight={10} />
-              <View style={[t.flex1]}>
-                <Paragraph
-                  text={`${
-                    sendTokenInfo.transaction
-                      ? normalizeNumber(sendTokenInfo.fee, 8)
-                      : '-'
-                  } ${token?.symbol.toUpperCase()} (${formatCurrency(
-                    (sendTokenInfo.fee || 0) * (token?.price || 0),
-                    currency,
-                  )})`}
-                  numberOfLines={1}
-                  ellipsizeMode="middle"
-                  align="right"
-                />
+              <View style={[t.flex1, t.mL4, t.itemsCenter]}>
+                <Paragraph text="Send Amount" align="center" marginBottom={5} />
+                <View
+                  style={[
+                    t.h5,
+                    t.justifyCenter,
+                    t.itemsCenter,
+                    t.bgGray300,
+                    t.p1,
+                    t.rounded,
+                    t.w20,
+                  ]}>
+                  <TextInput
+                    value={sendTokenInfo.amount}
+                    onChangeText={value => onUpdateAmount(value)}
+                    placeholder={sendTokenInfo?.token?.symbol.toUpperCase()}
+                    keyboardType="decimal-pad"
+                    placeholderTextColor={colors.textGray}
+                    style={[t.flex1, t.textWhite, {fontSize: 16}]}
+                  />
+                </View>
+                <View style={[t.mT2]}>
+                  <TouchableOpacity onPress={onPressMax}>
+                    <Paragraph
+                      text={`Max ${sendTokenInfo?.token?.symbol.toUpperCase()}`}
+                      size={13}
+                      align="center"
+                    />
+                    <Paragraph
+                      text={normalizeNumber(token?.balance).toString()}
+                      numberOfLines={1}
+                      align="center"
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </Card>
-          <Card padding={10}>
-            <Paragraph text="Total" align="center" marginBottom={10} />
-            <View style={[t.flexRow, t.p2, t.itemsCenter]}>
-              <Image style={[t.w6, t.h6]} source={icon} />
-              <Paragraph text="Max Total" marginLeft={10} marginRight={10} />
-              <View style={[t.flex1]}>
-                <Paragraph
-                  text={
-                    sendTokenInfo.transaction
-                      ? formatCurrency(total * (token?.price || 0), currency)
-                      : '-'
-                  }
-                  numberOfLines={1}
-                  ellipsizeMode="middle"
-                  align="right"
-                />
-              </View>
+          <Card borderColor={colors.secondary} padding={10}>
+            <Paragraph
+              text="Status of Transaction"
+              align="center"
+              marginBottom={10}
+            />
+            <View style={[t.flexRow]}>
+              <Paragraph text="Status:" marginRight={10} />
+              <Paragraph text={sendTokenInfo.status || '-'} />
+            </View>
+            <View style={[t.flexRow, t.mT2]}>
+              <Paragraph text="Time of send:" marginRight={10} />
+              <Paragraph
+                text={
+                  sendTokenInfo.date
+                    ? moment(sendTokenInfo.date).format('DD MMM yyyy hh:mm A')
+                    : '-'
+                }
+              />
             </View>
           </Card>
         </ScrollView>
@@ -299,11 +305,23 @@ export const SendScreen = () => {
             }(${token?.symbol.toUpperCase()}) balance`}
           />
         )}
-        <Button
-          text="Confirm"
-          disabled={!sendTokenInfo.transaction || insufficientBalance}
-          onPress={onSendToken}
-        />
+        <Button text="Tx Details" onPress={onTransaction} />
+        <View style={[t.flexRow, t.mT2]}>
+          <View style={[t.flex1]}>
+            <Button text="Cancel" onPress={() => navigation.goBack()} />
+          </View>
+          <View style={[t.flex1, t.mL2]}>
+            <Button
+              text="Confirm"
+              disabled={
+                !sendTokenInfo.transaction ||
+                insufficientBalance ||
+                sendTokenInfo.isTransferred
+              }
+              onPress={onSendToken}
+            />
+          </View>
+        </View>
       </View>
       <Modal visible={openScan} animationType="slide">
         <View style={t.flex1}>

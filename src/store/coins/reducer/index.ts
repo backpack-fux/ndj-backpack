@@ -136,6 +136,18 @@ export function transferTokenSuccessReducer(state: CoinsReducerType) {
     sendTokenInfo: {
       ...state.sendTokenInfo,
       isTransferred: true,
+      date: new Date(),
+      status: 'success',
+    },
+  };
+}
+
+export function transferTokenFailedReducer(state: CoinsReducerType) {
+  return {
+    ...state,
+    sendTokenInfo: {
+      ...state.sendTokenInfo,
+      status: 'failed',
     },
   };
 }

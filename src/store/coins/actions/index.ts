@@ -108,6 +108,12 @@ export const transferTokenSuccess = () => {
   };
 };
 
+export const transferTokenFailed = () => {
+  return {
+    type: ActionType.TRANSFER_TOKEN_FAILED,
+  };
+};
+
 export const getTransactions = (payload: {
   token: BaseCoin;
   page: number;
