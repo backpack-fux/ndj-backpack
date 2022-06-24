@@ -293,6 +293,43 @@ export const SessionApproval = () => {
                 </>
               ))}
             </View>
+            <Paragraph
+              text="What"
+              align="center"
+              marginTop={10}
+              marginBottom={15}
+              size={18}
+            />
+            <Paragraph text="Sign | Approve | Confirm" />
+            <View style={[t.flexRow]}>
+              <Paragraph text="•" marginLeft={5} marginRight={10} />
+              <View style={[t.flex1]}>
+                <Paragraph
+                  text={
+                    'like signing into an account or agreeing to potentially transact'
+                  }
+                />
+              </View>
+            </View>
+
+            <Paragraph text="Send Messages" marginTop={10} />
+            <View style={[t.flexRow]}>
+              <Paragraph text="•" marginLeft={5} marginRight={10} />
+              <View style={[t.flex1]}>
+                <Paragraph
+                  text={
+                    'like discussing a purchase, you can now send info but not yet spend'
+                  }
+                />
+              </View>
+            </View>
+            <Paragraph text="Spend | Transact | Tx" marginTop={10} />
+            <View style={[t.flexRow]}>
+              <Paragraph text="•" marginLeft={5} marginRight={10} />
+              <View style={[t.flex1]}>
+                <Paragraph text={'buy the thing'} />
+              </View>
+            </View>
           </Card>
         )}
       </ScrollView>
