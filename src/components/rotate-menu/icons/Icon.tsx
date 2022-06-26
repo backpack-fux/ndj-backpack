@@ -34,11 +34,18 @@ export const Icon = ({icon, current, onPress, styleIconText}: Props) => {
               styles.iconContainer,
               current === icon.id
                 ? {backgroundColor: colors.secondary}
-                : {backgroundColor: colors.primary},
+                : {backgroundColor: colors.white},
               // icon.styles || {},
             ]}>
             {/* {icon.el} */}
-            <Text style={[styles.iconText, styleIconText]}>{icon.title}</Text>
+            <Text
+              style={[
+                styles.iconText,
+                styleIconText,
+                {color: current === icon.id ? colors.white : colors.primary},
+              ]}>
+              {icon.title}
+            </Text>
           </View>
         )}
       </Animated.View>
