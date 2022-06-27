@@ -80,11 +80,3 @@ export const networkList: Network[] = [
     layer: 1,
   },
 ];
-
-export const availableTestNetworks = [
-  NetworkName.ethereum,
-  NetworkName.polygon,
-  NetworkName.binanceSmartChain,
-  NetworkName.zilliqa,
-  NetworkName.solana,
-];

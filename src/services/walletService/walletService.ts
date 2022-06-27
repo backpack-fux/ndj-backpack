@@ -1,5 +1,5 @@
 import {NetworkName} from '@app/constants';
-import {ENSInfo, ITransaction, WalletKeys} from '@app/models';
+import {ENSInfo, ITransaction, WalletItem} from '@app/models';
 const bip39 = require('bip39');
 
 abstract class WalletService {
@@ -57,7 +57,7 @@ abstract class WalletService {
   static async createWallets(
     mnemonic: string,
     network?: NetworkName,
-  ): Promise<WalletKeys[]> {
+  ): Promise<WalletItem[]> {
     if (!this.isValidMnemonic(mnemonic)) {
       throw new Error(`Invalid mnemonic phrase: ${mnemonic}`);
     }
@@ -70,23 +70,32 @@ abstract class WalletService {
       }
 
       const keys = await service.generateKeys(mnemonic);
+
       return [
-        {
+        new WalletItem(
           network,
-          ...keys,
-        } as WalletKeys,
+          keys.liveAddress,
+          keys.testAddress,
+          keys.privateKey,
+          keys.ensInfo,
+        ),
       ];
     }
 
-    const wallets: WalletKeys[] = [];
+    const wallets: WalletItem[] = [];
 
     for (const service of this.serviceArray) {
       const keys = await service.generateKeys(mnemonic);
 
-      wallets.push({
-        ...keys,
-        network: service.network,
-      } as WalletKeys);
+      wallets.push(
+        new WalletItem(
+          service.network,
+          keys.liveAddress,
+          keys.testAddress,
+          keys.privateKey,
+          keys.ensInfo,
+        ),
+      );
     }
 
     return wallets;
@@ -161,7 +170,8 @@ abstract class WalletService {
   }
 
   abstract generateKeys(mnemonic: string): Promise<{
-    address: string;
+    liveAddress: string;
+    testAddress: string;
     privateKey: string;
     ensInfo?: ENSInfo | null;
   }>;

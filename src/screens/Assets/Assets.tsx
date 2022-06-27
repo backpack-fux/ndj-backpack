@@ -9,7 +9,6 @@ import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {selectSendToken, setToken} from '@app/store/coins/actions';
 import {AssetStackParamList, BaseCoin} from '@app/models';
-import {availableTestNetworks} from '@app/constants';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
   accountCoinsSelector,
@@ -32,9 +31,6 @@ export const AssetsScreen = () => {
   }, []);
   let coins = useSelector(accountCoinsSelector);
 
-  if (network === 'testnet') {
-    coins = coins.filter(coin => availableTestNetworks.includes(coin.network));
-  }
   coins = coins
     .filter(c => c.enabled)
     .map(coin => {

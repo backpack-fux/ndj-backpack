@@ -103,6 +103,11 @@ export function switchNetworkReducer(
   {payload}: Action<'mainnet' | 'testnet'>,
 ) {
   WalletService.switchNetwork(payload);
+  for (const wallet of state.wallets) {
+    for (const walletItem of wallet.wallets) {
+      walletItem.setIsTestNet(payload === 'testnet');
+    }
+  }
   return {
     ...state,
     network: payload,

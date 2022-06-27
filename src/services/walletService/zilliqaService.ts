@@ -64,7 +64,8 @@ export default class ZilliqaService extends WalletService {
     }
 
     return {
-      address: account.bech32Address,
+      testAddress: account.bech32Address,
+      liveAddress: account.bech32Address,
       privateKey: account.privateKey,
     };
   }

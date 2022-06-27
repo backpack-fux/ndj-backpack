@@ -12,43 +12,58 @@ import moment from 'moment-timezone';
 export default class BinanceService extends WalletService {
   baseURL = 'https://dex.binance.org';
   chain: 'testnet' | 'mainnet' = 'mainnet';
-
-  // baseURL = 'https://testnet-dex.binance.org';
+  testBaseURL = 'https://testnet-dex.binance.org';
   // net = 'mainnet';
-  httpClient: AxiosInstance;
-  bnbClient: BncClient;
+  httpClientLive: AxiosInstance;
+  httpClientTest: AxiosInstance;
+  bnbClientLive: BncClient;
+  bnbClientTest: BncClient;
+
+  get httpClient() {
+    return this.chain === 'mainnet' ? this.httpClientLive : this.httpClientTest;
+  }
+
+  get client() {
+    return this.chain === 'mainnet' ? this.bnbClientLive : this.bnbClientTest;
+  }
 
   constructor() {
     super(NetworkName.binance);
     WalletService.add(this);
 
-    this.bnbClient = new BncClient(this.baseURL);
-    this.bnbClient.chooseNetwork(this.chain as 'testnet' | 'mainnet');
-    this.httpClient = axios.create({
+    this.bnbClientTest = new BncClient(this.testBaseURL);
+    this.bnbClientLive = new BncClient(this.baseURL);
+    this.bnbClientLive.chooseNetwork('mainnet');
+    this.bnbClientTest.chooseNetwork('testnet');
+    this.httpClientLive = axios.create({
       baseURL: this.baseURL + '/api/v1',
     });
-    this.bnbClient.initChain();
+    this.httpClientTest = axios.create({
+      baseURL: this.testBaseURL + '/api/v1',
+    });
+    this.bnbClientLive.initChain();
+    this.bnbClientTest.initChain();
   }
 
   switchNetwork(chain: 'mainnet' | 'testnet') {
     this.chain = chain;
-    // ToDo: need to generate key again in testnet
-    // this.bnbClient.chooseNetwork(this.chain);
   }
 
   async generateKeys(mnemonic: string) {
-    const {privateKey, address} =
-      this.bnbClient.recoverAccountFromMnemonic(mnemonic);
+    const live = this.bnbClientLive.recoverAccountFromMnemonic(mnemonic);
+
+    const test = this.bnbClientTest.recoverAccountFromMnemonic(mnemonic);
 
     return {
-      privateKey,
-      address,
+      privateKey: live.privateKey,
+      liveAddress: live.address,
+      testAddress: test.address,
     };
   }
 
   async getBalance(account: string, address?: string) {
     // Todo: need to get it by once
-    const res = await this.bnbClient.getBalance(account);
+    const res = await this.client.getBalance(account);
     const symbol = address || 'BNB';
     const data = res.find((item: any) => item.symbol === symbol);
 
@@ -78,8 +93,8 @@ export default class BinanceService extends WalletService {
     amount: number,
     asset?: string,
   ): Promise<{transaction: any; fee: number}> {
-    this.bnbClient.setPrivateKey(privateKey);
-    const fromAddress = this.bnbClient.getClientKeyAddress(); // sender address string (e.g. bnb1...)
+    this.client.setPrivateKey(privateKey);
+    const fromAddress = this.client.getClientKeyAddress(); // sender address string (e.g. bnb1...)
 
     if (!fromAddress) {
       throw new Error('Please init wallet');
@@ -130,15 +145,15 @@ export default class BinanceService extends WalletService {
     };
 
     const tx = new Transaction({
-      accountNumber: this.bnbClient.account_number as number,
-      chainId: this.bnbClient.chainId as string,
+      accountNumber: this.client.account_number as number,
+      chainId: this.client.chainId as string,
       msg,
       memo: '',
       sequence,
-      source: this.bnbClient._source,
+      source: this.client._source,
     });
 
-    const signedTx = await this.bnbClient._signingDelegate(tx, signMsg);
+    const signedTx = await this.client._signingDelegate(tx, signMsg);
 
     return {
       transaction: signedTx,
@@ -147,9 +162,9 @@ export default class BinanceService extends WalletService {
   }
 
   async sendTransaction(privateKey: string, tx: any): Promise<void> {
-    this.bnbClient.setPrivateKey(privateKey);
+    this.client.setPrivateKey(privateKey);
 
-    const res = await this.bnbClient.sendTransaction(tx, false);
+    const res = await this.client.sendTransaction(tx, false);
 
     if (res.status !== 200) {
       throw new Error('Failed send transaction');
@@ -157,7 +172,7 @@ export default class BinanceService extends WalletService {
   }
 
   async sign(privateKey: string, message: any) {
-    this.bnbClient.setPrivateKey(privateKey);
+    this.client.setPrivateKey(privateKey);
     console.log(message);
   }
 
@@ -167,12 +182,12 @@ export default class BinanceService extends WalletService {
     types: any,
     data: any,
   ): Promise<any> {
-    this.bnbClient.setPrivateKey(privateKey);
+    this.client.setPrivateKey(privateKey);
     console.log(domain, types, data);
   }
 
   async signTransaction(privateKey: string, data: any): Promise<any> {
-    this.bnbClient.setPrivateKey(privateKey);
+    this.client.setPrivateKey(privateKey);
     console.log(data);
   }
 

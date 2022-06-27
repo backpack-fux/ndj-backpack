@@ -22,16 +22,28 @@ export interface Wallet {
   id: string;
   name: string;
   mnemonic: string;
-  wallets: WalletKeys[];
+  wallets: WalletItem[];
   network?: NetworkName;
 }
 
-export type WalletKeys = {
-  network: NetworkName;
-  address: string;
-  privateKey: string;
-  ensInfo?: ENSInfo;
-};
+export class WalletItem {
+  public isTestNet: boolean = false;
+  constructor(
+    public network: NetworkName,
+    public liveAddress: string,
+    public testAddress: string,
+    public privateKey: string,
+    public ensInfo?: ENSInfo | null,
+  ) {}
+
+  get address() {
+    return this.isTestNet ? this.testAddress : this.liveAddress;
+  }
+
+  setIsTestNet(value: boolean) {
+    this.isTestNet = value;
+  }
+}
 
 export interface ENSInfo {
   name: string;

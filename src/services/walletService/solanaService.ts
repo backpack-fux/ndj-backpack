@@ -51,7 +51,8 @@ export default class SolanaService extends WalletService {
     const keypair = Keypair.fromSeed(derivedSeed);
 
     return {
-      address: keypair.publicKey.toString(),
+      testAddress: keypair.publicKey.toString(),
+      liveAddress: keypair.publicKey.toString(),
       privateKey: keypair.secretKey.toString(),
     };
   }

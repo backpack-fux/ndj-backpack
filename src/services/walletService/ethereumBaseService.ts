@@ -33,7 +33,8 @@ export default class EthereumBaseService extends WalletService {
     const ensInfo = await this.getENSInfo(wallet.address);
 
     return {
-      address: wallet.address,
+      testAddress: wallet.address,
+      liveAddress: wallet.address,
       privateKey: res.privateKey,
       ensInfo,
     };
