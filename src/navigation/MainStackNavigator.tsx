@@ -39,7 +39,9 @@ export const MainStackNavigator = () => {
   const {enabled, verifyPasscode} = useKeychain();
 
   const onSelectMenu = (name: any) => {
-    navigation.dispatch(StackActions.replace(name));
+    setTimeout(() => {
+      navigation.dispatch(StackActions.replace(name));
+    }, 200);
   };
 
   useEffect(() => {

@@ -65,6 +65,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     flex: 0,
     width: SQUARE_DIMENSIONS.WIDTH * 0.4,
+    fontWeight: 'bold',
     // left: -(
     //   SQUARE_DIMENSIONS.WIDTH * 0.2 -
     //   (SQUARE_DIMENSIONS.WIDTH * 0.09) / 2
