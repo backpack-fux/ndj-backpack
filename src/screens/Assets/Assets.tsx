@@ -7,7 +7,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
-import {selectSendToken, setToken} from '@app/store/coins/actions';
+import {setToken} from '@app/store/coins/actions';
 import {AssetStackParamList, BaseCoin} from '@app/models';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
@@ -50,15 +50,6 @@ export const AssetsScreen = () => {
     });
 
   const [selectedCoin, setSelectedCoin] = useState<BaseCoin>();
-
-  const onSend = () => {
-    if (!selectedCoin) {
-      return;
-    }
-
-    dispatch(selectSendToken(selectedCoin));
-    navigation.navigate('Send');
-  };
 
   const onPressToken = () => {
     if (!selectedCoin) {
@@ -140,20 +131,6 @@ export const AssetsScreen = () => {
               onPress={onPressToken}
               disabled={!selectedCoin}
             />
-          </View>
-        </View>
-        <View style={[t.flexRow, t.mT2]}>
-          <View style={[t.flex1]}>
-            <Button
-              text="Receive"
-              onPress={() =>
-                navigation.navigate('Receive', {coin: selectedCoin})
-              }
-              disabled={!selectedCoin}
-            />
-          </View>
-          <View style={[t.flex1, t.mL2]}>
-            <Button text="Send" disabled={!selectedCoin} onPress={onSend} />
           </View>
         </View>
       </View>

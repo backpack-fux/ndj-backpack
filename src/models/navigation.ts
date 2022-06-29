@@ -48,6 +48,7 @@ export type DappStackParamList = {
 export type WalletStackParamList = {
   Wallets: undefined;
   AddWallet: undefined;
+  SelectToken: undefined;
 };
 
 export type AssetStackParamList = {

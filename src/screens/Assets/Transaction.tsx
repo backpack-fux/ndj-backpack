@@ -15,6 +15,7 @@ import {BaseCoin, ITransaction} from '@app/models';
 import {normalizeNumber} from '@app/utils';
 import {t} from 'react-native-tailwindcss';
 import moment from 'moment-timezone';
+
 export const TransactionScreen = () => {
   const dispatch = useDispatch();
   const token = useSelector(tokenSelector);

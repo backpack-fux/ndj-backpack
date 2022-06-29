@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   Alert,
   FlatList,
@@ -10,6 +10,7 @@ import {
 import {t} from 'react-native-tailwindcss';
 import Clipboard from '@react-native-community/clipboard';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import CardFlip from 'react-native-card-flip';
 
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
@@ -24,6 +25,7 @@ import {colors} from '@app/assets/colors.config';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {
   isLoadingTokensSelector,
+  sendTokenInfoSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {
@@ -36,6 +38,13 @@ import {formatCurrency, showSnackbar} from '@app/utils';
 import {borderWidth, networkList, NetworkName} from '@app/constants';
 import {selectWallet} from '@app/store/wallets/actions';
 import {useWalletConnect} from '@app/context/walletconnect';
+import {Send} from './Send';
+import {Receive} from './Receive';
+import {
+  selectSendToken,
+  setToken,
+  transferTokenRequest,
+} from '@app/store/coins/actions';
 
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
@@ -57,7 +66,20 @@ export const WalletsScreen = () => {
   const navigation = useNavigation<NavigationProp<WalletStackParamList>>();
   const wallets = useSelector(walletsSelector);
   const selectedWallet = useSelector(selectedWalletSelector);
+  const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const isLoading = useSelector(isLoadingTokensSelector);
+  const [backScreen, setBackScreen] = useState<'send' | 'receive'>('send');
+
+  const [isBack, setIsBack] = useState(false);
+  const allTokens = useSelector(tokensSelector);
+  const [showSeed, setShowSeed] = useState(false);
+
+  const tokens = (selectedWallet?.id && allTokens[selectedWallet?.id]) || [];
+
+  const insufficientBalance =
+    Number(sendTokenInfo.amount || 0) > (sendTokenInfo.balance || 0);
+
+  let selectedCard: any;
 
   const walletList = useMemo(
     () => wallets.sort(a => (a.id === selectedWallet?.id ? -1 : 1)),
@@ -89,6 +111,76 @@ export const WalletsScreen = () => {
     navigation.navigate('AddWallet');
   };
 
+  const onPressReceive = () => {
+    setBackScreen('receive');
+
+    if (!selectedCard) {
+      return;
+    }
+
+    selectedCard?.flip();
+    setIsBack(true);
+    setShowSeed(false);
+  };
+
+  const onPressSend = () => {
+    setBackScreen('send');
+    if (!selectedCard) {
+      return;
+    }
+
+    selectedCard?.flip();
+    setIsBack(true);
+    setShowSeed(false);
+  };
+
+  const onCancelBack = () => {
+    if (!selectedCard) {
+      return;
+    }
+
+    selectedCard?.flip();
+    setIsBack(false);
+  };
+
+  const onSelectWallet = (w: Wallet) => {
+    if (isBack) {
+      onCancelBack();
+    }
+
+    ReactNativeHapticFeedback.trigger('impactHeavy');
+    dispatch(selectWallet(w));
+  };
+
+  const onOpenSelectScreen = () => {
+    navigation.navigate('SelectToken');
+  };
+
+  const onSendToken = () => {
+    dispatch(transferTokenRequest());
+  };
+
+  useEffect(() => {
+    dispatch(selectSendToken(tokens[0]));
+    dispatch(setToken(tokens[0]));
+  }, [tokens]);
+
+  useEffect(() => {
+    if (
+      insufficientBalance &&
+      isBack &&
+      backScreen === 'send' &&
+      sendTokenInfo.transaction &&
+      !sendTokenInfo.isLoading
+    ) {
+      showSnackbar(
+        `Insufficient ${
+          sendTokenInfo?.token?.name
+        }(${sendTokenInfo?.token?.symbol.toUpperCase()}) balance`,
+      );
+    }
+  }, [insufficientBalance, isBack, backScreen, sendTokenInfo]);
+
   return (
     <BaseScreen>
       <View style={[t.flex1]}>
@@ -97,7 +189,20 @@ export const WalletsScreen = () => {
           keyExtractor={item => `${item.id}`}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => <WalletItem wallet={item} />}
+          renderItem={({item}) => (
+            <WalletItem
+              wallet={item}
+              showSeed={showSeed}
+              onSelectWallet={onSelectWallet}
+              onShowSeed={(value: boolean) => setShowSeed(value)}
+              cardRef={ref => {
+                if (selectedWallet?.id === item.id) {
+                  selectedCard = ref;
+                }
+              }}
+              backScreen={backScreen}
+            />
+          )}
           refreshControl={
             <RefreshControl
               refreshing={isLoading}
@@ -108,29 +213,101 @@ export const WalletsScreen = () => {
           }
         />
       </View>
-      <View style={[t.flexRow, t.mT2]}>
-        <View style={[t.flex1]}>
-          <Button text="Add Wallet" onPress={onAddWallet} />
-        </View>
-        <View style={[t.flex1, t.mL2]}>
-          <Button
-            text="Delete Wallet"
-            onPress={onDelete}
-            disabled={!selectedWallet}
-          />
-        </View>
-      </View>
+      {!isBack ? (
+        <>
+          <View style={[t.flexRow, t.mT2]}>
+            <View style={[t.flex1]}>
+              <Button text="Add Wallet" onPress={onAddWallet} />
+            </View>
+            <View style={[t.flex1, t.mL2]}>
+              <Button
+                text="Delete Wallet"
+                onPress={onDelete}
+                disabled={!selectedWallet}
+              />
+            </View>
+          </View>
+          <View style={[t.flexRow, t.mT2]}>
+            <View style={[t.flex1]}>
+              <Button
+                text="Receive"
+                onPress={onPressReceive}
+                disabled={!selectedWallet}
+              />
+            </View>
+            <View style={[t.flex1, t.mL2]}>
+              <Button
+                text="Send"
+                onPress={onPressSend}
+                disabled={!selectedWallet}
+              />
+            </View>
+          </View>
+        </>
+      ) : (
+        <>
+          {backScreen === 'send' && (
+            <Button
+              text="Change Token"
+              onPress={onOpenSelectScreen}
+              disabled={!selectedWallet}
+            />
+          )}
+          <View style={[t.flexRow, t.mT2]}>
+            <View style={[t.flex1]}>
+              <Button
+                text="Cancel"
+                onPress={onCancelBack}
+                disabled={!selectedWallet}
+              />
+            </View>
+            <View style={[t.flex1, t.mL2]}>
+              {backScreen === 'send' ? (
+                <Button
+                  text="Submit"
+                  onPress={onSendToken}
+                  disabled={
+                    !sendTokenInfo.transaction ||
+                    insufficientBalance ||
+                    sendTokenInfo.isTransferred ||
+                    sendTokenInfo.isLoading
+                  }
+                />
+              ) : (
+                <Button
+                  text="Change Token"
+                  onPress={onOpenSelectScreen}
+                  disabled={!selectedWallet}
+                />
+              )}
+            </View>
+          </View>
+        </>
+      )}
     </BaseScreen>
   );
 };
 
-const WalletItem = ({wallet}: {wallet: Wallet}) => {
+const WalletItem = ({
+  wallet,
+  backScreen,
+  cardRef,
+  showSeed,
+  onShowSeed,
+  onSelectWallet,
+}: {
+  wallet: Wallet;
+  showSeed: boolean;
+  onShowSeed: (value: boolean) => void;
+  backScreen: 'send' | 'receive';
+  cardRef?: (ref: any) => void;
+  onSelectWallet: (wallet: Wallet) => void;
+}) => {
   const {sessions} = useWalletConnect();
   const dispatch = useDispatch();
   const selectedWallet = useSelector(selectedWalletSelector);
   const tokens = useSelector(tokensSelector);
   const currency = useSelector(currencySelector);
-  const [showSeed, setShowSeed] = useState(false);
   const network = useSelector(networkSelector);
 
   const tokenList = tokens[wallet.id] || [];
@@ -235,164 +412,179 @@ const WalletItem = ({wallet}: {wallet: Wallet}) => {
     );
   };
 
-  const onSelectWallet = () => {
-    ReactNativeHapticFeedback.trigger('impactHeavy');
-    dispatch(selectWallet(wallet));
-  };
-
   return (
-    <Card borderColor={isSelected ? colors.secondary : colors.primaryLight}>
-      <TouchableOpacity onLongPress={onRenameWallet} style={[t.pT1, t.pB2]}>
-        <Paragraph
-          text={`${wallet.name}${network === 'testnet' ? ' (Testnet)' : ''}`}
-          align="center"
-          type="bold"
-        />
-      </TouchableOpacity>
-      <View style={[t.flexRow, t.mT2, t.itemsCenter]}>
-        <View style={[t.mR10, t.itemsCenter]}>
-          <View
-            style={[t.h16, t.flexRow, t.mB1, t.itemsCenter, t.justifyCenter]}>
-            {ensAvatar ? (
-              <Image
-                source={{uri: ensAvatar}}
-                style={[t.w16, t.h16, t.selfCenter, t.flex1]}
-                resizeMode="contain"
+    <CardFlip
+      style={{height: showSeed && isSelected ? 470 : 220}}
+      ref={ref => cardRef && cardRef(ref)}>
+      <Card borderColor={isSelected ? colors.secondary : colors.primaryLight}>
+        <TouchableOpacity onLongPress={onRenameWallet} style={[t.pT1, t.pB2]}>
+          <Paragraph
+            text={`${wallet.name}${network === 'testnet' ? ' (Testnet)' : ''}`}
+            align="center"
+            type="bold"
+          />
+        </TouchableOpacity>
+        <View style={[t.flexRow, t.mT2, t.itemsCenter]}>
+          <View style={[t.mR10, t.itemsCenter]}>
+            <View
+              style={[t.h16, t.flexRow, t.mB1, t.itemsCenter, t.justifyCenter]}>
+              {ensAvatar ? (
+                <Image
+                  source={{uri: ensAvatar}}
+                  style={[t.w16, t.h16, t.selfCenter, t.flex1]}
+                  resizeMode="contain"
+                />
+              ) : topTokens.length ? (
+                <View
+                  style={[t.h16, {width: 64 + (topTokens.length - 1) * 25}]}>
+                  {topTokens.map((token, index) => (
+                    <Image
+                      key={token.id}
+                      source={{uri: token.image}}
+                      style={[
+                        {right: index * 25},
+                        t.absolute,
+                        t.w16,
+                        t.h16,
+                        t.selfCenter,
+                        t.flex1,
+                        t.roundedFull,
+                        t.bgWhite,
+                        boxShadow,
+                      ]}
+                      resizeMode="contain"
+                    />
+                  ))}
+                </View>
+              ) : (
+                <Image
+                  source={logo}
+                  style={[t.w16, t.h16]}
+                  resizeMode="contain"
+                />
+              )}
+            </View>
+            <View style={[{width: 100}, t.selfCenter]}>
+              <Paragraph
+                text={ensName || ethAddress}
+                numberOfLines={1}
+                ellipsizeMode="middle"
               />
-            ) : topTokens.length ? (
-              <View style={[t.h16, {width: 64 + (topTokens.length - 1) * 25}]}>
-                {topTokens.map((token, index) => (
+            </View>
+            <TouchableOpacity
+              onPress={() => onSelectWallet(wallet)}
+              style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT2]}>
+              {isSelected && (
+                <View style={[t.w4, t.h4]}>
                   <Image
-                    key={token.id}
-                    source={{uri: token.image}}
+                    source={toggle}
                     style={[
-                      {right: index * 25},
-                      t.absolute,
-                      t.w16,
-                      t.h16,
+                      t.w4,
+                      t.h4,
                       t.selfCenter,
                       t.flex1,
-                      t.roundedFull,
-                      t.bgWhite,
-                      boxShadow,
+                      isSelected ? t.opacity100 : t.opacity50,
                     ]}
                     resizeMode="contain"
                   />
-                ))}
-              </View>
-            ) : (
-              <Image
-                source={logo}
-                style={[t.w16, t.h16]}
-                resizeMode="contain"
-              />
-            )}
-          </View>
-          <View style={[{width: 100}, t.selfCenter]}>
-            <Paragraph
-              text={ensName || ethAddress}
-              numberOfLines={1}
-              ellipsizeMode="middle"
-            />
-          </View>
-          <TouchableOpacity
-            onPress={() => onSelectWallet()}
-            style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT2]}>
-            {isSelected && (
-              <View style={[t.w4, t.h4]}>
-                <Image
-                  source={toggle}
-                  style={[
-                    t.w4,
-                    t.h4,
-                    t.selfCenter,
-                    t.flex1,
-                    isSelected ? t.opacity100 : t.opacity50,
-                  ]}
-                  resizeMode="contain"
-                />
-              </View>
-            )}
-            <Paragraph
-              text={isSelected ? 'default' : 'set default'}
-              size={12}
-              marginLeft={10}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={[t.flex1, t.justifyBetween]}>
-          <View
-            style={[
-              t.bgGray300,
-              t.roundedLg,
-              t.itemsCenter,
-              t.justifyCenter,
-              t.h8,
-            ]}>
-            <Paragraph text={formatCurrency(totalBalance, currency)} />
-          </View>
-          <View style={[t.flexRow, t.mT4, t.justifyAround]}>
-            <TouchableOpacity
-              style={[t.itemsCenter]}
-              onPress={() => setShowSeed(!showSeed)}>
-              <Paragraph text="Seed" align="center" marginRight={5} />
+                </View>
+              )}
               <Paragraph
-                text={`${wallet.mnemonic.split(' ').length} W`}
-                type="bold"
+                text={isSelected ? 'default' : 'set default'}
+                size={12}
+                marginLeft={10}
               />
             </TouchableOpacity>
-            <View style={[t.itemsCenter]}>
-              <Paragraph text="dApps" align="center" />
-              <View style={[t.flexRow, t.itemsCenter]}>
+          </View>
+          <View style={[t.flex1, t.justifyBetween]}>
+            <View
+              style={[
+                t.bgGray300,
+                t.mL4,
+                t.mR4,
+                t.roundedLg,
+                t.itemsCenter,
+                t.justifyCenter,
+                {height: 30},
+              ]}>
+              <Paragraph text={formatCurrency(totalBalance, currency)} />
+            </View>
+            <View style={[t.flexRow, t.mT4, t.justifyAround]}>
+              <TouchableOpacity
+                style={[t.itemsCenter]}
+                onPress={() => isSelected && onShowSeed(!showSeed)}>
+                <Paragraph text="Seed" align="center" marginRight={5} />
                 <Paragraph
-                  text={walletSessions.length.toString()}
+                  text={`${wallet.mnemonic.split(' ').length} W`}
                   type="bold"
-                  align="center"
                 />
+              </TouchableOpacity>
+              <View style={[t.itemsCenter]}>
+                <Paragraph text="dApps" align="center" />
+                <View style={[t.flexRow, t.itemsCenter]}>
+                  <Paragraph
+                    text={walletSessions.length.toString()}
+                    type="bold"
+                    align="center"
+                  />
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
-      {showSeed && (
-        <TouchableOpacity
-          style={[t.mT4]}
-          onPress={() => setShowSeed(!showSeed)}
-          onLongPress={onCopySeed}>
-          <View
-            style={[
-              t.p2,
-              t.roundedLg,
-              t.borderYellow200,
-              t.bgGray300,
-              {borderWidth},
-            ]}>
-            <Paragraph
-              text="Seeds are private use them wisely, like you would with any other personal data"
-              align="center"
-              marginBottom={5}
-            />
-            <View style={[t.flexRow, t.justifyCenter]}>
-              <Paragraph text="tap" type="bold" marginRight={5} />
-              <Paragraph text="to close seed" />
+        {isSelected && showSeed && (
+          <TouchableOpacity
+            style={[t.mT4]}
+            onPress={() => onShowSeed(!showSeed)}
+            onLongPress={onCopySeed}>
+            <View
+              style={[
+                t.p2,
+                t.roundedLg,
+                t.borderYellow200,
+                t.bgGray300,
+                {borderWidth},
+              ]}>
+              <Paragraph
+                text="Seeds are private use them wisely, like you would with any other personal data"
+                align="center"
+                marginBottom={5}
+              />
+              <View style={[t.flexRow, t.justifyCenter]}>
+                <Paragraph text="tap" type="bold" marginRight={5} />
+                <Paragraph text="to close seed" />
+              </View>
+              <View style={[t.flexRow, t.justifyCenter]}>
+                <Paragraph text="long press" type="bold" marginRight={5} />
+                <Paragraph text="to copy your seed phrase" />
+              </View>
             </View>
-            <View style={[t.flexRow, t.justifyCenter]}>
-              <Paragraph text="long press" type="bold" marginRight={5} />
-              <Paragraph text="to copy your seed phrase" />
+            <View
+              style={[
+                t.p2,
+                t.mT2,
+                t.roundedLg,
+                t.borderPink500,
+                {borderWidth},
+              ]}>
+              <Paragraph
+                text={wallet.mnemonic}
+                font="Montserrat"
+                letterSpacing={3.5}
+                align="center"
+                lineHeight={24}
+              />
             </View>
-          </View>
-          <View
-            style={[t.p2, t.mT2, t.roundedLg, t.borderPink500, {borderWidth}]}>
-            <Paragraph
-              text={wallet.mnemonic}
-              font="Montserrat"
-              letterSpacing={3.5}
-              align="center"
-              lineHeight={24}
-            />
-          </View>
-        </TouchableOpacity>
-      )}
-    </Card>
+          </TouchableOpacity>
+        )}
+      </Card>
+      <Card borderColor={isSelected ? colors.secondary : colors.primaryLight}>
+        {isSelected ? (
+          <>{backScreen === 'send' ? <Send /> : <Receive />}</>
+        ) : (
+          <View style={{height: 160}} />
+        )}
+      </Card>
+    </CardFlip>
   );
 };
