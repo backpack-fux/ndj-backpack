@@ -113,7 +113,7 @@ export const SessionApproval = () => {
               </View>
             </View>
             <Paragraph
-              text="Chians"
+              text="Chains"
               align="center"
               marginTop={10}
               marginBottom={15}
@@ -135,7 +135,7 @@ export const SessionApproval = () => {
               ))}
             </View>
             <Paragraph
-              text="Chian Methods"
+              text="Chain Methods"
               align="center"
               marginTop={10}
               marginBottom={15}
