@@ -522,7 +522,7 @@ const WalletItem = ({
                 />
               </TouchableOpacity>
               <View style={[t.itemsCenter]}>
-                <Paragraph text="dApps" align="center" />
+                <Paragraph text="Apps" align="center" />
                 <View style={[t.flexRow, t.itemsCenter]}>
                   <Paragraph
                     text={walletSessions.length.toString()}

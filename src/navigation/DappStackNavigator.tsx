@@ -14,7 +14,7 @@ export const DappStackNavigator = () => {
         name="Dapps"
         options={{
           ...stackOptions,
-          headerTitle: 'dApp Management',
+          headerTitle: 'App Management',
         }}
         component={DappsScreen}
       />
@@ -22,7 +22,7 @@ export const DappStackNavigator = () => {
         name="DappDetails"
         options={{
           ...stackOptions,
-          headerTitle: 'dApp Management',
+          headerTitle: 'App Management',
         }}
         component={DappDetailScreen}
       />

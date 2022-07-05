@@ -156,7 +156,7 @@ export const MainStackNavigator = () => {
             <SettingsIcon id="Settings" title="Settings" />,
             <AssetsIcon id="AssetStack" title="Assets" />,
             <WalletsIcon id="WalletStack" title="Wallets" />,
-            <DappsIcon id="DappStack" title="dApps" />,
+            <DappsIcon id="DappStack" title="Apps" />,
           ]}
           onSelect={onSelectMenu}
           defaultIconColor={'gray'}
