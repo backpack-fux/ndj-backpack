@@ -161,8 +161,10 @@ export const WalletsScreen = () => {
   };
 
   useEffect(() => {
-    dispatch(selectSendToken(tokens[0]));
-    dispatch(setToken(tokens[0]));
+    if (tokens.length) {
+      dispatch(selectSendToken(tokens[0]));
+      dispatch(setToken(tokens[0]));
+    }
   }, [tokens]);
 
   useEffect(() => {
