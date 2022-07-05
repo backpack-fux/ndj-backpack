@@ -2,7 +2,7 @@ import {Paragraph} from '@app/components';
 import React, {useCallback, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import queryString from 'querystring';
+import * as queryString from 'query-string';
 
 import {
   ActivityIndicator,

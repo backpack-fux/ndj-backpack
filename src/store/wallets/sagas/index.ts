@@ -91,6 +91,7 @@ function* createWallet({
 export function* reloadWatcher() {
   yield takeLatest(ActionType.INIT_STORE as any, reload);
   yield takeLatest(ActionType.REFRESH_WALLETS as any, reload);
+  yield takeLatest(ActionType.ADD_WALLET as any, reload);
 }
 
 export function* createWalletWatcher() {
