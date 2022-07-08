@@ -2,6 +2,7 @@ import {Action, Wallet} from '@app/models';
 import {WalletsReducerType} from '../walletsReducer';
 import _ from 'lodash';
 import {WalletService} from '@app/services';
+import {wyreService} from '@app/services/wyreService';
 
 export function setLoadingReducer(
   state: WalletsReducerType,
@@ -103,6 +104,7 @@ export function switchNetworkReducer(
   {payload}: Action<'mainnet' | 'testnet'>,
 ) {
   WalletService.switchNetwork(payload);
+  wyreService.setNetwork(payload);
   for (const wallet of state.wallets) {
     for (const walletItem of wallet.wallets) {
       walletItem.setIsTestNet(payload === 'testnet');

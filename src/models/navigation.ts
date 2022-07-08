@@ -35,6 +35,10 @@ export type MainStackParamList = {
     event: SignClientTypes.EventArguments['session_request'];
     session?: SessionTypes.Struct;
   };
+  BuyToken: {
+    url: string;
+    token: BaseCoin;
+  };
   WebView: {
     url: string;
     title?: string;

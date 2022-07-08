@@ -31,6 +31,7 @@ import DappsIcon from '@app/assets/icons/dapps.svg';
 import WalletsIcon from '@app/assets/icons/wallets.svg';
 import SettingsIcon from '@app/assets/icons/settings.svg';
 import {SessionSignSolana} from '@app/screens/Dapps/SessionSignSolana';
+import {BuyTokenScreen} from '@app/screens/BuyToken';
 
 const Stack = createNativeStackNavigator();
 
@@ -147,6 +148,15 @@ export const MainStackNavigator = () => {
             headerShown: false,
           }}
           component={SetPasscodeScreen}
+        />
+        <Stack.Screen
+          name="BuyToken"
+          options={{
+            ...stackOptions,
+            presentation: 'formSheet',
+            headerShown: false,
+          }}
+          component={BuyTokenScreen}
         />
       </Stack.Navigator>
       <View style={styles.rotateMenu}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Image, RefreshControl, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {t} from 'react-native-tailwindcss';
@@ -8,23 +8,31 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {setToken} from '@app/store/coins/actions';
-import {AssetStackParamList, BaseCoin} from '@app/models';
+import {AssetStackParamList, BaseCoin, MainStackParamList} from '@app/models';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
   accountCoinsSelector,
   isLoadingTokensSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
-import {normalizeNumber, showNetworkName} from '@app/utils';
-import {networkSelector} from '@app/store/wallets/walletsSelector';
+import {normalizeNumber, showNetworkName, showSnackbar} from '@app/utils';
+import {
+  networkSelector,
+  selectedWalletSelector,
+} from '@app/store/wallets/walletsSelector';
+import {wyreSupportCoins} from '@app/constants/wyre';
+import {wyreService} from '@app/services/wyreService';
 
 export const AssetsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigationProp<AssetStackParamList>>();
+  const mainNavigation = useNavigation<NavigationProp<MainStackParamList>>();
 
   const isLoading = useSelector(isLoadingTokensSelector);
   const tokens = useSelector(tokensSelector);
   const network = useSelector(networkSelector);
+  const selectedWallet = useSelector(selectedWalletSelector);
+  const [loadingWyre, setLoadingWyre] = useState(false);
 
   const allTokens = Object.values(tokens).reduce((all, current) => {
     return all.concat(current);
@@ -51,6 +59,20 @@ export const AssetsScreen = () => {
 
   const [selectedCoin, setSelectedCoin] = useState<BaseCoin>();
 
+  const isSupportWyre = useMemo(() => {
+    if (!selectedCoin) {
+      return false;
+    }
+
+    const wyreSupportCoin = wyreSupportCoins.find(
+      item =>
+        item.network === selectedCoin.network &&
+        item.symbol === selectedCoin.symbol.toUpperCase(),
+    );
+
+    return !!wyreSupportCoin;
+  }, [selectedCoin]);
+
   const onPressToken = () => {
     if (!selectedCoin) {
       return;
@@ -64,8 +86,43 @@ export const AssetsScreen = () => {
     navigation.navigate('Tokens');
   };
 
+  const onByToken = async () => {
+    if (!selectedCoin || !selectedWallet) {
+      return;
+    }
+
+    const wallet = selectedWallet.wallets.find(
+      w => w.network === selectedCoin.network,
+    );
+
+    if (!wallet) {
+      return;
+    }
+
+    setLoadingWyre(true);
+
+    try {
+      const res = await wyreService.reserve(
+        selectedCoin.symbol.toUpperCase(),
+        wallet.address,
+      );
+
+      if (res.url) {
+        console.log(res);
+        mainNavigation.navigate('BuyToken', {
+          url: res.url,
+          token: selectedCoin,
+        });
+      }
+    } catch (err: any) {
+      showSnackbar(err.message);
+    } finally {
+      setLoadingWyre(false);
+    }
+  };
+
   return (
-    <BaseScreen>
+    <BaseScreen isLoading={loadingWyre}>
       <View style={[t.flex1]}>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -121,6 +178,13 @@ export const AssetsScreen = () => {
         </ScrollView>
       </View>
       <View>
+        <View style={[t.mT2]}>
+          <Button
+            text="Buy a Token"
+            disabled={!isSupportWyre || loadingWyre}
+            onPress={() => onByToken()}
+          />
+        </View>
         <View style={[t.flexRow, t.mT2]}>
           <View style={[t.flex1]}>
             <Button text="Add a Token" onPress={onOpenAddToken} />

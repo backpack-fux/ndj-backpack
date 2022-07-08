@@ -11,6 +11,7 @@ import {addWallet, setLoading, setReadyApp, setWallets} from '../actions';
 import {showSnackbar} from '@app/utils';
 import {NetworkName} from '@app/constants';
 import {WalletService} from '@app/services';
+import {wyreService} from '@app/services/wyreService';
 
 function* reload() {
   try {
@@ -21,6 +22,7 @@ function* reload() {
     const network = state.wallets.network;
 
     WalletService.switchNetwork(network);
+    wyreService.setNetwork(network);
 
     yield put(setReadyApp());
 
