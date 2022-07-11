@@ -1,20 +1,20 @@
-import React, {useEffect} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StyleSheet, View} from 'react-native';
-import {t} from 'react-native-tailwindcss';
+import React, { useEffect } from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, View } from 'react-native';
+import { t } from 'react-native-tailwindcss';
 import {
   NavigationProp,
   StackActions,
   useNavigation,
 } from '@react-navigation/native';
 
-import {screenOptions, stackOptions} from './config';
-import {WalletStackNavigator} from './WalletStackNavigator';
-import {AssetStackNavigator} from './AssetStackNavigator';
-import {DappStackNavigator} from './DappStackNavigator';
-import {RotateMenu} from '@app/components';
-import {colors} from '@app/assets/colors.config';
-import {MainStackParamList} from '@app/models';
+import { screenOptions, stackOptions } from './config';
+import { WalletStackNavigator } from './WalletStackNavigator';
+import { AssetStackNavigator } from './AssetStackNavigator';
+import { DappStackNavigator } from './DappStackNavigator';
+import { RotateMenu } from '@app/components';
+import { colors } from '@app/assets/colors.config';
+import { MainStackParamList } from '@app/models';
 import {
   SessionApproval,
   SessionSendTransaction,
@@ -22,27 +22,25 @@ import {
   SessionSignTypedData,
   SessionUnsuportedMethod,
 } from '@app/screens/Dapps';
-import {SettingsScreen} from '@app/screens/Settings';
-import {useKeychain} from '@app/context/keychain';
-import {SetPasscodeScreen} from '@app/screens/SetPasscode';
+import { SettingsScreen } from '@app/screens/Settings';
+import { useKeychain } from '@app/context/keychain';
+import { SetPasscodeScreen } from '@app/screens/SetPasscode';
 
 import AssetsIcon from '@app/assets/icons/assets.svg';
 import DappsIcon from '@app/assets/icons/dapps.svg';
 import WalletsIcon from '@app/assets/icons/wallets.svg';
 import SettingsIcon from '@app/assets/icons/settings.svg';
-import {SessionSignSolana} from '@app/screens/Dapps/SessionSignSolana';
-import {BuyTokenScreen} from '@app/screens/BuyToken';
+import { SessionSignSolana } from '@app/screens/Dapps/SessionSignSolana';
+import { BuyTokenScreen } from '@app/screens/BuyToken';
 
 const Stack = createNativeStackNavigator();
 
 export const MainStackNavigator = () => {
   const navigation = useNavigation<NavigationProp<MainStackParamList>>();
-  const {enabled, verifyPasscode} = useKeychain();
+  const { enabled, verifyPasscode } = useKeychain();
 
   const onSelectMenu = (name: any) => {
-    setTimeout(() => {
-      navigation.dispatch(StackActions.replace(name));
-    }, 200);
+    navigation.navigate(name)
   };
 
   useEffect(() => {
@@ -58,17 +56,17 @@ export const MainStackNavigator = () => {
         screenOptions={screenOptions}>
         <Stack.Screen
           name="WalletStack"
-          options={{animation: 'fade'}}
+          options={{ animation: 'fade', gestureEnabled: false }}
           component={WalletStackNavigator}
         />
         <Stack.Screen
           name="AssetStack"
-          options={{animation: 'fade'}}
+          options={{ animation: 'fade', gestureEnabled: false }}
           component={AssetStackNavigator}
         />
         <Stack.Screen
           name="DappStack"
-          options={{animation: 'fade'}}
+          options={{ animation: 'fade', gestureEnabled: false }}
           component={DappStackNavigator}
         />
         <Stack.Screen
@@ -76,7 +74,9 @@ export const MainStackNavigator = () => {
           options={{
             animation: 'fade',
             ...stackOptions,
+            headerBackVisible: false,
             headerTitle: 'Backpack Settings',
+            gestureEnabled: false,
           }}
           component={SettingsScreen}
         />
