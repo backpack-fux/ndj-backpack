@@ -13,7 +13,7 @@ export const DappDetailScreen = () => {
     useWalletConnect();
 
   const {session} = route.params;
-  console.log(session);
+
   const disconnect = () => {
     onDisconnect(session.topic);
     navigation.goBack();
@@ -60,7 +60,7 @@ export const DappDetailScreen = () => {
       </View>
       <View style={[t.flexRow, t.mT2]}>
         <View style={[t.flex1]}>
-          <Button text="Disconnect" onPress={() => disconnect} />
+          <Button text="Disconnect" onPress={disconnect} />
         </View>
       </View>
     </BaseScreen>
