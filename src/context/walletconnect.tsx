@@ -33,6 +33,7 @@ export interface WalletConnectContextProps {
   onDisconnect: (topic: string) => void;
   onToggleTransactionEnable: (topic: string, value: boolean) => void;
   onPairing: (uri: string) => void;
+  onClearPairingTopic: () => void;
 }
 
 export const WalletConnectContext = createContext<WalletConnectContextProps>({
@@ -43,6 +44,7 @@ export const WalletConnectContext = createContext<WalletConnectContextProps>({
   onDisconnect: () => {},
   onToggleTransactionEnable: () => {},
   onPairing: () => {},
+  onClearPairingTopic: () => {},
 });
 
 export const useWalletConnect = () => {
@@ -138,6 +140,10 @@ export const WalletConnectProvider = (props: {
     },
     [client],
   );
+
+  const onClearPairingTopic = () => {
+    setParingTopic('');
+  };
 
   const onSessionProposal = useCallback(
     (proposal: SignClientTypes.EventArguments['session_proposal']) => {
@@ -322,6 +328,7 @@ export const WalletConnectProvider = (props: {
         onAcceptSessionProposal,
         onDisconnect,
         onToggleTransactionEnable,
+        onClearPairingTopic,
       }}>
       {props.children}
     </WalletConnectContext.Provider>

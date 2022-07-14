@@ -33,7 +33,7 @@ export const TokensScreen = () => {
   const searchedCoins = useSelector(searchedCoinsSelector);
   const isSearchingCoins = useSelector(isSearchingCoinsSelector);
 
-  const debouncedSearchText = useDebounce(searchText, 500);
+  const debouncedSearchText = useDebounce(searchText, 1000);
 
   const coins = debouncedSearchText
     ? searchedCoins.map(

@@ -416,7 +416,7 @@ const WalletItem = ({
 
   return (
     <CardFlip
-      style={{height: showSeed && isSelected ? 470 : 220}}
+      style={{height: showSeed ? 470 : 220}}
       ref={ref => cardRef && cardRef(ref)}>
       <Card borderColor={isSelected ? colors.secondary : colors.primaryLight}>
         <TouchableOpacity onLongPress={onRenameWallet} style={[t.pT1, t.pB2]}>
@@ -514,7 +514,7 @@ const WalletItem = ({
             <View style={[t.flexRow, t.mT4, t.justifyAround]}>
               <TouchableOpacity
                 style={[t.itemsCenter]}
-                onPress={() => isSelected && onShowSeed(!showSeed)}>
+                onPress={() => onShowSeed(!showSeed)}>
                 <Paragraph text="Seed" align="center" marginRight={5} />
                 <Paragraph
                   text={`${wallet.mnemonic.split(' ').length} W`}

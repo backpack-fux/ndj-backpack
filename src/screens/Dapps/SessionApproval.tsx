@@ -17,7 +17,11 @@ import {getNetworkByChain, showNetworkName, showSnackbar} from '@app/utils';
 import {networkList, NetworkName, networkName} from '@app/constants';
 
 export const SessionApproval = () => {
-  const {onAcceptSessionProposal, onRejectSessionProposal} = useWalletConnect();
+  const {
+    onAcceptSessionProposal,
+    onRejectSessionProposal,
+    onClearPairingTopic,
+  } = useWalletConnect();
   const route =
     useRoute<RouteProp<MainStackParamList, 'SessionApprovalModal'>>();
   const wallets = useSelector(walletsSelector);
@@ -90,6 +94,10 @@ export const SessionApproval = () => {
       navigation.goBack();
     }
   }, [availableWallets]);
+
+  useEffect(() => {
+    onClearPairingTopic();
+  }, []);
 
   return (
     <BaseScreen noBottom title="Social Contract" onBack={onReject}>
