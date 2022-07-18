@@ -86,7 +86,7 @@ export const AssetsScreen = () => {
     navigation.navigate('Tokens');
   };
 
-  const onByToken = async () => {
+  const onBuyToken = async () => {
     if (!selectedCoin || !selectedWallet) {
       return;
     }
@@ -108,7 +108,6 @@ export const AssetsScreen = () => {
       );
 
       if (res.url) {
-        console.log(res);
         mainNavigation.navigate('BuyToken', {
           url: res.url,
           token: selectedCoin,
@@ -182,7 +181,7 @@ export const AssetsScreen = () => {
           <Button
             text="Buy a Token"
             disabled={!isSupportWyre || loadingWyre}
-            onPress={() => onByToken()}
+            onPress={() => onBuyToken()}
           />
         </View>
         <View style={[t.flexRow, t.mT2]}>
