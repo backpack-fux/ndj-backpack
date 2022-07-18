@@ -332,13 +332,15 @@ const WalletItem = ({
   const topTokens = useMemo(
     () =>
       tokenList
+        .slice()
         .filter(a => a.balance && a.balance > 0)
         .sort((a, b) =>
           (a.balance || 0) * (a.price || 0) > (b.balance || 0) * (b.price || 0)
             ? -1
             : 1,
         )
-        .slice(0, 3),
+        .splice(0, 3)
+        .reverse(),
     [tokenList],
   );
 

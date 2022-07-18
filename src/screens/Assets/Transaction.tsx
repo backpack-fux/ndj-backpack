@@ -61,7 +61,9 @@ export const TransactionScreen = () => {
       <FlatList
         data={transactions}
         renderItem={({item}) => <Transaction item={item} token={token} />}
-        keyExtractor={item => item.hash + item.timeStamp + item.index}
+        keyExtractor={item =>
+          `${item.hash}-${item.timeStamp}-${item.index}-${item.value}`
+        }
         showsHorizontalScrollIndicator={false}
         ListFooterComponent={() =>
           isLoading ? (
@@ -98,7 +100,6 @@ const Transaction = ({item, token}: {item: ITransaction; token?: BaseCoin}) => {
       : colors.blue;
   return (
     <View
-      key={item.hash + item.timeStamp + item.index}
       style={[
         shadow,
         t.bgPurple500,
