@@ -1,13 +1,15 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import {t} from 'react-native-tailwindcss';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import CardFlip from 'react-native-card-flip';
+
 import {colors} from '@app/assets/colors.config';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {MainStackParamList, Wallet} from '@app/models';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
-import {useSelector} from 'react-redux';
 import _ from 'lodash';
 import {
   networkSelector,
@@ -15,6 +17,18 @@ import {
 } from '@app/store/wallets/walletsSelector';
 import {getNetworkByChain, showNetworkName, showSnackbar} from '@app/utils';
 import {networkList, NetworkName, networkName} from '@app/constants';
+
+const shadow = {
+  shadowColor: '#fff',
+  shadowOffset: {
+    width: 0,
+    height: 5,
+  },
+  shadowOpacity: 0.6,
+  shadowRadius: 1,
+
+  elevation: 5,
+};
 
 export const SessionApproval = () => {
   const {
@@ -29,6 +43,13 @@ export const SessionApproval = () => {
   const [selectedAddresses, setSelectedAddresses] = useState<string[]>([]);
   const [techMode, setTechMode] = useState(false);
 
+  const card = useRef<any>();
+
+  const toggleMode = () => {
+    setTechMode(!techMode);
+    card.current?.flip();
+  };
+
   const navigation = useNavigation();
   const {proposal} = route.params;
   const {params} = proposal;
@@ -37,18 +58,16 @@ export const SessionApproval = () => {
   const {metadata} = proposer;
   let methods: string[] = [];
 
-  const availableChains = useMemo(() => {
-    return Object.values(requiredNamespaces)
-      .reduce((chains: string[], values: any) => {
-        methods = _.uniq([...methods, ...values.methods]);
-        return [...chains, ...values.chains];
-      }, [])
-      .map(c => ({
-        network: getNetworkByChain(c, network),
-        chain: c,
-      }))
-      .filter(c => c.network);
-  }, [requiredNamespaces]);
+  const availableChains = Object.values(requiredNamespaces)
+    .reduce((chains: string[], values: any) => {
+      methods = _.uniq([...methods, ...values.methods]);
+      return [...chains, ...values.chains];
+    }, [])
+    .map(c => ({
+      network: getNetworkByChain(c, network),
+      chain: c,
+    }))
+    .filter(c => c.network);
 
   const availableNetworks = useMemo(
     () => availableChains.map(c => c.network) as NetworkName[],
@@ -143,9 +162,18 @@ export const SessionApproval = () => {
 
   return (
     <BaseScreen noBottom title="Social Contract" onBack={onReject}>
-      <ScrollView>
-        {techMode ? (
-          <Card>
+      <CardFlip style={[t.flex1]} ref={card}>
+        <View
+          style={[
+            t.bgPurple500,
+            t.p4,
+            t.roundedXl,
+            t.border2,
+            t.mB4,
+            shadow,
+            t.borderPurple200,
+          ]}>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Paragraph
               text="Connection"
               align="center"
@@ -285,9 +313,19 @@ export const SessionApproval = () => {
                 </>
               ))}
             </View>
-          </Card>
-        ) : (
-          <Card>
+          </ScrollView>
+        </View>
+        <View
+          style={[
+            t.bgPurple500,
+            t.p4,
+            t.roundedXl,
+            t.border2,
+            t.mB4,
+            shadow,
+            t.borderPurple200,
+          ]}>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Paragraph text="Why" align="center" marginBottom={15} size={18} />
             <Paragraph
               text="This is like the sign outside a store telling you No Shoes No Shirt No Service, this is a social agreement to kick off commerce"
@@ -412,15 +450,15 @@ export const SessionApproval = () => {
                 <Paragraph text={'buy the thing'} />
               </View>
             </View>
-          </Card>
-        )}
-      </ScrollView>
+          </ScrollView>
+        </View>
+      </CardFlip>
       <View style={[t.mB4, t.mT2, t.flexRow]}>
         <View style={[t.flex1]}>
           <Button
             color={techMode ? colors.secondary : colors.gray}
             text={techMode ? 'View Normal' : 'View Technicals'}
-            onPress={() => setTechMode(!techMode)}
+            onPress={toggleMode}
           />
         </View>
         <View style={[t.flex1, t.mL2]}>
