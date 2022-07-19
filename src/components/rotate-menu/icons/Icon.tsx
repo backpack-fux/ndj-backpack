@@ -1,5 +1,4 @@
 import {colors} from '@app/assets/colors.config';
-import {shadow} from '@app/constants';
 import React from 'react';
 import {
   Animated,

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '@app/assets/colors.config';
 import {useWalletConnect} from '@app/context/walletconnect';
-import {MainStackParamList} from '@app/models';
+import {MainStackParamList, Wallet} from '@app/models';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useSelector} from 'react-redux';
 import _ from 'lodash';
@@ -37,30 +37,68 @@ export const SessionApproval = () => {
   const {metadata} = proposer;
   let methods: string[] = [];
 
-  const availableChains = Object.values(requiredNamespaces)
-    .reduce((chains: string[], values: any) => {
-      methods = _.uniq([...methods, ...values.methods]);
-      return [...chains, ...values.chains];
-    }, [])
-    .map(c => ({
-      network: getNetworkByChain(c, network),
-      chain: c,
-    }))
-    .filter(c => c.network);
-  const availableNetworks = availableChains.map(
-    c => c.network,
-  ) as NetworkName[];
+  const availableChains = useMemo(() => {
+    return Object.values(requiredNamespaces)
+      .reduce((chains: string[], values: any) => {
+        methods = _.uniq([...methods, ...values.methods]);
+        return [...chains, ...values.chains];
+      }, [])
+      .map(c => ({
+        network: getNetworkByChain(c, network),
+        chain: c,
+      }))
+      .filter(c => c.network);
+  }, [requiredNamespaces]);
 
-  const availableLayers = _.groupBy(
-    networkList
-      .filter(item => availableNetworks.includes(item.network))
-      .map(item => ({network: item.network, layer: item.layer})),
-    'layer',
+  const availableNetworks = useMemo(
+    () => availableChains.map(c => c.network) as NetworkName[],
+    [availableChains],
   );
 
-  const availableWallets = wallets.filter(
-    w =>
-      w.wallets.filter(c => availableNetworks.includes(c.network)).length > 0,
+  const availableLayers = useMemo(
+    () =>
+      _.groupBy(
+        networkList
+          .filter(item => availableNetworks.includes(item.network))
+          .map(item => ({network: item.network, layer: item.layer})),
+        'layer',
+      ),
+    [availableNetworks],
+  );
+
+  const availableWallets = useMemo(
+    () =>
+      wallets.filter(
+        w =>
+          w.wallets.filter(c => availableNetworks.includes(c.network)).length >
+          0,
+      ),
+    [wallets],
+  );
+
+  const availableAddresses = useMemo(
+    () =>
+      availableWallets.reduce((ids: string[], wallet: Wallet) => {
+        const items: string[] = wallet.wallets
+          .map(w => {
+            const chain = availableChains.find(
+              c => c.network === w.network,
+            )?.chain;
+            if (!chain) {
+              return '';
+            }
+            return `${chain}:${w.address}`;
+          })
+          .filter(w => w);
+
+        return [...ids, ...items];
+      }, []),
+    [availableWallets, availableChains],
+  );
+
+  const isSelectedAll = useMemo(
+    () => _.isEqual(selectedAddresses, availableAddresses),
+    [selectedAddresses, availableAddresses],
   );
 
   const onConnect = async () => {
@@ -84,6 +122,10 @@ export const SessionApproval = () => {
     }
 
     setSelectedAddresses(addresses);
+  };
+
+  const onSelectAll = () => {
+    setSelectedAddresses(isSelectedAll ? [] : availableAddresses);
   };
 
   useEffect(() => {
@@ -162,6 +204,22 @@ export const SessionApproval = () => {
               size={18}
             />
             <View>
+              <TouchableOpacity
+                style={[t.flexRow, t.alignCenter, t.mB2]}
+                onPress={() => onSelectAll()}>
+                <MIcon
+                  name={
+                    isSelectedAll
+                      ? 'checkbox-intermediate'
+                      : 'checkbox-blank-outline'
+                  }
+                  size={35}
+                  color={isSelectedAll ? colors.secondary : colors.textGray}
+                />
+                <View style={[t.flex1, t.mL2, t.flexRow, t.selfCenter]}>
+                  <Paragraph text="Select All" type="bold" />
+                </View>
+              </TouchableOpacity>
               {availableWallets.map(wallet => (
                 <>
                   {wallet.wallets.map(w => {
@@ -257,6 +315,22 @@ export const SessionApproval = () => {
               marginBottom={10}
             />
             <View>
+              <TouchableOpacity
+                style={[t.flexRow, t.alignCenter, t.mB2]}
+                onPress={() => onSelectAll()}>
+                <MIcon
+                  name={
+                    isSelectedAll
+                      ? 'checkbox-intermediate'
+                      : 'checkbox-blank-outline'
+                  }
+                  size={35}
+                  color={isSelectedAll ? colors.secondary : colors.textGray}
+                />
+                <View style={[t.flex1, t.mL2, t.flexRow, t.selfCenter]}>
+                  <Paragraph text="Select All" type="bold" />
+                </View>
+              </TouchableOpacity>
               {availableWallets.map(wallet => (
                 <>
                   {wallet.wallets.map(w => {
