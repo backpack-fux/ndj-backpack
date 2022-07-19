@@ -617,7 +617,7 @@ export class RotateMenu extends React.Component<Props, any> {
     currentIconAngle =
       this.adjustCurrentIconAngleExponentially(currentIconAngle);
 
-    if (currentIconAngle > 220 && currentIconAngle < 310) {
+    if (currentIconAngle > 210 && currentIconAngle < 330) {
       this.setIconDisplayState(icon.id, true);
     } else {
       this.setIconDisplayState(icon.id, false);

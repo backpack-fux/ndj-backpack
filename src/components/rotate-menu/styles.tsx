@@ -49,16 +49,12 @@ export const styles = StyleSheet.create({
   // },
   iconContainer: {
     position: 'absolute',
-    top: -12,
-    left: -15,
+    top: -((SQUARE_DIMENSIONS.WIDTH * 0.08) / 2),
     width: 70,
     height: 24,
-    // backgroundColor: colors.background,
     alignItems: 'center',
     borderRadius: 3,
     justifyContent: 'center',
-    // justifyContent: 'center',
-    // borderRadius: SQUARE_DIMENSIONS.WIDTH * 0.08,
   },
   iconText: {
     color: '#fff',
@@ -66,10 +62,6 @@ export const styles = StyleSheet.create({
     flex: 0,
     width: SQUARE_DIMENSIONS.WIDTH * 0.4,
     fontWeight: 'bold',
-    // left: -(
-    //   SQUARE_DIMENSIONS.WIDTH * 0.2 -
-    //   (SQUARE_DIMENSIONS.WIDTH * 0.09) / 2
-    // ),
     textAlign: 'center',
     textTransform: 'capitalize',
   },
