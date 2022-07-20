@@ -3,7 +3,7 @@ import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
 import {getPrivateKeyByParams} from './HelperUtil';
 import {Wallet} from '@app/models';
 import {formatJsonRpcError, formatJsonRpcResult} from '@json-rpc-tools/utils';
-import {ERROR} from '@walletconnect/utils';
+import {getInternalError, getSdkError} from '@walletconnect/utils';
 import {WalletService} from '@app/services';
 import {NetworkName} from '@app/constants';
 
@@ -17,7 +17,7 @@ export async function approveSolanaRequest(
   const service = WalletService.getServiceByNetwork(NetworkName.solana);
 
   if (!service || !privateKey) {
-    throw new Error(ERROR.MISSING_OR_INVALID.format().message);
+    throw new Error(getInternalError('MISSING_OR_INVALID').message);
   }
   console.log('request.method', request.method);
   switch (request.method) {
@@ -38,7 +38,7 @@ export async function approveSolanaRequest(
       return formatJsonRpcResult(id, {signature});
 
     default:
-      throw new Error(ERROR.UNKNOWN_JSONRPC_METHOD.format().message);
+      throw new Error(getSdkError('INVALID_METHOD').message);
   }
 }
 
@@ -47,8 +47,5 @@ export function rejectSolanaRequest(
 ) {
   const {id} = request;
 
-  return formatJsonRpcError(
-    id,
-    ERROR.JSONRPC_REQUEST_METHOD_REJECTED.format().message,
-  );
+  return formatJsonRpcError(id, getSdkError('USER_REJECTED_METHODS').message);
 }

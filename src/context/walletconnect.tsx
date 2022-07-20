@@ -18,7 +18,7 @@ import SignClient from '@walletconnect/sign-client';
 import {SessionTypes, SignClientTypes} from '@walletconnect/types';
 import {COSMOS_SIGNING_METHODS} from '@app/constants/COSMOSData';
 import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
-import {ERROR} from '@walletconnect/utils';
+import {getSdkError} from '@walletconnect/utils';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
 
@@ -186,13 +186,13 @@ export const WalletConnectProvider = (props: {
     async (proposal: SignClientTypes.EventArguments['session_proposal']) => {
       await client?.reject({
         id: proposal.id,
-        reason: ERROR.JSONRPC_REQUEST_METHOD_REJECTED.format(),
+        reason: getSdkError('USER_REJECTED_METHODS'),
       });
     };
   }, []);
 
   const onDisconnect = async (topic: string) => {
-    await client?.disconnect({topic, reason: ERROR.USER_DISCONNECTED.format()});
+    await client?.disconnect({topic, reason: getSdkError('USER_DISCONNECTED')});
 
     setSessions(client?.session.values || []);
   };

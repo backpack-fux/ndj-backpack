@@ -3,7 +3,7 @@ import {Wallet} from '@app/models';
 import {WalletService} from '@app/services';
 import {formatJsonRpcError, formatJsonRpcResult} from '@json-rpc-tools/utils';
 import {SignClientTypes} from '@walletconnect/types';
-import {ERROR} from '@walletconnect/utils';
+import {getInternalError, getSdkError} from '@walletconnect/utils';
 import {getNetworkByChain} from './index';
 import {
   getPrivateKeyByParams,
@@ -23,7 +23,7 @@ export async function approveEIP155Request(
   const service = networkName && WalletService.getServiceByNetwork(networkName);
 
   if (!service || !privateKey) {
-    throw new Error(ERROR.MISSING_OR_INVALID.format().message);
+    throw new Error(getInternalError('MISSING_OR_INVALID').message);
   }
 
   switch (request.method) {
@@ -59,7 +59,7 @@ export async function approveEIP155Request(
       );
       return formatJsonRpcResult(id, signature);
     default:
-      throw new Error(ERROR.UNKNOWN_JSONRPC_METHOD.format().message);
+      throw new Error(getSdkError('INVALID_METHOD').message);
   }
 }
 
@@ -68,8 +68,5 @@ export function rejectEIP155Request(
 ) {
   const {id} = request;
 
-  return formatJsonRpcError(
-    id,
-    ERROR.JSONRPC_REQUEST_METHOD_REJECTED.format().message,
-  );
+  return formatJsonRpcError(id, getSdkError('USER_REJECTED_METHODS').message);
 }
