@@ -1,9 +1,18 @@
 import React, {useMemo, useState} from 'react';
-import {Image, RefreshControl, TouchableOpacity, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {
+  Image,
+  RefreshControl,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {useDispatch, useSelector} from 'react-redux';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
@@ -33,6 +42,7 @@ export const AssetsScreen = () => {
   const network = useSelector(networkSelector);
   const selectedWallet = useSelector(selectedWalletSelector);
   const [loadingWyre, setLoadingWyre] = useState(false);
+  const focused = useIsFocused();
 
   const allTokens = Object.values(tokens).reduce((all, current) => {
     return all.concat(current);
@@ -127,7 +137,7 @@ export const AssetsScreen = () => {
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
-              refreshing={isLoading}
+              refreshing={isLoading && focused}
               onRefresh={() => dispatch(refreshWallets())}
               tintColor={colors.white}
               titleColor={colors.white}

@@ -5,10 +5,17 @@ import {DappStackParamList} from '@app/models';
 import {showSnackbar} from '@app/utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {Image, Modal, SafeAreaView, ScrollView, View} from 'react-native';
+import {
+  Image,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import {RNCamera} from 'react-native-camera';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 

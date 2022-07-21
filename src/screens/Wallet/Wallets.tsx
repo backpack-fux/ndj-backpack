@@ -11,7 +11,7 @@ import {t} from 'react-native-tailwindcss';
 import Clipboard from '@react-native-community/clipboard';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import CardFlip from 'react-native-card-flip';
-
+import * as _ from 'lodash';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -22,7 +22,11 @@ import {
 } from '@app/store/wallets/walletsSelector';
 import {Wallet, WalletStackParamList} from '@app/models';
 import {colors} from '@app/assets/colors.config';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {
   isLoadingTokensSelector,
   sendTokenInfoSelector,
@@ -69,6 +73,8 @@ export const WalletsScreen = () => {
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const isLoading = useSelector(isLoadingTokensSelector);
   const [backScreen, setBackScreen] = useState<'send' | 'receive'>('send');
+  // const [focused, setFocused] = useState(true);
+  const focused = useIsFocused();
 
   const [isBack, setIsBack] = useState(false);
   const allTokens = useSelector(tokensSelector);
@@ -82,7 +88,8 @@ export const WalletsScreen = () => {
   let selectedCard: any;
 
   const walletList = useMemo(
-    () => wallets.sort(a => (a.id === selectedWallet?.id ? -1 : 1)),
+    () =>
+      _.cloneDeep(wallets).sort(a => (a.id === selectedWallet?.id ? -1 : 1)),
     [wallets, selectedWallet],
   );
 
@@ -188,6 +195,7 @@ export const WalletsScreen = () => {
       <View style={[t.flex1]}>
         <FlatList
           data={walletList}
+          listKey="wallet"
           keyExtractor={item => `${item.id}`}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -207,8 +215,8 @@ export const WalletsScreen = () => {
           )}
           refreshControl={
             <RefreshControl
-              refreshing={isLoading}
-              onRefresh={() => dispatch(refreshWallets())}
+              refreshing={isLoading && focused}
+              onRefresh={() => !isLoading && dispatch(refreshWallets())}
               tintColor={colors.white}
               titleColor={colors.white}
             />
@@ -331,7 +339,7 @@ const WalletItem = ({
 
   const topTokens = useMemo(
     () =>
-      tokenList
+      _.cloneDeep(tokenList)
         .slice()
         .filter(a => a.balance && a.balance > 0)
         .sort((a, b) =>

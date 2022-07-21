@@ -1,12 +1,11 @@
 import React, {useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
-import {Image, View, TouchableOpacity} from 'react-native';
+import {Image, View, TouchableOpacity, TextInput} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {Paragraph, QRCode} from '@app/components';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {colors} from '@app/assets/colors.config';
 import {tokenSelector} from '@app/store/coins/coinsSelector';
-import {TextInput} from 'react-native-gesture-handler';
 import Clipboard from '@react-native-community/clipboard';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {showSnackbar} from '@app/utils';
