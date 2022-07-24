@@ -143,7 +143,7 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
                   resizeMode="contain"
                 />
                 <Text style={[t.text4xl, t.mT4, t.textWhite, t.fontMono]}>
-                  New Dao Jones
+                  backpack
                 </Text>
               </View>
             </>

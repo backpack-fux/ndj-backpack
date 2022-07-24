@@ -100,7 +100,7 @@ export const WalletsScreen = () => {
 
     Alert.alert(
       'Delete Wallet',
-      'Are you sure to delete the selected wallet?',
+      'Are you sure you want to delete the selected wallet?',
       [
         {
           text: 'Cancel',

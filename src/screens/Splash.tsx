@@ -16,7 +16,7 @@ export const SplashScreen = () => {
           resizeMode="contain"
         />
         <Text style={[t.text4xl, t.mT4, t.textWhite, t.fontMono]}>
-          New Dao Jones
+          backpack
         </Text>
       </View>
     </BaseScreen>

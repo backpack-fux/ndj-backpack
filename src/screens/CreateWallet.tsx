@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from 'react-native';
@@ -108,9 +107,6 @@ export const CreateWalletScreen = () => {
                   style={[{width: width * 0.5, height: width * 0.5}]}
                   resizeMode="contain"
                 />
-                <Text style={[t.text2xl, t.mT4, t.textWhite, t.fontMono]}>
-                  New Dao Jones
-                </Text>
               </View>
               <Card>
                 <Paragraph text="Import existing wallet" align="center" />
