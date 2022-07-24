@@ -22,6 +22,9 @@ class WyreService {
 
     this.liveAxiosInstance = axios.create({
       baseURL: 'https://api.sendwyre.com',
+      headers: {
+        Authorization: 'Bearer SK-JDU478CL-7DFVHG66-EPWGT7EJ-TUM8ARME',
+      },
     });
   }
 
