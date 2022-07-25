@@ -66,14 +66,14 @@ export const SettingsScreen = () => {
           <View style={[t.flexRow]}>
             <View style={[t.flex1]}>
               <Button
-                text="Testnets"
+                text="Fake Money"
                 onPress={() => onChangeNetwork('testnet')}
                 color={network === 'testnet' ? colors.secondary : colors.gray}
               />
             </View>
             <View style={[t.flex1, t.mL2]}>
               <Button
-                text="Mainnets"
+                text="Real Money"
                 onPress={() => onChangeNetwork('mainnet')}
                 color={network === 'mainnet' ? colors.secondary : colors.gray}
               />
