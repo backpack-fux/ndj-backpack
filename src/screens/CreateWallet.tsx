@@ -90,7 +90,7 @@ export const CreateWalletScreen = () => {
     <>
       <BaseScreen
         isLoading={isLoading}
-        noBottom={isAddWalletModal}
+        noBottom
         title={isAddWalletModal ? 'Add Wallet' : ''}
         onBack={() => navigation.goBack()}>
         <View style={[t.flex1]}>
@@ -133,7 +133,15 @@ export const CreateWalletScreen = () => {
               <View style={[t.flexRow, t.mT2, t.wFull]}>
                 {!mnemonic ? (
                   <View style={[t.wFull]}>
-                    <Button text="Create" onPress={onCreate} />
+                    <Paragraph
+                      text="OR"
+                      align="center"
+                      marginTop={10}
+                      marginBottom={20}
+                    />
+                    <View style={[t.wFull]}>
+                      <Button text="Create" onPress={onCreate} />
+                    </View>
                   </View>
                 ) : (
                   <View style={[t.wFull]}>
@@ -149,28 +157,6 @@ export const CreateWalletScreen = () => {
           </ScrollView>
         </View>
       </BaseScreen>
-      {!isAddWalletModal && (
-        <View style={styles.rotateMenu}>
-          <RotateMenu
-            girthAngle={100}
-            disable={true}
-            icons={[
-              <MaterialIcons
-                id={'Home'}
-                name="home"
-                color={colors.white}
-                size={30}
-              />,
-            ]}
-            onSelect={() => {}}
-            defaultIconColor={'gray'}
-            styleIconText={[t.bgTransparent]}
-            iconHideOnTheBackDuration={100}
-            isExpDistCorrection={false}
-            noExpDistCorrectionDegree={20}
-          />
-        </View>
-      )}
     </>
   );
 };
