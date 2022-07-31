@@ -67,7 +67,7 @@ export const WalletConnectProvider = (props: {
 
   const initClient = async () => {
     const wClient = await SignClient.init({
-      projectId: 'f17194a7efd15ee24623a532ccff7c77',
+      projectId: '6deff5a02e50ce1ec41397b27b372189',
       relayUrl: 'wss://relay.walletconnect.com',
       metadata: {
         name: 'NDJ Wallet',

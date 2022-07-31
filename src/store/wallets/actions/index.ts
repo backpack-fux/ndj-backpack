@@ -16,6 +16,12 @@ export const setMnemonic = (payload: string) => {
   };
 };
 
+export const createDefaultWallets = () => {
+  return {
+    type: ActionType.CREATE_DEFAULT_WALLETS,
+  };
+};
+
 export const createWallet = (payload: {
   mnemonic: string;
   name?: string;
@@ -92,5 +98,11 @@ export const renameWallet = (payload: {id: string; name: string}) => {
   return {
     type: ActionType.RENAME_WALLET,
     payload,
+  };
+};
+
+export const setIsReadFieldGuide = () => {
+  return {
+    type: ActionType.SET_IS_READ_FIELD_GUIDE,
   };
 };

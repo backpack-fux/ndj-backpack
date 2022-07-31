@@ -17,7 +17,12 @@ import {
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {setToken} from '@app/store/coins/actions';
-import {AssetStackParamList, BaseCoin, MainStackParamList} from '@app/models';
+import {
+  AssetStackParamList,
+  BaseCoin,
+  MainStackParamList,
+  RootStackParamList,
+} from '@app/models';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
   accountCoinsSelector,
@@ -35,7 +40,7 @@ import {wyreService} from '@app/services/wyreService';
 export const AssetsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigationProp<AssetStackParamList>>();
-  const mainNavigation = useNavigation<NavigationProp<MainStackParamList>>();
+  const rootNavigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const isLoading = useSelector(isLoadingTokensSelector);
   const tokens = useSelector(tokensSelector);
@@ -118,9 +123,8 @@ export const AssetsScreen = () => {
       );
 
       if (res.url) {
-        mainNavigation.navigate('BuyToken', {
+        rootNavigation.navigate('BuyToken', {
           url: res.url,
-          token: selectedCoin,
         });
       }
     } catch (err: any) {

@@ -19,12 +19,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {createWallet} from '@app/store/wallets/actions';
-import * as _ from 'lodash';
-//@ts-ignore
-import bip39 from 'react-native-bip39';
+
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {colors} from '@app/assets/colors.config';
 import {Wallet} from '@app/models';
+import {generateMnemonicPhrase} from '@app/utils';
 
 const logo = require('@app/assets/images/logo.png');
 const {width} = Dimensions.get('screen');
@@ -33,16 +32,13 @@ export const CreateWalletScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const route = useRoute();
-  const isAddWalletModal = route.name === 'AddWallet';
+  const isAddWalletModal =
+    route.name === 'AddWallet' || route.name === 'ImportWallet';
   const wallets = useSelector(walletsSelector);
   const [tempWallets, setTempWallets] = useState<Wallet[]>([]);
 
   useEffect(() => {
-    if (
-      isAddWalletModal &&
-      tempWallets.length &&
-      wallets.length !== tempWallets.length
-    ) {
+    if (isAddWalletModal && wallets.length !== tempWallets.length) {
       navigation.goBack();
     }
 
@@ -65,13 +61,8 @@ export const CreateWalletScreen = () => {
     dispatch(createWallet({mnemonic: newMnemonic}));
   };
 
-  const generateMnemonicPhrase = useCallback(async () => {
-    const mnemonicString: string = await bip39.generateMnemonic(128);
-    const words = mnemonicString.split(' ');
-    if (words.length !== _.uniq(words).length) {
-      generateMnemonicPhrase();
-      return;
-    }
+  const createMnemonicPhrase = useCallback(async () => {
+    const mnemonicString: string = await generateMnemonicPhrase();
 
     setNewMnemonic(mnemonicString);
   }, []);
@@ -83,8 +74,8 @@ export const CreateWalletScreen = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    generateMnemonicPhrase();
-  }, [generateMnemonicPhrase]);
+    createMnemonicPhrase();
+  }, [createMnemonicPhrase]);
 
   return (
     <>
@@ -96,9 +87,10 @@ export const CreateWalletScreen = () => {
         <View style={[t.flex1]}>
           <ScrollView
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={isAddWalletModal ? [t.flex1] : []}
             keyboardDismissMode="on-drag">
             <KeyboardAvoidingView
-              style={[t.flex1]}
+              style={[t.flex1, t.justifyCenter]}
               behavior="position"
               keyboardVerticalOffset={150}>
               <View style={[t.justifyCenter, t.itemsCenter, t.mB4]}>

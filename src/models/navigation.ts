@@ -5,6 +5,13 @@ export type RootStackParamList = {
   Splash: undefined;
   CreateWallet: undefined;
   MainStack: undefined;
+  FieldGuide: {
+    allowGoBack?: boolean;
+  };
+  ImportWallet: undefined;
+  BuyToken: {
+    url: string;
+  };
 };
 
 export type MainStackParamList = {
@@ -34,10 +41,6 @@ export type MainStackParamList = {
   SessionSignSolanaModal: {
     event: SignClientTypes.EventArguments['session_request'];
     session?: SessionTypes.Struct;
-  };
-  BuyToken: {
-    url: string;
-    token: BaseCoin;
   };
   WebView: {
     url: string;

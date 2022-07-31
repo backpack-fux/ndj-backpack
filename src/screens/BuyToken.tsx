@@ -3,7 +3,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import Webview from 'react-native-webview';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import {MainStackParamList} from '@app/models';
+import {RootStackParamList} from '@app/models';
 import {TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {colors} from '@app/assets/colors.config';
@@ -11,7 +11,7 @@ import {Paragraph} from '@app/components';
 
 export const BuyTokenScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute<RouteProp<MainStackParamList, 'BuyToken'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'BuyToken'>>();
   const {url} = route.params;
 
   return (

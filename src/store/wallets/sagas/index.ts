@@ -7,8 +7,14 @@ import {
   Wallet,
   WalletItem,
 } from '@app/models';
-import {addWallet, setLoading, setReadyApp, setWallets} from '../actions';
-import {showSnackbar} from '@app/utils';
+import {
+  addWallet,
+  selectWallet,
+  setLoading,
+  setReadyApp,
+  setWallets,
+} from '../actions';
+import {generateMnemonicPhrase, showSnackbar} from '@app/utils';
 import {NetworkName} from '@app/constants';
 import {WalletService} from '@app/services';
 import {wyreService} from '@app/services/wyreService';
@@ -90,6 +96,76 @@ function* createWallet({
   }
 }
 
+function* createDefaultWallets() {
+  yield put(setLoading(true));
+
+  try {
+    const state: RootState = yield select();
+
+    const defaultWallet = state.wallets.walletId;
+    const investedWallet = state.wallets.wallets?.find(w => w.id === 'invest');
+    const savedWallet = state.wallets.wallets?.find(w => w.id === 'save');
+
+    const mnemonicSpend: string = yield generateMnemonicPhrase();
+    const spendWalletItems: WalletItem[] = yield WalletService.createWallets(
+      mnemonicSpend,
+    );
+
+    const spendWallet: Wallet = {
+      id: 'spend',
+      name: 'Spend',
+      mnemonic: mnemonicSpend,
+      wallets: spendWalletItems,
+    };
+
+    yield put(addWallet(spendWallet));
+
+    if (!defaultWallet) {
+      yield put(selectWallet(spendWallet));
+    }
+
+    if (!savedWallet) {
+      // Save
+      yield delay(1000);
+      const mnemonicSave: string = yield generateMnemonicPhrase();
+      const saveWalletItems: WalletItem[] = yield WalletService.createWallets(
+        mnemonicSave,
+      );
+
+      const saveWallet: Wallet = {
+        id: 'save',
+        name: 'Save',
+        mnemonic: mnemonicSave,
+        wallets: saveWalletItems,
+      };
+
+      yield put(addWallet(saveWallet));
+    }
+
+    if (!investedWallet) {
+      // Invest
+      yield delay(1000);
+      const mnemonicInvest: string = yield generateMnemonicPhrase();
+      const saveWalletInvest: WalletItem[] = yield WalletService.createWallets(
+        mnemonicInvest,
+      );
+
+      const investWallet: Wallet = {
+        id: 'invest',
+        name: 'Invest',
+        mnemonic: mnemonicInvest,
+        wallets: saveWalletInvest,
+      };
+
+      yield put(addWallet(investWallet));
+    }
+  } catch (err: any) {
+    showSnackbar(err.message);
+  } finally {
+    yield put(setLoading(false));
+  }
+}
+
 export function* reloadWatcher() {
   yield takeLatest(ActionType.INIT_STORE as any, reload);
   yield takeLatest(ActionType.REFRESH_WALLETS as any, reload);
@@ -98,4 +174,8 @@ export function* reloadWatcher() {
 
 export function* createWalletWatcher() {
   yield takeLatest(ActionType.CREATE_WALLET as any, createWallet);
+  yield takeLatest(
+    ActionType.CREATE_DEFAULT_WALLETS as any,
+    createDefaultWallets,
+  );
 }

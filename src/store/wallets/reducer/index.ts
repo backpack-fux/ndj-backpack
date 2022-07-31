@@ -123,6 +123,13 @@ export function setReadyReducer(state: WalletsReducerType) {
   };
 }
 
+export function setIsReadFieldGuideReducer(state: WalletsReducerType) {
+  return {
+    ...state,
+    isReadFieldGuide: true,
+  };
+}
+
 export function renameWalletReducer(
   state: WalletsReducerType,
   {payload}: Action<{id: string; name: string}>,

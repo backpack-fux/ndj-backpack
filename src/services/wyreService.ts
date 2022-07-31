@@ -32,10 +32,11 @@ class WyreService {
     this.network = value;
   }
 
-  async reserve(destCurrency: string, dest: string) {
+  async reserve(destCurrency: string, dest: string, amount: number = 100) {
     const res = await this.axiosInstance.post('/v3/orders/reserve', {
       destCurrency,
       dest: `ethereum:${dest}`,
+      amount: amount || 100,
       referrerAccountId: this.accountId,
       paymentMethod: 'debit-card',
     });

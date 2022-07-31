@@ -10,6 +10,11 @@ const getWalletSessions = (state: RootState) => state.wallets.walletSessions;
 const getCurrency = (state: RootState) => state.wallets.currency;
 const getNetwork = (state: RootState) => state.wallets.network;
 const getAppReady = (state: RootState) => state.wallets.ready;
+const getSpendWallet = (state: RootState) =>
+  state.wallets.wallets.find(w => w.id === 'spend');
+const getIsReady = (state: RootState) => state.wallets.ready;
+const getIsReadFieldGuide = (state: RootState) =>
+  state.wallets.isReadFieldGuide;
 
 export const walletsLoadingSelector = createSelector(
   getLoading,
@@ -23,6 +28,11 @@ export const mnemonicSelector = createSelector(
 
 export const selectedWalletSelector = createSelector(
   getSelectedWallet,
+  wallet => wallet,
+);
+
+export const spendWalletSelector = createSelector(
+  getSpendWallet,
   wallet => wallet,
 );
 
@@ -41,3 +51,9 @@ export const appReadySelector = createSelector(getAppReady, ready => ready);
 export const networkSelector = createSelector(getNetwork, network => network);
 
 export const walletsSelector = createSelector(getWallets, wallets => wallets);
+
+export const isReadySelector = createSelector(getIsReady, isReady => isReady);
+export const isReadFieldGuideSelector = createSelector(
+  getIsReadFieldGuide,
+  select => select,
+);

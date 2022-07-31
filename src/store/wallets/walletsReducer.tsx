@@ -13,6 +13,7 @@ import {
   switchNetworkReducer,
   renameWalletReducer,
   setReadyReducer,
+  setIsReadFieldGuideReducer,
 } from './reducer';
 
 export interface WalletsReducerType {
@@ -24,6 +25,7 @@ export interface WalletsReducerType {
   walletSessions: {[id: string]: string[]};
   currency: string;
   network: 'mainnet' | 'testnet';
+  isReadFieldGuide: boolean;
 }
 
 export const defaultState: WalletsReducerType = {
@@ -33,6 +35,7 @@ export const defaultState: WalletsReducerType = {
   walletSessions: {},
   currency: 'usd',
   network: 'mainnet',
+  isReadFieldGuide: false,
 };
 
 export const walletsReducer = createReducer<WalletsReducerType>(defaultState, {
@@ -46,4 +49,5 @@ export const walletsReducer = createReducer<WalletsReducerType>(defaultState, {
   [ActionType.SWITCH_NETWORK]: switchNetworkReducer,
   [ActionType.RENAME_WALLET]: renameWalletReducer,
   [ActionType.READY]: setReadyReducer,
+  [ActionType.SET_IS_READ_FIELD_GUIDE]: setIsReadFieldGuideReducer,
 });
