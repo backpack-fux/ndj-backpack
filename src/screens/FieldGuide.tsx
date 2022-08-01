@@ -25,9 +25,7 @@ import {
   spendWalletSelector,
 } from '@app/store/wallets/walletsSelector';
 import {
-  createInvestWallet,
-  createSaveWallet,
-  createSpendWallet,
+  createDefaultWallets,
   setIsReadFieldGuide,
 } from '@app/store/wallets/actions';
 import {NetworkName} from '@app/constants';
@@ -434,9 +432,7 @@ export const FieldGuideScreen = () => {
 
   const onCreateDefaultWallets = () => {
     setIsCreateingWallet(true);
-    dispatch(createSpendWallet());
-    dispatch(createSaveWallet());
-    dispatch(createInvestWallet());
+    dispatch(createDefaultWallets());
   };
 
   const onAddFunds = async () => {
@@ -502,6 +498,10 @@ export const FieldGuideScreen = () => {
         <Carousel
           ref={carouselRef}
           data={fields}
+          keyExtractor={(item, index) => {
+            console.log(item);
+            return `test_${index}`;
+          }}
           renderItem={({item}) => item}
           windowSize={screenHeight}
           itemWidth={screenWidth - 60}

@@ -36,14 +36,19 @@ export const CreateWalletScreen = () => {
     route.name === 'AddWallet' || route.name === 'ImportWallet';
   const wallets = useSelector(walletsSelector);
   const [tempWallets, setTempWallets] = useState<Wallet[]>([]);
+  const [isCreatingWallet, setIsCreateingWallet] = useState(false);
 
   useEffect(() => {
-    if (isAddWalletModal && wallets.length !== tempWallets.length) {
+    if (
+      isAddWalletModal &&
+      isCreatingWallet &&
+      wallets.length !== tempWallets.length
+    ) {
       navigation.goBack();
     }
 
     setTempWallets(wallets);
-  }, [isAddWalletModal, wallets]);
+  }, [isAddWalletModal, isCreatingWallet, wallets, tempWallets]);
 
   const isLoading = useSelector(walletsLoadingSelector);
   const [mnemonic, setMnemonic] = useState<string>('');
@@ -54,10 +59,12 @@ export const CreateWalletScreen = () => {
   };
 
   const onImport = () => {
+    setIsCreateingWallet(true);
     dispatch(createWallet({mnemonic}));
   };
 
   const onCreate = () => {
+    setIsCreateingWallet(true);
     dispatch(createWallet({mnemonic: newMnemonic}));
   };
 

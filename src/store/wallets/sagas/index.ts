@@ -96,99 +96,69 @@ function* createWallet({
   }
 }
 
-function* createSpendWallet() {
+function* createDefaultWallets() {
   yield put(setLoading(true));
 
   try {
     const state: RootState = yield select();
 
     const defaultWallet = state.wallets.walletId;
-    const spendWallet = state.wallets.wallets?.find(w => w.id === 'spend');
-    if (spendWallet) {
-      return;
-    }
+    const investedWallet = state.wallets.wallets?.find(w => w.id === 'invest');
+    const savedWallet = state.wallets.wallets?.find(w => w.id === 'save');
 
     const mnemonicSpend: string = yield generateMnemonicPhrase();
     const spendWalletItems: WalletItem[] = yield WalletService.createWallets(
       mnemonicSpend,
     );
 
-    const wallet: Wallet = {
+    const spendWallet: Wallet = {
       id: 'spend',
       name: 'Spend',
       mnemonic: mnemonicSpend,
       wallets: spendWalletItems,
     };
 
-    yield put(addWallet(wallet));
+    yield put(addWallet(spendWallet));
 
     if (!defaultWallet) {
-      yield put(selectWallet(wallet));
-    }
-  } catch (err: any) {
-    showSnackbar(err.message);
-  } finally {
-    yield put(setLoading(false));
-  }
-}
-
-function* createSaveWallet() {
-  yield put(setLoading(true));
-
-  try {
-    const state: RootState = yield select();
-    const savedWallet = state.wallets.wallets?.find(w => w.id === 'save');
-
-    if (savedWallet) {
-      return;
+      yield put(selectWallet(spendWallet));
     }
 
-    yield delay(1000);
-    const mnemonicSave: string = yield generateMnemonicPhrase();
-    const saveWalletItems: WalletItem[] = yield WalletService.createWallets(
-      mnemonicSave,
-    );
+    if (!savedWallet) {
+      // Save
+      yield delay(1000);
+      const mnemonicSave: string = yield generateMnemonicPhrase();
+      const saveWalletItems: WalletItem[] = yield WalletService.createWallets(
+        mnemonicSave,
+      );
 
-    const saveWallet: Wallet = {
-      id: 'save',
-      name: 'Save',
-      mnemonic: mnemonicSave,
-      wallets: saveWalletItems,
-    };
+      const saveWallet: Wallet = {
+        id: 'save',
+        name: 'Save',
+        mnemonic: mnemonicSave,
+        wallets: saveWalletItems,
+      };
 
-    yield put(addWallet(saveWallet));
-  } catch (err: any) {
-    showSnackbar(err.message);
-  } finally {
-    yield put(setLoading(false));
-  }
-}
-
-function* createInvestWallet() {
-  yield put(setLoading(true));
-
-  try {
-    const state: RootState = yield select();
-    const investWallet = state.wallets.wallets?.find(w => w.id === 'invest');
-
-    if (investWallet) {
-      return;
+      yield put(addWallet(saveWallet));
     }
 
-    yield delay(1000);
-    const mnemonicSave: string = yield generateMnemonicPhrase();
-    const walletItems: WalletItem[] = yield WalletService.createWallets(
-      mnemonicSave,
-    );
+    if (!investedWallet) {
+      // Invest
+      yield delay(1000);
+      const mnemonicInvest: string = yield generateMnemonicPhrase();
+      const saveWalletInvest: WalletItem[] = yield WalletService.createWallets(
+        mnemonicInvest,
+      );
 
-    const saveWallet: Wallet = {
-      id: 'invest',
-      name: 'Invest',
-      mnemonic: mnemonicSave,
-      wallets: walletItems,
-    };
+      const investWallet: Wallet = {
+        id: 'invest',
+        name: 'Invest',
+        mnemonic: mnemonicInvest,
+        wallets: saveWalletInvest,
+      };
 
-    yield put(addWallet(saveWallet));
+      yield put(addWallet(investWallet));
+    }
   } catch (err: any) {
     showSnackbar(err.message);
   } finally {
@@ -204,7 +174,8 @@ export function* reloadWatcher() {
 
 export function* createWalletWatcher() {
   yield takeLatest(ActionType.CREATE_WALLET as any, createWallet);
-  yield takeLatest(ActionType.CREATE_SPEND_WALLETS as any, createSpendWallet);
-  yield takeLatest(ActionType.CREATE_INVEST_WALLETS as any, createInvestWallet);
-  yield takeLatest(ActionType.CREATE_SAVE_WALLETS as any, createSaveWallet);
+  yield takeLatest(
+    ActionType.CREATE_DEFAULT_WALLETS as any,
+    createDefaultWallets,
+  );
 }
