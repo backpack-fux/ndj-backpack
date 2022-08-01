@@ -78,7 +78,7 @@ export const WalletsScreen = () => {
 
   const [isBack, setIsBack] = useState(false);
   const allTokens = useSelector(tokensSelector);
-  const [showSeed, setShowSeed] = useState(false);
+  const [showSeed, setShowSeed] = useState<string | null>(null);
 
   const tokens = (selectedWallet?.id && allTokens[selectedWallet?.id]) || [];
 
@@ -127,7 +127,7 @@ export const WalletsScreen = () => {
 
     selectedCard?.flip();
     setIsBack(true);
-    setShowSeed(false);
+    setShowSeed(null);
   };
 
   const onPressSend = () => {
@@ -138,7 +138,7 @@ export const WalletsScreen = () => {
 
     selectedCard?.flip();
     setIsBack(true);
-    setShowSeed(false);
+    setShowSeed(null);
   };
 
   const onCancelBack = () => {
@@ -202,9 +202,9 @@ export const WalletsScreen = () => {
           renderItem={({item}) => (
             <WalletItem
               wallet={item}
-              showSeed={showSeed}
+              showSeed={showSeed === item.id}
               onSelectWallet={onSelectWallet}
-              onShowSeed={(value: boolean) => setShowSeed(value)}
+              onShowSeed={v => setShowSeed(v)}
               cardRef={ref => {
                 if (selectedWallet?.id === item.id) {
                   selectedCard = ref;
@@ -308,7 +308,7 @@ const WalletItem = ({
 }: {
   wallet: Wallet;
   showSeed: boolean;
-  onShowSeed: (value: boolean) => void;
+  onShowSeed: (val: string | null) => void;
   backScreen: 'send' | 'receive';
   cardRef?: (ref: any) => void;
   onSelectWallet: (wallet: Wallet) => void;
@@ -524,7 +524,7 @@ const WalletItem = ({
             <View style={[t.flexRow, t.mT4, t.justifyAround]}>
               <TouchableOpacity
                 style={[t.itemsCenter]}
-                onPress={() => onShowSeed(!showSeed)}>
+                onPress={() => onShowSeed(showSeed ? null : wallet.id)}>
                 <Paragraph text="Seed" align="center" marginRight={5} />
                 <Paragraph
                   text={`${wallet.mnemonic.split(' ').length} W`}
@@ -544,10 +544,10 @@ const WalletItem = ({
             </View>
           </View>
         </View>
-        {isSelected && showSeed && (
+        {showSeed && (
           <TouchableOpacity
             style={[t.mT4]}
-            onPress={() => onShowSeed(!showSeed)}
+            onPress={() => onShowSeed(showSeed ? null : wallet.id)}
             onLongPress={onCopySeed}>
             <View
               style={[

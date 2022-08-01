@@ -25,7 +25,9 @@ import {
   spendWalletSelector,
 } from '@app/store/wallets/walletsSelector';
 import {
-  createDefaultWallets,
+  createInvestWallet,
+  createSaveWallet,
+  createSpendWallet,
   setIsReadFieldGuide,
 } from '@app/store/wallets/actions';
 import {NetworkName} from '@app/constants';
@@ -409,7 +411,7 @@ export const FieldGuideScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const wallet = useSelector(selectedWalletSelector);
   const spendWallet = useSelector(spendWalletSelector);
-  const {allowGoBack} = route.params;
+  const allowGoBack = route?.params?.allowGoBack;
 
   const fields = useMemo(() => {
     if (!wallet) {
@@ -432,7 +434,9 @@ export const FieldGuideScreen = () => {
 
   const onCreateDefaultWallets = () => {
     setIsCreateingWallet(true);
-    dispatch(createDefaultWallets());
+    dispatch(createSpendWallet());
+    dispatch(createSaveWallet());
+    dispatch(createInvestWallet());
   };
 
   const onAddFunds = async () => {

@@ -16,9 +16,21 @@ export const setMnemonic = (payload: string) => {
   };
 };
 
-export const createDefaultWallets = () => {
+export const createSpendWallet = () => {
   return {
-    type: ActionType.CREATE_DEFAULT_WALLETS,
+    type: ActionType.CREATE_SPEND_WALLETS,
+  };
+};
+
+export const createSaveWallet = () => {
+  return {
+    type: ActionType.CREATE_SAVE_WALLETS,
+  };
+};
+
+export const createInvestWallet = () => {
+  return {
+    type: ActionType.CREATE_INVEST_WALLETS,
   };
 };
 
