@@ -10,20 +10,19 @@ import {
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
 
-import {BaseScreen, Button, Card, Paragraph, RotateMenu} from '@app/components';
-import {
-  walletsLoadingSelector,
-  walletsSelector,
-} from '@app/store/wallets/walletsSelector';
+import {BaseScreen, Button, Card, Paragraph} from '@app/components';
+import {walletsSelector} from '@app/store/wallets/walletsSelector';
 import {useDispatch, useSelector} from 'react-redux';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Thread} from 'react-native-threads';
 
-import {createWallet} from '@app/store/wallets/actions';
+import {addWallet} from '@app/store/wallets/actions';
 
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {colors} from '@app/assets/colors.config';
 import {Wallet} from '@app/models';
-import {generateMnemonicPhrase} from '@app/utils';
+import {generateMnemonicPhrase, showSnackbar} from '@app/utils';
+
+const thread = new Thread('./createWalletThread.js');
 
 const logo = require('@app/assets/images/logo.png');
 const {width} = Dimensions.get('screen');
@@ -35,22 +34,7 @@ export const CreateWalletScreen = () => {
   const isAddWalletModal =
     route.name === 'AddWallet' || route.name === 'ImportWallet';
   const wallets = useSelector(walletsSelector);
-  const [tempWallets, setTempWallets] = useState<Wallet[]>([]);
   const [isCreatingWallet, setIsCreateingWallet] = useState(false);
-
-  useEffect(() => {
-    if (
-      isAddWalletModal &&
-      isCreatingWallet &&
-      wallets.length !== tempWallets.length
-    ) {
-      navigation.goBack();
-    }
-
-    setTempWallets(wallets);
-  }, [isAddWalletModal, isCreatingWallet, wallets, tempWallets]);
-
-  const isLoading = useSelector(walletsLoadingSelector);
   const [mnemonic, setMnemonic] = useState<string>('');
   const [newMnemonic, setNewMnemonic] = useState<string>('');
 
@@ -59,13 +43,38 @@ export const CreateWalletScreen = () => {
   };
 
   const onImport = () => {
-    setIsCreateingWallet(true);
-    dispatch(createWallet({mnemonic}));
+    generateWallet(newMnemonic);
   };
 
   const onCreate = () => {
+    generateWallet(newMnemonic);
+  };
+
+  const generateWallet = (value: string) => {
     setIsCreateingWallet(true);
-    dispatch(createWallet({mnemonic: newMnemonic}));
+
+    thread.postMessage(value);
+
+    // listen for messages
+    thread.onmessage = (message: string) => {
+      if (message.startsWith('Error:')) {
+        showSnackbar(message);
+      }
+
+      const wallet: Wallet = {
+        id: (Math.random() + 1).toString(36).substring(7),
+        name: `Main Wallet ${wallets.length + 1}`,
+        mnemonic: value,
+        wallets: JSON.parse(message),
+      };
+      dispatch(addWallet(wallet));
+
+      setIsCreateingWallet(false);
+
+      if (isAddWalletModal) {
+        navigation.goBack();
+      }
+    };
   };
 
   const createMnemonicPhrase = useCallback(async () => {
@@ -76,9 +85,9 @@ export const CreateWalletScreen = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      gestureEnabled: !isLoading,
+      gestureEnabled: !isCreatingWallet,
     });
-  }, [isLoading]);
+  }, [isCreatingWallet]);
 
   useEffect(() => {
     createMnemonicPhrase();
@@ -87,7 +96,7 @@ export const CreateWalletScreen = () => {
   return (
     <>
       <BaseScreen
-        isLoading={isLoading}
+        isLoading={isCreatingWallet}
         noBottom
         title={isAddWalletModal ? 'Add Wallet' : ''}
         onBack={() => navigation.goBack()}>

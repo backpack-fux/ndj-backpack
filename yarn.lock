@@ -4353,7 +4353,7 @@ buffer@6.0.1:
     base64-js "^1.3.1"
     ieee754 "^1.2.1"
 
-buffer@6.0.3, buffer@~6.0.3:
+buffer@6.0.3, buffer@^6.0.3, buffer@~6.0.3:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-6.0.3.tgz#2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6"
   integrity sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==
@@ -4361,7 +4361,7 @@ buffer@6.0.3, buffer@~6.0.3:
     base64-js "^1.3.1"
     ieee754 "^1.2.1"
 
-buffer@^4.3.0, buffer@^4.9.1, buffer@^4.9.2:
+buffer@^4.3.0, buffer@^4.9.1:
   version "4.9.2"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-4.9.2.tgz#230ead344002988644841ab0244af8c44bbe3ef8"
   integrity sha512-xq+q3SRMOxGivLhBNaUdC64hDTQwejJ+H0T/NB1XMtTVEwNTrfFF3gAxiyW0Bu/xWEGhjVKgUcMhCrUy2+uCWg==
@@ -10589,6 +10589,11 @@ react-native-barcode-mask@^1.2.4:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-bg-thread@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-bg-thread/-/react-native-bg-thread-1.2.0.tgz#371ce0824202c85ce9b549d00bae0ec2e00a825c"
+  integrity sha512-gKRDs8VmJsMjbTdwY25UFJrOflOjmNIXhkZSgx6+BMVGSuquNQ4DmkrkaX/oi1914Crp04jpo0cbG6YI2t5HZg==
+
 react-native-bip39@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/react-native-bip39/-/react-native-bip39-2.3.0.tgz#30c58d93a22b41f4937727fd456ab6b03f452671"
@@ -10876,6 +10881,11 @@ react-native-tailwindcss@^1.1.11:
   dependencies:
     buffer "^5.4.3"
     eventemitter3 "^4.0.7"
+
+react-native-threads@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/react-native-threads/-/react-native-threads-0.0.19.tgz#17464b60715d774ab60e1ca6a97e31d706aa6125"
+  integrity sha512-VAQB06D+qxGDm3XwNUaDtEh1pKEuRLx4w3/E81z+pK1luMyJhK1W0G+eA0xygcM74dShXCgG10ZNvN+LHfyCLg==
 
 react-native-udp@^4.1.2:
   version "4.1.5"

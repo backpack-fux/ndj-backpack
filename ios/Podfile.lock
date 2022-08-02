@@ -209,6 +209,8 @@ PODS:
     - React-jsi (= 0.65.1)
     - React-perflogger (= 0.65.1)
   - React-jsinspector (0.65.1)
+  - react-native-bg-thread (1.1.9):
+    - React
   - react-native-camera (4.2.1):
     - React-Core
     - react-native-camera/RCT (= 4.2.1)
@@ -350,6 +352,8 @@ PODS:
     - React-Core
   - RNSVG (9.6.4):
     - React
+  - RNThread (0.0.19):
+    - React
   - RNVectorIcons (8.1.0):
     - React-Core
   - SRSRadialGradient (1.0.9):
@@ -375,6 +379,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-bg-thread (from `../node_modules/react-native-bg-thread`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-mail (from `../node_modules/react-native-mail`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
@@ -408,6 +413,7 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNThread (from `../node_modules/react-native-threads/ios`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - SRSRadialGradient (from `../node_modules/react-native-radial-gradient/ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -451,6 +457,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-bg-thread:
+    :path: "../node_modules/react-native-bg-thread"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
   react-native-mail:
@@ -517,6 +525,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-snackbar"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNThread:
+    :path: "../node_modules/react-native-threads/ios"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   SRSRadialGradient:
@@ -544,6 +554,7 @@ SPEC CHECKSUMS:
   React-jsi: 12913c841713a15f64eabf5c9ad98592c0ec5940
   React-jsiexecutor: 43f2542aed3c26e42175b339f8d37fe3dd683765
   React-jsinspector: 41e58e5b8e3e0bf061fdf725b03f2144014a8fb0
+  react-native-bg-thread: b5daa49e9084baa6de4503b815953bdf4c1d6c4a
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-mail: 8fdcd3aef007c33a6877a18eb4cf7447a1d4ce4a
   react-native-pager-view: 7f00d63688f7df9fad86dfb0154814419cc5eb8d
@@ -577,6 +588,7 @@ SPEC CHECKSUMS:
   RNShare: 2074af48908436c310847c6c47ebb6129db1dc89
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSVG: a53a5de0d90ec96a6502cc3a4534dfcc0c130622
+  RNThread: dfc202533c6687316c2f026820c791a8bc2a5042
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SRSRadialGradient: 49ba49a7a8f257c3fe785c250867b07185d1d01e
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4
