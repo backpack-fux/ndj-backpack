@@ -30,7 +30,7 @@ import {NetworkName} from '@app/constants';
 import {wyreService} from '@app/services/wyreService';
 import {generateMnemonicPhrase, showSnackbar} from '@app/utils';
 
-const thread = new Thread('./createWalletThread.js');
+const thread = new Thread('./wallet.thread.js');
 const logo = require('@app/assets/images/logo.png');
 const bankIcon = require('@app/assets/images/bank.png');
 const walletIcon = require('@app/assets/images/wall.png');

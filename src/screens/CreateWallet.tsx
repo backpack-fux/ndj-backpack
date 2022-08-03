@@ -22,7 +22,7 @@ import {colors} from '@app/assets/colors.config';
 import {Wallet} from '@app/models';
 import {generateMnemonicPhrase, showSnackbar} from '@app/utils';
 
-const thread = new Thread('./createWalletThread.js');
+const thread = new Thread('./wallet.thread.js');
 
 const logo = require('@app/assets/images/logo.png');
 const {width} = Dimensions.get('screen');

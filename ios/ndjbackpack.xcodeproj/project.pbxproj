@@ -21,6 +21,7 @@
 		BFB2CF70CEB14DE6881AEA0C /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6760A227D58D486ABC66EAAB /* Montserrat-Light.ttf */; };
 		D2118D8D65484A52BB1CA5E3 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0111C39237504E0BACB421F5 /* Montserrat-Italic.ttf */; };
 		E24823D589CE4CA8A6FE6666 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0389F73CF61D424E9770D36F /* Montserrat-Medium.ttf */; };
+		FC7AC80F289ADFB600F35454 /* wallet.thread.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = FC7AC80E289ADFB600F35454 /* wallet.thread.jsbundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		DE3A76F478434CA4A329619D /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F43C47940DDD45EFB11262E3 /* Nicomoji.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Nicomoji.ttf; path = ../src/assets/fonts/Nicomoji.ttf; sourceTree = "<group>"; };
+		FC7AC80E289ADFB600F35454 /* wallet.thread.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wallet.thread.jsbundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 		13B07FAE1A68108700A75B9A /* ndjbackpack */ = {
 			isa = PBXGroup;
 			children = (
+				FC7AC80E289ADFB600F35454 /* wallet.thread.jsbundle */,
 				AF6336B5284469AF00527645 /* ndjbackpack.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -311,6 +314,7 @@
 				BFB2CF70CEB14DE6881AEA0C /* Montserrat-Light.ttf in Resources */,
 				E24823D589CE4CA8A6FE6666 /* Montserrat-Medium.ttf in Resources */,
 				2120E9674DD54C9CA2215B9F /* Montserrat-Regular.ttf in Resources */,
+				FC7AC80F289ADFB600F35454 /* wallet.thread.jsbundle in Resources */,
 				15B5E537F72C445681B81DDB /* Montserrat-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -518,7 +522,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ndjbackpack/ndjbackpack.entitlements;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = FWJ939Z7T9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ndjbackpack/Info.plist;
@@ -547,7 +551,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ndjbackpack/ndjbackpack.entitlements;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = FWJ939Z7T9;
 				INFOPLIST_FILE = ndjbackpack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
