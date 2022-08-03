@@ -17,16 +17,12 @@ import {
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {setToken} from '@app/store/coins/actions';
-import {
-  AssetStackParamList,
-  BaseCoin,
-  MainStackParamList,
-  RootStackParamList,
-} from '@app/models';
+import {AssetStackParamList, BaseCoin, RootStackParamList} from '@app/models';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
   accountCoinsSelector,
   isLoadingTokensSelector,
+  tokenSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {normalizeNumber, showNetworkName, showSnackbar} from '@app/utils';
@@ -45,6 +41,7 @@ export const AssetsScreen = () => {
   const isLoading = useSelector(isLoadingTokensSelector);
   const tokens = useSelector(tokensSelector);
   const network = useSelector(networkSelector);
+  const selectedCoin = useSelector(tokenSelector);
   const selectedWallet = useSelector(selectedWalletSelector);
   const [loadingWyre, setLoadingWyre] = useState(false);
   const focused = useIsFocused();
@@ -72,8 +69,6 @@ export const AssetsScreen = () => {
       };
     });
 
-  const [selectedCoin, setSelectedCoin] = useState<BaseCoin>();
-
   const isSupportWyre = useMemo(() => {
     if (!selectedCoin) {
       return false;
@@ -93,8 +88,11 @@ export const AssetsScreen = () => {
       return;
     }
 
-    dispatch(setToken(selectedCoin));
     navigation.navigate('Transaction');
+  };
+
+  const onSelectToken = (token: BaseCoin) => {
+    dispatch(setToken(token));
   };
 
   const onOpenAddToken = () => {
@@ -154,7 +152,7 @@ export const AssetsScreen = () => {
                 selectedCoin.network === coin.network;
               return (
                 <TouchableOpacity
-                  onPress={() => setSelectedCoin(coin)}
+                  onPress={() => onSelectToken(coin)}
                   key={coin.id + coin.network}
                   style={[
                     t.flexRow,

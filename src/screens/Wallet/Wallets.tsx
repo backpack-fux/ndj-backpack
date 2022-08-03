@@ -28,8 +28,10 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {
+  accountCoinsSelector,
   isLoadingTokensSelector,
   sendTokenInfoSelector,
+  tokenSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {
@@ -44,11 +46,7 @@ import {selectWallet} from '@app/store/wallets/actions';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {Send} from './Send';
 import {Receive} from './Receive';
-import {
-  selectSendToken,
-  setToken,
-  transferTokenRequest,
-} from '@app/store/coins/actions';
+import {setToken, transferTokenRequest} from '@app/store/coins/actions';
 
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
@@ -72,15 +70,13 @@ export const WalletsScreen = () => {
   const selectedWallet = useSelector(selectedWalletSelector);
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const isLoading = useSelector(isLoadingTokensSelector);
+  const tokens = useSelector(accountCoinsSelector);
+  const selectedCoin = useSelector(tokenSelector);
   const [backScreen, setBackScreen] = useState<'send' | 'receive'>('send');
-  // const [focused, setFocused] = useState(true);
   const focused = useIsFocused();
 
   const [isBack, setIsBack] = useState(false);
-  const allTokens = useSelector(tokensSelector);
   const [showSeed, setShowSeed] = useState<string | null>(null);
-
-  const tokens = (selectedWallet?.id && allTokens[selectedWallet?.id]) || [];
 
   const insufficientBalance =
     Number(sendTokenInfo.amount || 0) > (sendTokenInfo.balance || 0);
@@ -168,11 +164,10 @@ export const WalletsScreen = () => {
   };
 
   useEffect(() => {
-    if (tokens.length) {
-      dispatch(selectSendToken(tokens[0]));
+    if (tokens.length && !selectedCoin) {
       dispatch(setToken(tokens[0]));
     }
-  }, [tokens]);
+  }, [tokens, selectedCoin]);
 
   useEffect(() => {
     if (

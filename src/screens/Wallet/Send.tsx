@@ -16,9 +16,13 @@ import {t} from 'react-native-tailwindcss';
 import Clipboard from '@react-native-community/clipboard';
 import {RNCamera} from 'react-native-camera';
 import {colors} from '@app/assets/colors.config';
-import {sendTokenInfoSelector} from '@app/store/coins/coinsSelector';
+import {
+  sendTokenInfoSelector,
+  tokenSelector,
+} from '@app/store/coins/coinsSelector';
 import {
   getTransferTransaction,
+  selectSendToken,
   updateSendTokenInfo,
 } from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
@@ -29,6 +33,7 @@ export const Send = () => {
   const dispatch = useDispatch();
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const token = sendTokenInfo?.token;
+  const selectedCoin = useSelector(tokenSelector);
 
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
@@ -159,6 +164,12 @@ export const Send = () => {
   useEffect(() => {
     onUpdateSendTokenInfo();
   }, [onUpdateSendTokenInfo]);
+
+  useEffect(() => {
+    if (selectedCoin) {
+      dispatch(selectSendToken(selectedCoin));
+    }
+  }, [selectedCoin]);
 
   return (
     <View>

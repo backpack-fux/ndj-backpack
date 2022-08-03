@@ -22,7 +22,6 @@ export const SelectTokenScreen = () => {
   const tokens = (selectedWallet?.id && allTokens[selectedWallet?.id]) || [];
 
   const onSelectToken = (token: Token) => {
-    dispatch(selectSendToken(token));
     dispatch(setToken(token));
     navigation.goBack();
   };
