@@ -3,6 +3,7 @@ import {View, Dimensions, Image, TouchableOpacity} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {t} from 'react-native-tailwindcss';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import {Thread} from 'react-native-threads';
 
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {colors} from '@app/assets/colors.config';
@@ -18,20 +19,18 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {RootStackParamList} from '@app/models';
+import {RootStackParamList, Wallet, WalletItem} from '@app/models';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   selectedWalletSelector,
   spendWalletSelector,
 } from '@app/store/wallets/walletsSelector';
-import {
-  createDefaultWallets,
-  setIsReadFieldGuide,
-} from '@app/store/wallets/actions';
+import {addWallet, setIsReadFieldGuide} from '@app/store/wallets/actions';
 import {NetworkName} from '@app/constants';
 import {wyreService} from '@app/services/wyreService';
-import {showSnackbar} from '@app/utils';
+import {generateMnemonicPhrase, showSnackbar} from '@app/utils';
 
+const thread = new Thread('./createWalletThread.js');
 const logo = require('@app/assets/images/logo.png');
 const bankIcon = require('@app/assets/images/bank.png');
 const walletIcon = require('@app/assets/images/wall.png');
@@ -430,9 +429,80 @@ export const FieldGuideScreen = () => {
     navigation.navigate('ImportWallet');
   };
 
-  const onCreateDefaultWallets = () => {
+  const onCreateDefaultWallets = async () => {
     setIsCreateingWallet(true);
-    dispatch(createDefaultWallets());
+
+    await onCreateSpendWallet();
+    await onCreateSaveWallet();
+    await onCreateInvestWallet();
+  };
+
+  const onCreateSpendWallet = async () => {
+    try {
+      const spendMnemonic = await generateMnemonicPhrase();
+
+      const res = await createWallet(spendMnemonic);
+
+      const newWallet: Wallet = {
+        id: 'spend',
+        name: 'Spend',
+        mnemonic: spendMnemonic,
+        wallets: res,
+      };
+      dispatch(addWallet(newWallet));
+    } catch (err: any) {
+      showSnackbar(err.message);
+    }
+  };
+
+  const onCreateSaveWallet = async () => {
+    try {
+      const saveMnemonic = await generateMnemonicPhrase();
+
+      const res = await createWallet(saveMnemonic);
+
+      const newWallet: Wallet = {
+        id: 'save',
+        name: 'Save',
+        mnemonic: saveMnemonic,
+        wallets: res,
+      };
+      dispatch(addWallet(newWallet));
+    } catch (err: any) {
+      showSnackbar(err.message);
+    }
+  };
+
+  const onCreateInvestWallet = async () => {
+    try {
+      const investMnemonic = await generateMnemonicPhrase();
+
+      const res = await createWallet(investMnemonic);
+
+      const newWallet: Wallet = {
+        id: 'invest',
+        name: 'Invest',
+        mnemonic: investMnemonic,
+        wallets: res,
+      };
+      dispatch(addWallet(newWallet));
+    } catch (err: any) {
+      showSnackbar(err.message);
+    }
+  };
+
+  const createWallet = async (mnemonic: string): Promise<WalletItem[]> => {
+    return new Promise((resolve, reject) => {
+      thread.postMessage(mnemonic);
+
+      thread.onmessage = (message: string) => {
+        if (message.startsWith('Error:')) {
+          reject(message);
+        }
+
+        resolve(JSON.parse(message));
+      };
+    });
   };
 
   const onAddFunds = async () => {
@@ -498,10 +568,7 @@ export const FieldGuideScreen = () => {
         <Carousel
           ref={carouselRef}
           data={fields}
-          keyExtractor={(item, index) => {
-            console.log(item);
-            return `test_${index}`;
-          }}
+          keyExtractor={(item, index) => `wallet_${index}`}
           renderItem={({item}) => item}
           windowSize={screenHeight}
           itemWidth={screenWidth - 60}
