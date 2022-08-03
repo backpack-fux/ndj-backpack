@@ -43,7 +43,7 @@ export const CreateWalletScreen = () => {
   };
 
   const onImport = () => {
-    generateWallet(newMnemonic);
+    generateWallet(mnemonic);
   };
 
   const onCreate = () => {
