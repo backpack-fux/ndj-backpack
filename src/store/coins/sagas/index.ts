@@ -168,7 +168,7 @@ function* searchCoins({payload}: Action<string>) {
     }
 
     const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
-      coin.name.toLowerCase().includes(payload.toLowerCase()),
+      coin.name.toLowerCase().includes(payload.toLowerCase().trim()),
     );
 
     const searchedCoins = baseCoins
