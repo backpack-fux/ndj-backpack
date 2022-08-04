@@ -19,7 +19,7 @@ import {colors} from '@app/assets/colors.config';
 
 const background = require('@app/assets/images/bg.png');
 const logo = require('@app/assets/images/logo.png');
-const {width} = Dimensions.get('screen');
+const {width, height} = Dimensions.get('screen');
 
 export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
   const {passcode, enabled, enabledBiometry, authorizeDeviceBiometry} =
@@ -132,14 +132,14 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
                 marginTop={30}
                 marginBottom={20}
                 text="Backpack"
-                font="Montserrat"
+                font="NicoMoji+"
                 align="center"
                 type="bold"
               />
               <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
                 <Image
                   source={logo}
-                  style={[t.mB8, {width: width * 0.8, height: width * 0.8}]}
+                  style={[{width: width * 0.7, height: width * 0.7, marginBottom: height * 0.05}]}
                   resizeMode="contain"
                 />
               </View>

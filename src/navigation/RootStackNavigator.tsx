@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { t } from 'react-native-tailwindcss';
 
 import {CreateWalletScreen, SplashScreen} from '@app/screens';
 import {screenOptions, stackOptions} from './config';
@@ -60,6 +61,8 @@ export const RootStackNavigator = () => {
         name="Splash"
         options={{
           ...stackOptions,
+          headerTitle: 'Backpack',
+          headerTitleStyle: [t.textWhite, {fontFamily: 'NicoMoji+'}],
           animation: 'fade',
         }}
         component={SplashScreen}
