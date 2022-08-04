@@ -72,17 +72,12 @@ const FirstCard = () => (
         <Image
           source={logo}
           style={[
-            t.mT16,
+            t.mT10,
             {width: screenWidth * 0.3, height: screenWidth * 0.3},
           ]}
           resizeMode="contain"
         />
       </View>
-      <Paragraph
-        text="Create Spend wallet in background now"
-        align="center"
-        color={colors.secondary}
-      />
       <Paragraph
         text="The following Field Guide will help you set up your Backpack for the first time and get a sense of how to use it."
         align="center"
@@ -137,7 +132,7 @@ const SecondCard = () => (
         text="We recommend setting up Backpack accounts, called wallets, similarly."
         align="center"
       />
-      <View style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT8, t.mB8]}>
+      <View style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT8]}>
         <ProfileIcon />
         <PlusIcon style={[t.mL2]} />
         <UsdIcon style={[t.mL2]} />
@@ -145,23 +140,17 @@ const SecondCard = () => (
         <WalletIcon style={[t.mL2]} />
       </View>
     </View>
-
-    <Paragraph
-      text="wallet still being created time"
-      align="center"
-      color={colors.secondary}
-    />
   </Card>
 );
 
 const ThirdCard = () => (
   <Card>
-    <View style={[t.flex1, t.justifyEvenly]}>
+    <View style={[t.flex1, t.justifyAround]}>
       <Paragraph
         text="These wallets are built with web3 technology and will take about 1 minute to generate."
         align="center"
       />
-      <View style={[t.flex1, t.justifyCenter]}>
+      <View style={[t.justifyCenter]}>
         <View style={[t.flexRow]}>
           <View style={[t.flex1, t.justifyCenter, t.mR4]}>
             <Paragraph
@@ -233,12 +222,6 @@ const ThirdCard = () => (
         </View>
       </View>
     </View>
-
-    <Paragraph
-      text="wallet might almost be done"
-      color={colors.secondary}
-      align="center"
-    />
   </Card>
 );
 
@@ -338,11 +321,6 @@ const FourthCard = ({
         />
       </View>
     </View>
-    <Paragraph
-      text="gotta be done or close enough to start wyre purchase"
-      align="center"
-      color={colors.secondary}
-    />
   </Card>
 );
 
