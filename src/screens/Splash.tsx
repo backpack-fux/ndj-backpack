@@ -12,12 +12,9 @@ export const SplashScreen = () => {
       <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
         <Image
           source={logo}
-          style={[{width: width * 0.8, height: width * 0.8}]}
+          style={[t.mB8, {width: width * 0.8, height: width * 0.8}]}
           resizeMode="contain"
         />
-        <Text style={[t.text4xl, t.mT4, t.textWhite, t.fontMono]}>
-          backpack
-        </Text>
       </View>
     </BaseScreen>
   );

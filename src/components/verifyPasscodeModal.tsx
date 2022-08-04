@@ -131,7 +131,7 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
               <Paragraph
                 marginTop={30}
                 marginBottom={20}
-                text="NDJ Backpack"
+                text="Backpack"
                 font="Montserrat"
                 align="center"
                 type="bold"
@@ -139,12 +139,9 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
               <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
                 <Image
                   source={logo}
-                  style={[{width: width * 0.8, height: width * 0.8}]}
+                  style={[t.mB8, {width: width * 0.8, height: width * 0.8}]}
                   resizeMode="contain"
                 />
-                <Text style={[t.text4xl, t.mT4, t.textWhite, t.fontMono]}>
-                  backpack
-                </Text>
               </View>
             </>
           )}
