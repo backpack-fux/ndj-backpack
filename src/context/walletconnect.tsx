@@ -277,7 +277,7 @@ export const WalletConnectProvider = (props: {
     let timeout: any;
     if (pairingTopic) {
       timeout = setTimeout(() => {
-        showSnackbar('WalletConnect: failed connect');
+        showSnackbar('WalletConnect: connection timed out');
         setParingTopic('');
       }, 15000);
     }

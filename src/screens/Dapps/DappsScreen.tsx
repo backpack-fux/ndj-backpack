@@ -86,7 +86,7 @@ export const DappsScreen = () => {
               </>
             ) : (
               <Paragraph
-                text="Active Connections will appear here"
+                text="Active connections will appear here"
                 color={colors.textGray}
                 align="center"
               />
