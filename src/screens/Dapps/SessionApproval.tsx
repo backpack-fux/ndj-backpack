@@ -120,6 +120,22 @@ export const SessionApproval = () => {
     [selectedAddresses, availableAddresses],
   );
 
+  const isDisabled = useMemo(() => {
+    const alChains = Object.values(requiredNamespaces).reduce(
+      (c: string[], item: any) => {
+        return [...c, ...item.chains];
+      },
+      [],
+    );
+
+    const unselectedChians = alChains.filter(
+      chain =>
+        selectedAddresses.filter(address => address.startsWith(chain))
+          .length === 0,
+    );
+    return unselectedChians.length > 0;
+  }, [selectedAddresses, requiredNamespaces]);
+
   const onConnect = async () => {
     onAcceptSessionProposal(proposal, selectedAddresses);
     navigation.goBack();
@@ -462,11 +478,7 @@ export const SessionApproval = () => {
           />
         </View>
         <View style={[t.flex1, t.mL2]}>
-          <Button
-            disabled={!selectedAddresses.length}
-            text="Connect"
-            onPress={onConnect}
-          />
+          <Button disabled={isDisabled} text="Connect" onPress={onConnect} />
         </View>
       </View>
     </BaseScreen>

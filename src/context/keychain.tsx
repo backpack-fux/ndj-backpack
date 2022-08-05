@@ -165,7 +165,6 @@ export const KeychainProvider = (props: {
 
   const onVerifiedPasscord = () => {
     setShowVerify(false);
-    console.log('verifyCallback', verifyCallback);
     switch (verifyCallback) {
       case 'disable':
         turnOffKeychain();
