@@ -7,6 +7,7 @@ import {
   transferTokenWatcher,
   getTransferTransactionWatcher,
   getTransactionsWatcher,
+  getBaseCoinsWatcher,
 } from './sagas';
 
 export default [
@@ -17,4 +18,5 @@ export default [
   fork(getTransferTransactionWatcher),
   fork(transferTokenWatcher),
   fork(getTransactionsWatcher),
+  fork(getBaseCoinsWatcher),
 ];

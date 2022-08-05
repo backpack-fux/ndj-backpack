@@ -11,9 +11,11 @@ import {
   CoinGeckoCoin,
 } from '@app/models';
 import * as _ from 'lodash';
+import moment from 'moment-timezone';
 import {getCoinGeckoCoinList, getCoinGeckoDetail} from '@app/apis';
 import {networkList, NetworkName} from '@app/constants';
 import {
+  getBaseCoinsSuccess,
   getTransactionsFailed,
   getTransactionsSuccess,
   searchCoinsResponse,
@@ -26,9 +28,56 @@ import {
 } from '../actions';
 import {DEFAULT_COINS} from '@app/constants/coins';
 import {WalletService} from '@app/services';
-import {showSnackbar} from '@app/utils';
+import {closeetBaseCoins, showSnackbar} from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {refreshWallets} from '@app/store/wallets/actions';
+import {sqliteService} from '@app/services/sqllite';
+
+function* getBaseCoins() {
+  try {
+    yield delay(1000);
+    const state: RootState = yield select();
+    const baseCoinExpiresAt =
+      state.coins.baseCoinExpiresAt && moment(state.coins.baseCoinExpiresAt);
+
+    const now = moment();
+
+    if (baseCoinExpiresAt && baseCoinExpiresAt.isAfter(now)) {
+      yield put(getBaseCoinsSuccess(false));
+      return;
+    }
+
+    const coins: CoinGeckoCoin[] = yield getCoinGeckoCoinList();
+    const baseCoins: BaseCoin[] = [];
+
+    for (const coin of coins) {
+      if (_.isEmpty(coin.platforms)) {
+        continue;
+      }
+
+      for (const platform of Object.keys(coin.platforms)) {
+        const network = networkList.find(item => item.network === platform);
+
+        if (!network) {
+          continue;
+        }
+
+        baseCoins.push({
+          id: coin.id,
+          name: coin.name,
+          symbol: coin.symbol,
+          contractAddress: coin.platforms[platform],
+          network: platform as NetworkName,
+        });
+      }
+    }
+
+    yield sqliteService.setBaseCoins(baseCoins);
+    yield put(getBaseCoinsSuccess(true));
+  } catch (err) {
+    yield put(getBaseCoinsSuccess(false));
+  }
+}
 
 function* accountCoins({payload}: Action<Wallet>) {
   const state: RootState = yield select();
@@ -148,41 +197,27 @@ function* getTokens({payload}: Action<Wallet>) {
 
 function* searchCoins({payload}: Action<string>) {
   try {
-    const coins: CoinGeckoCoin[] = yield getCoinGeckoCoinList();
-    const baseCoins: BaseCoin[] = [];
+    const searchKey = payload.toLowerCase().trim();
 
-    for (const coin of coins) {
-      if (_.isEmpty(coin.platforms)) {
-        continue;
-      }
-
-      for (const platform of Object.keys(coin.platforms)) {
-        baseCoins.push({
-          id: coin.id,
-          name: coin.name,
-          symbol: coin.symbol,
-          contractAddress: coin.platforms[platform],
-          network: platform as NetworkName,
-        });
-      }
+    if (!searchKey) {
+      yield put(searchCoinsResponse([]));
+      return;
     }
 
-    const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
-      coin.name.toLowerCase().includes(payload.toLowerCase().trim()),
+    const baseCoins: BaseCoin[] = yield sqliteService.searchBaseCoins(
+      searchKey,
     );
 
-    const searchedCoins = baseCoins
+    const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
+      coin.name.toLowerCase().includes(searchKey),
+    );
+
+    const searchedCoins = closeetBaseCoins(baseCoins, searchKey)
       .filter(c => !searchedDefaultCoins.map(d => d.id).includes(c.id))
       .filter(c =>
         networkList.map(network => network.network).includes(c.network),
       )
-      .filter(
-        c =>
-          c.name.toLowerCase().includes(payload.toLowerCase()) ||
-          c.symbol.toLowerCase().includes(payload.toLowerCase()),
-      )
       .slice(0, 100);
-
     let result = searchedDefaultCoins.concat(searchedCoins);
 
     if (!result.length) {
@@ -190,7 +225,7 @@ function* searchCoins({payload}: Action<string>) {
       return;
     }
 
-    const res: CoinGeckoCoinDetail[] = yield getCoinGeckoDetail(result);
+    const res: CoinGeckoCoinDetail[] = yield getCoinGeckoDetail(result, 'usd');
 
     const newCoins: BaseCoin[] = [];
     for (const coin of result) {
@@ -402,4 +437,8 @@ export function* getTransferTransactionWatcher() {
 
 export function* getTransactionsWatcher() {
   yield takeLatest(ActionType.GET_TRANSACTIONS_REQUEST as any, getTransactions);
+}
+
+export function* getBaseCoinsWatcher() {
+  yield takeLatest(ActionType.GET_BASE_COINS as any, getBaseCoins);
 }

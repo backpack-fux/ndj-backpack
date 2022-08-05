@@ -141,3 +141,16 @@ export const getTransactionsFailed = (payload: string) => {
     payload,
   };
 };
+
+export const getBaseCoins = () => {
+  return {
+    type: ActionType.GET_BASE_COINS,
+  };
+};
+
+export const getBaseCoinsSuccess = (payload: boolean) => {
+  return {
+    type: ActionType.GET_BASE_COINS_SUCCESS,
+    payload,
+  };
+};

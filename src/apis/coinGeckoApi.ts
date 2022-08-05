@@ -22,7 +22,6 @@ export const getCoinGeckoDetail = async (
     params: {
       vs_currency: currency,
       ids: baseCoins.map(b => b.id).join(','),
-      order: 'market_cap_desc',
       sparkline: false,
       per_page: 100,
       page: 1,

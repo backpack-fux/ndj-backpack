@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { t } from 'react-native-tailwindcss';
+import {t} from 'react-native-tailwindcss';
 
 import {CreateWalletScreen, SplashScreen} from '@app/screens';
 import {screenOptions, stackOptions} from './config';
@@ -9,7 +9,6 @@ import {
   isReadFieldGuideSelector,
   isReadySelector,
   selectedWalletSelector,
-  walletsSelector,
 } from '@app/store/wallets/walletsSelector';
 import {
   NavigationProp,
@@ -21,16 +20,24 @@ import {sleep} from '@app/utils';
 import {MainStackNavigator} from './MainStackNavigator';
 import {FieldGuideScreen} from '@app/screens/FieldGuide';
 import {BuyTokenScreen} from '@app/screens/BuyToken';
+import {isLoadingGetBaseCoinSelector} from '@app/store/coins/coinsSelector';
 const Stack = createNativeStackNavigator();
 
 export const RootStackNavigator = () => {
   const wallet = useSelector(selectedWalletSelector);
   const isReady = useSelector(isReadySelector);
   const isReadFieldGuide = useSelector(isReadFieldGuideSelector);
+  const isLoadingGetBaseCoin = useSelector(isLoadingGetBaseCoinSelector);
   const navigation: any = useNavigation<NavigationProp<RootStackParamList>>();
   const onLoadedWallets = async () => {
     if (!isReady) {
+      return;
     }
+
+    if (isLoadingGetBaseCoin) {
+      return;
+    }
+
     const route = navigation.getCurrentRoute();
     if (route?.name === 'Splash') {
       await sleep(1500);
@@ -53,7 +60,7 @@ export const RootStackNavigator = () => {
 
   useEffect(() => {
     onLoadedWallets();
-  }, [isReady, isReadFieldGuide, wallet]);
+  }, [isReady, isReadFieldGuide, wallet, isLoadingGetBaseCoin]);
 
   return (
     <Stack.Navigator initialRouteName={'Splash'} screenOptions={screenOptions}>

@@ -54,3 +54,8 @@ export const isTransactionReachedSelector = createSelector(
   getCoinState,
   state => state.isTransactionReached,
 );
+
+export const isLoadingGetBaseCoinSelector = createSelector(
+  getCoinState,
+  state => state.isLoadingGetBaseCoin,
+);

@@ -25,6 +25,8 @@ import {
   getTransactionsFailedReducer,
   deleteTokensFromWalletReducer,
   transferTokenFailedReducer,
+  getBaseTokenReducer,
+  getBaseTokenSuccessReducer,
 } from './reducer';
 
 export interface CoinsReducerType {
@@ -40,6 +42,8 @@ export interface CoinsReducerType {
   isLoadingTokens: boolean;
   isLoadingTransactions: boolean;
   isTransactionReached: boolean;
+  baseCoinExpiresAt?: Date;
+  isLoadingGetBaseCoin: boolean;
 }
 
 export const defaultState: CoinsReducerType = {
@@ -52,6 +56,7 @@ export const defaultState: CoinsReducerType = {
   isLoadingTokens: false,
   sendTokenInfo: {},
   isTransactionReached: false,
+  isLoadingGetBaseCoin: false,
 };
 
 export const coinsReducer = createReducer<CoinsReducerType>(defaultState, {
@@ -71,4 +76,6 @@ export const coinsReducer = createReducer<CoinsReducerType>(defaultState, {
   [ActionType.GET_TRANSACTIONS_SUCCESS]: getTransactionsSuccessReducer,
   [ActionType.GET_TRANSACTIONS_FAILED]: getTransactionsFailedReducer,
   [ActionType.DELETE_WALLET]: deleteTokensFromWalletReducer,
+  [ActionType.GET_BASE_COINS]: getBaseTokenReducer,
+  [ActionType.GET_BASE_COINS_SUCCESS]: getBaseTokenSuccessReducer,
 });

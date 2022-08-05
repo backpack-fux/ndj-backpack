@@ -6,6 +6,7 @@ import {
   Token,
   Wallet,
 } from '@app/models';
+import moment from 'moment-timezone';
 import {CoinsReducerType} from '../coinsReducer';
 
 export function setTokenReducer(
@@ -201,5 +202,25 @@ export function deleteTokensFromWalletReducer(
   return {
     ...state,
     tokens,
+  };
+}
+
+export function getBaseTokenReducer(state: CoinsReducerType) {
+  return {
+    ...state,
+    isLoadingGetBaseCoin: true,
+  };
+}
+
+export function getBaseTokenSuccessReducer(
+  state: CoinsReducerType,
+  {payload}: Action<boolean>,
+) {
+  return {
+    ...state,
+    isLoadingGetBaseCoin: false,
+    baseCoinExpiresAt: payload
+      ? moment().add(1, 'week').toDate()
+      : state.baseCoinExpiresAt,
   };
 }

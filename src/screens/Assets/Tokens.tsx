@@ -5,7 +5,7 @@ import {
   Switch,
   TextInput,
   ScrollView,
-  RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {t} from 'react-native-tailwindcss';
@@ -78,40 +78,42 @@ export const TokensScreen = () => {
       </View>
       <ScrollView
         contentContainerStyle={[t.pL4, t.pR4]}
-        keyboardDismissMode="on-drag"
-        refreshControl={
-          <RefreshControl
-            refreshing={isSearchingCoins}
-            onRefresh={() => {}}
-            tintColor={colors.white}
-            titleColor={colors.white}
-          />
-        }>
+        keyboardDismissMode="on-drag">
         <Card>
-          {coins.map(coin => (
-            <View
-              key={coin.id + coin.network}
-              style={[t.flexRow, t.p2, {borderBottomWidth}]}>
-              <Image
-                source={{uri: coin.image}}
-                style={[t.w10, t.h10, t.roundedFull, t.bgWhite, t.mR4]}
-              />
-              <View style={[t.flex1, t.selfCenter]}>
-                <Paragraph
-                  text={`${coin.name} (${coin.symbol.toUpperCase()})`}
-                />
-                <Paragraph
-                  text={networkName[coin.network] || coin.network}
-                  color={colors.textGray}
-                />
-              </View>
-              <Switch
-                style={[t.selfCenter]}
-                value={coin.enabled}
-                onChange={() => onToggleCoin(coin, !coin.enabled)}
-              />
-            </View>
-          ))}
+          {isSearchingCoins ? (
+            <ActivityIndicator color={colors.white} size="large" />
+          ) : (
+            <>
+              {coins.length ? (
+                coins.map(coin => (
+                  <View
+                    key={coin.id + coin.network}
+                    style={[t.flexRow, t.p2, {borderBottomWidth}]}>
+                    <Image
+                      source={{uri: coin.image}}
+                      style={[t.w10, t.h10, t.roundedFull, t.bgWhite, t.mR4]}
+                    />
+                    <View style={[t.flex1, t.selfCenter]}>
+                      <Paragraph
+                        text={`${coin.name} (${coin.symbol.toUpperCase()})`}
+                      />
+                      <Paragraph
+                        text={networkName[coin.network] || coin.network}
+                        color={colors.textGray}
+                      />
+                    </View>
+                    <Switch
+                      style={[t.selfCenter]}
+                      value={coin.enabled}
+                      onChange={() => onToggleCoin(coin, !coin.enabled)}
+                    />
+                  </View>
+                ))
+              ) : (
+                <Paragraph text="No Result" size={14} align="center" />
+              )}
+            </>
+          )}
         </Card>
       </ScrollView>
     </BaseScreen>

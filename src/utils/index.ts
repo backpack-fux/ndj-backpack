@@ -1,7 +1,7 @@
 import Snackbar from 'react-native-snackbar';
 import {colors} from '@app/assets/colors.config';
 import {networkList, NetworkName} from '@app/constants';
-import {News, Wallet} from '@app/models';
+import {BaseCoin, News, Wallet} from '@app/models';
 import numeral from 'numeral';
 import {Dimensions} from 'react-native';
 import {currencies} from '@app/constants/currencies';
@@ -203,4 +203,27 @@ export const generateMnemonicPhrase = async (): Promise<string> => {
   }
 
   return mnemonicString;
+};
+
+const levenshtein = (s: string, t: string): number => {
+  if (!s.length) {
+    return t.length;
+  }
+  if (!t.length) {
+    return s.length;
+  }
+
+  return Math.min(
+    levenshtein(s.substring(1), t) + 1,
+    levenshtein(t.substring(1), s) + 1,
+    levenshtein(s.substring(1), t.substring(1)) + (s[0] !== t[0] ? 1 : 0),
+  );
+};
+
+export const closeetBaseCoins = (baseCoins: BaseCoin[], str: string) => {
+  return baseCoins.sort(function (a: BaseCoin, b: BaseCoin) {
+    const aText = a.symbol.includes(str) ? a.symbol : a.name;
+    const bText = b.symbol.includes(str) ? b.symbol : a.name;
+    return levenshtein(aText, str) - levenshtein(bText, str);
+  });
 };
