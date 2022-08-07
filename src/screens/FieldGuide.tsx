@@ -552,9 +552,7 @@ export const FieldGuideScreen = () => {
   }, [isImportingWallet, wallet]);
 
   return (
-    <BaseScreen
-      noBottom
-      isLoading={isImportingWallet || isCreatingWallet || isLoading}>
+    <BaseScreen noBottom isLoading={isCreatingWallet || isLoading}>
       <View style={[t.flex1]}>
         <Carousel
           ref={carouselRef}
