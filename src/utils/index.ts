@@ -205,25 +205,81 @@ export const generateMnemonicPhrase = async (): Promise<string> => {
   return mnemonicString;
 };
 
-const levenshtein = (s: string, t: string): number => {
-  if (!s.length) {
-    return t.length;
+const levDist = function (s: string, t: string): number {
+  var d: any = []; //2d matrix
+
+  // Step 1
+  var n = s.length;
+  var m = t.length;
+
+  if (n === 0) {
+    return m;
   }
-  if (!t.length) {
-    return s.length;
+  if (m === 0) {
+    return n;
   }
 
-  return Math.min(
-    levenshtein(s.substring(1), t) + 1,
-    levenshtein(t.substring(1), s) + 1,
-    levenshtein(s.substring(1), t.substring(1)) + (s[0] !== t[0] ? 1 : 0),
-  );
+  //Create an array of arrays in javascript (a descending loop is quicker)
+  for (var i = n; i >= 0; i--) {
+    d[i] = [];
+  }
+
+  // Step 2
+  for (var i = n; i >= 0; i--) {
+    d[i][0] = i;
+  }
+  for (var j = m; j >= 0; j--) {
+    d[0][j] = j;
+  }
+
+  // Step 3
+  for (var i = 1; i <= n; i++) {
+    var s_i = s.charAt(i - 1);
+
+    // Step 4
+    for (var j = 1; j <= m; j++) {
+      //Check the jagged ld total so far
+      if (i === j && d[i][j] > 4) {
+        return n;
+      }
+
+      var t_j = t.charAt(j - 1);
+      var cost = s_i === t_j ? 0 : 1; // Step 5
+
+      //Calculate the minimum
+      var mi = d[i - 1][j] + 1;
+      var b = d[i][j - 1] + 1;
+      var c = d[i - 1][j - 1] + cost;
+
+      if (b < mi) {
+        mi = b;
+      }
+      if (c < mi) {
+        mi = c;
+      }
+
+      d[i][j] = mi; // Step 6
+
+      //Damerau transposition
+      if (
+        i > 1 &&
+        j > 1 &&
+        s_i === t.charAt(j - 2) &&
+        s.charAt(i - 2) === t_j
+      ) {
+        d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + cost);
+      }
+    }
+  }
+
+  // Step 7
+  return d[n][m];
 };
 
 export const closeetBaseCoins = (baseCoins: BaseCoin[], str: string) => {
   return baseCoins.sort(function (a: BaseCoin, b: BaseCoin) {
-    const aText = a.symbol.includes(str) ? a.symbol : a.name;
-    const bText = b.symbol.includes(str) ? b.symbol : a.name;
-    return levenshtein(aText, str) - levenshtein(bText, str);
+    const aText = a.symbol.indexOf(str) > -1 ? a.symbol : a.name;
+    const bText = b.symbol.indexOf(str) > -1 ? b.symbol : a.name;
+    return levDist(aText, str) - levDist(bText, str);
   });
 };

@@ -207,7 +207,8 @@ function* searchCoins({payload}: Action<string>) {
     const baseCoins: BaseCoin[] = yield sqliteService.searchBaseCoins(
       searchKey,
     );
-
+    console.log('get base coins=====================');
+    console.log(baseCoins);
     const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
       coin.name.toLowerCase().includes(searchKey),
     );
