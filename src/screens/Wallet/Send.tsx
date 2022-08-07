@@ -184,6 +184,7 @@ export const Send = () => {
               <TextInput
                 placeholder="Send to address"
                 autoFocus
+                editable={!sendTokenInfo.isLoading}
                 onBlur={() => setFocusSendAddress(false)}
                 placeholderTextColor={colors.textGray}
                 value={sendTokenInfo.toAccount}
@@ -234,6 +235,7 @@ export const Send = () => {
               onChangeText={value => onUpdateAmount(value)}
               placeholder={sendTokenInfo?.token?.symbol.toUpperCase()}
               keyboardType="decimal-pad"
+              editable={!sendTokenInfo.isLoading}
               placeholderTextColor={colors.textGray}
               style={[
                 t.flex1,

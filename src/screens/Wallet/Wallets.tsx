@@ -258,7 +258,7 @@ export const WalletsScreen = () => {
             <Button
               text="Change Token"
               onPress={onOpenSelectScreen}
-              disabled={!selectedWallet}
+              disabled={!selectedWallet || sendTokenInfo.isLoading}
             />
           )}
           <View style={[t.flexRow, t.mT2]}>
@@ -266,7 +266,7 @@ export const WalletsScreen = () => {
               <Button
                 text="Cancel"
                 onPress={onCancelBack}
-                disabled={!selectedWallet}
+                disabled={!selectedWallet || sendTokenInfo.isLoading}
               />
             </View>
             <View style={[t.flex1, t.mL2]}>
