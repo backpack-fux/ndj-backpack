@@ -12,6 +12,8 @@ import {
 } from '@app/models';
 import * as _ from 'lodash';
 import moment from 'moment-timezone';
+import Toast from 'react-native-toast-message';
+
 import {getCoinGeckoCoinList, getCoinGeckoDetail} from '@app/apis';
 import {networkList, NetworkName} from '@app/constants';
 import {
@@ -28,7 +30,7 @@ import {
 } from '../actions';
 import {DEFAULT_COINS} from '@app/constants/coins';
 import {WalletService} from '@app/services';
-import {closeetBaseCoins, showSnackbar} from '@app/utils';
+import {closeetBaseCoins} from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {sqliteService} from '@app/services/sqllite';
@@ -207,8 +209,7 @@ function* searchCoins({payload}: Action<string>) {
     const baseCoins: BaseCoin[] = yield sqliteService.searchBaseCoins(
       searchKey,
     );
-    console.log('get base coins=====================');
-    console.log(baseCoins);
+
     const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
       coin.name.toLowerCase().includes(searchKey),
     );
@@ -325,7 +326,10 @@ function* getTransferTransaction() {
       );
     }
   } catch (err: any) {
-    showSnackbar(err.message);
+    Toast.show({
+      type: 'error',
+      text1: err.message,
+    });
   } finally {
     yield put(setSendTokenLoading(false));
   }
@@ -349,15 +353,18 @@ function* transferToken() {
       );
 
       yield put(transferTokenSuccess());
-
-      showSnackbar(
-        `Transferred ${
+      Toast.show({
+        type: 'success',
+        text1: `Transferred ${
           sendTokenInfo.amount
         } ${sendTokenInfo.token.symbol.toUpperCase()} successfully`,
-      );
+      });
     }
   } catch (err: any) {
-    showSnackbar(err.message);
+    Toast.show({
+      type: 'error',
+      text1: err.message,
+    });
   } finally {
     yield put(setSendTokenLoading(false));
   }
@@ -399,7 +406,10 @@ export function* getTransactions({
 
     yield put(getTransactionsSuccess({transactions, page: payload.page}));
   } catch (err: any) {
-    showSnackbar(err.message);
+    Toast.show({
+      type: 'error',
+      text1: err.message,
+    });
     yield put(getTransactionsFailed(err.message));
   }
 }

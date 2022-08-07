@@ -8,7 +8,7 @@ import {colors} from '@app/assets/colors.config';
 import {tokenSelector} from '@app/store/coins/coinsSelector';
 import Clipboard from '@react-native-community/clipboard';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import {showSnackbar} from '@app/utils';
+import Toast from 'react-native-toast-message';
 
 const logo = require('@app/assets/images/logo.png');
 
@@ -31,7 +31,10 @@ export const Receive = () => {
 
     ReactNativeHapticFeedback.trigger('impactHeavy');
     Clipboard.setString(wallet.address);
-    showSnackbar('Copied Address!');
+    Toast.show({
+      type: 'success',
+      text1: 'Copied Address!',
+    });
   };
 
   return (

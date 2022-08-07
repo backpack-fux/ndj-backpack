@@ -7,17 +7,11 @@ import {
   Wallet,
   WalletItem,
 } from '@app/models';
-import {
-  addWallet,
-  selectWallet,
-  setLoading,
-  setReadyApp,
-  setWallets,
-} from '../actions';
-import {generateMnemonicPhrase, showSnackbar} from '@app/utils';
+import {addWallet, setLoading, setReadyApp, setWallets} from '../actions';
 import {NetworkName} from '@app/constants';
 import {WalletService} from '@app/services';
 import {wyreService} from '@app/services/wyreService';
+import Toast from 'react-native-toast-message';
 
 function* reload() {
   try {
@@ -61,7 +55,10 @@ function* reload() {
     }
     yield put(setWallets(wallets));
   } catch (err: any) {
-    showSnackbar(err.message);
+    Toast.show({
+      type: 'error',
+      text1: err.message,
+    });
   } finally {
     yield put(setLoading(false));
   }
@@ -90,7 +87,10 @@ function* createWallet({
     };
     yield put(addWallet(wallet));
   } catch (err: any) {
-    showSnackbar(err.message);
+    Toast.show({
+      type: 'error',
+      text1: err.message,
+    });
   } finally {
     yield put(setLoading(false));
   }

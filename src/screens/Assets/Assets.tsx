@@ -13,6 +13,7 @@ import {
   useIsFocused,
   useNavigation,
 } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
@@ -25,7 +26,7 @@ import {
   tokenSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
-import {normalizeNumber, showNetworkName, showSnackbar} from '@app/utils';
+import {normalizeNumber, showNetworkName} from '@app/utils';
 import {
   networkSelector,
   selectedWalletSelector,
@@ -126,7 +127,10 @@ export const AssetsScreen = () => {
         });
       }
     } catch (err: any) {
-      showSnackbar(err.message);
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
     } finally {
       setLoadingWyre(false);
     }

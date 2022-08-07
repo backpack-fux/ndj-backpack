@@ -5,12 +5,12 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import Share from 'react-native-share';
 import {t} from 'react-native-tailwindcss';
 import Clipboard from '@react-native-community/clipboard';
+import Toast from 'react-native-toast-message';
 
 import {BaseScreen, QRCode, Paragraph, Button} from '@app/components';
 import {AssetStackParamList} from '@app/models';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {colors} from '@app/assets/colors.config';
-import {showSnackbar} from '@app/utils';
 
 const logo = require('@app/assets/images/logo.png');
 let width = Dimensions.get('window').width;
@@ -43,7 +43,10 @@ export const ReceiveScreen = () => {
     }
 
     Clipboard.setString(wallet.address);
-    showSnackbar('Copied Address!');
+    Toast.show({
+      type: 'success',
+      text1: 'Copied Address!',
+    });
   };
 
   const onSetAmount = () => {

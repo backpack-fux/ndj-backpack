@@ -1,5 +1,3 @@
-import Snackbar from 'react-native-snackbar';
-import {colors} from '@app/assets/colors.config';
 import {networkList, NetworkName} from '@app/constants';
 import {BaseCoin, News, Wallet} from '@app/models';
 import numeral from 'numeral';
@@ -8,20 +6,6 @@ import {currencies} from '@app/constants/currencies';
 import * as _ from 'lodash';
 //@ts-ignore
 import bip39 from 'react-native-bip39';
-
-export const showSnackbar = (text: string) => {
-  Snackbar.show({
-    text: text,
-    duration: Snackbar.LENGTH_LONG,
-    backgroundColor: '#303030',
-    textColor: 'white',
-    action: {
-      text: 'OK',
-      textColor: colors.primary,
-      onPress: () => Snackbar.dismiss(),
-    },
-  });
-};
 
 export function readableNumString(value: number) {
   const log = Math.log10(value);

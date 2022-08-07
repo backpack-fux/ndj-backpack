@@ -4,6 +4,7 @@ import Carousel from 'react-native-snap-carousel';
 import {t} from 'react-native-tailwindcss';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {Thread} from 'react-native-threads';
+import Toast from 'react-native-toast-message';
 
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {colors} from '@app/assets/colors.config';
@@ -28,7 +29,7 @@ import {
 import {addWallet, setIsReadFieldGuide} from '@app/store/wallets/actions';
 import {NetworkName} from '@app/constants';
 import {wyreService} from '@app/services/wyreService';
-import {generateMnemonicPhrase, showSnackbar} from '@app/utils';
+import {generateMnemonicPhrase} from '@app/utils';
 
 const thread = new Thread('./wallet.thread.js');
 const logo = require('@app/assets/images/logo.png');
@@ -429,7 +430,10 @@ export const FieldGuideScreen = () => {
       };
       dispatch(addWallet(newWallet));
     } catch (err: any) {
-      showSnackbar(err.message);
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
     }
   };
 
@@ -447,7 +451,10 @@ export const FieldGuideScreen = () => {
       };
       dispatch(addWallet(newWallet));
     } catch (err: any) {
-      showSnackbar(err.message);
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
     }
   };
 
@@ -465,7 +472,10 @@ export const FieldGuideScreen = () => {
       };
       dispatch(addWallet(newWallet));
     } catch (err: any) {
-      showSnackbar(err.message);
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
     }
   };
 
@@ -504,7 +514,10 @@ export const FieldGuideScreen = () => {
         });
       }
     } catch (err: any) {
-      showSnackbar(err.message);
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
     } finally {
       setIsLoading(false);
     }

@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
+import Toast from 'react-native-toast-message';
 
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {walletsSelector} from '@app/store/wallets/walletsSelector';
@@ -20,7 +21,7 @@ import {addWallet} from '@app/store/wallets/actions';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {colors} from '@app/assets/colors.config';
 import {Wallet} from '@app/models';
-import {generateMnemonicPhrase, showSnackbar} from '@app/utils';
+import {generateMnemonicPhrase} from '@app/utils';
 
 const thread = new Thread('./wallet.thread.js');
 
@@ -58,7 +59,10 @@ export const CreateWalletScreen = () => {
     // listen for messages
     thread.onmessage = (message: string) => {
       if (message.startsWith('Error:')) {
-        showSnackbar(message);
+        Toast.show({
+          type: 'error',
+          text1: message,
+        });
       }
 
       const wallet: Wallet = {

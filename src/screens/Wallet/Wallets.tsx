@@ -14,6 +14,7 @@ import CardFlip from 'react-native-card-flip';
 import * as _ from 'lodash';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
+import Toast from 'react-native-toast-message';
 import {
   currencySelector,
   networkSelector,
@@ -40,7 +41,7 @@ import {
   renameWallet,
 } from '@app/store/wallets/actions';
 
-import {formatCurrency, showSnackbar} from '@app/utils';
+import {formatCurrency} from '@app/utils';
 import {borderWidth, networkList, NetworkName} from '@app/constants';
 import {selectWallet} from '@app/store/wallets/actions';
 import {useWalletConnect} from '@app/context/walletconnect';
@@ -177,11 +178,12 @@ export const WalletsScreen = () => {
       sendTokenInfo.transaction &&
       !sendTokenInfo.isLoading
     ) {
-      showSnackbar(
-        `Insufficient ${
+      Toast.show({
+        type: 'error',
+        text1: `Insufficient ${
           sendTokenInfo?.token?.name
         }(${sendTokenInfo?.token?.symbol.toUpperCase()}) balance`,
-      );
+      });
     }
   }, [insufficientBalance, isBack, backScreen, sendTokenInfo]);
 
@@ -390,7 +392,10 @@ const WalletItem = ({
   const onCopySeed = () => {
     ReactNativeHapticFeedback.trigger('impactHeavy');
     Clipboard.setString(wallet.mnemonic);
-    showSnackbar('Copied Seed!');
+    Toast.show({
+      type: 'success',
+      text1: 'Copied Seed!',
+    });
   };
 
   const onRenameWallet = () => {

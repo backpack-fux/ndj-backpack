@@ -2,7 +2,6 @@ import {colors} from '@app/assets/colors.config';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {DappStackParamList} from '@app/models';
-import {showSnackbar} from '@app/utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
@@ -15,7 +14,7 @@ import {
 } from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import {RNCamera} from 'react-native-camera';
-
+import Toast from 'react-native-toast-message';
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -27,10 +26,16 @@ export const DappsScreen = () => {
 
   const onBarCodeRead = async (uri: string) => {
     if (!uri.startsWith('wc:')) {
-      return showSnackbar('WalletConnect: invalid QR code');
+      return Toast.show({
+        type: 'error',
+        text1: 'WalletConnect: invalid QR code',
+      });
     }
 
-    showSnackbar('WalletConnect: connecting may take a few seconds');
+    Toast.show({
+      type: 'success',
+      text1: 'WalletConnect: connecting may take a few seconds',
+    });
     setOpenScan(false);
     onPairing(uri);
   };

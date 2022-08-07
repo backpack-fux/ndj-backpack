@@ -5,17 +5,18 @@ import {t} from 'react-native-tailwindcss';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CardFlip from 'react-native-card-flip';
+import Toast from 'react-native-toast-message';
 
 import {colors} from '@app/assets/colors.config';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {MainStackParamList, Wallet} from '@app/models';
-import {BaseScreen, Button, Card, Paragraph} from '@app/components';
+import {BaseScreen, Button, Paragraph} from '@app/components';
 import _ from 'lodash';
 import {
   networkSelector,
   walletsSelector,
 } from '@app/store/wallets/walletsSelector';
-import {getNetworkByChain, showNetworkName, showSnackbar} from '@app/utils';
+import {getNetworkByChain, showNetworkName} from '@app/utils';
 import {networkList, NetworkName, networkName} from '@app/constants';
 
 const shadow = {
@@ -166,8 +167,10 @@ export const SessionApproval = () => {
   useEffect(() => {
     if (!availableWallets.length) {
       onRejectSessionProposal(proposal, 'No available accounts');
-      showSnackbar('No available accounts');
-
+      Toast.show({
+        type: 'error',
+        text1: 'No available accounts',
+      });
       navigation.goBack();
     }
   }, [availableWallets]);

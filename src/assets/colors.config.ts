@@ -12,4 +12,6 @@ export const colors = {
   gray: 'rgba(135, 135, 153, 0.7)',
   yellow: '#FCF601',
   blue: '#6ADAFE',
+  tomato: 'tomato',
+  toast: '#303030',
 };

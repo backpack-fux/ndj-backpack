@@ -9,9 +9,9 @@ import {Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import * as queryString from 'query-string';
+import Toast from 'react-native-toast-message';
 
 import {MainStackParamList} from '@app/models';
-import {showSnackbar} from '@app/utils';
 import {EIP155_SIGNING_METHODS} from '@app/constants/EIP155Data';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import SignClient from '@walletconnect/sign-client';
@@ -110,7 +110,10 @@ export const WalletConnectProvider = (props: {
     const urlParam = url.replace(urlWithUri, '');
 
     if (!urlParam?.startsWith('wc:')) {
-      return showSnackbar('WalletConnect: invalid QR code');
+      Toast.show({
+        type: 'error',
+        text1: 'WalletConnect: invalid QR code',
+      });
     }
 
     setDeepLinkUri(urlParam);
@@ -126,7 +129,10 @@ export const WalletConnectProvider = (props: {
     }
 
     if (!deepLinkUri.startsWith('wc:')) {
-      showSnackbar('WalletConnect: invalid QR code');
+      Toast.show({
+        type: 'error',
+        text1: 'WalletConnect: invalid QR code',
+      });
     } else {
       client?.pair({uri: deepLinkUri});
       setDeepLinkUri('');
@@ -220,7 +226,10 @@ export const WalletConnectProvider = (props: {
   };
 
   const onSessionCreated = useCallback((session: any) => {
-    showSnackbar(`Connected ${session.self.metadata.name} successfully`);
+    Toast.show({
+      type: 'success',
+      text1: `Connected ${session.self.metadata.name} successfully`,
+    });
   }, []);
 
   const onSessionRequest = useCallback(
@@ -277,7 +286,10 @@ export const WalletConnectProvider = (props: {
     let timeout: any;
     if (pairingTopic) {
       timeout = setTimeout(() => {
-        showSnackbar('WalletConnect: connection timed out');
+        Toast.show({
+          type: 'error',
+          text1: 'WalletConnect: connection timed out',
+        });
         setParingTopic('');
       }, 15000);
     }
