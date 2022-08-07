@@ -31,7 +31,9 @@ import {WalletService} from '@app/services';
 import {closeetBaseCoins, showSnackbar} from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {refreshWallets} from '@app/store/wallets/actions';
-import {sqliteService} from '@app/services/sqllite';
+import {realmService} from '@app/services/realm';
+import {searchBaseCoins} from '@app/utils/realm';
+// import {sqliteService} from '@app/services/sqllite';
 
 function* getBaseCoins() {
   try {
@@ -72,7 +74,7 @@ function* getBaseCoins() {
       }
     }
 
-    yield sqliteService.setBaseCoins(baseCoins);
+    yield realmService.setBaseCoins(baseCoins);
     yield put(getBaseCoinsSuccess(true));
   } catch (err) {
     yield put(getBaseCoinsSuccess(false));
@@ -168,11 +170,6 @@ function* getTokens({payload}: Action<Wallet>) {
       currency,
     );
 
-    // if (payload) {
-    //   yield getBalances(payload, enabledCoins, coinDetails);
-    // } else {
-
-    // }
     for (const wallet of wallets) {
       yield getBalances(wallet, enabledCoins, coinDetails);
     }
@@ -204,10 +201,10 @@ function* searchCoins({payload}: Action<string>) {
       return;
     }
 
-    const baseCoins: BaseCoin[] = yield sqliteService.searchBaseCoins(
-      searchKey,
-    );
-
+    console.log('start==============================', searchKey);
+    const baseCoins: BaseCoin[] = yield searchBaseCoins(searchKey);
+    console.log('------------------------------------------------');
+    console.log(baseCoins.length);
     const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
       coin.name.toLowerCase().includes(searchKey),
     );
@@ -239,6 +236,8 @@ function* searchCoins({payload}: Action<string>) {
 
     yield put(searchCoinsResponse(newCoins));
   } catch (err) {
+    console.log('----------------');
+    console.log(err);
     yield put(searchCoinsResponse([]));
   }
 }
