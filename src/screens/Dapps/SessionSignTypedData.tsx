@@ -79,7 +79,7 @@ export const SessionSignTypedData = () => {
 
   return (
     <BaseScreen noBottom title="Sign Typed Data" onBack={onReject}>
-      <ScrollView>
+      <ScrollView keyboardDismissMode="on-drag">
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail
           address={address}

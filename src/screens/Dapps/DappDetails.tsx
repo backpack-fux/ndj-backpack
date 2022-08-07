@@ -22,7 +22,9 @@ export const DappDetailScreen = () => {
   return (
     <BaseScreen>
       <View style={[t.flex1]}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          keyboardDismissMode="on-drag">
           <Card>
             <Paragraph
               text={session.peer.metadata.name}

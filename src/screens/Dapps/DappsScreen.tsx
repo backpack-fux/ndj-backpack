@@ -57,7 +57,9 @@ export const DappsScreen = () => {
   return (
     <BaseScreen>
       <View style={[t.flex1]}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          keyboardDismissMode="on-drag">
           <Card>
             {sessions.length ? (
               <>

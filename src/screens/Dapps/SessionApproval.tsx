@@ -192,7 +192,9 @@ export const SessionApproval = () => {
             shadow,
             t.borderPurple200,
           ]}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            keyboardDismissMode="on-drag">
             <Paragraph
               text="Connection"
               align="center"
@@ -344,7 +346,9 @@ export const SessionApproval = () => {
             shadow,
             t.borderPurple200,
           ]}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            keyboardDismissMode="on-drag">
             <Paragraph text="Why" align="center" marginBottom={15} size={18} />
             <Paragraph
               text="This is like the sign outside a store telling you No Shoes No Shirt No Service, this is a social agreement to kick off commerce"

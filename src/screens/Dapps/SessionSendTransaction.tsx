@@ -102,7 +102,7 @@ export const SessionSendTransaction = () => {
       noBottom
       title="Sign / Send Transaction"
       onBack={() => onReject()}>
-      <ScrollView>
+      <ScrollView keyboardDismissMode="on-drag">
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail
           address={transaction.from}

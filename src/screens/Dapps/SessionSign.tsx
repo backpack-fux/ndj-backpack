@@ -80,7 +80,7 @@ export const SessionSign = () => {
 
   return (
     <BaseScreen noBottom title="Sign Message" onBack={onReject}>
-      <ScrollView>
+      <ScrollView keyboardDismissMode="on-drag">
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail
           address={address}

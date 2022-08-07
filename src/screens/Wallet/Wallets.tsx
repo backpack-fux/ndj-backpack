@@ -196,6 +196,7 @@ export const WalletsScreen = () => {
           keyExtractor={item => `${item.id}`}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
+          keyboardDismissMode="on-drag"
           renderItem={({item}) => (
             <WalletItem
               wallet={item}

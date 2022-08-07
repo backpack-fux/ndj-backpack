@@ -141,6 +141,7 @@ export const AssetsScreen = () => {
       <View style={[t.flex1]}>
         <ScrollView
           showsVerticalScrollIndicator={false}
+          keyboardDismissMode="on-drag"
           refreshControl={
             <RefreshControl
               refreshing={isLoading && focused}

@@ -73,7 +73,7 @@ export const SessionSignSolana = () => {
 
   return (
     <BaseScreen noBottom title="Sign Message" onBack={onReject}>
-      <ScrollView>
+      <ScrollView keyboardDismissMode="on-drag">
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail
           chainId={chainId}

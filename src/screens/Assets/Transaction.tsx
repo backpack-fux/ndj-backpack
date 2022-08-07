@@ -59,6 +59,7 @@ export const TransactionScreen = () => {
   return (
     <BaseScreen>
       <FlatList
+        keyboardDismissMode="on-drag"
         data={transactions}
         renderItem={({item}) => <Transaction item={item} token={token} />}
         keyExtractor={item =>
