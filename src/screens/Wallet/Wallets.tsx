@@ -47,7 +47,11 @@ import {selectWallet} from '@app/store/wallets/actions';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {Send} from './Send';
 import {Receive} from './Receive';
-import {setToken, transferTokenRequest} from '@app/store/coins/actions';
+import {
+  setToken,
+  transferTokenRequest,
+  updateSendTokenInfo,
+} from '@app/store/coins/actions';
 
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
@@ -75,12 +79,16 @@ export const WalletsScreen = () => {
   const selectedCoin = useSelector(tokenSelector);
   const [backScreen, setBackScreen] = useState<'send' | 'receive'>('send');
   const focused = useIsFocused();
+  const allTokens = useSelector(tokensSelector);
+  const token = ((selectedWallet && allTokens[selectedWallet.id]) || []).find(
+    a => a.contractAddress === selectedCoin?.contractAddress,
+  );
 
   const [isBack, setIsBack] = useState(false);
   const [showSeed, setShowSeed] = useState<string | null>(null);
 
   const insufficientBalance =
-    Number(sendTokenInfo.amount || 0) > (sendTokenInfo.balance || 0);
+    Number(sendTokenInfo.amount || 0) > (token?.balance || 0);
 
   let selectedCard: any;
 
@@ -142,6 +150,16 @@ export const WalletsScreen = () => {
     if (!selectedCard) {
       return;
     }
+
+    dispatch(
+      updateSendTokenInfo({
+        token: sendTokenInfo.token,
+        transaction: undefined,
+        toAccount: undefined,
+        amount: undefined,
+        isSendMax: false,
+      }),
+    );
 
     selectedCard?.flip();
     setIsBack(false);

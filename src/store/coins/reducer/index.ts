@@ -8,7 +8,6 @@ import {
 } from '@app/models';
 import moment from 'moment-timezone';
 import {CoinsReducerType} from '../coinsReducer';
-import * as _ from 'lodash';
 
 export function setTokenReducer(
   state: CoinsReducerType,
@@ -137,8 +136,16 @@ export function transferTokenSuccessReducer(state: CoinsReducerType) {
     ...state,
     sendTokenInfo: {
       ...state.sendTokenInfo,
+      isLoading: false,
+      fromAccount: undefined,
       toAccount: undefined,
       amount: undefined,
+      fee: undefined,
+      balance: undefined,
+      transaction: undefined,
+      status: undefined,
+      date: undefined,
+      isSendMax: undefined,
     },
   };
 }

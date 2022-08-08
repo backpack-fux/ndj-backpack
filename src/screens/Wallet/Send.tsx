@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import * as queryString from 'query-string';
-
+import Toast from 'react-native-toast-message';
 import {
   ActivityIndicator,
   Modal,
@@ -38,18 +38,17 @@ export const Send = () => {
   const selectedWallet = useSelector(selectedWalletSelector);
 
   const allTokens = useSelector(tokensSelector);
-
-  const token = ((selectedWallet && allTokens[selectedWallet.id]) || []).find(
-    a => a.contractAddress === sendTokenInfo.token?.contractAddress,
+  const wallet = selectedWallet?.wallets.find(
+    e => e.network === selectedCoin?.network,
   );
-
-  const [toAddress, setToAddress] = useState('');
-  const [amount, setAmount] = useState('');
+  const token = ((selectedWallet && allTokens[selectedWallet.id]) || []).find(
+    a => a.contractAddress === selectedCoin?.contractAddress,
+  );
   const [openScan, setOpenScan] = useState(false);
   const [focusSendAddress, setFocusSendAddress] = useState(false);
 
-  const debouncedToAddress = useDebounce(toAddress, 500);
-  const debouncedToAmount = useDebounce(amount, 500);
+  const debouncedToAddress = useDebounce(sendTokenInfo.toAccount, 500);
+  const debouncedToAmount = useDebounce(sendTokenInfo.amount, 500);
 
   const onBarCodeRead = (data: any) => {
     const dataArray = data.split('?');
@@ -81,7 +80,6 @@ export const Send = () => {
 
   const onPressMax = () => {
     const value = (token?.balance || 0).toString();
-    setAmount(value);
     dispatch(
       updateSendTokenInfo({
         ...sendTokenInfo,
@@ -92,14 +90,12 @@ export const Send = () => {
     );
   };
 
-  const onUpdateAccountWithAmount = (account: string, amount: string) => {
-    setToAddress(account);
-    setAmount(amount);
+  const onUpdateAccountWithAmount = (account: string, amountValue: string) => {
     dispatch(
       updateSendTokenInfo({
         ...sendTokenInfo,
         toAccount: account,
-        amount,
+        amount: amountValue,
         isSendMax: false,
         transaction: undefined,
       }),
@@ -107,7 +103,6 @@ export const Send = () => {
   };
 
   const onUpdateToAccount = (account: string) => {
-    setToAddress(account);
     dispatch(
       updateSendTokenInfo({
         ...sendTokenInfo,
@@ -118,7 +113,6 @@ export const Send = () => {
   };
 
   const onUpdateAmount = (value: string) => {
-    setAmount(value);
     dispatch(
       updateSendTokenInfo({
         ...sendTokenInfo,
@@ -133,8 +127,6 @@ export const Send = () => {
     const content = await Clipboard.getString();
 
     if (content) {
-      setToAddress(content);
-
       dispatch(
         updateSendTokenInfo({
           ...sendTokenInfo,
@@ -152,6 +144,13 @@ export const Send = () => {
       !isNaN(Number(debouncedToAmount)) &&
       Number(debouncedToAmount) > 0
     ) {
+      if (debouncedToAddress === wallet?.address) {
+        return Toast.show({
+          type: 'error',
+          text1: "Can't send token to the same account",
+        });
+      }
+
       dispatch(getTransferTransaction());
     }
   }, [debouncedToAddress, debouncedToAmount]);
