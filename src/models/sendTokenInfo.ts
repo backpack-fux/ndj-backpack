@@ -7,9 +7,9 @@ export interface SendTokenInfo {
   toAccount?: string;
   amount?: string;
   fee?: number;
-  isTransferred?: boolean;
   balance?: number;
   transaction?: any;
   status?: string;
   date?: Date;
+  isSendMax?: boolean;
 }

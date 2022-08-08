@@ -117,6 +117,7 @@ abstract class WalletService {
     toAccount: string,
     amount: number,
     address?: string,
+    sendMax?: boolean,
   ) {
     const service = this.getServiceByNetwork(network);
 
@@ -124,7 +125,7 @@ abstract class WalletService {
       throw new Error(`Can't get service for ${network}`);
     }
 
-    return service.transfer(privateKey, toAccount, amount, address);
+    return service.transfer(privateKey, toAccount, amount, address, sendMax);
   }
 
   static sendTransaction(privateKey: string, network: NetworkName, tx: any) {
@@ -188,6 +189,7 @@ abstract class WalletService {
     toAccount: string,
     amount: number,
     address?: string,
+    sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}>;
 
   abstract sendTransaction(privateKey: string, tx: any): Promise<any>;

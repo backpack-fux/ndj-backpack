@@ -309,12 +309,14 @@ function* getTransferTransaction() {
         sendTokenInfo.token.contractAddress !== sendTokenInfo.token.network
           ? sendTokenInfo.token.contractAddress
           : undefined;
+
       const res: {transaction: any; fee: number} = yield WalletService.transfer(
         privateKey,
         sendTokenInfo.token.network,
         sendTokenInfo.toAccount,
         Number(sendTokenInfo.amount),
         tokenAddress,
+        sendTokenInfo.isSendMax,
       );
 
       yield put(

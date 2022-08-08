@@ -58,6 +58,7 @@
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.33",
     "node-libs-browser": "^2.2.1",
+    "number-precision": "^1.5.2",
     "numeral": "^2.0.6",
     "paraswap": "^5.0.1",
     "path-browserify": "0.0.0",

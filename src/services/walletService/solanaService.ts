@@ -19,6 +19,7 @@ import {ENSInfo, ITransaction} from '@app/models';
 import {AxiosInstance} from '@app/apis/axios';
 import * as _ from 'lodash';
 import SolanaWallet, {SolanaSignTransaction} from 'solana-wallet';
+import NP from 'number-precision';
 
 const solscanApi = 'https://public-api.solscan.io';
 
@@ -88,9 +89,16 @@ export default class SolanaService extends WalletService {
     toAccount: string,
     amount: number,
     address?: string,
+    sendMax?: boolean,
   ) {
     if (address) {
-      return this.transferCustomToken(privateKey, toAccount, amount, address);
+      return this.transferCustomToken(
+        privateKey,
+        toAccount,
+        amount,
+        address,
+        sendMax,
+      );
     }
 
     const key = privateKey?.split(',').map(v => Number(v)) || [];
@@ -110,19 +118,26 @@ export default class SolanaService extends WalletService {
       recentBlockhash: blockHashInfo.value.blockhash,
     });
 
+    const fee =
+      blockHashInfo.value.feeCalculator.lamportsPerSignature / LAMPORTS_PER_SOL;
+
+    let sendAmount = amount;
+
+    if (sendMax) {
+      sendAmount = NP.strip(NP.minus(sendAmount, fee));
+    }
+
     transaction.add(
       SystemProgram.transfer({
         fromPubkey: wallet.publicKey,
         toPubkey: new PublicKey(toAccount),
-        lamports: LAMPORTS_PER_SOL * amount,
+        lamports: LAMPORTS_PER_SOL * sendAmount,
       }),
     );
 
     return {
       transaction,
-      fee:
-        blockHashInfo.value.feeCalculator.lamportsPerSignature /
-        LAMPORTS_PER_SOL,
+      fee,
     };
   }
 
@@ -131,6 +146,7 @@ export default class SolanaService extends WalletService {
     toAccount: string,
     amount: number,
     address: string,
+    sendMax?: boolean,
   ) {
     const key = privateKey?.split(',').map(v => Number(v)) || [];
     const wallet = Keypair.fromSecretKey(new Uint8Array(key));
@@ -155,6 +171,15 @@ export default class SolanaService extends WalletService {
       recentBlockhash: blockHashInfo.value.blockhash,
     });
 
+    const fee =
+      blockHashInfo.value.feeCalculator.lamportsPerSignature / LAMPORTS_PER_SOL;
+
+    let sendAmount = amount;
+
+    if (sendMax) {
+      sendAmount = NP.strip(NP.minus(sendAmount, fee));
+    }
+
     transaction.add(
       Token.createTransferInstruction(
         TOKEN_PROGRAM_ID,
@@ -162,7 +187,7 @@ export default class SolanaService extends WalletService {
         toTokenAccount.address,
         wallet.publicKey,
         [],
-        amount * Math.pow(10, 6),
+        sendAmount * Math.pow(10, 6),
       ),
     );
 

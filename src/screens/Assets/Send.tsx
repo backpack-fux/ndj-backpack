@@ -84,9 +84,6 @@ export const SendScreen = () => {
       updateSendTokenInfo({
         ...sendTokenInfo,
         amount: value,
-        isTransferred: false,
-        status: undefined,
-        date: undefined,
       }),
     );
   };
@@ -99,9 +96,6 @@ export const SendScreen = () => {
         ...sendTokenInfo,
         toAccount: account,
         amount,
-        isTransferred: false,
-        status: undefined,
-        date: undefined,
       }),
     );
   };
@@ -112,9 +106,6 @@ export const SendScreen = () => {
       updateSendTokenInfo({
         ...sendTokenInfo,
         toAccount: account,
-        isTransferred: false,
-        status: undefined,
-        date: undefined,
       }),
     );
   };
@@ -125,9 +116,6 @@ export const SendScreen = () => {
       updateSendTokenInfo({
         ...sendTokenInfo,
         amount: value,
-        isTransferred: false,
-        status: undefined,
-        date: undefined,
       }),
     );
   };
@@ -142,9 +130,6 @@ export const SendScreen = () => {
         updateSendTokenInfo({
           ...sendTokenInfo,
           toAccount: content,
-          isTransferred: false,
-          status: undefined,
-          date: undefined,
         }),
       );
     }
@@ -313,11 +298,7 @@ export const SendScreen = () => {
           <View style={[t.flex1, t.mL2]}>
             <Button
               text="Confirm"
-              disabled={
-                !sendTokenInfo.transaction ||
-                insufficientBalance ||
-                sendTokenInfo.isTransferred
-              }
+              disabled={!sendTokenInfo.transaction || insufficientBalance}
               onPress={onSendToken}
             />
           </View>

@@ -2,6 +2,7 @@ import {Zilliqa} from '@zilliqa-js/zilliqa';
 import * as zilUntils from '@zilliqa-js/util';
 import * as zcrypto from '@zilliqa-js/crypto';
 import {RPCMethod} from '@zilliqa-js/core';
+import NP from 'number-precision';
 
 import {NetworkName} from '@app/constants';
 import WalletService from './walletService';
@@ -106,17 +107,18 @@ export default class ZilliqaService extends WalletService {
     toAccount: string,
     amount: number,
     address?: string,
+    sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}> {
     await this.initWallet(privateKey);
 
     if (!address) {
-      return this.transferZil(toAccount, amount);
+      return this.transferZil(toAccount, amount, sendMax);
     }
 
-    return this.transferZrc2(toAccount, amount, address);
+    return this.transferZrc2(toAccount, amount, address, 18, sendMax);
   }
 
-  async transferZil(toAccount: string, amount: number) {
+  async transferZil(toAccount: string, amount: number, sendMax?: boolean) {
     if (!this.zilliqa.wallet.defaultAccount?.address) {
       throw new Error('Please init your wallet');
     }
@@ -129,12 +131,17 @@ export default class ZilliqaService extends WalletService {
 
     const zilBalance = await this.getBalance(fromAddress);
 
-    const total = +fee + +amount;
+    let transferAmount = amount;
+    if (sendMax) {
+      transferAmount = NP.strip(NP.minus(zilBalance, fee));
+    } else {
+      const total = +fee + +amount;
 
-    if (total > zilBalance) {
-      throw new Error(
-        `Insufficient funds. You need at least ${total} ZIL to make this transaction. You have ${zilBalance} ZIL on your account.`,
-      );
+      if (total > zilBalance) {
+        throw new Error(
+          `Insufficient funds. You need at least ${total} ZIL to make this transaction. You have ${zilBalance} ZIL on your account.`,
+        );
+      }
     }
 
     const transaction = this.zilliqa.transactions.new(
@@ -142,7 +149,10 @@ export default class ZilliqaService extends WalletService {
         version: this.zilApi,
         toAddr: zcrypto.fromBech32Address(toAccount),
         amount: new zilUntils.BN(
-          zilUntils.units.toQa(String(amount), zilUntils.units.Units.Zil),
+          zilUntils.units.toQa(
+            String(transferAmount),
+            zilUntils.units.Units.Zil,
+          ),
         ), // Sending an amount in Zil (1) and converting the amount to Qa
         gasPrice: new zilUntils.BN(
           zilUntils.units.toQa(gasPrice * 1000000, zilUntils.units.Units.Li),
@@ -163,9 +173,12 @@ export default class ZilliqaService extends WalletService {
     amount: number,
     contractAddress: string,
     decimals: number = 18,
+    sendMax?: boolean,
   ) {
-    const tokenAmount = this.parseUnits(amount.toString(), +decimals);
     const {gasPrice, gasLimit} = await this.getZRC2MinimumGasPrice();
+    const fee = gasLimit * gasPrice;
+    const sendAmount = sendMax ? NP.strip(NP.minus(amount, fee)) : amount;
+    const tokenAmount = this.parseUnits(sendAmount.toString(), +decimals);
     try {
       const data = {
         _tag: 'Transfer',
@@ -296,15 +309,12 @@ export default class ZilliqaService extends WalletService {
     address: string,
     contractAddress: string | undefined,
     page: number,
-    limit: number,
   ): Promise<ITransaction[]> {
     const params: any = {
       network: this.chain,
       page,
       type: 'normal',
     };
-
-    console.log(limit);
 
     if (contractAddress) {
       params.type = 'tokens';

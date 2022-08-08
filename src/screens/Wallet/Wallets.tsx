@@ -277,7 +277,6 @@ export const WalletsScreen = () => {
                   disabled={
                     !sendTokenInfo.transaction ||
                     insufficientBalance ||
-                    sendTokenInfo.isTransferred ||
                     sendTokenInfo.isLoading
                   }
                 />

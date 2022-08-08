@@ -4,6 +4,7 @@ import {BncClient, Transaction, crypto} from '@binance-chain/javascript-sdk';
 import {AminoPrefix} from '@binance-chain/javascript-sdk/lib/types';
 import {BASENUMBER} from '@binance-chain/javascript-sdk/lib/utils';
 import BigNumber from 'bignumber.js';
+import NP from 'number-precision';
 
 import WalletService from './walletService';
 import {ENSInfo, ITransaction} from '@app/models';
@@ -92,6 +93,7 @@ export default class BinanceService extends WalletService {
     toAccount: string,
     amount: number,
     asset?: string,
+    sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}> {
     this.client.setPrivateKey(privateKey);
     const fromAddress = this.client.getClientKeyAddress(); // sender address string (e.g. bnb1...)
@@ -100,7 +102,11 @@ export default class BinanceService extends WalletService {
       throw new Error('Please init wallet');
     }
 
-    const amountBig = new BigNumber(amount);
+    const fee = 0.000075;
+
+    let sendAmount = sendMax ? NP.strip(NP.minus(amount, fee)) : amount;
+
+    const amountBig = new BigNumber(sendAmount);
     const amountString = Number(amountBig.multipliedBy(BASENUMBER).toString());
     // const res = await this.httpClient.get(`/account/${fromAddress}/sequence`);
     // const sequence = res.data.sequence || 0;
@@ -157,7 +163,7 @@ export default class BinanceService extends WalletService {
 
     return {
       transaction: signedTx,
-      fee: 0.000075,
+      fee,
     };
   }
 

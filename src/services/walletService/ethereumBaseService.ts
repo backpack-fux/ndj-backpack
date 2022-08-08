@@ -59,11 +59,11 @@ export default class EthereumBaseService extends WalletService {
     toAccount: string,
     amount: number,
     contractAddress?: string,
+    sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}> {
     const account = this.web3.eth.accounts.privateKeyToAccount(privateKey);
 
-    const qty = this.web3.utils.toWei(amount.toString(), 'ether');
-    const hexQty = this.web3.utils.toHex(qty);
+    let qty = this.web3.utils.toWei(amount.toString(), 'ether');
     const nonce = await this.web3.eth.getTransactionCount(account.address);
     let hexNonce = this.web3.utils.toHex(nonce);
     const gasPrice = await this.web3.eth.getGasPrice();
@@ -71,6 +71,13 @@ export default class EthereumBaseService extends WalletService {
     if (!contractAddress) {
       const gasLimit = this.web3.utils.toBN('100000');
       const estimatedFee = this.web3.utils.toBN(gasPrice).mul(gasLimit);
+
+      if (sendMax) {
+        qty = this.web3.utils
+          .toBN(qty)
+          .sub(estimatedFee.mul(this.web3.utils.toBN(2)))
+          .toString();
+      }
       const tx = {
         from: account.address,
         to: toAccount,
@@ -87,13 +94,36 @@ export default class EthereumBaseService extends WalletService {
 
     const contract = new this.web3.eth.Contract(ERC20_ABI, contractAddress);
 
-    const transferFunc = contract.methods.transfer(toAccount, hexQty);
+    let transferFunc = contract.methods.transfer(
+      toAccount,
+      this.web3.utils.toHex(qty),
+    );
     let estimatedGas = await transferFunc.estimateGas({
       from: account.address,
     });
-    const estimatedFee = this.web3.utils
+    let estimatedFee = this.web3.utils
       .toBN(gasPrice)
       .mul(this.web3.utils.toBN(estimatedGas));
+
+    if (sendMax) {
+      qty = this.web3.utils
+        .toBN(qty)
+        .sub(estimatedFee.mul(this.web3.utils.toBN(2)))
+        .toString();
+
+      transferFunc = contract.methods.transfer(
+        toAccount,
+        this.web3.utils.toHex(qty),
+      );
+      estimatedGas = await transferFunc.estimateGas({
+        from: account.address,
+      });
+
+      estimatedFee = this.web3.utils
+        .toBN(gasPrice)
+        .mul(this.web3.utils.toBN(estimatedGas));
+    }
+
     const data = transferFunc.encodeABI();
     const tx = {
       from: account.address,

@@ -19,6 +19,7 @@ import {colors} from '@app/assets/colors.config';
 import {
   sendTokenInfoSelector,
   tokenSelector,
+  tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {
   getTransferTransaction,
@@ -28,12 +29,19 @@ import {
 import BarcodeMask from 'react-native-barcode-mask';
 import {useDebounce} from '@app/uses';
 import {normalizeNumber} from '@app/utils';
+import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 
 export const Send = () => {
   const dispatch = useDispatch();
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
-  const token = sendTokenInfo?.token;
   const selectedCoin = useSelector(tokenSelector);
+  const selectedWallet = useSelector(selectedWalletSelector);
+
+  const allTokens = useSelector(tokensSelector);
+
+  const token = ((selectedWallet && allTokens[selectedWallet.id]) || []).find(
+    a => a.contractAddress === sendTokenInfo.token?.contractAddress,
+  );
 
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
@@ -72,17 +80,14 @@ export const Send = () => {
   };
 
   const onPressMax = () => {
-    console.log(token?.balance);
     const value = (token?.balance || 0).toString();
     setAmount(value);
     dispatch(
       updateSendTokenInfo({
         ...sendTokenInfo,
+        isSendMax: true,
         amount: value,
         transaction: undefined,
-        isTransferred: false,
-        status: undefined,
-        date: undefined,
       }),
     );
   };
@@ -95,10 +100,8 @@ export const Send = () => {
         ...sendTokenInfo,
         toAccount: account,
         amount,
+        isSendMax: false,
         transaction: undefined,
-        isTransferred: false,
-        status: undefined,
-        date: undefined,
       }),
     );
   };
@@ -110,9 +113,6 @@ export const Send = () => {
         ...sendTokenInfo,
         toAccount: account,
         transaction: undefined,
-        isTransferred: false,
-        status: undefined,
-        date: undefined,
       }),
     );
   };
@@ -124,9 +124,7 @@ export const Send = () => {
         ...sendTokenInfo,
         amount: value,
         transaction: undefined,
-        isTransferred: false,
-        status: undefined,
-        date: undefined,
+        isSendMax: false,
       }),
     );
   };
@@ -141,10 +139,7 @@ export const Send = () => {
         updateSendTokenInfo({
           ...sendTokenInfo,
           toAccount: content,
-          isTransferred: false,
           transaction: undefined,
-          status: undefined,
-          date: undefined,
         }),
       );
     }
@@ -233,7 +228,7 @@ export const Send = () => {
             <TextInput
               value={sendTokenInfo.amount}
               onChangeText={value => onUpdateAmount(value)}
-              placeholder={sendTokenInfo?.token?.symbol.toUpperCase()}
+              placeholder={token?.symbol.toUpperCase()}
               keyboardType="decimal-pad"
               editable={!sendTokenInfo.isLoading}
               placeholderTextColor={colors.textGray}
@@ -251,7 +246,7 @@ export const Send = () => {
           <View style={[t.mT4]}>
             <TouchableOpacity onPress={onPressMax}>
               <Paragraph
-                text={`Max ${sendTokenInfo?.token?.symbol.toUpperCase()}`}
+                text={`Max ${token?.symbol.toUpperCase()}`}
                 size={13}
                 align="center"
               />
