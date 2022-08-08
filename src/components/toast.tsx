@@ -13,7 +13,7 @@ const toastConfig: ToastConfig = {
   success: props => (
     <BaseToast
       {...props}
-      style={{borderLeftColor: colors.green}}
+      style={[t.overflowHidden, {borderLeftColor: colors.green}]}
       contentContainerStyle={[{backgroundColor: colors.toast}]}
       text1Style={[t.textWhite]}
       text2Style={[t.textWhite]}
@@ -22,6 +22,7 @@ const toastConfig: ToastConfig = {
   error: props => (
     <ErrorToast
       {...props}
+      style={[t.overflowHidden, {borderLeftColor: colors.tomato}]}
       contentContainerStyle={[{backgroundColor: colors.toast}]}
       text1Style={[t.textWhite]}
       text2Style={[t.textWhite]}
