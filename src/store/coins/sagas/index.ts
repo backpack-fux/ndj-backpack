@@ -256,6 +256,7 @@ function* getPriceOfSendToken({payload}: Action<Token>) {
     const wallet = selectedWallet?.wallets.find(
       e => e.network === payload.network,
     );
+
     const token = ((selectedWallet && tokens[selectedWallet.id]) || []).find(
       a => a.contractAddress === payload.contractAddress,
     );
@@ -270,7 +271,7 @@ function* getPriceOfSendToken({payload}: Action<Token>) {
           fromAccount: wallet?.address,
           balance: token?.balance || 0,
           token: {
-            ...sendTokenInfo.token,
+            ...token,
             image: details?.image,
             price: details?.current_price,
             highPrice: details?.high_24h,
