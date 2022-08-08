@@ -469,7 +469,7 @@ const WalletItem = ({
                   style={[t.h16, {width: 64 + (topTokens.length - 1) * 25}]}>
                   {topTokens.map((token, index) => (
                     <Image
-                      key={token.id}
+                      key={token.id + token.network}
                       source={{uri: token.image}}
                       style={[
                         {right: index * 25},

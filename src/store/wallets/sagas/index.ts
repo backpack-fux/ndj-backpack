@@ -20,7 +20,6 @@ function* reload() {
     yield delay(1000);
     const state: RootState = yield select();
     const network = state.wallets.network;
-
     WalletService.switchNetwork(network);
     wyreService.setNetwork(network);
 
@@ -40,15 +39,17 @@ function* reload() {
         } catch (err) {
           console.log(err);
         }
-        walletItems.push(
-          new WalletItem(
-            wallet.network,
-            wallet.liveAddress,
-            wallet.testAddress,
-            wallet.privateKey,
-            wallet.ensInfo,
-          ),
+        const item = new WalletItem(
+          wallet.network,
+          wallet.liveAddress,
+          wallet.testAddress,
+          wallet.privateKey,
+          wallet.ensInfo,
         );
+
+        item.setIsTestNet(network === 'testnet');
+
+        walletItems.push(item);
       }
 
       account.wallets = walletItems;

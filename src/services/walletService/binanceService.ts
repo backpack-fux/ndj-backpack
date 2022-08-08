@@ -1,9 +1,6 @@
 import {NetworkName} from '@app/constants';
 import axios, {AxiosInstance} from 'axios';
-import {BncClient, Transaction, crypto} from '@binance-chain/javascript-sdk';
-import {AminoPrefix} from '@binance-chain/javascript-sdk/lib/types';
-import {BASENUMBER} from '@binance-chain/javascript-sdk/lib/utils';
-import BigNumber from 'bignumber.js';
+import {BncClient} from '@binance-chain/javascript-sdk';
 import NP from 'number-precision';
 
 import WalletService from './walletService';
@@ -66,6 +63,7 @@ export default class BinanceService extends WalletService {
     // Todo: need to get it by once
     const res = await this.client.getBalance(account);
     const symbol = address || 'BNB';
+    console.log(res);
     const data = res.find((item: any) => item.symbol === symbol);
 
     if (!data) {
@@ -105,64 +103,20 @@ export default class BinanceService extends WalletService {
     const fee = 0.000075;
 
     let sendAmount = sendMax ? NP.strip(NP.minus(amount, fee)) : amount;
+    const res = await this.httpClient.get(`/account/${fromAddress}/sequence`);
+    const sequence = res.data.sequence || 0;
 
-    const amountBig = new BigNumber(sendAmount);
-    const amountString = Number(amountBig.multipliedBy(BASENUMBER).toString());
-    // const res = await this.httpClient.get(`/account/${fromAddress}/sequence`);
-    // const sequence = res.data.sequence || 0;
-    const sequence = 0;
-
-    const accCode = crypto.decodeAddress(fromAddress);
-    const toAccCode = crypto.decodeAddress(toAccount);
-    const coin = {
-      denom: asset || 'BNB',
-      amount: amountString,
-    };
-
-    const msg = {
-      inputs: [
-        {
-          address: accCode,
-          coins: [coin],
-        },
-      ],
-      outputs: [
-        {
-          address: toAccCode,
-          coins: [coin],
-        },
-      ],
-      aminoPrefix: AminoPrefix.MsgSend,
-    };
-
-    const signMsg = {
-      inputs: [
-        {
-          address: fromAddress,
-          coins: [coin],
-        },
-      ],
-      outputs: [
-        {
-          address: toAccount,
-          coins: [coin],
-        },
-      ],
-    };
-
-    const tx = new Transaction({
-      accountNumber: this.client.account_number as number,
-      chainId: this.client.chainId as string,
-      msg,
-      memo: '',
+    const transaction = {
+      fromAddress: fromAddress,
+      toAddress: toAccount,
+      amount: sendAmount,
       sequence,
-      source: this.client._source,
-    });
-
-    const signedTx = await this.client._signingDelegate(tx, signMsg);
+      asset: asset || 'BNB',
+      memo: '',
+    };
 
     return {
-      transaction: signedTx,
+      transaction,
       fee,
     };
   }
@@ -170,8 +124,14 @@ export default class BinanceService extends WalletService {
   async sendTransaction(privateKey: string, tx: any): Promise<void> {
     this.client.setPrivateKey(privateKey);
 
-    const res = await this.client.sendTransaction(tx, false);
-
+    const res = await this.client.transfer(
+      tx.fromAddress,
+      tx.toAddress,
+      tx.amount,
+      tx.asset,
+      tx.memo,
+      tx.sequence,
+    );
     if (res.status !== 200) {
       throw new Error('Failed send transaction');
     }
