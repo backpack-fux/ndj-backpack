@@ -5,9 +5,12 @@ import {t} from 'react-native-tailwindcss';
 
 import {colors} from '@app/assets/colors.config';
 import {BaseScreen, Card, Paragraph} from '@app/components';
-import {tokensSelector} from '@app/store/coins/coinsSelector';
+import {
+  sendTokenInfoSelector,
+  tokensSelector,
+} from '@app/store/coins/coinsSelector';
 import {Token} from '@app/models';
-import {selectSendToken, setToken} from '@app/store/coins/actions';
+import {setToken, updateSendTokenInfo} from '@app/store/coins/actions';
 import {networkName} from '@app/constants';
 import {useNavigation} from '@react-navigation/native';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
@@ -20,8 +23,18 @@ export const SelectTokenScreen = () => {
   const selectedWallet = useSelector(selectedWalletSelector);
   const allTokens = useSelector(tokensSelector);
   const tokens = (selectedWallet?.id && allTokens[selectedWallet?.id]) || [];
+  const sendTokenInfo = useSelector(sendTokenInfoSelector);
 
   const onSelectToken = (token: Token) => {
+    dispatch(
+      updateSendTokenInfo({
+        token: sendTokenInfo.token,
+        transaction: undefined,
+        toAccount: undefined,
+        amount: undefined,
+        isSendMax: false,
+      }),
+    );
     dispatch(setToken(token));
     navigation.goBack();
   };

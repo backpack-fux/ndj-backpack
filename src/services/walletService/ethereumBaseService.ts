@@ -6,6 +6,8 @@ import {TransactionConfig, TransactionReceipt} from 'web3-core';
 import {ENSInfo, ITransaction} from '@app/models';
 import {JsonRpcProvider} from '@ethersproject/providers';
 
+const generatedKeys: any = {};
+
 export default class EthereumBaseService extends WalletService {
   chain: 'mainnet' | 'testnet' = 'mainnet';
   web3: Web3;
@@ -27,17 +29,25 @@ export default class EthereumBaseService extends WalletService {
   }
 
   async generateKeys(mnemonic: string) {
+    if (generatedKeys[mnemonic]) {
+      return generatedKeys[mnemonic];
+    }
+
     const wallet = ethers.Wallet.fromMnemonic(mnemonic);
     const {_signingKey} = wallet;
     const res = _signingKey();
     const ensInfo = await this.getENSInfo(wallet.address);
 
-    return {
+    const data = {
       testAddress: wallet.address,
       liveAddress: wallet.address,
       privateKey: res.privateKey,
       ensInfo,
     };
+
+    generatedKeys[mnemonic] = data;
+
+    return data;
   }
 
   async getBalance(account: string, address?: string) {

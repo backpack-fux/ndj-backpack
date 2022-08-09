@@ -86,7 +86,6 @@ abstract class WalletService {
 
     for (const service of this.serviceArray) {
       const keys = await service.generateKeys(mnemonic);
-
       wallets.push(
         new WalletItem(
           service.network,

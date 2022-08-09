@@ -83,7 +83,6 @@ export const CreateWalletScreen = () => {
 
   const createMnemonicPhrase = useCallback(async () => {
     const mnemonicString: string = await generateMnemonicPhrase();
-
     setNewMnemonic(mnemonicString);
   }, []);
 

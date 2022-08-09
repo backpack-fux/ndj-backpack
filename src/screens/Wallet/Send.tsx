@@ -147,7 +147,7 @@ export const Send = () => {
       if (debouncedToAddress === wallet?.address) {
         return Toast.show({
           type: 'error',
-          text1: "You cannot pay yourself",
+          text1: 'You cannot pay yourself',
         });
       }
 
@@ -162,13 +162,6 @@ export const Send = () => {
   useEffect(() => {
     if (selectedCoin && selectedCoin?.id !== sendTokenInfo.token?.id) {
       dispatch(selectSendToken(selectedCoin));
-      dispatch(
-        updateSendTokenInfo({
-          ...sendTokenInfo,
-          transaction: undefined,
-          isSendMax: false,
-        }),
-      );
     }
   }, [selectedCoin, sendTokenInfo]);
 
