@@ -270,10 +270,8 @@ function* searchCoins({payload}: Action<string>) {
 
 function* getPriceOfSendToken({payload}: Action<Token>) {
   try {
-    yield put(setSendTokenLoading(true));
     const state: RootState = yield select();
     const selectedWallet = selectedWalletSelector(state);
-    const sendTokenInfo = state.coins.sendTokenInfo;
     const tokens = state.coins.tokens;
 
     const wallet = selectedWallet?.wallets.find(
@@ -284,32 +282,18 @@ function* getPriceOfSendToken({payload}: Action<Token>) {
       a => a.contractAddress === payload.contractAddress,
     );
 
-    const res: CoinGeckoCoinDetail[] = yield getCoinGeckoDetail([payload]);
-    const details = res[0];
-
-    if (details) {
-      yield put(
-        updateSendTokenInfo({
-          ...sendTokenInfo,
-          fromAccount: wallet?.address,
-          balance: token?.balance || 0,
-          token: {
-            ...token,
-            image: details?.image,
-            price: details?.current_price,
-            highPrice: details?.high_24h,
-            lowPrice: details?.low_24h,
-            priceChange: details?.price_change_24h,
-            priceChangePercent: details?.price_change_percentage_24h,
-          } as Token,
-          transaction: undefined,
-        }),
-      );
-    }
+    yield put(
+      updateSendTokenInfo({
+        fromAccount: wallet?.address,
+        balance: token?.balance || 0,
+        token: token,
+        transaction: undefined,
+        amount: undefined,
+        toAccount: undefined,
+      }),
+    );
   } catch (err) {
     console.log('getPriceOfSendToken', err);
-  } finally {
-    yield put(setSendTokenLoading(false));
   }
 }
 
@@ -458,7 +442,7 @@ export function* searchCoinsWatcher() {
 }
 
 export function* getPriceOfSendTokenWatcher() {
-  yield takeLatest(ActionType.SELECT_SEND_TOKEN as any, getPriceOfSendToken);
+  yield takeLatest(ActionType.SET_TOKEN as any, getPriceOfSendToken);
 }
 
 export function* transferTokenWatcher() {

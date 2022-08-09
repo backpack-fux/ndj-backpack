@@ -69,13 +69,6 @@ export const searchCoinsResponse = (payload: BaseCoin[]) => {
   };
 };
 
-export const selectSendToken = (payload: BaseCoin) => {
-  return {
-    type: ActionType.SELECT_SEND_TOKEN,
-    payload,
-  };
-};
-
 export const setSendTokenLoading = (payload: boolean) => {
   return {
     type: ActionType.SET_SEND_TOKEN_LOADING,

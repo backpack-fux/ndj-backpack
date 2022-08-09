@@ -273,11 +273,13 @@ export const WalletsScreen = () => {
       ) : (
         <>
           {backScreen === 'send' && (
-            <Button
-              text="Change Token"
-              onPress={onOpenSelectScreen}
-              disabled={!selectedWallet || sendTokenInfo.isLoading}
-            />
+            <View style={[t.mT2]}>
+              <Button
+                text="Change Token"
+                onPress={onOpenSelectScreen}
+                disabled={!selectedWallet || sendTokenInfo.isLoading}
+              />
+            </View>
           )}
           <View style={[t.flexRow, t.mT2]}>
             <View style={[t.flex1]}>

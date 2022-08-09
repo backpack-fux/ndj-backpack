@@ -23,7 +23,6 @@ import {
 } from '@app/store/coins/coinsSelector';
 import {
   getTransferTransaction,
-  selectSendToken,
   updateSendTokenInfo,
 } from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
@@ -158,12 +157,6 @@ export const Send = () => {
   useEffect(() => {
     onUpdateSendTokenInfo();
   }, [onUpdateSendTokenInfo]);
-
-  useEffect(() => {
-    if (selectedCoin && selectedCoin?.id !== sendTokenInfo.token?.id) {
-      dispatch(selectSendToken(selectedCoin));
-    }
-  }, [selectedCoin, sendTokenInfo]);
 
   return (
     <View>

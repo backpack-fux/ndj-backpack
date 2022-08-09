@@ -96,18 +96,6 @@ export function setIsLoadingTokensReducer(
   };
 }
 
-export function selectSendTokenReducer(
-  state: CoinsReducerType,
-  {payload}: Action<Token>,
-) {
-  return {
-    ...state,
-    sendTokenInfo: {
-      token: payload,
-    },
-  };
-}
-
 export function updateSendTokenInfoReducer(
   state: CoinsReducerType,
   {payload}: Action<SendTokenInfo>,
