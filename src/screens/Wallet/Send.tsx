@@ -160,7 +160,8 @@ export const Send = () => {
   }, [onUpdateSendTokenInfo]);
 
   useEffect(() => {
-    if (selectedCoin) {
+    if (selectedCoin && selectedCoin?.id !== sendTokenInfo.token?.id) {
+      dispatch(selectSendToken(selectedCoin));
       dispatch(
         updateSendTokenInfo({
           ...sendTokenInfo,
@@ -168,9 +169,8 @@ export const Send = () => {
           isSendMax: false,
         }),
       );
-      dispatch(selectSendToken(selectedCoin));
     }
-  }, [selectedCoin]);
+  }, [selectedCoin, sendTokenInfo]);
 
   return (
     <View>

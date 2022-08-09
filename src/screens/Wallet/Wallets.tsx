@@ -284,7 +284,11 @@ export const WalletsScreen = () => {
               <Button
                 text="Cancel"
                 onPress={onCancelBack}
-                disabled={!selectedWallet || sendTokenInfo.isLoading}
+                disabled={
+                  backScreen === 'send'
+                    ? !selectedWallet || sendTokenInfo.isLoading
+                    : !selectedWallet
+                }
               />
             </View>
             <View style={[t.flex1, t.mL2]}>
