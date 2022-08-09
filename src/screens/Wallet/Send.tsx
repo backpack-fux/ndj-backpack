@@ -147,7 +147,7 @@ export const Send = () => {
       if (debouncedToAddress === wallet?.address) {
         return Toast.show({
           type: 'error',
-          text1: "Can't send token to the same account",
+          text1: "You cannot pay yourself",
         });
       }
 
