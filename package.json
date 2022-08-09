@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "postinstall": "./node_modules/.bin/rn-nodeify --install 'crypto,buffer,react-native-randombytes,vm,stream,http,https,os,url,net,fs' --hack",
+    "postinstall": "./node_modules/.bin/rn-nodeify --install 'crypto,buffer,react-native-randombytes,vm,stream,http,https,os,url,net,fs' --hack && yarn wallet-thread && yarn sqlite-thread",
     "wallet-thread": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./ios --entry-file wallet.thread.js --platform ios --bundle-output ./ios/wallet.thread.jsbundle",
     "sqlite-thread": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./ios --entry-file sqlite.thread.js --platform ios --bundle-output ./ios/sqlite.thread.jsbundle"
   },
