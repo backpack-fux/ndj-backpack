@@ -44,8 +44,6 @@ class SqliteService {
       'CREATE INDEX IF NOT EXISTS baseCoins_symbol_name_idx ON baseCoins (symbol, name);',
     );
 
-    console.log('========================', baseCoins.length);
-
     const values = baseCoins.reduce((total: any[], item: BaseCoin) => {
       return [
         ...total,

@@ -4,7 +4,7 @@ import {t} from 'react-native-tailwindcss';
 
 import {BaseScreen} from '@app/components';
 import {useDispatch} from 'react-redux';
-import {getBaseCoins} from '@app/store/coins/actions';
+import {getBaseCoinsRequest} from '@app/store/coins/actions';
 
 const logo = require('@app/assets/images/logo.png');
 const {width, height} = Dimensions.get('screen');
@@ -13,7 +13,7 @@ export const SplashScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBaseCoins());
+    dispatch(getBaseCoinsRequest());
   }, []);
   return (
     <BaseScreen>

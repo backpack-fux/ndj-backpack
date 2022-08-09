@@ -20,21 +20,15 @@ import {sleep} from '@app/utils';
 import {MainStackNavigator} from './MainStackNavigator';
 import {FieldGuideScreen} from '@app/screens/FieldGuide';
 import {BuyTokenScreen} from '@app/screens/BuyToken';
-import {isLoadingGetBaseCoinSelector} from '@app/store/coins/coinsSelector';
 const Stack = createNativeStackNavigator();
 
 export const RootStackNavigator = () => {
   const wallet = useSelector(selectedWalletSelector);
   const isReady = useSelector(isReadySelector);
   const isReadFieldGuide = useSelector(isReadFieldGuideSelector);
-  const isLoadingGetBaseCoin = useSelector(isLoadingGetBaseCoinSelector);
   const navigation: any = useNavigation<NavigationProp<RootStackParamList>>();
   const onLoadedWallets = async () => {
     if (!isReady) {
-      return;
-    }
-
-    if (isLoadingGetBaseCoin) {
       return;
     }
 
@@ -60,7 +54,7 @@ export const RootStackNavigator = () => {
 
   useEffect(() => {
     onLoadedWallets();
-  }, [isReady, isReadFieldGuide, wallet, isLoadingGetBaseCoin]);
+  }, [isReady, isReadFieldGuide, wallet]);
 
   return (
     <Stack.Navigator initialRouteName={'Splash'} screenOptions={screenOptions}>

@@ -63,7 +63,7 @@ export default class BinanceService extends WalletService {
     // Todo: need to get it by once
     const res = await this.client.getBalance(account);
     const symbol = address || 'BNB';
-    console.log(res);
+
     const data = res.find((item: any) => item.symbol === symbol);
 
     if (!data) {

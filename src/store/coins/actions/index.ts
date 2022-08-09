@@ -142,7 +142,14 @@ export const getTransactionsFailed = (payload: string) => {
   };
 };
 
-export const getBaseCoins = () => {
+export const setBaseCoinsRequest = (payload: BaseCoin[]) => {
+  return {
+    type: ActionType.SET_BASE_COINS,
+    payload,
+  };
+};
+
+export const getBaseCoinsRequest = () => {
   return {
     type: ActionType.GET_BASE_COINS,
   };

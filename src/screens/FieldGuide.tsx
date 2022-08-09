@@ -486,9 +486,9 @@ export const FieldGuideScreen = () => {
       thread.onmessage = (message: string) => {
         if (message.startsWith('Error:')) {
           reject(message);
+        } else {
+          resolve(JSON.parse(message));
         }
-
-        resolve(JSON.parse(message));
       };
     });
   };

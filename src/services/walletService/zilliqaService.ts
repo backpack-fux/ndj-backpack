@@ -83,7 +83,6 @@ export default class ZilliqaService extends WalletService {
       console.log('Error at getZilBalance', e);
     }
 
-    console.log(balance);
     return balance;
   }
 

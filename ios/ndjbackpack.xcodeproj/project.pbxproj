@@ -11,6 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		155B4A0228A1F5D0003427A1 /* sqlite.thread.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 155B4A0128A1F5D0003427A1 /* sqlite.thread.jsbundle */; };
 		15B5E537F72C445681B81DDB /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC9E98404E5541C9A4F65796 /* Montserrat-Thin.ttf */; };
 		2120E9674DD54C9CA2215B9F /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21B21BC489AF4DD2ADE47A68 /* Montserrat-Regular.ttf */; };
 		59BAF82142CC42679055EB8C /* Nicomoji.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F43C47940DDD45EFB11262E3 /* Nicomoji.ttf */; };
@@ -46,6 +47,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ndjbackpack/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ndjbackpack/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ndjbackpack/main.m; sourceTree = "<group>"; };
+		155B4A0128A1F5D0003427A1 /* sqlite.thread.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sqlite.thread.jsbundle; sourceTree = "<group>"; };
 		1C668806834D4568B09BD695 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		1D0AE47A65C8663E3B452821 /* Pods-ndjbackpack-ndjbackpackTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack-ndjbackpackTests.release.xcconfig"; path = "Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests.release.xcconfig"; sourceTree = "<group>"; };
 		1DEDA8BF089B489481997224 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 		13B07FAE1A68108700A75B9A /* ndjbackpack */ = {
 			isa = PBXGroup;
 			children = (
+				155B4A0128A1F5D0003427A1 /* sqlite.thread.jsbundle */,
 				FC7AC80E289ADFB600F35454 /* wallet.thread.jsbundle */,
 				AF6336B5284469AF00527645 /* ndjbackpack.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -311,6 +314,7 @@
 				59BAF82142CC42679055EB8C /* Nicomoji.ttf in Resources */,
 				5E3E928F4C45417EA34CC274 /* Montserrat-Bold.ttf in Resources */,
 				D2118D8D65484A52BB1CA5E3 /* Montserrat-Italic.ttf in Resources */,
+				155B4A0228A1F5D0003427A1 /* sqlite.thread.jsbundle in Resources */,
 				BFB2CF70CEB14DE6881AEA0C /* Montserrat-Light.ttf in Resources */,
 				E24823D589CE4CA8A6FE6666 /* Montserrat-Medium.ttf in Resources */,
 				2120E9674DD54C9CA2215B9F /* Montserrat-Regular.ttf in Resources */,

@@ -67,8 +67,7 @@ export default class EthereumBaseService extends WalletService {
     const nonce = await this.web3.eth.getTransactionCount(account.address);
     let hexNonce = this.web3.utils.toHex(nonce);
     const gasPrice = await this.web3.eth.getGasPrice();
-    const balance = await this.getBalance(account.address, contractAddress);
-    console.log('-----------------', balance);
+
     if (!contractAddress) {
       const gasLimit = this.web3.utils.toBN('100000');
       const estimatedFee = this.web3.utils.toBN(gasPrice).mul(gasLimit);

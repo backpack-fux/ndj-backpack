@@ -22,6 +22,7 @@ import {
   getTransactionsSuccess,
   searchCoinsResponse,
   setAccountCoins,
+  setBaseCoinsRequest,
   setIsLoadingTokens,
   setSendTokenLoading,
   setTokens,
@@ -34,6 +35,36 @@ import {closeetBaseCoins} from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {sqliteService} from '@app/services/sqllite';
+import {saveBaseCoins} from '@app/utils/sqlite';
+
+async function getCoinGeckoCoins() {
+  const coins: CoinGeckoCoin[] = await getCoinGeckoCoinList();
+  const baseCoins: BaseCoin[] = [];
+
+  for (const coin of coins) {
+    if (_.isEmpty(coin.platforms)) {
+      continue;
+    }
+
+    for (const platform of Object.keys(coin.platforms)) {
+      const network = networkList.find(item => item.network === platform);
+
+      if (!network) {
+        continue;
+      }
+
+      baseCoins.push({
+        id: coin.id,
+        name: coin.name,
+        symbol: coin.symbol,
+        contractAddress: coin.platforms[platform],
+        network: platform as NetworkName,
+      });
+    }
+  }
+
+  return baseCoins;
+}
 
 function* getBaseCoins() {
   try {
@@ -48,33 +79,17 @@ function* getBaseCoins() {
       yield put(getBaseCoinsSuccess(false));
       return;
     }
+    const baseCoins: BaseCoin[] = yield getCoinGeckoCoins();
+    yield saveBaseCoins(baseCoins);
+    yield put(getBaseCoinsSuccess(true));
+  } catch (err) {
+    yield put(getBaseCoinsSuccess(false));
+  }
+}
 
-    const coins: CoinGeckoCoin[] = yield getCoinGeckoCoinList();
-    const baseCoins: BaseCoin[] = [];
-
-    for (const coin of coins) {
-      if (_.isEmpty(coin.platforms)) {
-        continue;
-      }
-
-      for (const platform of Object.keys(coin.platforms)) {
-        const network = networkList.find(item => item.network === platform);
-
-        if (!network) {
-          continue;
-        }
-
-        baseCoins.push({
-          id: coin.id,
-          name: coin.name,
-          symbol: coin.symbol,
-          contractAddress: coin.platforms[platform],
-          network: platform as NetworkName,
-        });
-      }
-    }
-
-    yield sqliteService.setBaseCoins(baseCoins);
+function* setBaseCoins({payload}: Action<BaseCoin[]>) {
+  try {
+    yield saveBaseCoins(payload);
     yield put(getBaseCoinsSuccess(true));
   } catch (err) {
     yield put(getBaseCoinsSuccess(false));
@@ -170,11 +185,6 @@ function* getTokens({payload}: Action<Wallet>) {
       currency,
     );
 
-    // if (payload) {
-    //   yield getBalances(payload, enabledCoins, coinDetails);
-    // } else {
-
-    // }
     for (const wallet of wallets) {
       yield getBalances(wallet, enabledCoins, coinDetails);
     }
@@ -199,6 +209,9 @@ function* getTokens({payload}: Action<Wallet>) {
 
 function* searchCoins({payload}: Action<string>) {
   try {
+    const state: RootState = yield select();
+    const isSavedBaseCoins = !!state.coins.baseCoinExpiresAt;
+
     const searchKey = payload.toLowerCase().trim();
 
     if (!searchKey) {
@@ -206,9 +219,19 @@ function* searchCoins({payload}: Action<string>) {
       return;
     }
 
-    const baseCoins: BaseCoin[] = yield sqliteService.searchBaseCoins(
-      searchKey,
-    );
+    let baseCoins: BaseCoin[] = [];
+
+    if (isSavedBaseCoins) {
+      baseCoins = yield sqliteService.searchBaseCoins(searchKey);
+    } else {
+      const coins: BaseCoin[] = yield getCoinGeckoCoins();
+      yield put(setBaseCoinsRequest(coins));
+      baseCoins = coins.filter(
+        coin =>
+          coin.symbol.toLowerCase().indexOf(searchKey) > -1 ||
+          coin.name.toLowerCase().indexOf(searchKey) > -1,
+      );
+    }
 
     const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
       coin.name.toLowerCase().includes(searchKey),
@@ -455,4 +478,5 @@ export function* getTransactionsWatcher() {
 
 export function* getBaseCoinsWatcher() {
   yield takeLatest(ActionType.GET_BASE_COINS as any, getBaseCoins);
+  yield takeLatest(ActionType.SET_BASE_COINS as any, setBaseCoins);
 }
