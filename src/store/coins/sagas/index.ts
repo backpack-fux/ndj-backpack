@@ -279,6 +279,7 @@ function* getPriceOfSendToken({payload}: Action<Token>) {
             priceChange: details?.price_change_24h,
             priceChangePercent: details?.price_change_percentage_24h,
           } as Token,
+          transaction: undefined,
         }),
       );
     }

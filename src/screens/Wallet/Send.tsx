@@ -161,6 +161,13 @@ export const Send = () => {
 
   useEffect(() => {
     if (selectedCoin) {
+      dispatch(
+        updateSendTokenInfo({
+          ...sendTokenInfo,
+          transaction: undefined,
+          isSendMax: false,
+        }),
+      );
       dispatch(selectSendToken(selectedCoin));
     }
   }, [selectedCoin]);
