@@ -486,7 +486,6 @@ const WalletItem = ({
                         t.flex1,
                         t.roundedFull,
                         t.bgWhite,
-                        boxShadow,
                       ]}
                       resizeMode="contain"
                     />

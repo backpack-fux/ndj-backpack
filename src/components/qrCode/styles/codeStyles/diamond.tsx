@@ -16,9 +16,13 @@ export function drawDiamondPiece(
   const px = x * xsize + props.padding * xsize;
   const py = y * ysize + props.padding * ysize;
   return (
-    <G x={px + xsize / 2} y={py + ysize / 2} width={xsize} height={ysize}>
+    <G
+      key={px + ':' + py}
+      x={px + xsize / 2}
+      y={py + ysize / 2}
+      width={xsize}
+      height={ysize}>
       <Rect
-        key={px + ':' + py}
         x={-xsize / 2}
         y={-ysize / 2}
         width={xsize}

@@ -23,6 +23,7 @@ export function drawNinjaPiece(
     case '2b':
       return (
         <Rect
+          key={px + ':' + py}
           x={-(xsize / 2)}
           y={-(ysize / 2)}
           originX={px + xsize / 2}
@@ -36,6 +37,7 @@ export function drawNinjaPiece(
     case '1b':
       return (
         <Rect
+          key={px + ':' + py}
           x={-(xsize / 2)}
           y={-(ysize / 2)}
           originX={px + xsize / 2}
@@ -49,6 +51,7 @@ export function drawNinjaPiece(
     case '1b3b':
       return (
         <Rect
+          key={px + ':' + py}
           x={-(xsize / 2)}
           y={-(ysize / 2)}
           originX={px + xsize / 2}
@@ -62,6 +65,7 @@ export function drawNinjaPiece(
     case '2a1b':
       return (
         <Rect
+          key={px + ':' + py}
           x={-(xsize / 2)}
           y={-(ysize / 2)}
           originX={px + xsize / 2}
@@ -75,6 +79,7 @@ export function drawNinjaPiece(
     case '2a1b1a':
       return (
         <Rect
+          key={px + ':' + py}
           x={-(xsize / 2)}
           y={-(ysize / 2)}
           originX={px + xsize / 2}
@@ -88,6 +93,7 @@ export function drawNinjaPiece(
     case '2a1b2c':
       return (
         <Rect
+          key={px + ':' + py}
           x={-(xsize / 2)}
           y={-(ysize / 2)}
           originX={px + xsize / 2}
@@ -101,6 +107,7 @@ export function drawNinjaPiece(
     case '2a1b2c3b':
       return (
         <Rect
+          key={px + ':' + py}
           x={-(xsize / 2)}
           y={-(ysize / 2)}
           originX={px + xsize / 2}
@@ -114,6 +121,7 @@ export function drawNinjaPiece(
     default:
       return (
         <Rect
+          key={px + ':' + py}
           x={-(xsize / 2)}
           y={-(ysize / 2)}
           originX={px + xsize / 2}

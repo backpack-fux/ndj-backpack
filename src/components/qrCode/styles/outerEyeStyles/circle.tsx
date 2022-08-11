@@ -17,7 +17,7 @@ export function drawCirclePiece(
   var py = y * ysize + props.padding * ysize + ysize / 2;
   return (
     <Circle
-      key={px + ':' + py}
+      key={px + ':' + py + Math.random()}
       cx={px}
       cy={py}
       r={xsize / 2}
