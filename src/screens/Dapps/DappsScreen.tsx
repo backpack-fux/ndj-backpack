@@ -18,6 +18,8 @@ import Toast from 'react-native-toast-message';
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+const logo = require('@app/assets/images/logo.png');
+
 export const DappsScreen = () => {
   const navigation = useNavigation<NavigationProp<DappStackParamList>>();
   const {sessions, onDisconnect, onPairing} = useWalletConnect();
@@ -64,7 +66,8 @@ export const DappsScreen = () => {
             {sessions.length ? (
               <>
                 {sessions.map(session => {
-                  const title = session.peer.metadata.name;
+                  const title =
+                    session.peer.metadata.name || session.peer.metadata.url;
                   const icon = session.peer.metadata.icons[0];
                   const isSelected = session.topic === selectedTopic;
                   return (
@@ -83,10 +86,12 @@ export const DappsScreen = () => {
                         isSelected ? {backgroundColor: colors.secondary} : {},
                       ]}>
                       <Image
-                        source={{uri: icon}}
+                        source={icon ? {uri: icon} : logo}
                         style={[t.selfCenter, t.w8, t.h8, t.mR2]}
                       />
-                      <Paragraph text={title} />
+                      <View style={[t.flex1]}>
+                        <Paragraph text={title} numberOfLines={1} />
+                      </View>
                     </TouchableOpacity>
                   );
                 })}

@@ -56,18 +56,6 @@ import {
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
 
-const boxShadow = {
-  shadowColor: '#000',
-  shadowOffset: {
-    width: 0,
-    height: 2,
-  },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-
-  elevation: 5,
-};
-
 export const WalletsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigationProp<WalletStackParamList>>();
