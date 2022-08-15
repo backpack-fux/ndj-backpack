@@ -16,6 +16,7 @@ export const AssetStackNavigator = () => {
         name="Assets"
         options={{
           ...stackOptions,
+          headerBackVisible: false,
           headerTitle: 'Asset Management',
         }}
         component={AssetsScreen}

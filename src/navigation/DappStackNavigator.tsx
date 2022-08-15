@@ -15,6 +15,7 @@ export const DappStackNavigator = () => {
         options={{
           ...stackOptions,
           headerTitle: 'App Management',
+          headerBackVisible: false,
         }}
         component={DappsScreen}
       />
