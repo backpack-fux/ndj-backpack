@@ -16,6 +16,7 @@ export const screenOptions: any = {
 export const stackOptions = {
   headerShown: true,
   headerTintColor: colors.white,
+  title: 'Backpack',
   headerTitle: 'Backpack',
   headerBackTitle: '',
   headerTitleStyle: [t.textWhite, {fontFamily: 'Montserrat'}],

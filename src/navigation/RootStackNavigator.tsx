@@ -62,6 +62,7 @@ export const RootStackNavigator = () => {
         name="Splash"
         options={{
           ...stackOptions,
+          title: 'Backpack',
           headerTitle: 'Backpack',
           headerTitleStyle: [t.textWhite, {fontFamily: 'NicoMoji+'}],
           animation: 'fade',
@@ -89,6 +90,7 @@ export const RootStackNavigator = () => {
         name="FieldGuide"
         options={{
           ...stackOptions,
+          title: 'Field Guide Basic',
           headerTitle: 'Field Guide Basic',
           animation: 'fade',
         }}

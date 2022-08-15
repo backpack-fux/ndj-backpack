@@ -70,6 +70,7 @@ export const MainStackNavigator = () => {
             animation: 'fade',
             ...stackOptions,
             headerBackVisible: false,
+            title: 'Backpack Settings',
             headerTitle: 'Backpack Settings',
             gestureEnabled: false,
           }}

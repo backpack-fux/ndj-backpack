@@ -17,6 +17,7 @@ export const AssetStackNavigator = () => {
         options={{
           ...stackOptions,
           headerBackVisible: false,
+          title: 'Aseet Management',
           headerTitle: 'Asset Management',
         }}
         component={AssetsScreen}
@@ -34,6 +35,7 @@ export const AssetStackNavigator = () => {
         name="Receive"
         options={{
           ...stackOptions,
+          title: 'Aseet Management',
           headerTitle: 'Asset Management',
         }}
         component={ReceiveScreen}
@@ -42,6 +44,7 @@ export const AssetStackNavigator = () => {
         name="Send"
         options={{
           ...stackOptions,
+          title: 'Aseet Management',
           headerTitle: 'Asset Management',
         }}
         component={SendScreen}
@@ -50,6 +53,7 @@ export const AssetStackNavigator = () => {
         name="Transaction"
         options={{
           ...stackOptions,
+          title: 'Aseet Management',
           headerTitle: 'Asset Management',
         }}
         component={TransactionScreen}

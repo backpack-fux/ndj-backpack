@@ -14,6 +14,7 @@ export const WalletStackNavigator = () => {
         name="Wallets"
         options={{
           ...stackOptions,
+          title: 'Wallet Management',
           headerTitle: 'Wallet Management',
         }}
         component={WalletsScreen}
