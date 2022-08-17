@@ -6,8 +6,7 @@ import {
   Image,
   ImageBackground,
   KeyboardAvoidingView,
-  Modal,
-  Text,
+  Platform,
   View,
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
@@ -45,6 +44,10 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
   };
 
   const onChangeAppStatus = async (appState: AppStateStatus) => {
+    if (Platform.OS !== 'ios') {
+      return;
+    }
+
     if (appState === 'active') {
       if (enabled) {
         setShowVerify(true);
@@ -53,6 +56,18 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
       }
     } else if (!isVerifyingBiometry) {
       setShowVerify(false);
+    }
+  };
+
+  const onFocuseAppStatus = async () => {
+    if (Platform.OS !== 'android') {
+      return;
+    }
+
+    if (enabled) {
+      setShowVerify(true);
+    } else {
+      onVerified();
     }
   };
 
@@ -65,7 +80,17 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
   }, [isVerifyingBiometry, enabled]);
 
   useEffect(() => {
-    if (AppState.currentState === 'active') {
+    const subscription =
+      Platform.OS === 'android' &&
+      AppState.addEventListener('focus', onFocuseAppStatus);
+
+    return () => {
+      subscription && subscription?.remove();
+    };
+  }, [isVerifyingBiometry, enabled]);
+
+  useEffect(() => {
+    if (AppState.currentState === 'active' && Platform.OS === 'ios') {
       if (enabled) {
         setShowVerify(true);
       } else {
@@ -102,51 +127,65 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
   }, [passcode, value]);
 
   return (
-    <Modal visible={true} animationType="fade">
-      <ImageBackground source={background} style={[t.flex1, t.bgPurple500]}>
-        <KeyboardAvoidingView
-          style={[t.flex1, t.itemsCenter, t.justifyCenter]}
-          behavior="padding">
-          {showVerify ? (
-            <>
-              <Paragraph text="Enter your passcode" marginBottom={10} />
-              <PasscodeField
-                autoFocus
-                value={value}
-                setValue={onChangeValue}
-                editable
-              />
-              <View style={[t.h8]}>
-                {isFailed && (
-                  <Paragraph
-                    text="Incorrect passcode, please try again"
-                    marginTop={10}
-                    color={colors.secondary}
-                  />
-                )}
-              </View>
-            </>
-          ) : (
-            <>
-              <Paragraph
-                marginTop={30}
-                marginBottom={20}
-                text="Backpack"
-                font="NicoMoji+"
-                align="center"
-                type="bold"
-              />
-              <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
-                <Image
-                  source={logo}
-                  style={[{width: width * 0.7, height: width * 0.7, marginBottom: height * 0.05}]}
-                  resizeMode="contain"
+    <ImageBackground
+      source={background}
+      style={[
+        t.flex1,
+        t.bgPurple500,
+        t.absolute,
+        t.hFull,
+        t.wFull,
+        t.top0,
+        t.z10,
+      ]}>
+      <KeyboardAvoidingView
+        style={[t.flex1, t.itemsCenter, t.justifyCenter]}
+        behavior="padding">
+        {showVerify ? (
+          <>
+            <Paragraph text="Enter your passcode" marginBottom={10} />
+            <PasscodeField
+              autoFocus
+              value={value}
+              setValue={onChangeValue}
+              editable
+            />
+            <View style={[t.h8]}>
+              {isFailed && (
+                <Paragraph
+                  text="Incorrect passcode, please try again"
+                  marginTop={10}
+                  color={colors.secondary}
                 />
-              </View>
-            </>
-          )}
-        </KeyboardAvoidingView>
-      </ImageBackground>
-    </Modal>
+              )}
+            </View>
+          </>
+        ) : (
+          <>
+            <Paragraph
+              marginTop={30}
+              marginBottom={20}
+              text="Backpack"
+              font="NicoMoji+"
+              align="center"
+              type="bold"
+            />
+            <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
+              <Image
+                source={logo}
+                style={[
+                  {
+                    width: width * 0.7,
+                    height: width * 0.7,
+                    marginBottom: height * 0.05,
+                  },
+                ]}
+                resizeMode="contain"
+              />
+            </View>
+          </>
+        )}
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };

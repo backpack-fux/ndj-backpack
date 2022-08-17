@@ -16,7 +16,7 @@ import {
   setGenericPassword,
 } from 'react-native-keychain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AppState, AppStateStatus} from 'react-native';
+import {AppState, AppStateStatus, Platform} from 'react-native';
 import {VerifyPasscodeModal} from '@app/components/verifyPasscodeModal';
 import {MainStackParamList} from '@app/models';
 
@@ -140,7 +140,11 @@ export const KeychainProvider = (props: {
     setBiometryType(res);
   };
 
-  const onChangeAppStatus = async (nextAppState: AppStateStatus) => {
+  const onChangeAppStatus = (nextAppState: AppStateStatus) => {
+    if (Platform.OS !== 'ios') {
+      return;
+    }
+
     if (
       nextAppState.match(/background|inactive/) &&
       appState.current.match(/active/) &&
@@ -151,6 +155,13 @@ export const KeychainProvider = (props: {
     }
 
     appState.current = nextAppState;
+  };
+
+  const onBlurAppStatus = () => {
+    if (!showVerify) {
+      setShowVerify(true);
+      setVerifyCallback(undefined);
+    }
   };
 
   const onSetAutoLockTime = (value: number) => {
@@ -182,12 +193,24 @@ export const KeychainProvider = (props: {
   }, []);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', onChangeAppStatus);
+    const changeSubscription = AppState.addEventListener(
+      'change',
+      onChangeAppStatus,
+    );
 
     return () => {
-      subscription.remove();
+      changeSubscription.remove();
     };
   }, [appState, showVerify]);
+
+  useEffect(() => {
+    const blurSubscription =
+      Platform.OS === 'android' &&
+      AppState.addEventListener('blur', onBlurAppStatus);
+    return () => {
+      blurSubscription && blurSubscription?.remove();
+    };
+  }, [showVerify]);
 
   return (
     <KeychainContext.Provider
