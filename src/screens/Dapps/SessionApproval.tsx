@@ -195,6 +195,145 @@ export const SessionApproval = () => {
           <ScrollView
             showsVerticalScrollIndicator={false}
             keyboardDismissMode="on-drag">
+            <Paragraph text="Why" align="center" marginBottom={15} size={18} />
+            <Paragraph
+              text="This is like the sign outside a store telling you No Shoes No Shirt No Service, this is a social agreement to kick off commerce"
+              marginBottom={10}
+            />
+            <Paragraph text="Where" align="center" marginBottom={15} />
+            <View style={[t.flexRow]}>
+              <Paragraph text="UI from" marginRight={5} />
+              <View style={[t.flex1, t.justifyCenter]}>
+                <Paragraph
+                  text={metadata.url}
+                  color={colors.blue}
+                  numberOfLines={1}
+                />
+              </View>
+            </View>
+            <Paragraph
+              text="How"
+              align="center"
+              marginTop={10}
+              marginBottom={15}
+            />
+            <Paragraph
+              text="Choosing a wallet is like choosing which card to pay with. So choose which wallet(s) to connect with"
+              marginBottom={10}
+            />
+            <View>
+              <TouchableOpacity
+                style={[t.flexRow, t.alignCenter, t.mB2]}
+                onPress={() => onSelectAll()}>
+                <MIcon
+                  name={
+                    isSelectedAll
+                      ? 'checkbox-intermediate'
+                      : 'checkbox-blank-outline'
+                  }
+                  size={35}
+                  color={isSelectedAll ? colors.secondary : colors.textGray}
+                />
+                <View style={[t.flex1, t.mL2, t.flexRow, t.selfCenter]}>
+                  <Paragraph text="Select All" type="bold" />
+                </View>
+              </TouchableOpacity>
+              {availableWallets.map(wallet => (
+                <>
+                  {wallet.wallets.map(w => {
+                    const chain = availableChains.find(
+                      c => c.network === w.network,
+                    )?.chain;
+
+                    if (!chain) {
+                      return <></>;
+                    }
+
+                    const isChecked = selectedAddresses.includes(
+                      `${chain}:${w.address}`,
+                    );
+
+                    return (
+                      <TouchableOpacity
+                        key={`${chain}:${w.address}${wallet.network}`}
+                        style={[t.flexRow, t.alignCenter]}
+                        onPress={() =>
+                          onSelectAddress(`${chain}:${w.address}`)
+                        }>
+                        <MIcon
+                          name={
+                            isChecked
+                              ? 'checkbox-intermediate'
+                              : 'checkbox-blank-outline'
+                          }
+                          size={35}
+                          color={isChecked ? colors.secondary : colors.textGray}
+                        />
+                        <View style={[t.flex1, t.mL2, t.flexRow, t.selfCenter]}>
+                          <Paragraph
+                            text={`${wallet.name} using ${
+                              networkName[w.network]
+                            }${showNetworkName(w.network, network)}`}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </>
+              ))}
+            </View>
+            <Paragraph
+              text="What"
+              align="center"
+              marginTop={10}
+              marginBottom={15}
+              size={18}
+            />
+            <Paragraph text="Sign | Approve | Confirm" />
+            <View style={[t.flexRow]}>
+              <Paragraph text="•" marginLeft={5} marginRight={10} />
+              <View style={[t.flex1]}>
+                <Paragraph
+                  text={
+                    'like signing into an account or agreeing to potentially transact'
+                  }
+                />
+              </View>
+            </View>
+
+            <Paragraph text="Send Messages" marginTop={10} />
+            <View style={[t.flexRow]}>
+              <Paragraph text="•" marginLeft={5} marginRight={10} />
+              <View style={[t.flex1]}>
+                <Paragraph
+                  text={
+                    'like discussing a purchase, you can now send info but not yet spend'
+                  }
+                />
+              </View>
+            </View>
+            <Paragraph text="Spend | Transact | Tx" marginTop={10} />
+            <View style={[t.flexRow]}>
+              <Paragraph text="•" marginLeft={5} marginRight={10} />
+              <View style={[t.flex1]}>
+                <Paragraph text={'buy the thing'} />
+              </View>
+            </View>
+          </ScrollView>
+        </View>
+        <View
+          style={[
+            t.bgPurple500,
+            t.p4,
+            t.roundedXl,
+            t.border2,
+            t.mB4,
+            shadow,
+            t.borderPurple200,
+          ]}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            keyboardDismissMode="on-drag">
             <Paragraph
               text="Connection"
               align="center"
@@ -333,145 +472,6 @@ export const SessionApproval = () => {
                   })}
                 </>
               ))}
-            </View>
-          </ScrollView>
-        </View>
-        <View
-          style={[
-            t.bgPurple500,
-            t.p4,
-            t.roundedXl,
-            t.border2,
-            t.mB4,
-            shadow,
-            t.borderPurple200,
-          ]}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            keyboardDismissMode="on-drag">
-            <Paragraph text="Why" align="center" marginBottom={15} size={18} />
-            <Paragraph
-              text="This is like the sign outside a store telling you No Shoes No Shirt No Service, this is a social agreement to kick off commerce"
-              marginBottom={10}
-            />
-            <Paragraph text="Where" align="center" marginBottom={15} />
-            <View style={[t.flexRow]}>
-              <Paragraph text="UI from" marginRight={5} />
-              <View style={[t.flex1, t.justifyCenter]}>
-                <Paragraph
-                  text={metadata.url}
-                  color={colors.blue}
-                  numberOfLines={1}
-                />
-              </View>
-            </View>
-            <Paragraph
-              text="How"
-              align="center"
-              marginTop={10}
-              marginBottom={15}
-            />
-            <Paragraph
-              text="Choosing a wallet is like choosing which card to pay with. So choose which wallet(s) to connect with"
-              marginBottom={10}
-            />
-            <View>
-              <TouchableOpacity
-                style={[t.flexRow, t.alignCenter, t.mB2]}
-                onPress={() => onSelectAll()}>
-                <MIcon
-                  name={
-                    isSelectedAll
-                      ? 'checkbox-intermediate'
-                      : 'checkbox-blank-outline'
-                  }
-                  size={35}
-                  color={isSelectedAll ? colors.secondary : colors.textGray}
-                />
-                <View style={[t.flex1, t.mL2, t.flexRow, t.selfCenter]}>
-                  <Paragraph text="Select All" type="bold" />
-                </View>
-              </TouchableOpacity>
-              {availableWallets.map(wallet => (
-                <>
-                  {wallet.wallets.map(w => {
-                    const chain = availableChains.find(
-                      c => c.network === w.network,
-                    )?.chain;
-
-                    if (!chain) {
-                      return <></>;
-                    }
-
-                    const isChecked = selectedAddresses.includes(
-                      `${chain}:${w.address}`,
-                    );
-
-                    return (
-                      <TouchableOpacity
-                        key={`${chain}:${w.address}${wallet.network}`}
-                        style={[t.flexRow, t.alignCenter]}
-                        onPress={() =>
-                          onSelectAddress(`${chain}:${w.address}`)
-                        }>
-                        <MIcon
-                          name={
-                            isChecked
-                              ? 'checkbox-intermediate'
-                              : 'checkbox-blank-outline'
-                          }
-                          size={35}
-                          color={isChecked ? colors.secondary : colors.textGray}
-                        />
-                        <View style={[t.flex1, t.mL2, t.flexRow, t.selfCenter]}>
-                          <Paragraph
-                            text={`${wallet.name} using ${
-                              networkName[w.network]
-                            }${showNetworkName(w.network, network)}`}
-                          />
-                        </View>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </>
-              ))}
-            </View>
-            <Paragraph
-              text="What"
-              align="center"
-              marginTop={10}
-              marginBottom={15}
-              size={18}
-            />
-            <Paragraph text="Sign | Approve | Confirm" />
-            <View style={[t.flexRow]}>
-              <Paragraph text="•" marginLeft={5} marginRight={10} />
-              <View style={[t.flex1]}>
-                <Paragraph
-                  text={
-                    'like signing into an account or agreeing to potentially transact'
-                  }
-                />
-              </View>
-            </View>
-
-            <Paragraph text="Send Messages" marginTop={10} />
-            <View style={[t.flexRow]}>
-              <Paragraph text="•" marginLeft={5} marginRight={10} />
-              <View style={[t.flex1]}>
-                <Paragraph
-                  text={
-                    'like discussing a purchase, you can now send info but not yet spend'
-                  }
-                />
-              </View>
-            </View>
-            <Paragraph text="Spend | Transact | Tx" marginTop={10} />
-            <View style={[t.flexRow]}>
-              <Paragraph text="•" marginLeft={5} marginRight={10} />
-              <View style={[t.flex1]}>
-                <Paragraph text={'buy the thing'} />
-              </View>
             </View>
           </ScrollView>
         </View>
