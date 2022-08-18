@@ -67,9 +67,18 @@ export const TokensScreen = () => {
       noBottom
       onBack={() => navigation.goBack()}>
       <View
-        style={[t.bgPurple200, t.mT2, t.mL4, t.mR4, t.p2, t.roundedLg, t.mB4]}>
+        style={[
+          t.bgPurple200,
+          t.mT2,
+          t.mL4,
+          t.mR4,
+          t.pL2,
+          t.pR2,
+          t.roundedLg,
+          t.mB4,
+        ]}>
         <TextInput
-          style={[t.textWhite, t.wFull, {fontSize: 16}]}
+          style={[t.textWhite, t.wFull, t.h10, {fontSize: 16}]}
           placeholder="Search"
           value={searchText}
           onChangeText={setSearchText}
