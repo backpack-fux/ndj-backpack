@@ -16,7 +16,7 @@ import {
   setGenericPassword,
 } from 'react-native-keychain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AppState, AppStateStatus} from 'react-native';
+import {AppState, AppStateStatus, Platform} from 'react-native';
 import {VerifyPasscodeModal} from '@app/components/verifyPasscodeModal';
 import {MainStackParamList} from '@app/models';
 
@@ -57,8 +57,9 @@ export const KeychainProvider = (props: {
   const [passcode, setPasscode] = useState<string>();
   const [autoLockTime, setAutoLockTime] = useState(0);
   const [biometryType, setBiometryType] = useState<BIOMETRY_TYPE>();
-  const [showVerify, setShowVerify] = useState(false);
   const [verifyCallback, setVerifyCallback] = useState<string>();
+  const [openVerify, setOpenVerify] = useState(false);
+  const [showVerify, setShowVerify] = useState(false);
 
   const toggleKeychain = useCallback(() => {
     if (enabled) {
@@ -140,17 +141,47 @@ export const KeychainProvider = (props: {
     setBiometryType(res);
   };
 
-  const onChangeAppStatus = async (nextAppState: AppStateStatus) => {
+  const onChangeAppStatus = (nextAppState: AppStateStatus) => {
     if (
       nextAppState.match(/background|inactive/) &&
       appState.current.match(/active/) &&
-      !showVerify
+      !openVerify
     ) {
-      setShowVerify(true);
+      // deactive
+      setOpenVerify(true);
+      setShowVerify(false);
       setVerifyCallback(undefined);
+    } else if (
+      appState.current.match(/background|inactive/) &&
+      nextAppState.match(/active/)
+    ) {
+      // active
+      if (openVerify) {
+        if (enabled) {
+          setShowVerify(true);
+        } else {
+          setOpenVerify(false);
+        }
+      }
     }
 
     appState.current = nextAppState;
+  };
+
+  const onBlurAppStatus = () => {
+    setOpenVerify(true);
+    setShowVerify(false);
+    setVerifyCallback(undefined);
+  };
+
+  const onFouseAppStatus = () => {
+    if (openVerify) {
+      if (enabled) {
+        setShowVerify(true);
+      } else {
+        setOpenVerify(false);
+      }
+    }
   };
 
   const onSetAutoLockTime = (value: number) => {
@@ -159,11 +190,13 @@ export const KeychainProvider = (props: {
   };
 
   const verifyPasscode = (callback?: string) => {
+    setOpenVerify(true);
     setShowVerify(true);
     setVerifyCallback(callback);
   };
 
   const onVerifiedPasscord = () => {
+    setOpenVerify(false);
     setShowVerify(false);
     switch (verifyCallback) {
       case 'disable':
@@ -182,12 +215,34 @@ export const KeychainProvider = (props: {
   }, []);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', onChangeAppStatus);
+    const subscription =
+      Platform.OS === 'ios' &&
+      AppState.addEventListener('change', onChangeAppStatus);
 
     return () => {
-      subscription.remove();
+      subscription && subscription?.remove();
     };
-  }, [appState, showVerify]);
+  }, [appState, openVerify, showVerify, enabled]);
+
+  useEffect(() => {
+    const subscription =
+      Platform.OS === 'android' &&
+      AppState.addEventListener('blur', onBlurAppStatus);
+
+    return () => {
+      subscription && subscription?.remove();
+    };
+  }, [appState, openVerify, showVerify]);
+
+  useEffect(() => {
+    const subscription =
+      Platform.OS === 'android' &&
+      AppState.addEventListener('focus', onFouseAppStatus);
+
+    return () => {
+      subscription && subscription?.remove();
+    };
+  }, [appState, openVerify, showVerify, enabled]);
 
   return (
     <KeychainContext.Provider
@@ -204,9 +259,11 @@ export const KeychainProvider = (props: {
         onSetAutoLockTime,
         verifyPasscode,
       }}>
-      {showVerify && (
-        <VerifyPasscodeModal onVerified={() => onVerifiedPasscord()} />
-      )}
+      <VerifyPasscodeModal
+        open={openVerify}
+        showVerify={showVerify}
+        onVerified={() => onVerifiedPasscord()}
+      />
       {props.children}
     </KeychainContext.Provider>
   );

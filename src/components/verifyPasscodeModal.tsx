@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {
-  AppState,
-  AppStateStatus,
   Dimensions,
   Image,
   ImageBackground,
   KeyboardAvoidingView,
-  Modal,
-  Text,
   View,
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
@@ -21,22 +17,26 @@ const background = require('@app/assets/images/bg.png');
 const logo = require('@app/assets/images/logo.png');
 const {width, height} = Dimensions.get('screen');
 
-export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
+export const VerifyPasscodeModal = ({
+  onVerified,
+  open,
+  showVerify,
+}: {
+  onVerified: () => void;
+  open: boolean;
+  showVerify: boolean;
+}) => {
   const {passcode, enabled, enabledBiometry, authorizeDeviceBiometry} =
     useKeychain();
   const [value, setValue] = useState('');
   const [isFailed, setIsFailed] = useState(false);
-  const [showVerify, setShowVerify] = useState(false);
-  const [isVerifyingBiometry, setIsVerifyingBiometry] = useState(false);
 
   const verifyBiometry = async () => {
-    setIsVerifyingBiometry(true);
     const res = await authorizeDeviceBiometry();
 
     if (res) {
       onVerified();
     }
-    setIsVerifyingBiometry(false);
   };
 
   const onChangeValue = (val: string) => {
@@ -44,43 +44,14 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
     setIsFailed(false);
   };
 
-  const onChangeAppStatus = async (appState: AppStateStatus) => {
-    if (appState === 'active') {
-      if (enabled) {
-        setShowVerify(true);
-      } else {
-        onVerified();
-      }
-    } else if (!isVerifyingBiometry) {
-      setShowVerify(false);
-    }
-  };
-
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', onChangeAppStatus);
-
-    return () => {
-      subscription.remove();
-    };
-  }, [isVerifyingBiometry, enabled]);
-
-  useEffect(() => {
-    if (AppState.currentState === 'active') {
-      if (enabled) {
-        setShowVerify(true);
-      } else {
-        onVerified();
-      }
-    }
-  }, [AppState]);
-
-  useEffect(() => {
-    if (!showVerify) {
+    if (!showVerify || !open) {
       return;
     }
 
     if (!enabled) {
       onVerified();
+      setValue('');
       return;
     }
 
@@ -89,11 +60,12 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
     if (enabledBiometry) {
       verifyBiometry();
     }
-  }, [enabled, enabledBiometry, showVerify]);
+  }, [enabled, enabledBiometry, open, showVerify]);
 
   useEffect(() => {
     if (value === passcode) {
       onVerified();
+      setValue('');
     } else if (value && value.length === passcode?.length) {
       ReactNativeHapticFeedback.trigger('impactHeavy');
       setValue('');
@@ -101,52 +73,70 @@ export const VerifyPasscodeModal = ({onVerified}: {onVerified: () => void}) => {
     }
   }, [passcode, value]);
 
+  if (!open) {
+    return <></>;
+  }
+
   return (
-    <Modal visible={true} animationType="fade">
-      <ImageBackground source={background} style={[t.flex1, t.bgPurple500]}>
-        <KeyboardAvoidingView
-          style={[t.flex1, t.itemsCenter, t.justifyCenter]}
-          behavior="padding">
-          {showVerify ? (
-            <>
-              <Paragraph text="Enter your passcode" marginBottom={10} />
-              <PasscodeField
-                autoFocus
-                value={value}
-                setValue={onChangeValue}
-                editable
-              />
-              <View style={[t.h8]}>
-                {isFailed && (
-                  <Paragraph
-                    text="Incorrect passcode, please try again"
-                    marginTop={10}
-                    color={colors.secondary}
-                  />
-                )}
-              </View>
-            </>
-          ) : (
-            <>
-              <Paragraph
-                marginTop={30}
-                marginBottom={20}
-                text="Backpack"
-                font="NicoMoji+"
-                align="center"
-                type="bold"
-              />
-              <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
-                <Image
-                  source={logo}
-                  style={[{width: width * 0.7, height: width * 0.7, marginBottom: height * 0.05}]}
-                  resizeMode="contain"
+    <ImageBackground
+      source={background}
+      style={[
+        t.flex1,
+        t.bgPurple500,
+        t.absolute,
+        t.hFull,
+        t.wFull,
+        t.top0,
+        t.z10,
+      ]}>
+      <KeyboardAvoidingView
+        style={[t.flex1, t.itemsCenter, t.justifyCenter]}
+        behavior="padding">
+        {showVerify ? (
+          <>
+            <Paragraph text="Enter your passcode" marginBottom={10} />
+            <PasscodeField
+              autoFocus
+              value={value}
+              setValue={onChangeValue}
+              editable
+            />
+            <View style={[t.h8]}>
+              {isFailed && (
+                <Paragraph
+                  text="Incorrect passcode, please try again"
+                  marginTop={10}
+                  color={colors.secondary}
                 />
-              </View>
-            </>
-          )}
-        </KeyboardAvoidingView>
-      </ImageBackground>
-    </Modal>
+              )}
+            </View>
+          </>
+        ) : (
+          <>
+            <Paragraph
+              marginTop={30}
+              marginBottom={20}
+              text="Backpack"
+              font="NicoMoji+"
+              align="center"
+              type="bold"
+            />
+            <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
+              <Image
+                source={logo}
+                style={[
+                  {
+                    width: width * 0.7,
+                    height: width * 0.7,
+                    marginBottom: height * 0.05,
+                  },
+                ]}
+                resizeMode="contain"
+              />
+            </View>
+          </>
+        )}
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
