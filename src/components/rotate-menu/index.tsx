@@ -734,8 +734,7 @@ export class RotateMenu extends React.Component<Props, any> {
           styles.menuWrap,
           {
             opacity: !ICON_PATH_RADIUS ? 0 : 1,
-            height:
-              menuSize + ICON_PATH_RADIUS - menuSize / 2 + menuIconSize - 100,
+            height: menuSize + ICON_PATH_RADIUS - menuSize / 2 + menuIconSize,
           },
         ]}>
         <View
