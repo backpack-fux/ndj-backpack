@@ -21,7 +21,7 @@ import {
   selectedWalletSelector,
   walletsSelector,
 } from '@app/store/wallets/walletsSelector';
-import {Wallet, WalletStackParamList} from '@app/models';
+import {StackParams, Wallet} from '@app/models';
 import {colors} from '@app/assets/colors.config';
 import {
   NavigationProp,
@@ -58,7 +58,7 @@ const toggle = require('@app/assets/images/toggle.png');
 
 export const WalletsScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation<NavigationProp<WalletStackParamList>>();
+  const navigation = useNavigation<NavigationProp<StackParams>>();
   const wallets = useSelector(walletsSelector);
   const selectedWallet = useSelector(selectedWalletSelector);
   const sendTokenInfo = useSelector(sendTokenInfoSelector);

@@ -10,28 +10,19 @@ import {AssetStackNavigator} from './AssetStackNavigator';
 import {DappStackNavigator} from './DappStackNavigator';
 import {RotateMenu} from '@app/components';
 import {colors} from '@app/assets/colors.config';
-import {MainStackParamList} from '@app/models';
-import {
-  SessionApproval,
-  SessionSendTransaction,
-  SessionSign,
-  SessionSignTypedData,
-  SessionUnsuportedMethod,
-} from '@app/screens/Dapps';
+import {StackParams} from '@app/models';
 import {SettingsScreen} from '@app/screens/Settings';
 import {useKeychain} from '@app/context/keychain';
-import {SetPasscodeScreen} from '@app/screens/SetPasscode';
 
 import AssetsIcon from '@app/assets/icons/assets.svg';
 import DappsIcon from '@app/assets/icons/dapps.svg';
 import WalletsIcon from '@app/assets/icons/wallets.svg';
 import SettingsIcon from '@app/assets/icons/settings.svg';
-import {SessionSignSolana} from '@app/screens/Dapps/SessionSignSolana';
 
 const Stack = createNativeStackNavigator();
 
 export const MainStackNavigator = () => {
-  const navigation = useNavigation<NavigationProp<MainStackParamList>>();
+  const navigation = useNavigation<NavigationProp<StackParams>>();
   const {enabled, verifyPasscode} = useKeychain();
 
   const onSelectMenu = (name: any) => {
@@ -75,75 +66,6 @@ export const MainStackNavigator = () => {
             gestureEnabled: false,
           }}
           component={SettingsScreen}
-        />
-        <Stack.Screen
-          name="SessionApprovalModal"
-          component={SessionApproval}
-          options={{
-            ...stackOptions,
-            headerShown: false,
-            presentation: 'formSheet',
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="SessionSignModal"
-          component={SessionSign}
-          options={{
-            ...stackOptions,
-            headerShown: false,
-            presentation: 'formSheet',
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="SessionSignTypedDataModal"
-          component={SessionSignTypedData}
-          options={{
-            ...stackOptions,
-            headerShown: false,
-            presentation: 'formSheet',
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="SessionSendTransactionModal"
-          component={SessionSendTransaction}
-          options={{
-            ...stackOptions,
-            headerShown: false,
-            presentation: 'formSheet',
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="SessionSignSolanaModal"
-          component={SessionSignSolana}
-          options={{
-            ...stackOptions,
-            headerShown: false,
-            presentation: 'formSheet',
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="SessionUnsuportedMethodModal"
-          component={SessionUnsuportedMethod}
-          options={{
-            ...stackOptions,
-            headerShown: false,
-            presentation: 'formSheet',
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="SetPasscode"
-          options={{
-            ...stackOptions,
-            presentation: 'formSheet',
-            headerShown: false,
-          }}
-          component={SetPasscodeScreen}
         />
       </Stack.Navigator>
       <View style={styles.rotateMenu}>

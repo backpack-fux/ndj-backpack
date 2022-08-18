@@ -11,7 +11,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import * as queryString from 'query-string';
 import Toast from 'react-native-toast-message';
 
-import {MainStackParamList} from '@app/models';
+import {StackParams} from '@app/models';
 import {EIP155_SIGNING_METHODS} from '@app/constants/EIP155Data';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import SignClient from '@walletconnect/sign-client';
@@ -56,7 +56,7 @@ export const useWalletConnect = () => {
 export const WalletConnectProvider = (props: {
   children: React.ReactChild[] | React.ReactChild;
 }) => {
-  const navigation = useNavigation<NavigationProp<MainStackParamList>>();
+  const navigation = useNavigation<NavigationProp<StackParams>>();
   const [client, setClient] = useState<SignClient>();
   const [sessions, setSessions] = useState<any[]>([]);
   const [enabledTransactionTopics, setEnabledTransactionTopics] = useState<{

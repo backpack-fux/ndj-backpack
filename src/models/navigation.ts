@@ -8,17 +8,12 @@ export type RootStackParamList = {
   FieldGuide: {
     allowGoBack?: boolean;
   };
+  Tokens: undefined;
+  SetPasscode: undefined;
   ImportWallet: undefined;
   BuyToken: {
     url: string;
   };
-};
-
-export type MainStackParamList = {
-  WalletStack: undefined;
-  AssetStack: undefined;
-  DappStack: undefined;
-  SetPasscode: undefined;
   SessionApprovalModal: {
     proposal: SignClientTypes.EventArguments['session_proposal'];
   };
@@ -42,6 +37,14 @@ export type MainStackParamList = {
     event: SignClientTypes.EventArguments['session_request'];
     session?: SessionTypes.Struct;
   };
+  AddWallet: undefined;
+  SelectToken: undefined;
+};
+
+export type MainStackParamList = {
+  WalletStack: undefined;
+  AssetStack: undefined;
+  DappStack: undefined;
   WebView: {
     url: string;
     title?: string;
@@ -54,18 +57,14 @@ export type DappStackParamList = {
 
 export type WalletStackParamList = {
   Wallets: undefined;
-  AddWallet: undefined;
-  SelectToken: undefined;
 };
 
 export type AssetStackParamList = {
   Assets: undefined;
-  Tokens: undefined;
   Receive: {coin?: BaseCoin};
   Send: undefined;
   Transaction: undefined;
 };
-
 export type StackParams = RootStackParamList &
   MainStackParamList &
   WalletStackParamList &

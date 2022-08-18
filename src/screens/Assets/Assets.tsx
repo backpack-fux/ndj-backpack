@@ -18,7 +18,7 @@ import Toast from 'react-native-toast-message';
 import {colors} from '@app/assets/colors.config';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {setToken} from '@app/store/coins/actions';
-import {AssetStackParamList, BaseCoin, RootStackParamList} from '@app/models';
+import {BaseCoin, StackParams} from '@app/models';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
   accountCoinsSelector,
@@ -36,8 +36,7 @@ import {wyreService} from '@app/services/wyreService';
 
 export const AssetsScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation<NavigationProp<AssetStackParamList>>();
-  const rootNavigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<StackParams>>();
 
   const isLoading = useSelector(isLoadingTokensSelector);
   const tokens = useSelector(tokensSelector);
@@ -122,7 +121,7 @@ export const AssetsScreen = () => {
       );
 
       if (res.url) {
-        rootNavigation.navigate('BuyToken', {
+        navigation.navigate('BuyToken', {
           url: res.url,
         });
       }

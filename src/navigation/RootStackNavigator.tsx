@@ -19,7 +19,19 @@ import {RootStackParamList} from '@app/models';
 import {sleep} from '@app/utils';
 import {MainStackNavigator} from './MainStackNavigator';
 import {FieldGuideScreen} from '@app/screens/FieldGuide';
+import {TokensScreen} from '@app/screens/Assets/Tokens';
+import {SetPasscodeScreen} from '@app/screens/SetPasscode';
+import {
+  SessionApproval,
+  SessionSendTransaction,
+  SessionSign,
+  SessionSignTypedData,
+  SessionUnsuportedMethod,
+} from '@app/screens/Dapps';
+import {SessionSignSolana} from '@app/screens/Dapps/SessionSignSolana';
 import {BuyTokenScreen} from '@app/screens/BuyToken';
+import {SelectTokenScreen} from '@app/screens/Wallet/SelectToken';
+
 const Stack = createNativeStackNavigator();
 
 export const RootStackNavigator = () => {
@@ -78,15 +90,6 @@ export const RootStackNavigator = () => {
         component={CreateWalletScreen}
       />
       <Stack.Screen
-        name="ImportWallet"
-        options={{
-          ...stackOptions,
-          headerShown: false,
-          presentation: 'formSheet',
-        }}
-        component={CreateWalletScreen}
-      />
-      <Stack.Screen
         name="FieldGuide"
         options={{
           ...stackOptions,
@@ -104,6 +107,84 @@ export const RootStackNavigator = () => {
         component={MainStackNavigator}
       />
       <Stack.Screen
+        name="Tokens"
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+        }}
+        component={TokensScreen}
+      />
+      <Stack.Screen
+        name="SessionApprovalModal"
+        component={SessionApproval}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="SessionSignModal"
+        component={SessionSign}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="SessionSignTypedDataModal"
+        component={SessionSignTypedData}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="SessionSendTransactionModal"
+        component={SessionSendTransaction}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="SessionSignSolanaModal"
+        component={SessionSignSolana}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="SessionUnsuportedMethodModal"
+        component={SessionUnsuportedMethod}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="SetPasscode"
+        options={{
+          ...stackOptions,
+          presentation: 'formSheet',
+          headerShown: false,
+        }}
+        component={SetPasscodeScreen}
+      />
+      <Stack.Screen
         name="BuyToken"
         options={{
           ...stackOptions,
@@ -112,6 +193,33 @@ export const RootStackNavigator = () => {
           gestureEnabled: false,
         }}
         component={BuyTokenScreen}
+      />
+      <Stack.Screen
+        name="ImportWallet"
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+        }}
+        component={CreateWalletScreen}
+      />
+      <Stack.Screen
+        name="AddWallet"
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+        }}
+        component={CreateWalletScreen}
+      />
+      <Stack.Screen
+        name="SelectToken"
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+        }}
+        component={SelectTokenScreen}
       />
     </Stack.Navigator>
   );

@@ -3,17 +3,18 @@ import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useKeychain} from '@app/context/keychain';
 import {switchNetwork} from '@app/store/wallets/actions';
 import {networkSelector} from '@app/store/wallets/walletsSelector';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
+import {StackParams} from '@app/models';
 
 import BookIcon from '@app/assets/icons/book.svg';
 
 export const SettingsScreen = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NavigationProp<StackParams>>();
   const dispatch = useDispatch();
   const network = useSelector(networkSelector);
   const [selectedSetting, setSelectedSetting] = useState<string>('network');

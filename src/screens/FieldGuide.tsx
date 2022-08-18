@@ -20,7 +20,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import {RootStackParamList, Wallet, WalletItem} from '@app/models';
+import {StackParams, Wallet, WalletItem} from '@app/models';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   selectedWalletSelector,
@@ -375,9 +375,9 @@ const FivethCard = () => (
 
 const slider = [0, 1, 2, 3, 4];
 export const FieldGuideScreen = () => {
-  const route = useRoute<RouteProp<RootStackParamList, 'FieldGuide'>>();
+  const route = useRoute<RouteProp<StackParams, 'FieldGuide'>>();
 
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<StackParams>>();
   const dispatch = useDispatch();
   const [active, setActive] = useState(0);
   const carouselRef = useRef<any>();

@@ -18,7 +18,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AppState, AppStateStatus, Platform} from 'react-native';
 import {VerifyPasscodeModal} from '@app/components/verifyPasscodeModal';
-import {MainStackParamList} from '@app/models';
+import {StackParams} from '@app/models';
 
 const NDJ_PASSCODE = 'NDJ_PASSCODE';
 const NDJ_BIOMETRY = 'NDJ_BIOMETRY';
@@ -51,7 +51,7 @@ export const KeychainProvider = (props: {
   children: React.ReactChild[] | React.ReactChild;
 }) => {
   const appState = useRef(AppState.currentState);
-  const navigation = useNavigation<NavigationProp<MainStackParamList>>();
+  const navigation = useNavigation<NavigationProp<StackParams>>();
   const [enabled, setEnabled] = useState(false);
   const [enabledBiometry, setEnabledBiometry] = useState(false);
   const [passcode, setPasscode] = useState<string>();

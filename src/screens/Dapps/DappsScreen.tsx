@@ -1,7 +1,7 @@
 import {colors} from '@app/assets/colors.config';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useWalletConnect} from '@app/context/walletconnect';
-import {DappStackParamList} from '@app/models';
+import {StackParams} from '@app/models';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
@@ -21,7 +21,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const logo = require('@app/assets/images/logo.png');
 
 export const DappsScreen = () => {
-  const navigation = useNavigation<NavigationProp<DappStackParamList>>();
+  const navigation = useNavigation<NavigationProp<StackParams>>();
   const {sessions, onDisconnect, onPairing} = useWalletConnect();
   const [openScan, setOpenScan] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string>();

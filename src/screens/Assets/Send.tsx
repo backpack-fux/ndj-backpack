@@ -28,12 +28,12 @@ import BarcodeMask from 'react-native-barcode-mask';
 import {useDebounce} from '@app/uses';
 import {normalizeNumber} from '@app/utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {AssetStackParamList} from '@app/models';
+import {StackParams} from '@app/models';
 import moment from 'moment-timezone';
 
 export const SendScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation<NavigationProp<AssetStackParamList>>();
+  const navigation = useNavigation<NavigationProp<StackParams>>();
   const selectedWallet = useSelector(selectedWalletSelector);
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const token = sendTokenInfo?.token;
