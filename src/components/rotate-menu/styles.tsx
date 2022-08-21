@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   // },
   iconContainer: {
     position: 'absolute',
-    top: -((SQUARE_DIMENSIONS.WIDTH * 0.08) / 2),
+    top: -10,
     width: 70,
     height: 24,
     alignItems: 'center',

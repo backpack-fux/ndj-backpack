@@ -79,7 +79,6 @@ export const MainStackNavigator = () => {
           ]}
           onSelect={onSelectMenu}
           defaultIconColor={'gray'}
-          styleIconText={[t.bgTransparent]}
           iconHideOnTheBackDuration={100}
           isExpDistCorrection={false}
         />
