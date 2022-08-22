@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -110,8 +111,8 @@ export const CreateWalletScreen = () => {
             keyboardDismissMode="on-drag">
             <KeyboardAvoidingView
               style={[t.flex1, t.justifyCenter]}
-              behavior="position"
-              keyboardVerticalOffset={150}>
+              behavior={Platform.OS === 'android' ? 'padding' : 'position'}
+              keyboardVerticalOffset={Platform.OS === 'android' ? 0 : 150}>
               <View style={[t.justifyCenter, t.itemsCenter, t.mB4]}>
                 <Image
                   source={logo}
