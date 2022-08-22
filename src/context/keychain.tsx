@@ -169,9 +169,11 @@ export const KeychainProvider = (props: {
   };
 
   const onBlurAppStatus = () => {
-    setOpenVerify(true);
-    setShowVerify(false);
-    setVerifyCallback(undefined);
+    if (!openVerify) {
+      setOpenVerify(true);
+      setShowVerify(false);
+      setVerifyCallback(undefined);
+    }
   };
 
   const onFouseAppStatus = () => {
@@ -232,7 +234,7 @@ export const KeychainProvider = (props: {
     return () => {
       subscription && subscription?.remove();
     };
-  }, [appState, openVerify, showVerify]);
+  }, [appState, openVerify, showVerify, openVerify]);
 
   useEffect(() => {
     const subscription =
@@ -242,7 +244,7 @@ export const KeychainProvider = (props: {
     return () => {
       subscription && subscription?.remove();
     };
-  }, [appState, openVerify, showVerify, enabled]);
+  }, [appState, openVerify, showVerify, enabled, openVerify]);
 
   return (
     <KeychainContext.Provider
