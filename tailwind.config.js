@@ -1,4 +1,5 @@
 const {colors} = require('@app/assets/colors.config');
+const {Platform} = require('react-native');
 
 module.exports = {
   purge: ['./src/**/*.{js,ts,jsx,tsx}'],
@@ -19,7 +20,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      mono: ['NicoMoji+'],
+      mono: [Platform.OS === 'android' ? 'Nicomoji' : 'NicoMoji+'],
     },
   },
 };

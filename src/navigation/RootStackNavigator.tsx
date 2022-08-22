@@ -31,6 +31,7 @@ import {
 import {SessionSignSolana} from '@app/screens/Dapps/SessionSignSolana';
 import {BuyTokenScreen} from '@app/screens/BuyToken';
 import {SelectTokenScreen} from '@app/screens/Wallet/SelectToken';
+import {Platform} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,7 +77,10 @@ export const RootStackNavigator = () => {
           ...stackOptions,
           title: 'Backpack',
           headerTitle: 'Backpack',
-          headerTitleStyle: [t.textWhite, {fontFamily: 'NicoMoji+'}],
+          headerTitleStyle: [
+            t.textWhite,
+            {fontFamily: Platform.OS === 'android' ? 'Nicomoji' : 'NicoMoji+'},
+          ],
           animation: 'fade',
         }}
         component={SplashScreen}

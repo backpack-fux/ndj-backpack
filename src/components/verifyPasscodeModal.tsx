@@ -4,6 +4,7 @@ import {
   Image,
   ImageBackground,
   KeyboardAvoidingView,
+  Platform,
   View,
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
@@ -117,9 +118,8 @@ export const VerifyPasscodeModal = ({
               marginTop={30}
               marginBottom={20}
               text="Backpack"
-              font="NicoMoji+"
+              font={Platform.OS === 'android' ? 'Nicomoji' : 'NicoMoji+'}
               align="center"
-              type="bold"
             />
             <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
               <Image
