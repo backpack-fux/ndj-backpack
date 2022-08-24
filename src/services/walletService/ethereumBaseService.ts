@@ -47,13 +47,10 @@ export default class EthereumBaseService extends WalletService {
       childWallet.getPrivateKey().toString('hex'),
     );
 
-    const ensInfo = await this.getENSInfo(wallet.address);
-
     const data = {
       testAddress: wallet.address,
       liveAddress: wallet.address,
       privateKey: wallet.privateKey,
-      ensInfo,
     };
 
     generatedKeys[mnemonic] = data;

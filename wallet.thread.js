@@ -11,6 +11,7 @@ self.onmessage = async message => {
     const spendWalletItems = await WalletService.createWallets(mnemonic);
     self.postMessage(JSON.stringify(spendWalletItems));
   } catch (err) {
+    console.log(err);
     self.postMessage(`Error: ${err.message}`);
   }
 };

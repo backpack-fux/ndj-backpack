@@ -44,7 +44,7 @@ export default class SolanaService extends WalletService {
   }
 
   async generateKeys(mnemonic: string) {
-    const seed = await bip39.mnemonicToSeedSync(mnemonic);
+    const seed = await bip39.mnemonicToSeed(mnemonic);
     const derivedSeed = ed25519.derivePath(
       "m/44'/501'/0'",
       seed.toString('hex'),

@@ -1,6 +1,7 @@
 import {NetworkName} from '@app/constants';
 import {ENSInfo, ITransaction, WalletItem} from '@app/models';
 const bip39 = require('bip39');
+import * as moment from 'moment-timezone';
 
 abstract class WalletService {
   network: NetworkName;
@@ -85,6 +86,7 @@ abstract class WalletService {
     const wallets: WalletItem[] = [];
 
     for (const service of this.serviceArray) {
+      const start = moment.utc();
       const keys = await service.generateKeys(mnemonic);
       wallets.push(
         new WalletItem(
@@ -94,6 +96,10 @@ abstract class WalletService {
           keys.privateKey,
           keys.ensInfo,
         ),
+      );
+      console.log(
+        service.network,
+        moment.duration(moment.utc().diff(start)).asSeconds(),
       );
     }
 
