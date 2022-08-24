@@ -1,5 +1,7 @@
 import {ERC20_ABI, NetworkName} from '@app/constants';
 import * as ethers from 'ethers';
+import * as bip39 from 'bip39';
+import {hdkey} from 'ethereumjs-wallet';
 import WalletService from './walletService';
 import Web3 from 'web3';
 import {TransactionConfig, TransactionReceipt} from 'web3-core';
@@ -33,15 +35,24 @@ export default class EthereumBaseService extends WalletService {
       return generatedKeys[mnemonic];
     }
 
-    const wallet = ethers.Wallet.fromMnemonic(mnemonic);
-    const {_signingKey} = wallet;
-    const res = _signingKey();
+    const seed = await bip39.mnemonicToSeed(mnemonic);
+    const hdNode = hdkey.fromMasterSeed(seed);
+    const node = hdNode.derivePath("m/44'/60'/0'");
+    // m/44'/60'/0'/0
+    const change = node.deriveChild(0);
+    // m/44'/60'/0'/0/{N}
+    const childNode = change.deriveChild(0);
+    const childWallet = childNode.getWallet();
+    const wallet = new ethers.Wallet(
+      childWallet.getPrivateKey().toString('hex'),
+    );
+
     const ensInfo = await this.getENSInfo(wallet.address);
 
     const data = {
       testAddress: wallet.address,
       liveAddress: wallet.address,
-      privateKey: res.privateKey,
+      privateKey: wallet.privateKey,
       ensInfo,
     };
 
