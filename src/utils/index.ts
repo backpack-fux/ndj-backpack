@@ -4,6 +4,9 @@ import numeral from 'numeral';
 import {Dimensions} from 'react-native';
 import {currencies} from '@app/constants/currencies';
 import * as _ from 'lodash';
+import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import Toast from 'react-native-toast-message';
+
 //@ts-ignore
 import bip39 from 'react-native-bip39';
 
@@ -266,4 +269,44 @@ export const closeetBaseCoins = (baseCoins: BaseCoin[], str: string) => {
     const bText = b.symbol.indexOf(str) > -1 ? b.symbol : a.name;
     return levDist(aText, str) - levDist(bText, str);
   });
+};
+
+export const checkCameraPermission = async () => {
+  try {
+    let result = await check(PERMISSIONS.IOS.CAMERA);
+
+    if (result === RESULTS.GRANTED) {
+      return true;
+    } else if (result === RESULTS.DENIED) {
+      result = await request(PERMISSIONS.IOS.CAMERA);
+
+      if (result === RESULTS.GRANTED) {
+        return true;
+      }
+    }
+
+    if (result === RESULTS.UNAVAILABLE) {
+      throw new Error('The Camera is not available');
+    }
+
+    if (result === RESULTS.DENIED) {
+      throw new Error('The Camera permission is denied');
+    }
+
+    if (result === RESULTS.LIMITED) {
+      throw new Error('The Camera permission is limited');
+    }
+
+    if (result === RESULTS.BLOCKED) {
+      throw new Error('The Camera permission is denied');
+    }
+
+    return false;
+  } catch (err: any) {
+    Toast.show({
+      type: 'error',
+      text1: err.message,
+    });
+    return false;
+  }
 };

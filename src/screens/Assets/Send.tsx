@@ -26,7 +26,7 @@ import {
 } from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
 import {useDebounce} from '@app/uses';
-import {normalizeNumber} from '@app/utils';
+import {checkCameraPermission, normalizeNumber} from '@app/utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {StackParams} from '@app/models';
 import moment from 'moment-timezone';
@@ -159,6 +159,14 @@ export const SendScreen = () => {
     }
   }, [debouncedToAddress, debouncedToAmount]);
 
+  const onOpenScan = async () => {
+    const res = await checkCameraPermission();
+
+    if (res) {
+      setOpenScan(true);
+    }
+  };
+
   useEffect(() => {
     onUpdateSendTokenInfo();
   }, [onUpdateSendTokenInfo]);
@@ -212,7 +220,7 @@ export const SendScreen = () => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[t.itemsCenter, t.mL4]}
-                    onPress={() => setOpenScan(true)}>
+                    onPress={() => onOpenScan()}>
                     <Paragraph text="Scan" size={13} />
                     <Icon name="scan-helper" size={20} color={colors.white} />
                   </TouchableOpacity>

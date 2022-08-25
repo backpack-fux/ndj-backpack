@@ -17,6 +17,7 @@ import {RNCamera} from 'react-native-camera';
 import Toast from 'react-native-toast-message';
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {checkCameraPermission} from '@app/utils';
 
 const logo = require('@app/assets/images/logo.png');
 
@@ -54,6 +55,14 @@ export const DappsScreen = () => {
     }
 
     navigation.navigate('DappDetails', {session});
+  };
+
+  const onOpenScan = async () => {
+    const res = await checkCameraPermission();
+
+    if (res) {
+      setOpenScan(true);
+    }
   };
 
   return (
@@ -107,7 +116,7 @@ export const DappsScreen = () => {
         </ScrollView>
       </View>
       <View>
-        <Button text="New Connection" onPress={() => setOpenScan(true)} />
+        <Button text="New Connection" onPress={() => onOpenScan()} />
         <View style={[t.flexRow, t.mT2]}>
           <View style={[t.flex1]}>
             <Button
