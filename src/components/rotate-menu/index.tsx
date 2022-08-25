@@ -15,6 +15,7 @@ import {menuSize, menuIconSize, SQUARE_DIMENSIONS} from '@app/constants';
 import {styles} from './styles';
 import {Icons} from './icons/Icons';
 import {CircleIcon} from './icons/CircleIcon';
+import {t} from 'react-native-tailwindcss';
 
 const line = require('@app/assets/images/round-line.png');
 
@@ -727,16 +728,33 @@ export class RotateMenu extends React.Component<Props, any> {
     const {ICON_PATH_RADIUS, currentSnappedIcon} = this.state;
     const panHandlers = disable ? {} : this._panResponder.panHandlers;
 
+    const menuHeight =
+      menuSize + ICON_PATH_RADIUS - menuSize / 2 + menuIconSize;
+
+    const opacity = !ICON_PATH_RADIUS ? 0 : 1;
+
     return (
-      <Animated.View
-        {...panHandlers}
+      <View
         style={[
           styles.menuWrap,
           {
-            opacity: !ICON_PATH_RADIUS ? 0 : 1,
-            height: menuSize + ICON_PATH_RADIUS - menuSize / 2 + menuIconSize,
+            opacity,
+            height: menuHeight,
           },
         ]}>
+        <Animated.View
+          {...panHandlers}
+          style={[
+            t.wFull,
+            t.absolute,
+            t.z10,
+            t.top0,
+            {
+              height: menuHeight - SQUARE_DIMENSIONS.WIDTH * 0.45 - 20,
+            },
+          ]}
+        />
+
         <View
           style={[style]}
           onLayout={debounce(
@@ -867,7 +885,7 @@ export class RotateMenu extends React.Component<Props, any> {
             </Animated.View>
           </View>
         </View>
-      </Animated.View>
+      </View>
     );
   }
 }
