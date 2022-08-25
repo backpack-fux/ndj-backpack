@@ -1,10 +1,16 @@
 import {networkList, NetworkName} from '@app/constants';
 import {BaseCoin, News, Wallet} from '@app/models';
 import numeral from 'numeral';
-import {Dimensions} from 'react-native';
+import {Alert, Dimensions} from 'react-native';
 import {currencies} from '@app/constants/currencies';
 import * as _ from 'lodash';
-import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import {
+  check,
+  PERMISSIONS,
+  RESULTS,
+  request,
+  openSettings,
+} from 'react-native-permissions';
 import Toast from 'react-native-toast-message';
 
 //@ts-ignore
@@ -285,21 +291,20 @@ export const checkCameraPermission = async () => {
       }
     }
 
-    if (result === RESULTS.UNAVAILABLE) {
-      throw new Error('The Camera is not available');
-    }
-
-    if (result === RESULTS.DENIED) {
-      throw new Error('The Camera permission is denied');
-    }
-
-    if (result === RESULTS.LIMITED) {
-      throw new Error('The Camera permission is limited');
-    }
-
-    if (result === RESULTS.BLOCKED) {
-      throw new Error('The Camera permission is denied');
-    }
+    Alert.alert(
+      'Permission Denied',
+      'Go to the settings and allow camera access?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Ok',
+          onPress: () => openSettings(),
+        },
+      ],
+    );
 
     return false;
   } catch (err: any) {
