@@ -1,7 +1,7 @@
 import {networkList, NetworkName} from '@app/constants';
 import {BaseCoin, News, Wallet} from '@app/models';
 import numeral from 'numeral';
-import {Alert, Dimensions} from 'react-native';
+import {Alert, Dimensions, Platform} from 'react-native';
 import {currencies} from '@app/constants/currencies';
 import * as _ from 'lodash';
 import {
@@ -278,13 +278,18 @@ export const closeetBaseCoins = (baseCoins: BaseCoin[], str: string) => {
 };
 
 export const checkCameraPermission = async () => {
+  const permission =
+    Platform.OS === 'android'
+      ? PERMISSIONS.ANDROID.CAMERA
+      : PERMISSIONS.IOS.CAMERA;
+
   try {
-    let result = await check(PERMISSIONS.IOS.CAMERA);
+    let result = await check(permission);
 
     if (result === RESULTS.GRANTED) {
       return true;
     } else if (result === RESULTS.DENIED) {
-      result = await request(PERMISSIONS.IOS.CAMERA);
+      result = await request(permission);
 
       if (result === RESULTS.GRANTED) {
         return true;
