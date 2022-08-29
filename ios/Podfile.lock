@@ -14,43 +14,11 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.65.1)
   - fmt (6.2.1)
   - glog (0.3.5)
-  - Permission-AppTrackingTransparency (3.6.1):
-    - RNPermissions
-  - Permission-BluetoothPeripheral (3.6.1):
-    - RNPermissions
-  - Permission-Calendars (3.6.1):
-    - RNPermissions
   - Permission-Camera (3.6.1):
-    - RNPermissions
-  - Permission-Contacts (3.6.1):
     - RNPermissions
   - Permission-FaceID (3.6.1):
     - RNPermissions
-  - Permission-LocationAccuracy (3.6.1):
-    - RNPermissions
-  - Permission-LocationAlways (3.6.1):
-    - RNPermissions
-  - Permission-LocationWhenInUse (3.6.1):
-    - RNPermissions
-  - Permission-MediaLibrary (3.6.1):
-    - RNPermissions
   - Permission-Microphone (3.6.1):
-    - RNPermissions
-  - Permission-Motion (3.6.1):
-    - RNPermissions
-  - Permission-Notifications (3.6.1):
-    - RNPermissions
-  - Permission-PhotoLibrary (3.6.1):
-    - RNPermissions
-  - Permission-PhotoLibraryAddOnly (3.6.1):
-    - RNPermissions
-  - Permission-Reminders (3.6.1):
-    - RNPermissions
-  - Permission-Siri (3.6.1):
-    - RNPermissions
-  - Permission-SpeechRecognition (3.6.1):
-    - RNPermissions
-  - Permission-StoreKit (3.6.1):
     - RNPermissions
   - RCT-Folly (2021.04.26.00):
     - boost-for-react-native
@@ -398,25 +366,9 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - Permission-AppTrackingTransparency (from `../node_modules/react-native-permissions/ios/AppTrackingTransparency`)
-  - Permission-BluetoothPeripheral (from `../node_modules/react-native-permissions/ios/BluetoothPeripheral`)
-  - Permission-Calendars (from `../node_modules/react-native-permissions/ios/Calendars`)
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
-  - Permission-Contacts (from `../node_modules/react-native-permissions/ios/Contacts`)
   - Permission-FaceID (from `../node_modules/react-native-permissions/ios/FaceID`)
-  - Permission-LocationAccuracy (from `../node_modules/react-native-permissions/ios/LocationAccuracy`)
-  - Permission-LocationAlways (from `../node_modules/react-native-permissions/ios/LocationAlways`)
-  - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse`)
-  - Permission-MediaLibrary (from `../node_modules/react-native-permissions/ios/MediaLibrary`)
   - Permission-Microphone (from `../node_modules/react-native-permissions/ios/Microphone`)
-  - Permission-Motion (from `../node_modules/react-native-permissions/ios/Motion`)
-  - Permission-Notifications (from `../node_modules/react-native-permissions/ios/Notifications`)
-  - Permission-PhotoLibrary (from `../node_modules/react-native-permissions/ios/PhotoLibrary`)
-  - Permission-PhotoLibraryAddOnly (from `../node_modules/react-native-permissions/ios/PhotoLibraryAddOnly`)
-  - Permission-Reminders (from `../node_modules/react-native-permissions/ios/Reminders`)
-  - Permission-Siri (from `../node_modules/react-native-permissions/ios/Siri`)
-  - Permission-SpeechRecognition (from `../node_modules/react-native-permissions/ios/SpeechRecognition`)
-  - Permission-StoreKit (from `../node_modules/react-native-permissions/ios/StoreKit`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -483,44 +435,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
-  Permission-AppTrackingTransparency:
-    :path: "../node_modules/react-native-permissions/ios/AppTrackingTransparency"
-  Permission-BluetoothPeripheral:
-    :path: "../node_modules/react-native-permissions/ios/BluetoothPeripheral"
-  Permission-Calendars:
-    :path: "../node_modules/react-native-permissions/ios/Calendars"
   Permission-Camera:
     :path: "../node_modules/react-native-permissions/ios/Camera"
-  Permission-Contacts:
-    :path: "../node_modules/react-native-permissions/ios/Contacts"
   Permission-FaceID:
     :path: "../node_modules/react-native-permissions/ios/FaceID"
-  Permission-LocationAccuracy:
-    :path: "../node_modules/react-native-permissions/ios/LocationAccuracy"
-  Permission-LocationAlways:
-    :path: "../node_modules/react-native-permissions/ios/LocationAlways"
-  Permission-LocationWhenInUse:
-    :path: "../node_modules/react-native-permissions/ios/LocationWhenInUse"
-  Permission-MediaLibrary:
-    :path: "../node_modules/react-native-permissions/ios/MediaLibrary"
   Permission-Microphone:
     :path: "../node_modules/react-native-permissions/ios/Microphone"
-  Permission-Motion:
-    :path: "../node_modules/react-native-permissions/ios/Motion"
-  Permission-Notifications:
-    :path: "../node_modules/react-native-permissions/ios/Notifications"
-  Permission-PhotoLibrary:
-    :path: "../node_modules/react-native-permissions/ios/PhotoLibrary"
-  Permission-PhotoLibraryAddOnly:
-    :path: "../node_modules/react-native-permissions/ios/PhotoLibraryAddOnly"
-  Permission-Reminders:
-    :path: "../node_modules/react-native-permissions/ios/Reminders"
-  Permission-Siri:
-    :path: "../node_modules/react-native-permissions/ios/Siri"
-  Permission-SpeechRecognition:
-    :path: "../node_modules/react-native-permissions/ios/SpeechRecognition"
-  Permission-StoreKit:
-    :path: "../node_modules/react-native-permissions/ios/StoreKit"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -623,25 +543,9 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: df8f81d2a7541ee6755a047b398a5cb5a72acd0e
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
-  Permission-AppTrackingTransparency: 9eedbc3b5a2907b8cb2c971461754616eac1661d
-  Permission-BluetoothPeripheral: 67708853584bb9208c76d36d0e0ea4eafb97ea5b
-  Permission-Calendars: dd55f36958c398a487f141d4c89119907e34dca8
   Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6
-  Permission-Contacts: 2484d274171688b1ca80978b949ac771259b51f0
   Permission-FaceID: e70223280292a1a5e4b8ad943b70cd9229a7d2c3
-  Permission-LocationAccuracy: 76df17de5c6b8bc2eee34e61ee92cdd7a864c73d
-  Permission-LocationAlways: 8d99b025c9f73c696e0cdb367e42525f2e9a26f2
-  Permission-LocationWhenInUse: 3ba99e45c852763f730eabecec2870c2382b7bd4
-  Permission-MediaLibrary: a994236bae41b3597a376ff08298fb1c6d84729b
   Permission-Microphone: 48212dd4d28025d9930d583e3c7a56da7268665c
-  Permission-Motion: d3e5ac6c989b2594a3c5c5ab19ffe9453fa3eb5c
-  Permission-Notifications: 150484ae586eb9be4e32217582a78350a9bb31c3
-  Permission-PhotoLibrary: 5b34ca67279f7201ae109cef36f9806a6596002d
-  Permission-PhotoLibraryAddOnly: 6dba8924024e239af2e282daa8a88967679b4983
-  Permission-Reminders: dd6692dab69ae8a4e2473860e25b6304f9bcd326
-  Permission-Siri: 9853b319177b9f2460bd3e0bdd26bdebe6238def
-  Permission-SpeechRecognition: 7bda51c7a3b68f259a98436ed431afdf84a19ecf
-  Permission-StoreKit: 7dcf43ad1b8cdc7ae21e547d49df9ac9b6ea7270
   RCT-Folly: 0dd9e1eb86348ecab5ba76f910b56f4b5fef3c46
   RCTRequired: 6cf071ab2adfd769014b3d94373744ee6e789530
   RCTTypeSafety: b829c59453478bb5b02487b8de3336386ab93ab1
@@ -689,6 +593,6 @@ SPEC CHECKSUMS:
   SRSRadialGradient: 49ba49a7a8f257c3fe785c250867b07185d1d01e
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4
 
-PODFILE CHECKSUM: 18995fbb09519a25babe95c6b75388b89151be91
+PODFILE CHECKSUM: 9b9593de12db939a4a59c9ef4a634c353caff1c9
 
 COCOAPODS: 1.11.3
