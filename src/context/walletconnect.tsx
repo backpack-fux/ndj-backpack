@@ -159,7 +159,7 @@ export const WalletConnectProvider = (props: {
       ReactNativeHapticFeedback.trigger('impactHeavy');
       navigation?.navigate('SessionApprovalModal', {proposal});
     },
-    [pairingTopic],
+    [pairingTopic, navigation],
   );
 
   const onAcceptSessionProposal = async (
@@ -225,13 +225,6 @@ export const WalletConnectProvider = (props: {
     setEnabledTransactionTopics(result);
   };
 
-  const onSessionCreated = useCallback((session: any) => {
-    Toast.show({
-      type: 'success',
-      text1: `Connected ${session.self.metadata.name} successfully`,
-    });
-  }, []);
-
   const onSessionRequest = useCallback(
     async (event: SignClientTypes.EventArguments['session_request']) => {
       const {topic, params} = event;
@@ -279,7 +272,7 @@ export const WalletConnectProvider = (props: {
           });
       }
     },
-    [client],
+    [client, navigation],
   );
 
   useEffect(() => {
@@ -309,21 +302,31 @@ export const WalletConnectProvider = (props: {
 
   useEffect(() => {
     client?.on('session_proposal', onSessionProposal);
+
+    return () => {
+      client?.removeListener('session_proposal', onSessionProposal);
+    };
+  }, [client, onSessionProposal]);
+
+  useEffect(() => {
     client?.on('session_request', onSessionRequest);
-    client?.on('session_event', (data: any) => {});
+
+    return () => {
+      client?.removeListener('session_request', onSessionRequest);
+    };
+  }, [client, onSessionRequest]);
+
+  useEffect(() => {
     client?.on('session_delete', () => {
       setSessions(client?.session.values || []);
     });
 
     return () => {
-      client?.removeListener('session_proposal', onSessionProposal);
-      client?.removeListener('session_request', onSessionRequest);
-      client?.removeListener('session_event', (data: any) => {});
       client?.removeListener('session_delete', () => {
         setSessions(client?.session.values || []);
       });
     };
-  }, [client, onSessionProposal, onSessionCreated, onSessionRequest]);
+  }, [client]);
 
   useEffect(() => {
     initClient();
