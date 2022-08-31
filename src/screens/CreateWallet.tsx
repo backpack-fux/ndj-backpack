@@ -15,7 +15,6 @@ import Toast from 'react-native-toast-message';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {walletsSelector} from '@app/store/wallets/walletsSelector';
 import {useDispatch, useSelector} from 'react-redux';
-import {Thread} from 'react-native-threads';
 
 import {addWallet} from '@app/store/wallets/actions';
 
@@ -23,8 +22,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {colors} from '@app/assets/colors.config';
 import {Wallet} from '@app/models';
 import {generateMnemonicPhrase} from '@app/utils';
-
-const thread = new Thread('./wallet.thread.js');
+import {createNewWallet} from '@app/utils/wallet';
 
 const logo = require('@app/assets/images/logo.png');
 const {width} = Dimensions.get('screen');
@@ -52,25 +50,17 @@ export const CreateWalletScreen = () => {
     generateWallet(newMnemonic);
   };
 
-  const generateWallet = (value: string) => {
+  const generateWallet = async (value: string) => {
     setIsCreateingWallet(true);
 
-    thread.postMessage(value);
-
-    // listen for messages
-    thread.onmessage = (message: string) => {
-      if (message.startsWith('Error:')) {
-        Toast.show({
-          type: 'error',
-          text1: message,
-        });
-      }
+    try {
+      const newWallets = await createNewWallet(value);
 
       const wallet: Wallet = {
         id: (Math.random() + 1).toString(36).substring(7),
         name: `Main Wallet ${wallets.length + 1}`,
         mnemonic: value,
-        wallets: JSON.parse(message),
+        wallets: newWallets,
       };
       dispatch(addWallet(wallet));
 
@@ -79,7 +69,14 @@ export const CreateWalletScreen = () => {
       if (isAddWalletModal) {
         navigation.goBack();
       }
-    };
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+    } finally {
+      setIsCreateingWallet(false);
+    }
   };
 
   const createMnemonicPhrase = useCallback(async () => {

@@ -1,9 +1,14 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {View, Dimensions, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {t} from 'react-native-tailwindcss';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import {Thread} from 'react-native-threads';
 import Toast from 'react-native-toast-message';
 
 import {BaseScreen, Button, Paragraph} from '@app/components';
@@ -30,8 +35,8 @@ import {addWallet, setIsReadFieldGuide} from '@app/store/wallets/actions';
 import {NetworkName} from '@app/constants';
 import {wyreService} from '@app/services/wyreService';
 import {generateMnemonicPhrase} from '@app/utils';
+import {createNewWallet} from '@app/utils/wallet';
 
-const thread = new Thread('./wallet.thread.js');
 const logo = require('@app/assets/images/logo.png');
 const bankIcon = require('@app/assets/images/bank.png');
 const walletIcon = require('@app/assets/images/wall.png');
@@ -411,16 +416,56 @@ export const FieldGuideScreen = () => {
   const onCreateDefaultWallets = async () => {
     setIsCreateingWallet(true);
 
-    await onCreateSpendWallet();
-    await onCreateSaveWallet();
-    await onCreateInvestWallet();
+    if (Platform.OS === 'android') {
+      await createAllWallets();
+    } else {
+      await onCreateSpendWallet();
+      await onCreateSaveWallet();
+      await onCreateInvestWallet();
+    }
+  };
+
+  const createAllWallets = async () => {
+    const spendMnemonic = await generateMnemonicPhrase();
+    const spendWalletItems = await createNewWallet(spendMnemonic);
+
+    const saveMnemonic = await generateMnemonicPhrase();
+    const saveWalletItems = await createNewWallet(saveMnemonic);
+
+    const investMnemonic = await generateMnemonicPhrase();
+    const investWalletItems = await createNewWallet(investMnemonic);
+
+    const newSpendWallet: Wallet = {
+      id: 'spend',
+      name: 'Spend',
+      mnemonic: spendMnemonic,
+      wallets: spendWalletItems,
+    };
+
+    const newSaveWallet: Wallet = {
+      id: 'save',
+      name: 'Save',
+      mnemonic: saveMnemonic,
+      wallets: saveWalletItems,
+    };
+
+    const newInvestWallet: Wallet = {
+      id: 'invest',
+      name: 'Invest',
+      mnemonic: investMnemonic,
+      wallets: investWalletItems,
+    };
+
+    dispatch(addWallet(newSpendWallet));
+    dispatch(addWallet(newSaveWallet));
+    dispatch(addWallet(newInvestWallet));
   };
 
   const onCreateSpendWallet = async () => {
     try {
       const spendMnemonic = await generateMnemonicPhrase();
 
-      const res = await createWallet(spendMnemonic);
+      const res = await createNewWallet(spendMnemonic);
 
       const newWallet: Wallet = {
         id: 'spend',
@@ -441,7 +486,7 @@ export const FieldGuideScreen = () => {
     try {
       const saveMnemonic = await generateMnemonicPhrase();
 
-      const res = await createWallet(saveMnemonic);
+      const res = await createNewWallet(saveMnemonic);
 
       const newWallet: Wallet = {
         id: 'save',
@@ -462,7 +507,7 @@ export const FieldGuideScreen = () => {
     try {
       const investMnemonic = await generateMnemonicPhrase();
 
-      const res = await createWallet(investMnemonic);
+      const res = await createNewWallet(investMnemonic);
 
       const newWallet: Wallet = {
         id: 'invest',
@@ -477,20 +522,6 @@ export const FieldGuideScreen = () => {
         text1: err.message,
       });
     }
-  };
-
-  const createWallet = async (mnemonic: string): Promise<WalletItem[]> => {
-    return new Promise((resolve, reject) => {
-      thread.postMessage(mnemonic);
-
-      thread.onmessage = (message: string) => {
-        if (message.startsWith('Error:')) {
-          reject(message);
-        } else {
-          resolve(JSON.parse(message));
-        }
-      };
-    });
   };
 
   const onAddFunds = async () => {
