@@ -7,6 +7,7 @@ import Web3 from 'web3';
 import {TransactionConfig, TransactionReceipt} from 'web3-core';
 import {ENSInfo, ITransaction} from '@app/models';
 import {JsonRpcProvider} from '@ethersproject/providers';
+import BigNumber from 'bignumber.js';
 
 const generatedKeys: any = {};
 
@@ -67,7 +68,13 @@ export default class EthereumBaseService extends WalletService {
       balance = await this.web3.eth.getBalance(account);
     }
 
-    return Number(this.web3.utils.fromWei(balance, 'ether'));
+    let decimals = 10e18;
+
+    if (address === '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48') {
+      decimals = 10e5;
+    }
+
+    return Number(new BigNumber(balance).div(decimals));
   }
 
   async getAllowance() {}
