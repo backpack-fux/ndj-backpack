@@ -11,9 +11,9 @@
     "prepare": "patch-package",
     "postinstall": "./node_modules/.bin/rn-nodeify --install 'crypto,buffer,react-native-randombytes,vm,stream,http,https,os,url,net,fs' --hack && yarn wallet-thread:ios && yarn sqlite-thread:ios && yarn wallet-thread:android && yarn sqlite-thread:android",
     "wallet-thread:ios": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./ios --entry-file wallet.thread.js --platform ios --bundle-output ./ios/wallet.thread.jsbundle",
-    "wallet-thread:android": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./android/app/src/main/res/ --entry-file wallet.thread.js --platform android --bundle-output ./android/app/src/main/assets/threads/wallet.thread.bundle",
+    "wallet-thread:android": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./android/app/src/main/res/ --entry-file wallet.thread.android.js --platform android --bundle-output ./android/app/src/main/assets/threads/wallet.thread.bundle",
     "sqlite-thread:ios": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./ios --entry-file sqlite.thread.js --platform ios --bundle-output ./ios/sqlite.thread.jsbundle",
-    "sqlite-thread:android": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./android/app/src/main/res/ --entry-file sqlite.thread.js --platform android --bundle-output ./android/app/src/main/assets/threads/sqlite.thread.bundle"
+    "sqlite-thread:android": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./android/app/src/main/res/ --entry-file sqlite.thread.android.js --platform android --bundle-output ./android/app/src/main/assets/threads/sqlite.thread.bundle"
   },
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.2.0",
