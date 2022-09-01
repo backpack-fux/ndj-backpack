@@ -68,7 +68,7 @@ export default class EthereumBaseService extends WalletService {
       balance = await this.web3.eth.getBalance(account);
     }
 
-    let decimals = 10e18;
+    let decimals = 10e17;
 
     if (address === '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48') {
       decimals = 10e5;
