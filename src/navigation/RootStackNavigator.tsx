@@ -32,6 +32,7 @@ import {SessionSignSolana} from '@app/screens/Dapps/SessionSignSolana';
 import {BuyTokenScreen} from '@app/screens/BuyToken';
 import {SelectTokenScreen} from '@app/screens/Wallet/SelectToken';
 import {Platform} from 'react-native';
+import {WebviewScreen} from '@app/screens/Webview';
 
 const Stack = createNativeStackNavigator();
 
@@ -224,6 +225,13 @@ export const RootStackNavigator = () => {
           presentation: 'formSheet',
         }}
         component={SelectTokenScreen}
+      />
+      <Stack.Screen
+        name="Webwiew"
+        options={{
+          ...stackOptions,
+        }}
+        component={WebviewScreen}
       />
     </Stack.Navigator>
   );

@@ -39,16 +39,16 @@ export type RootStackParamList = {
   };
   AddWallet: undefined;
   SelectToken: undefined;
+  Webwiew: {
+    url: string;
+    title?: string;
+  };
 };
 
 export type MainStackParamList = {
   WalletStack: undefined;
   AssetStack: undefined;
   DappStack: undefined;
-  WebView: {
-    url: string;
-    title?: string;
-  };
 };
 
 export type DappStackParamList = {

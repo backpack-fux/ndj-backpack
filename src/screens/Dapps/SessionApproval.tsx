@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 
 import {colors} from '@app/assets/colors.config';
 import {useWalletConnect} from '@app/context/walletconnect';
-import {MainStackParamList, Wallet} from '@app/models';
+import {MainStackParamList, StackParams, Wallet} from '@app/models';
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import _ from 'lodash';
 import {
@@ -37,8 +37,7 @@ export const SessionApproval = () => {
     onRejectSessionProposal,
     onClearPairingTopic,
   } = useWalletConnect();
-  const route =
-    useRoute<RouteProp<MainStackParamList, 'SessionApprovalModal'>>();
+  const route = useRoute<RouteProp<StackParams, 'SessionApprovalModal'>>();
   const wallets = useSelector(walletsSelector);
   const network = useSelector(networkSelector);
   const [selectedAddresses, setSelectedAddresses] = useState<string[]>([]);
