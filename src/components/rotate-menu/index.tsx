@@ -59,7 +59,7 @@ export class RotateMenu extends React.Component<Props, any> {
     this.INDEX_EXTRACTORS = {};
     this.GIRTH_ANGLE = this.props.girthAngle || 120;
     this.AMOUNT_OF_ICONS = icons.length;
-    this.ICON_POSITION_ANGLE = this.GIRTH_ANGLE / this.AMOUNT_OF_ICONS;
+    this.ICON_POSITION_ANGLE = this.GIRTH_ANGLE / 4;
 
     this.state = {
       pan: new Animated.Value(0),
@@ -78,7 +78,7 @@ export class RotateMenu extends React.Component<Props, any> {
     this.INDEX_EXTRACTORS = {};
     this.GIRTH_ANGLE = this.props.girthAngle || 120;
     this.AMOUNT_OF_ICONS = icons.length;
-    this.ICON_POSITION_ANGLE = this.GIRTH_ANGLE / this.AMOUNT_OF_ICONS;
+    this.ICON_POSITION_ANGLE = this.GIRTH_ANGLE / 4;
 
     // 2*π*r / 360
     this.STEP_LENGTH_TO_1_ANGLE = 0;
