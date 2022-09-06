@@ -83,7 +83,7 @@ export const MainStackNavigator = () => {
       </Stack.Navigator>
       <View style={styles.rotateMenu}>
         <RotateMenu
-          girthAngle={180}
+          girthAngle={210}
           icons={[
             <SettingsIcon id="Settings" title="Settings" />,
             <AssetsIcon id="AssetStack" title="Assets" />,
