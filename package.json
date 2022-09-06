@@ -57,7 +57,6 @@
     "ethereum-qr-code": "^0.3.0",
     "ethereumjs-wallet": "^1.0.2",
     "ethers": "^5.6.4",
-    "events": "^1.1.1",
     "https-browserify": "0.0.1",
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.33",
