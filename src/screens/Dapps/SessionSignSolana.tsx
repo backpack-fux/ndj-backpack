@@ -72,7 +72,7 @@ export const SessionSignSolana = () => {
   const address = getAddressByParams(wallets, params);
 
   return (
-    <BaseScreen noBottom title="Sign Message" onBack={onReject}>
+    <BaseScreen noBottom showToast title="Sign Message" onBack={onReject}>
       <ScrollView keyboardDismissMode="on-drag">
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail

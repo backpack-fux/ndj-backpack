@@ -50,6 +50,7 @@ export const SetPasscodeScreen = () => {
   return (
     <BaseScreen
       noBottom
+      showToast
       title="Set Passcode"
       onBack={() => navigation.goBack()}>
       <KeyboardAvoidingView

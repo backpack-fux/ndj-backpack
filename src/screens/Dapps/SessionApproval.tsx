@@ -179,7 +179,7 @@ export const SessionApproval = () => {
   }, []);
 
   return (
-    <BaseScreen noBottom title="Social Contract" onBack={onReject}>
+    <BaseScreen noBottom showToast title="Social Contract" onBack={onReject}>
       <CardFlip style={[t.flex1]} ref={card}>
         <View
           style={[

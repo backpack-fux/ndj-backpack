@@ -100,6 +100,7 @@ export const SessionSendTransaction = () => {
     <BaseScreen
       isLoading={isLoading}
       noBottom
+      showToast
       title="Sign / Send Transaction"
       onBack={() => onReject()}>
       <ScrollView keyboardDismissMode="on-drag">

@@ -78,7 +78,7 @@ export const SessionSignTypedData = () => {
   const address = getSignParamsAddress(request.params);
 
   return (
-    <BaseScreen noBottom title="Sign Typed Data" onBack={onReject}>
+    <BaseScreen noBottom showToast title="Sign Typed Data" onBack={onReject}>
       <ScrollView keyboardDismissMode="on-drag">
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail

@@ -17,6 +17,7 @@ import {WalletConnectProvider} from './context/walletconnect';
 import {KeychainProvider} from './context/keychain';
 import {t} from 'react-native-tailwindcss';
 import {RootStackNavigator} from './navigation/RootStackNavigator';
+import {ToastContainer} from './components/toast';
 const background = require('@app/assets/images/bg.png');
 
 LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
@@ -69,6 +70,7 @@ const App = () => {
           </GestureHandlerRootView>
         </PersistGate>
       </Provider>
+      <ToastContainer />
     </SafeAreaProvider>
   );
 };

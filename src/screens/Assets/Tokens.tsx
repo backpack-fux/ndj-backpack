@@ -65,6 +65,7 @@ export const TokensScreen = () => {
       noPadding
       title="Add a Custom Token"
       noBottom
+      showToast
       onBack={() => navigation.goBack()}>
       <View
         style={[

@@ -43,7 +43,7 @@ export const SessionUnsuportedMethod = () => {
   const {request, chainId} = params;
 
   return (
-    <BaseScreen noBottom title="Unsupported Method" onBack={onReject}>
+    <BaseScreen noBottom showToast title="Unsupported Method" onBack={onReject}>
       <ScrollView keyboardDismissMode="on-drag">
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail chainId={chainId} protocol={session.relay.protocol} />

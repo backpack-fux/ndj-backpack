@@ -21,6 +21,7 @@ export const BaseScreen = ({
   isLoading = false,
   noPadding = false,
   noBottom = false,
+  showToast = false,
   title,
   onBack,
 }: {
@@ -28,6 +29,7 @@ export const BaseScreen = ({
   isLoading?: boolean;
   noPadding?: boolean;
   noBottom?: boolean;
+  showToast?: boolean;
   title?: string;
   onBack?: () => void;
 }) => {
@@ -94,7 +96,7 @@ export const BaseScreen = ({
           </View>
         </SafeAreaView>
       </View>
-      <ToastContainer />
+      {showToast && <ToastContainer />}
     </ImageBackground>
   );
 };

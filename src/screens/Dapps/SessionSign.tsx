@@ -79,7 +79,7 @@ export const SessionSign = () => {
   const address = getSignParamsAddress(request.params);
 
   return (
-    <BaseScreen noBottom title="Sign Message" onBack={onReject}>
+    <BaseScreen noBottom showToast title="Sign Message" onBack={onReject}>
       <ScrollView keyboardDismissMode="on-drag">
         <DappInfo metadata={session?.peer.metadata} />
         <RequestDetail

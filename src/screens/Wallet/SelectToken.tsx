@@ -44,6 +44,7 @@ export const SelectTokenScreen = () => {
       noPadding
       title="Change a Token"
       noBottom
+      showToast
       onBack={() => navigation.goBack()}>
       <ScrollView
         contentContainerStyle={[t.pL4, t.pR4]}
