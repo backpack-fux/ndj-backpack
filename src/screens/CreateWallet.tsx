@@ -43,6 +43,15 @@ export const CreateWalletScreen = () => {
   };
 
   const onImport = () => {
+    const existingWallet = wallets.find(w => w.mnemonic === mnemonic);
+
+    if (existingWallet) {
+      return Toast.show({
+        type: 'error',
+        text1: `Wallet already exists (${existingWallet.name})`,
+      });
+    }
+
     generateWallet(mnemonic);
   };
 

@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {colors} from '@app/assets/colors.config';
 import {menuHeight} from '@app/constants';
 import {Paragraph} from './text';
+import {ToastContainer} from './toast';
 const background = require('@app/assets/images/bg.png');
 
 export const BaseScreen = ({
@@ -93,6 +94,7 @@ export const BaseScreen = ({
           </View>
         </SafeAreaView>
       </View>
+      <ToastContainer />
     </ImageBackground>
   );
 };
