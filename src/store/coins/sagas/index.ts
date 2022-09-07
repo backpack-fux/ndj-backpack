@@ -146,13 +146,11 @@ function* getBalances(
         );
 
         token.balance = balance;
-      } catch (err) {
-        console.log(
-          'get balance error',
-          token.network,
-          token.contractAddress,
-          err,
-        );
+      } catch (err: any) {
+        Toast.show({
+          type: 'error',
+          text1: err.message,
+        });
       }
     }
 
@@ -201,8 +199,11 @@ function* getTokens({payload}: Action<Wallet>) {
 
     yield put(setAccountCoins(newCoins));
     yield put(setIsLoadingTokens(false));
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    Toast.show({
+      type: 'error',
+      text1: err.message,
+    });
     yield put(setIsLoadingTokens(false));
   }
 }

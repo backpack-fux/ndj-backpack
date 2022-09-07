@@ -61,20 +61,22 @@ export default class EthereumBaseService extends WalletService {
 
   async getBalance(account: string, address?: string) {
     let balance = '0';
+    let decimals = 18;
+
     if (address) {
       const contract = new this.web3.eth.Contract(ERC20_ABI, address);
       balance = await contract.methods.balanceOf(account).call();
+      try {
+        const decimalsString = await contract.methods.decimals().call();
+        if (decimalsString) {
+          decimals = Number(decimalsString);
+        }
+      } catch (err) {}
     } else {
       balance = await this.web3.eth.getBalance(account);
     }
 
-    let decimals = 10e17;
-
-    if (address === '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48') {
-      decimals = 10e5;
-    }
-
-    return Number(new BigNumber(balance).div(decimals));
+    return new BigNumber(balance).div(Math.pow(10, decimals)).toNumber();
   }
 
   async getAllowance() {}
