@@ -33,13 +33,16 @@ export const TokensScreen = () => {
   const searchedCoins = useSelector(searchedCoinsSelector);
   const isSearchingCoins = useSelector(isSearchingCoinsSelector);
 
+  const enabledCoins = userCoins.filter(c => !c.hidden);
+
   const debouncedSearchText = useDebounce(searchText, 1000);
 
   const coins = debouncedSearchText
     ? searchedCoins.map(
-        s => userCoins.find(w => w.contractAddress === s.contractAddress) || s,
+        s =>
+          enabledCoins.find(w => w.contractAddress === s.contractAddress) || s,
       )
-    : userCoins;
+    : enabledCoins;
 
   const onToggleCoin = (coin: BaseCoin, value: boolean) => {
     dispatch(

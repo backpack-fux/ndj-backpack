@@ -8,6 +8,7 @@ export interface BaseCoin {
   network: NetworkName;
   image?: string;
   enabled?: boolean;
+  hidden?: boolean;
   balance?: number;
 }
 

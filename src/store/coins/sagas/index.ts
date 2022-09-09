@@ -36,6 +36,7 @@ import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {sqliteService} from '@app/services/sqllite';
 import {saveBaseCoins} from '@app/utils/sqlite';
+import {testnetCoins} from '@app/constants/testnetCoins';
 
 async function getCoinGeckoCoins() {
   const coins: CoinGeckoCoin[] = await getCoinGeckoCoinList();
@@ -111,10 +112,29 @@ function* accountCoins({payload}: Action<Wallet>) {
   yield put(refreshWallets());
 }
 
+function getTokenContractAddress(token: Token, isTest: boolean) {
+  if (token.contractAddress === token.network) {
+    return;
+  }
+
+  if (isTest) {
+    const testContractAddresses = testnetCoins[token.network];
+
+    const contractAddress =
+      testContractAddresses &&
+      testContractAddresses[token.symbol.toUpperCase()];
+
+    return contractAddress;
+  }
+
+  return token.contractAddress;
+}
+
 function* getBalances(
   wallet: Wallet,
   coins: BaseCoin[],
   coinDetails: CoinGeckoCoinDetail[],
+  isTest: boolean,
 ) {
   const tokens: Token[] = [];
 
@@ -129,10 +149,7 @@ function* getBalances(
       priceChange: detail?.price_change_24h,
       priceChangePercent: detail?.price_change_percentage_24h,
     };
-    const contractAddress =
-      token.contractAddress !== token.network
-        ? token.contractAddress
-        : undefined;
+    const contractAddress = getTokenContractAddress(token, isTest);
     const accountAddress = wallet.wallets.find(
       w => w.network === token.network,
     )?.address;
@@ -147,6 +164,7 @@ function* getBalances(
 
         token.balance = balance;
       } catch (err: any) {
+        console.log(err, token.symbol, contractAddress);
         Toast.show({
           type: 'error',
           text1: err.message,
@@ -166,12 +184,25 @@ function* getTokens({payload}: Action<Wallet>) {
 
     yield delay(1000);
     const state: RootState = yield select();
+    const isTest = state.wallets.network === 'testnet';
     const wallets = state.wallets.wallets;
     const currency = state.wallets.currency;
-    const walletCoins = state.coins.accountCoins;
-    let enabledCoins = walletCoins.filter(
-      c => c.enabled || DEFAULT_COINS.map(d => d.id).includes(c.id),
-    );
+    let walletCoins = state.coins.accountCoins;
+
+    walletCoins = walletCoins.map(token => {
+      if (token.contractAddress === token.network) {
+        return token;
+      }
+      const contractAddress = getTokenContractAddress(token, isTest);
+      return {
+        ...token,
+        hidden: !contractAddress,
+      };
+    });
+
+    let enabledCoins = walletCoins
+      .filter(c => c.enabled)
+      .filter(c => !c.hidden);
 
     if ((!wallets?.length && payload) || !walletCoins?.length) {
       yield put(setIsLoadingTokens(false));
@@ -184,7 +215,7 @@ function* getTokens({payload}: Action<Wallet>) {
     );
 
     for (const wallet of wallets) {
-      yield getBalances(wallet, enabledCoins, coinDetails);
+      yield getBalances(wallet, enabledCoins, coinDetails, isTest);
     }
 
     const newCoins: BaseCoin[] = [];
@@ -212,6 +243,7 @@ function* searchCoins({payload}: Action<string>) {
   try {
     const state: RootState = yield select();
     const isSavedBaseCoins = !!state.coins.baseCoinExpiresAt;
+    const isTest = state.wallets.network === 'testnet';
 
     const searchKey = payload.toLowerCase().trim();
 
@@ -243,6 +275,14 @@ function* searchCoins({payload}: Action<string>) {
       .filter(c =>
         networkList.map(network => network.network).includes(c.network),
       )
+      .filter(c => {
+        if (!isTest) {
+          return;
+        }
+
+        const testCoins = testnetCoins[c.network];
+        return Boolean(testCoins && testCoins[c.symbol.toUpperCase()]);
+      })
       .slice(0, 100);
     let result = searchedDefaultCoins.concat(searchedCoins);
 
@@ -302,6 +342,7 @@ function* getTransferTransaction() {
   try {
     yield put(setSendTokenLoading(true));
     const state: RootState = yield select();
+    const isTest = state.wallets.network === 'testnet';
     const sendTokenInfo = state.coins.sendTokenInfo;
     const selectedWallet = selectedWalletSelector(state);
     const privateKey = selectedWallet?.wallets.find(
@@ -314,10 +355,7 @@ function* getTransferTransaction() {
       sendTokenInfo.toAccount &&
       Number(sendTokenInfo.amount)
     ) {
-      const tokenAddress =
-        sendTokenInfo.token.contractAddress !== sendTokenInfo.token.network
-          ? sendTokenInfo.token.contractAddress
-          : undefined;
+      const tokenAddress = getTokenContractAddress(sendTokenInfo.token, isTest);
 
       const res: {transaction: any; fee: number} = yield WalletService.transfer(
         privateKey,
@@ -392,6 +430,7 @@ export function* getTransactions({
   try {
     const state: RootState = yield select();
     const selectedWallet = selectedWalletSelector(state);
+    const isTest = state.wallets.network === 'testnet';
 
     if (!selectedWallet) {
       return;
@@ -405,12 +444,15 @@ export function* getTransactions({
       return;
     }
 
+    const contractAddress: string = yield getTokenContractAddress(
+      token,
+      isTest,
+    );
+
     const transactions: ITransaction[] = yield WalletService.getTransactions(
       token.network,
       wallet.address,
-      token.contractAddress !== token.network
-        ? token.contractAddress
-        : undefined,
+      contractAddress,
       payload.page,
       payload.limit,
     );

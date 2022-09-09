@@ -53,6 +53,7 @@ export const AssetsScreen = () => {
 
   coins = coins
     .filter(c => c.enabled)
+    .filter(c => !c.hidden)
     .map(coin => {
       const balance = allTokens
         .filter(
