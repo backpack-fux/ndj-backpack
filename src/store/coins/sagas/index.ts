@@ -117,14 +117,14 @@ function getTokenContractAddress(token: Token, isTest: boolean) {
     return;
   }
 
+  const testContractAddresses = testnetCoins[token.network];
+
+  if (!testContractAddresses) {
+    return token.contractAddress;
+  }
+
   if (isTest) {
-    const testContractAddresses = testnetCoins[token.network];
-
-    const contractAddress =
-      testContractAddresses &&
-      testContractAddresses[token.symbol.toUpperCase()];
-
-    return contractAddress;
+    return testContractAddresses[token.symbol.toUpperCase()];
   }
 
   return token.contractAddress;
@@ -277,7 +277,7 @@ function* searchCoins({payload}: Action<string>) {
       )
       .filter(c => {
         if (!isTest) {
-          return;
+          return true;
         }
 
         const testCoins = testnetCoins[c.network];

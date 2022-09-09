@@ -88,6 +88,16 @@ export default class EthereumBaseService extends WalletService {
     contractAddress?: string,
     sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}> {
+    if (contractAddress) {
+      return this.transferERC20(
+        privateKey,
+        toAccount,
+        amount,
+        contractAddress,
+        sendMax,
+      );
+    }
+
     const account = this.web3.eth.accounts.privateKeyToAccount(privateKey);
 
     let qty = this.web3.utils.toWei(amount.toString(), 'ether');
@@ -95,31 +105,47 @@ export default class EthereumBaseService extends WalletService {
     let hexNonce = this.web3.utils.toHex(nonce);
     const gasPrice = await this.web3.eth.getGasPrice();
 
-    if (!contractAddress) {
-      const gasLimit = this.web3.utils.toBN('100000');
-      const estimatedFee = this.web3.utils.toBN(gasPrice).mul(gasLimit);
+    const gasLimit = this.web3.utils.toBN('100000');
+    const estimatedFee = this.web3.utils.toBN(gasPrice).mul(gasLimit);
 
-      if (sendMax) {
-        qty = this.web3.utils
-          .toBN(qty)
-          .sub(estimatedFee.mul(this.web3.utils.toBN(2)))
-          .toString();
-      }
-      const tx = {
-        from: account.address,
-        to: toAccount,
-        value: qty,
-        nonce: hexNonce,
-        gasLimit: this.web3.utils.toHex(gasLimit),
-        gasPrice: this.web3.utils.toHex(gasPrice),
-      };
-      return {
-        transaction: tx,
-        fee: Number(this.web3.utils.fromWei(estimatedFee)),
-      };
+    if (sendMax) {
+      qty = this.web3.utils
+        .toBN(qty)
+        .sub(estimatedFee.mul(this.web3.utils.toBN(2)))
+        .toString();
     }
+    const tx = {
+      from: account.address,
+      to: toAccount,
+      value: qty,
+      nonce: hexNonce,
+      gasLimit: this.web3.utils.toHex(gasLimit),
+      gasPrice: this.web3.utils.toHex(gasPrice),
+    };
+    return {
+      transaction: tx,
+      fee: Number(this.web3.utils.fromWei(estimatedFee)),
+    };
+  }
 
+  async transferERC20(
+    privateKey: string,
+    toAccount: string,
+    amount: number,
+    contractAddress?: string,
+    sendMax?: boolean,
+  ) {
+    const account = this.web3.eth.accounts.privateKeyToAccount(privateKey);
     const contract = new this.web3.eth.Contract(ERC20_ABI, contractAddress);
+
+    const gasPrice = await this.web3.eth.getGasPrice();
+    const nonce = await this.web3.eth.getTransactionCount(account.address);
+    let hexNonce = this.web3.utils.toHex(nonce);
+
+    const decimalsString = await contract.methods.decimals().call();
+    const decimals = Number(decimalsString);
+
+    let qty = new BigNumber(amount).times(Math.pow(10, decimals)).toString();
 
     let transferFunc = contract.methods.transfer(
       toAccount,
@@ -167,6 +193,7 @@ export default class EthereumBaseService extends WalletService {
       fee: Number(this.web3.utils.fromWei(estimatedFee)),
     };
   }
+
   async sendTransaction(privateKey: string, tx: any): Promise<string> {
     const rawTransaction = await this.signTransaction(privateKey, tx);
 

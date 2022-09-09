@@ -1,4 +1,4 @@
-import {networkList, NetworkName} from '@app/constants';
+import {networkList, networkName, NetworkName} from '@app/constants';
 import {BaseCoin, News, Wallet} from '@app/models';
 import numeral from 'numeral';
 import {Alert, Dimensions, Platform} from 'react-native';
@@ -168,7 +168,7 @@ export const showNetworkName = (
   chain: 'testnet' | 'mainnet',
 ) => {
   if (chain === 'mainnet') {
-    return '';
+    return ` - ${networkName[network]}`;
   }
 
   let name = ' - Testnet';
