@@ -25,6 +25,7 @@ import {
   setBaseCoinsRequest,
   setIsLoadingTokens,
   setSendTokenLoading,
+  setToken,
   setTokens,
   transferTokenSuccess,
   updateSendTokenInfo,
@@ -188,6 +189,7 @@ function* getTokens({payload}: Action<Wallet>) {
     const wallets = state.wallets.wallets;
     const currency = state.wallets.currency;
     let walletCoins = state.coins.accountCoins;
+    const selectedToken = state.coins.token;
 
     walletCoins = walletCoins.map(token => {
       if (token.contractAddress === token.network) {
@@ -207,6 +209,17 @@ function* getTokens({payload}: Action<Wallet>) {
     if ((!wallets?.length && payload) || !walletCoins?.length) {
       yield put(setIsLoadingTokens(false));
       return;
+    }
+
+    if (selectedToken) {
+      const selectedTokenContractAddress = getTokenContractAddress(
+        selectedToken,
+        isTest,
+      );
+
+      if (!selectedTokenContractAddress) {
+        yield put(setToken(enabledCoins[0]));
+      }
     }
 
     const coinDetails: CoinGeckoCoinDetail[] = yield getCoinGeckoDetail(
@@ -281,7 +294,12 @@ function* searchCoins({payload}: Action<string>) {
         }
 
         const testCoins = testnetCoins[c.network];
-        return Boolean(testCoins && testCoins[c.symbol.toUpperCase()]);
+
+        if (!testCoins) {
+          return true;
+        }
+
+        return Boolean(testCoins[c.symbol.toUpperCase()]);
       })
       .slice(0, 100);
     let result = searchedDefaultCoins.concat(searchedCoins);
