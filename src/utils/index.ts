@@ -180,8 +180,14 @@ export const showNetworkName = (
     case NetworkName.polygon:
       name = 'Mumbai';
       break;
-
+    case NetworkName.binanceSmartChain:
+      name = 'BSC Testnet';
+      break;
+    case NetworkName.solana:
+      name = `${networkName[network]} Devnet`
+      break;
     default:
+      name = `${networkName[network]} Testnet`
       break;
   }
 

@@ -38,7 +38,7 @@ export default class SolanaService extends WalletService {
 
   switchNetwork(chain: 'mainnet' | 'testnet') {
     this.connection = new Connection(
-      clusterApiUrl(chain === 'mainnet' ? 'mainnet-beta' : 'testnet'),
+      clusterApiUrl(chain === 'mainnet' ? 'mainnet-beta' : 'devnet'),
       'confirmed',
     );
   }
