@@ -168,17 +168,17 @@ export const showNetworkName = (
   chain: 'testnet' | 'mainnet',
 ) => {
   if (chain === 'mainnet') {
-    return ` - ${networkName[network]}`;
+    return `${networkName[network]}`;
   }
 
-  let name = ' - Testnet';
+  let name = 'Testnet';
 
   switch (network) {
     case NetworkName.ethereum:
-      name = ' - Kovan';
+      name = 'Kovan';
       break;
     case NetworkName.polygon:
-      name = ' - Mumbai';
+      name = 'Mumbai';
       break;
 
     default:

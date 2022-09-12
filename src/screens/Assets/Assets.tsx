@@ -172,14 +172,13 @@ export const AssetsScreen = () => {
                   ]}>
                   <Image
                     source={{uri: coin.image}}
-                    style={[t.w8, t.h8, t.roundedFull, t.bgWhite, t.mR2]}
+                    style={[t.w10, t.h10, t.roundedFull, t.bgWhite, t.mR2]}
                   />
                   <View style={[t.flex1]}>
+                    <Paragraph text={`${coin.name}`} />
                     <Paragraph
-                      text={`${coin.name}${showNetworkName(
-                        coin.network,
-                        network,
-                      )}`}
+                      size={14}
+                      text={showNetworkName(coin.network, network)}
                     />
                   </View>
                   <Paragraph
