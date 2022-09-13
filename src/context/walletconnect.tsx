@@ -8,7 +8,6 @@ import React, {
 import {Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import * as queryString from 'query-string';
 import Toast from 'react-native-toast-message';
 
 import {StackParams} from '@app/models';
@@ -19,10 +18,9 @@ import {SessionTypes, SignClientTypes} from '@walletconnect/types';
 import {COSMOS_SIGNING_METHODS} from '@app/constants/COSMOSData';
 import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
 import {getSdkError} from '@walletconnect/utils';
+import {getDeepLink} from '@app/utils';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
-
-const linkingURLs = ['wc://wc', 'ndj-backpack://wc', 'https://jxndao.com/wc'];
 
 export interface WalletConnectContextProps {
   client?: SignClient;
@@ -34,6 +32,7 @@ export interface WalletConnectContextProps {
   onToggleTransactionEnable: (topic: string, value: boolean) => void;
   onPairing: (uri: string) => void;
   onClearPairingTopic: () => void;
+  onOpenDeepLink: (url: string) => void;
 }
 
 export const WalletConnectContext = createContext<WalletConnectContextProps>({
@@ -45,6 +44,7 @@ export const WalletConnectContext = createContext<WalletConnectContextProps>({
   onToggleTransactionEnable: () => {},
   onPairing: () => {},
   onClearPairingTopic: () => {},
+  onOpenDeepLink: () => {},
 });
 
 export const useWalletConnect = () => {
@@ -95,28 +95,20 @@ export const WalletConnectProvider = (props: {
   }, []);
 
   const onOpenDeepLink = (url: string) => {
-    if (url.startsWith('wc:')) {
-      setDeepLinkUri(url);
-      return;
-    }
+    const deepLink = getDeepLink(url);
 
-    const data = queryString.parseUrl(url);
-    const urlWithUri = `${data.url}?uri=`;
-
-    if (!linkingURLs.includes(data.url)) {
-      return;
-    }
-
-    const urlParam = url.replace(urlWithUri, '');
-
-    if (!urlParam?.startsWith('wc:')) {
+    if (!deepLink?.startsWith('wc:')) {
       Toast.show({
         type: 'error',
         text1: 'WalletConnect: invalid QR code',
       });
+
+      return;
     }
 
-    setDeepLinkUri(urlParam);
+    if (deepLink) {
+      setDeepLinkUri(deepLink);
+    }
   };
 
   useEffect(() => {
@@ -344,6 +336,7 @@ export const WalletConnectProvider = (props: {
         onDisconnect,
         onToggleTransactionEnable,
         onClearPairingTopic,
+        onOpenDeepLink,
       }}>
       {props.children}
     </WalletConnectContext.Provider>

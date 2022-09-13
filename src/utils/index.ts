@@ -4,6 +4,7 @@ import numeral from 'numeral';
 import {Alert, Dimensions, Platform} from 'react-native';
 import {currencies} from '@app/constants/currencies';
 import * as _ from 'lodash';
+import * as queryString from 'query-string';
 import {
   check,
   PERMISSIONS,
@@ -184,10 +185,10 @@ export const showNetworkName = (
       name = 'BSC Testnet';
       break;
     case NetworkName.solana:
-      name = `${networkName[network]} Devnet`
+      name = `${networkName[network]} Devnet`;
       break;
     default:
-      name = `${networkName[network]} Testnet`
+      name = `${networkName[network]} Testnet`;
       break;
   }
 
@@ -325,4 +326,23 @@ export const checkCameraPermission = async () => {
     });
     return false;
   }
+};
+
+const linkingURLs = ['wc://wc', 'ndj-backpack://wc', 'https://jxndao.com/wc'];
+
+export const getDeepLink = (url: string) => {
+  if (url.startsWith('wc:')) {
+    return url;
+  }
+
+  const data = queryString.parseUrl(url);
+  const urlWithUri = `${data.url}?uri=`;
+
+  if (!linkingURLs.includes(data.url)) {
+    return;
+  }
+
+  const urlParam = url.replace(urlWithUri, '');
+
+  return urlParam;
 };

@@ -1,5 +1,7 @@
 import {BaseScreen} from '@app/components';
+import {useWalletConnect} from '@app/context/walletconnect';
 import {StackParams} from '@app/models';
+import {getDeepLink} from '@app/utils';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React, {useCallback, useEffect} from 'react';
 import {t} from 'react-native-tailwindcss';
@@ -8,6 +10,7 @@ import WebView from 'react-native-webview';
 export const WebviewScreen = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<StackParams, 'Webwiew'>>();
+  const {onOpenDeepLink} = useWalletConnect();
 
   const {url, title} = route.params;
 
@@ -36,7 +39,14 @@ export const WebviewScreen = () => {
     setTitle();
   }, [setTitle]);
 
-  const openExternalLink = () => {
+  const openExternalLink = (event: any) => {
+    const deepLink = getDeepLink(event.url);
+
+    if (deepLink) {
+      onOpenDeepLink(event.url);
+      return false;
+    }
+
     return true;
   };
 
