@@ -12,8 +12,8 @@ export const testnetCoins: any = {
     LINK: '0xa36085F69e2889c224210F603D836748e7dC0088', //
   },
   [NetworkName.polygon]: {
-    USDT: '0xA02f6adc7926efeBBd59Fd43A84f4E0c0c91e832', //
-    USDC: '0x0fa8781a83e46826621b3bc094ea2a0212e71b23', //
+    USDT: '0x3813e82e6f7098b9583fc0f33a962d02018b6803', //
+    USDC: '0xe11a86849d99f524cac3e7a0ec1241828e332c62', //
     DAI: '0xcb1e72786a6eb3b44c2a2429e317c8a2462cfeb1', //
     WETH: '0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa',
     WBTC: '0xeb8df6700e24802a5d435e5b0e4228065ca9e0f3', //
@@ -30,8 +30,8 @@ export const testnetCoins: any = {
   [NetworkName.solana]: {
     USDC: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU',
     USDT: 'HY6uvCfBQhKANRxBcYLBK7aUva8mT7mLP2SjrLLmipza',
-    RAY: '3bsvftcGX66jB39fLJ2a9ipPgVGWsxEopgJxBfdjar3D'
+    RAY: '3bsvftcGX66jB39fLJ2a9ipPgVGWsxEopgJxBfdjar3D',
   },
   [NetworkName.zilliqa]: {},
-  [NetworkName.binance]: {}
+  [NetworkName.binance]: {},
 };

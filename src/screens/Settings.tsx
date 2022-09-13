@@ -12,10 +12,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {StackParams} from '@app/models';
 
 import BookIcon from '@app/assets/icons/book.svg';
+import {isLoadingTokensSelector} from '@app/store/coins/coinsSelector';
 
 export const SettingsScreen = () => {
   const navigation = useNavigation<NavigationProp<StackParams>>();
   const dispatch = useDispatch();
+  const isLoading = useSelector(isLoadingTokensSelector);
   const network = useSelector(networkSelector);
   const [selectedSetting, setSelectedSetting] = useState<string>('network');
   const {enabled, toggleKeychain, setNewPasscord} = useKeychain();
@@ -90,12 +92,14 @@ export const SettingsScreen = () => {
               <Button
                 text="Fake Money"
                 onPress={() => onChangeNetwork('testnet')}
+                disabled={isLoading}
                 color={network === 'testnet' ? colors.secondary : colors.gray}
               />
             </View>
             <View style={[t.flex1, t.mL2]}>
               <Button
                 text="Real Money"
+                disabled={isLoading}
                 onPress={() => onChangeNetwork('mainnet')}
                 color={network === 'mainnet' ? colors.secondary : colors.gray}
               />

@@ -20,9 +20,10 @@ import {
 import {BaseCoin} from '@app/models';
 import {searchCoinsRequest, toggleAccountCoin} from '@app/store/coins/actions';
 import {useDebounce} from '@app/uses';
-import {networkName} from '@app/constants';
 import {refreshWallets} from '@app/store/wallets/actions';
 import {useNavigation} from '@react-navigation/native';
+import {showNetworkName} from '@app/utils';
+import {networkSelector} from '@app/store/wallets/walletsSelector';
 
 const borderBottomWidth = 0.3;
 export const TokensScreen = () => {
@@ -32,6 +33,7 @@ export const TokensScreen = () => {
   const userCoins = useSelector(accountCoinsSelector);
   const searchedCoins = useSelector(searchedCoinsSelector);
   const isSearchingCoins = useSelector(isSearchingCoinsSelector);
+  const network = useSelector(networkSelector);
 
   const enabledCoins = userCoins.filter(c => !c.hidden);
 
@@ -111,7 +113,8 @@ export const TokensScreen = () => {
                         text={`${coin.name} (${coin.symbol.toUpperCase()})`}
                       />
                       <Paragraph
-                        text={networkName[coin.network] || coin.network}
+                        text={showNetworkName(coin.network, network)}
+                        size={14}
                         color={colors.textGray}
                       />
                     </View>

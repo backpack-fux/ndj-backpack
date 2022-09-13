@@ -31,7 +31,7 @@ export const Button = ({
         {
           backgroundColor: disabled ? colors.transparent : color || colors.gray,
         },
-        disabled && {borderWidth, borderColor: colors.gray},
+        disabled && {borderWidth, borderColor: color || colors.gray},
         t.h10,
         t.alignCenter,
         t.justifyCenter,
