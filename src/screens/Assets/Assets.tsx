@@ -178,7 +178,7 @@ export const AssetsScreen = () => {
                     <Paragraph text={`${coin.name}`} />
                     <Paragraph
                       size={14}
-                      color={colors.textGray}
+                      color={isSelected ? colors.white : colors.textGray}
                       text={showNetworkName(coin.network, network)}
                     />
                   </View>
