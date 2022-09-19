@@ -1,8 +1,9 @@
 import {AxiosInstance} from '@app/apis/axios';
-import {ETHERSCAN, NetworkName} from '@app/constants';
+import {ERC20_ABI, ETHERSCAN, NetworkName} from '@app/constants';
 import {ENSInfo, ITransaction} from '@app/models';
 import Web3 from 'web3';
 import EthereumBaseService from './ethereumBaseService';
+import BigNumber from 'bignumber.js';
 
 const provider =
   'https://eth.getblock.io/mainnet/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3';
@@ -46,10 +47,18 @@ export default class EthereumService extends EthereumBaseService {
       apiKey: etherscanApiKey,
     };
 
+    let decimals = 18;
     if (contractAddress) {
       // fetch ERC20 transactions
       params.contractaddress = contractAddress;
       params.action = 'tokentx';
+
+      const contract = new this.web3.eth.Contract(ERC20_ABI, contractAddress);
+
+      const decimalsString = await contract.methods.decimals().call();
+      if (decimalsString) {
+        decimals = Number(decimalsString);
+      }
     }
 
     const {data} = await AxiosInstance.get(`${this.etherScanApi}`, {
@@ -71,7 +80,7 @@ export default class EthereumService extends EthereumBaseService {
         from: item.from,
         to: item.to,
         fee: Number(this.web3.utils.fromWei(item.gasUsed, 'ether')),
-        value: Number(this.web3.utils.fromWei(item.value, 'ether')),
+        value: new BigNumber(item.value).div(Math.pow(10, decimals)).toNumber(),
         timeStamp: item.timeStamp,
         nonce: item.nonce,
         index: item.transactionIndex,

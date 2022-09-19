@@ -199,7 +199,7 @@ export default class SolanaService extends WalletService {
     };
   }
 
-  async calceTransferFee(account: string) {
+  async calcTransferFee(account: string) {
     let nonceAccountData = await this.connection.getNonce(
       new PublicKey(account),
       'confirmed',
