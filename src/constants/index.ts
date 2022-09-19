@@ -27,9 +27,10 @@ export const menuHeight =
 export const borderWidth = 1;
 export const ETHERSCAN = {
   mainnet: 'https://api.etherscan.io/api',
-  ropsten: 'https://api-ropsten.etherscan.io/api/',
-  rinkeby: 'https://api-rinkeby.etherscan.io/api/',
-  kovan: 'https://api-kovan.etherscan.io/api/',
+  ropsten: 'https://api-ropsten.etherscan.io/api',
+  rinkeby: 'https://api-rinkeby.etherscan.io/api',
+  kovan: 'https://api-kovan.etherscan.io/api',
+  goerli: 'https://api-goerli.etherscan.io/api',
 };
 
 export const POLYGONSCAN = {

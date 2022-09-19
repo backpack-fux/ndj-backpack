@@ -2,18 +2,17 @@ import {NetworkName} from './enums';
 
 export const testnetCoins: any = {
   [NetworkName.ethereum]: {
-    // kovan
-    USDT: '0xf3e0d7bf58c5d455d31ef1c2d5375904df525105',
-    USDC: '0xc2569dd7d0fd715b054fbf16e75b001e5c0c1115', //
-    DAI: '0x04df6e4121c27713ed22341e7c7df330f56f289b', //
-    WETH: '0xdfcea9088c8a88a76ff74892c1457c17dfeef9c1', //
-    WBTC: '0xa0a5ad2296b38bd3e3eb59aaeaf1589e8d9a29a9',
-    SHIB: '0xe9a1ed75621d9357c753e1436fe9eb63628bde67',
-    LINK: '0xa36085F69e2889c224210F603D836748e7dC0088', //
+    // goerli
+    USDT: '0xe802376580c10fe23f027e1e19ed9d54d4c9311e',
+    USDC: '0x07865c6e87b9f70255377e024ace6630c1eaa37f', //
+    DAI: '0x11fe4b6ae13d2a6055c8d9cf65c55bac32b5d844', //
+    WETH: '0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6', //
+    WBTC: '0xc04b0d3107736c32e19f1c62b2af67be61d63a05',
+    LINK: '0x326c977e6efc84e512bb9c30f76e30c160ed06fb', //
   },
   [NetworkName.polygon]: {
     USDT: '0x3813e82e6f7098b9583fc0f33a962d02018b6803', //
-    USDC: '0xe11a86849d99f524cac3e7a0ec1241828e332c62', //
+    USDC: '0x566368d78dbdec50f04b588e152de3cec0d5889f', //
     DAI: '0xcb1e72786a6eb3b44c2a2429e317c8a2462cfeb1', //
     WETH: '0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa',
     WBTC: '0xeb8df6700e24802a5d435e5b0e4228065ca9e0f3', //

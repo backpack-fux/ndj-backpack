@@ -9,7 +9,7 @@ const provider =
   'https://eth.getblock.io/mainnet/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3';
 
 const testnetProvider =
-  'https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
+  'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
 
 const etherscanApiKey = 'I39JN6BK9Q2FDWZIG3U5EDF2XDI12X97M4';
 
@@ -22,7 +22,7 @@ export default class EthereumService extends EthereumBaseService {
 
   switchNetwork(chain: 'mainnet' | 'testnet') {
     this.etherScanApi =
-      chain === 'mainnet' ? ETHERSCAN.mainnet : ETHERSCAN.kovan;
+      chain === 'mainnet' ? ETHERSCAN.mainnet : ETHERSCAN.goerli;
     const web3Provider = chain === 'mainnet' ? provider : testnetProvider;
 
     this.chain = chain;
