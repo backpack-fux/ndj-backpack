@@ -314,8 +314,6 @@ export default class SolanaService extends WalletService {
 
     const data = res.data.data;
 
-    console.log(data);
-
     if (!data || !data.length) {
       return [];
     }
