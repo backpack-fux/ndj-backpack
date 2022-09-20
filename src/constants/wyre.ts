@@ -1,112 +1,112 @@
 import {NetworkName} from './enums';
 
-export const wyreSupportCoins = [
-  {
-    symbol: 'ETH',
-    network: NetworkName.ethereum,
+export const wyreSupportCoins: any = {
+  [NetworkName.ethereum]: {
+    ETH: {
+      network: 'ethereum',
+      symbol: 'ETH',
+    },
+    DAI: {
+      network: 'ethereum',
+      symbol: 'DAI',
+    },
+    USDC: {
+      network: 'ethereum',
+      symbol: 'USDC',
+    },
+    USDT: {
+      network: 'ethereum',
+      symbol: 'USDT',
+    },
+    BUSD: {
+      network: 'ethereum',
+      symbol: 'BUSD',
+    },
+    GUSD: {
+      network: 'ethereum',
+      symbol: 'GUSD',
+    },
+    PAX: {
+      network: 'ethereum',
+      symbol: 'PAX',
+    },
+    USDS: {
+      network: 'ethereum',
+      symbol: 'USDS',
+    },
+    AAVE: {
+      network: 'ethereum',
+      symbol: 'AAVE',
+    },
+    COMP: {
+      network: 'ethereum',
+      symbol: 'COMP',
+    },
+    LINK: {
+      network: 'ethereum',
+      symbol: 'LINK',
+    },
+    WBTC: {
+      network: 'ethereum',
+      symbol: 'WBTC',
+    },
+    WETH: {
+      network: 'ethereum',
+      symbol: 'WETH',
+    },
+    BAT: {
+      network: 'ethereum',
+      symbol: 'BAT',
+    },
+    CRV: {
+      network: 'ethereum',
+      symbol: 'CRV',
+    },
+    MKR: {
+      network: 'ethereum',
+      symbol: 'MKR',
+    },
+    SNX: {
+      network: 'ethereum',
+      symbol: 'SNX',
+    },
+    UMA: {
+      network: 'ethereum',
+      symbol: 'UMA',
+    },
+    UNI: {
+      network: 'ethereum',
+      symbol: 'UNI',
+    },
+    YFI: {
+      network: 'ethereum',
+      symbol: 'YFI',
+    },
+    GYEN: {
+      network: 'ethereum',
+      symbol: 'GYEN',
+    },
+    ZUSD: {
+      network: 'ethereum',
+      symbol: 'ZUSD',
+    },
+    RAI: {
+      network: 'ethereum',
+      symbol: 'RAI',
+    },
   },
-  {
-    symbol: 'DAI',
-    network: NetworkName.ethereum,
+  [NetworkName.polygon]: {
+    MATIC: {
+      network: 'matic',
+      symbol: 'MATIC',
+    },
+    USDC: {
+      netork: 'matic',
+      symbol: 'mUSDC',
+    },
   },
-  {
-    symbol: 'USDC',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'USDT',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'BUSD',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'GUSD',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'PAX',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'USDS',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'AAVE',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'COMP',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'LINK',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'WBTC',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'WETH',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'BAT',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'CRV',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'MKR',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'SNX',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'UMA',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'UNI',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'YFI',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'GYEN',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'ZUSD',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'RAI',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'LETH',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'LUSDC',
-    network: NetworkName.ethereum,
-  },
-  {
-    symbol: 'MUSDC',
-    network: NetworkName.polygon,
-  },
-  {
-    symbol: 'MATIC',
-    network: NetworkName.polygon,
-  },
-];
+  [NetworkName.binance]: {},
+  [NetworkName.binanceSmartChain]: {},
+  [NetworkName.solana]: {},
+  [NetworkName.zilliqa]: {},
+};

@@ -70,18 +70,18 @@ export const AssetsScreen = () => {
       };
     });
 
-  const isSupportWyre = useMemo(() => {
+  const wyreToken = useMemo<any>(() => {
     if (!selectedCoin) {
-      return false;
+      return null;
     }
 
-    const wyreSupportCoin = wyreSupportCoins.find(
-      item =>
-        item.network === selectedCoin.network &&
-        item.symbol === selectedCoin.symbol.toUpperCase(),
-    );
+    const networkTokens = wyreSupportCoins[selectedCoin.network];
 
-    return !!wyreSupportCoin;
+    if (!networkTokens) {
+      return;
+    }
+
+    return networkTokens[selectedCoin.symbol.toUpperCase()];
   }, [selectedCoin]);
 
   const onPressToken = () => {
@@ -101,7 +101,7 @@ export const AssetsScreen = () => {
   };
 
   const onBuyToken = async () => {
-    if (!selectedCoin || !selectedWallet) {
+    if (!selectedCoin || !wyreToken || !selectedWallet) {
       return;
     }
 
@@ -117,8 +117,8 @@ export const AssetsScreen = () => {
 
     try {
       const res = await wyreService.reserve(
-        selectedCoin.symbol.toUpperCase(),
-        wallet.address,
+        wyreToken.symbol,
+        `${wyreToken.network}:${wallet.address}`,
       );
 
       if (res.url) {
@@ -197,7 +197,7 @@ export const AssetsScreen = () => {
         <View style={[t.mT2]}>
           <Button
             text="Buy a Token"
-            disabled={!isSupportWyre || loadingWyre}
+            disabled={!wyreToken || loadingWyre}
             onPress={() => onBuyToken()}
           />
         </View>

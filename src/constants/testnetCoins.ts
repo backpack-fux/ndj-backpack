@@ -11,6 +11,7 @@ export const testnetCoins: any = {
     LINK: '0x326c977e6efc84e512bb9c30f76e30c160ed06fb', //
   },
   [NetworkName.polygon]: {
+    // mumbai
     USDT: '0x3813e82e6f7098b9583fc0f33a962d02018b6803', //
     USDC: '0x566368d78dbdec50f04b588e152de3cec0d5889f', //
     DAI: '0xcb1e72786a6eb3b44c2a2429e317c8a2462cfeb1', //
@@ -19,6 +20,7 @@ export const testnetCoins: any = {
     LINK: '0x326C977E6efc84E512bB9C30f76E30c160eD06FB', //
   },
   [NetworkName.binanceSmartChain]: {
+    // testnet
     USDT: '0x337610d27c682e347c9cd60bd4b3b107c9d34ddd', //
     USDC: '0x64544969ed7ebf5f083679233325356ebe738930', //
     DAI: '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867', //
@@ -27,6 +29,7 @@ export const testnetCoins: any = {
     LINK: '0x84b9b910527ad5c03a9ca831909e21e236ea7b06', //
   },
   [NetworkName.solana]: {
+    // devnet
     USDC: '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU',
     USDT: 'HY6uvCfBQhKANRxBcYLBK7aUva8mT7mLP2SjrLLmipza',
     RAY: '3bsvftcGX66jB39fLJ2a9ipPgVGWsxEopgJxBfdjar3D',
