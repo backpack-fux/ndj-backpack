@@ -17,11 +17,11 @@ import {Token, TOKEN_PROGRAM_ID} from '@solana/spl-token';
 import * as bip39 from 'bip39';
 import {ENSInfo, ITransaction} from '@app/models';
 import {AxiosInstance} from '@app/apis/axios';
-import * as _ from 'lodash';
 import SolanaWallet, {SolanaSignTransaction} from 'solana-wallet';
 import NP from 'number-precision';
 
 const solscanApi = 'https://public-api.solscan.io';
+const solscanDevApi = 'https://public-api-test.solscan.io';
 
 export default class SolanaService extends WalletService {
   chain: 'mainnet' | 'testnet' = 'mainnet';
@@ -36,7 +36,16 @@ export default class SolanaService extends WalletService {
     );
   }
 
+  get apiURI() {
+    if (this.chain === 'testnet') {
+      return solscanDevApi;
+    }
+
+    return solscanApi;
+  }
+
   switchNetwork(chain: 'mainnet' | 'testnet') {
+    this.chain = chain;
     this.connection = new Connection(
       clusterApiUrl(chain === 'mainnet' ? 'mainnet-beta' : 'devnet'),
       'confirmed',
@@ -280,22 +289,32 @@ export default class SolanaService extends WalletService {
     page: number,
     limit: number,
   ) {
-    const params = {
-      account: address,
-      beforeHash: typeof page === 'string' ? page : undefined,
-      limit,
-    };
-
-    if (contractAddress) {
+    if (this.chain === 'testnet') {
       return [];
     }
 
-    const {data} = await AxiosInstance.get(
-      `${solscanApi}/account/transactions`,
-      {
-        params,
-      },
-    );
+    const params = {
+      account: address,
+      limit,
+      offset: (page - 1) * limit,
+    };
+
+    if (contractAddress) {
+      return this.getCustomTokenTransactions(
+        address,
+        contractAddress,
+        page,
+        limit,
+      );
+    }
+
+    const res = await AxiosInstance.get(`${this.apiURI}/account/solTransfers`, {
+      params,
+    });
+
+    const data = res.data.data;
+
+    console.log(data);
 
     if (!data || !data.length) {
       return [];
@@ -304,22 +323,62 @@ export default class SolanaService extends WalletService {
     const transactions: ITransaction[] = [];
 
     data.forEach((item: any) => {
-      const signer = item.signer[0];
-      const instruction = item.parsedInstruction[0];
-
       transactions.push({
-        to: '',
-        from: signer,
-        type: 'by',
-        label: _.startCase(instruction.type),
-        fee: item.fee / LAMPORTS_PER_SOL,
+        to: item.dst,
+        from: item.src,
+        type: item.src === address ? 'out' : 'in',
+        fee: item.fee / Math.pow(10, item.decimals),
+        value: item.lamport / Math.pow(10, item.decimals),
         timeStamp: item.blockTime,
         status: item.status,
-        value: item.lamport / LAMPORTS_PER_SOL,
         hash: item.txHash,
         nonce: item.nonce,
         url: `https://solscan.io/tx/${item.txHash}${
-          this.chain === 'testnet' ? '?cluster=testnet' : ''
+          this.chain === 'testnet' ? '?cluster=devnet' : ''
+        }`,
+      });
+    });
+
+    return transactions;
+  }
+
+  async getCustomTokenTransactions(
+    address: string,
+    contractAddress: string,
+    page: number,
+    limit: number,
+  ) {
+    const params = {
+      account: address,
+      limit,
+      offset: (page - 1) * limit,
+      cluster: 'devnet',
+    };
+
+    const res = await AxiosInstance.get(`${this.apiURI}/account/splTransfers`, {
+      params,
+    });
+
+    const data = res.data.data;
+    const result = data.filter(
+      (item: any) => item.tokenAddress === contractAddress,
+    );
+    const transactions: ITransaction[] = [];
+
+    result.forEach((item: any) => {
+      transactions.push({
+        to: item.changeAmount >= 0 ? item.owner : item.address,
+        from: item.changeAmount < 0 ? item.owner : item.address,
+        type: item.changeAmount >= 0 ? 'in' : 'out',
+        fee: item.fee / LAMPORTS_PER_SOL,
+        value:
+          Number(item.balance.amount) / Math.pow(10, item.balance.decimals),
+        timeStamp: item.blockTime,
+        status: item.status,
+        hash: item.txHash,
+        nonce: item.nonce,
+        url: `https://solscan.io/tx/${item.txHash}${
+          this.chain === 'testnet' ? '?cluster=devnet' : ''
         }`,
       });
     });
