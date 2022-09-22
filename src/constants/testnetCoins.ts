@@ -13,7 +13,7 @@ export const testnetCoins: any = {
   [NetworkName.polygon]: {
     // mumbai
     USDT: '0x3813e82e6f7098b9583fc0f33a962d02018b6803', //
-    USDC: '0xe11a86849d99f524cac3e7a0ec1241828e332c62', //
+    USDC: '0x566368d78dbdec50f04b588e152de3cec0d5889f', //
     DAI: '0xcb1e72786a6eb3b44c2a2429e317c8a2462cfeb1', //
     WETH: '0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa',
     WBTC: '0xeb8df6700e24802a5d435e5b0e4228065ca9e0f3', //

@@ -101,7 +101,7 @@ export const wyreSupportCoins: any = {
       symbol: 'MATIC',
     },
     USDC: {
-      netork: 'matic',
+      network: 'matic',
       symbol: 'mUSDC',
     },
   },

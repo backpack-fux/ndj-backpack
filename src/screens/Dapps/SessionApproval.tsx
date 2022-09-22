@@ -270,9 +270,10 @@ export const SessionApproval = () => {
                         />
                         <View style={[t.flex1, t.mL2, t.flexRow, t.selfCenter]}>
                           <Paragraph
-                            text={`${wallet.name} using ${
-                              networkName[w.network]
-                            }${showNetworkName(w.network, network)}`}
+                            text={`${wallet.name} using ${showNetworkName(
+                              w.network,
+                              network,
+                            )}`}
                           />
                         </View>
                       </TouchableOpacity>

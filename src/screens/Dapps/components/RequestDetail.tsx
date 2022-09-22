@@ -51,10 +51,7 @@ export const RequestDetail = ({
           </View>
           <Paragraph
             align="right"
-            text={`${networkName[network]}${showNetworkName(
-              network,
-              currentNetwork,
-            )}`}
+            text={showNetworkName(network, currentNetwork)}
           />
         </View>
       )}
