@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   Alert,
   FlatList,
@@ -41,7 +41,7 @@ import {
   renameWallet,
 } from '@app/store/wallets/actions';
 
-import {formatCurrency} from '@app/utils';
+import {formatCurrency, sleep} from '@app/utils';
 import {borderWidth, networkList, NetworkName} from '@app/constants';
 import {selectWallet} from '@app/store/wallets/actions';
 import {useWalletConnect} from '@app/context/walletconnect';
@@ -68,6 +68,7 @@ export const WalletsScreen = () => {
   const [backScreen, setBackScreen] = useState<'send' | 'receive'>('send');
   const focused = useIsFocused();
   const allTokens = useSelector(tokensSelector);
+  const listRef = useRef<any>();
   const token = ((selectedWallet && allTokens[selectedWallet.id]) || []).find(
     a => a.contractAddress === selectedCoin?.contractAddress,
   );
@@ -82,7 +83,7 @@ export const WalletsScreen = () => {
 
   const walletList = useMemo(
     () =>
-      _.cloneDeep(wallets).sort(a => (a.id === selectedWallet?.id ? -1 : 1)),
+      _.cloneDeep(wallets).sort(a => (a.id === selectedWallet?.id ? 1 : -1)),
     [wallets, selectedWallet],
   );
 
@@ -117,7 +118,7 @@ export const WalletsScreen = () => {
     if (!selectedCard) {
       return;
     }
-
+    scrollToEnd();
     selectedCard?.flip();
     setIsBack(true);
     setShowSeed(null);
@@ -128,7 +129,6 @@ export const WalletsScreen = () => {
     if (!selectedCard) {
       return;
     }
-
     selectedCard?.flip();
     setIsBack(true);
     setShowSeed(null);
@@ -139,6 +139,7 @@ export const WalletsScreen = () => {
       return;
     }
 
+    scrollToEnd(200);
     dispatch(
       updateSendTokenInfo({
         token: sendTokenInfo.token,
@@ -170,9 +171,15 @@ export const WalletsScreen = () => {
     dispatch(transferTokenRequest());
   };
 
+  const scrollToEnd = async (timeout: number = 0) => {
+    if (!listRef?.current) {
+    }
+    await sleep(timeout);
+    listRef.current.scrollToEnd({animating: true});
+  };
+
   useEffect(() => {
     if (tokens.length && !selectedCoin) {
-      console.log('------------------------------------');
       dispatch(setToken(tokens[0]));
     }
   }, [tokens, selectedCoin]);
@@ -194,11 +201,18 @@ export const WalletsScreen = () => {
     }
   }, [insufficientBalance, isBack, backScreen, sendTokenInfo]);
 
+  useEffect(() => {
+    if (focused) {
+      scrollToEnd();
+    }
+  }, [wallets, focused]);
+
   return (
     <BaseScreen>
       <View style={[t.flex1]}>
         <FlatList
           data={walletList}
+          ref={listRef}
           listKey="wallet"
           keyExtractor={item => `${item.id}`}
           showsHorizontalScrollIndicator={false}
