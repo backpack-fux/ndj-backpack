@@ -3,6 +3,14 @@ import {NetworkName} from './enums';
 
 export const DEFAULT_COINS: BaseCoin[] = [
   {
+    id: 'usd-coin',
+    name: 'USD Coin',
+    symbol: 'usdc',
+    contractAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+    network: NetworkName.ethereum,
+    enabled: true,
+  },
+  {
     id: 'ethereum',
     name: 'Ethereum',
     symbol: 'eth',
@@ -16,7 +24,7 @@ export const DEFAULT_COINS: BaseCoin[] = [
     symbol: 'matic',
     contractAddress: NetworkName.polygon,
     network: NetworkName.polygon,
-    enabled: true,
+    enabled: false,
   },
   {
     id: 'zilliqa',
@@ -24,7 +32,7 @@ export const DEFAULT_COINS: BaseCoin[] = [
     symbol: 'zil',
     contractAddress: NetworkName.zilliqa,
     network: NetworkName.zilliqa,
-    enabled: true,
+    enabled: false,
   },
   {
     id: 'binancecoin',
@@ -32,7 +40,7 @@ export const DEFAULT_COINS: BaseCoin[] = [
     symbol: 'bnb',
     contractAddress: NetworkName.binance,
     network: NetworkName.binance,
-    enabled: true,
+    enabled: false,
   },
   {
     id: 'binancecoin',
@@ -40,7 +48,7 @@ export const DEFAULT_COINS: BaseCoin[] = [
     symbol: 'bnb',
     contractAddress: NetworkName.binanceSmartChain,
     network: NetworkName.binanceSmartChain,
-    enabled: true,
+    enabled: false,
   },
   {
     id: 'solana',
@@ -48,6 +56,6 @@ export const DEFAULT_COINS: BaseCoin[] = [
     name: 'Solana',
     contractAddress: NetworkName.solana,
     network: NetworkName.solana,
-    enabled: true,
+    enabled: false,
   },
 ];
