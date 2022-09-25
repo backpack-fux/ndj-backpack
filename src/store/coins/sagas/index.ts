@@ -202,7 +202,7 @@ function* getTokens({payload}: Action<Wallet>) {
       };
     });
 
-    let enabledCoins = walletCoins
+    const enabledCoins = walletCoins
       .filter(c => c.enabled)
       .filter(c => !c.hidden);
 
@@ -212,12 +212,11 @@ function* getTokens({payload}: Action<Wallet>) {
     }
 
     if (selectedToken) {
-      const selectedTokenContractAddress = getTokenContractAddress(
-        selectedToken,
-        isTest,
+      const enabledCoin = enabledCoins.find(
+        e => e.id === selectedToken.id && e.network === selectedToken.network,
       );
 
-      if (!selectedTokenContractAddress) {
+      if (!enabledCoin) {
         yield put(setToken(enabledCoins[0]));
       }
     }

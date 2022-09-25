@@ -172,6 +172,7 @@ export const WalletsScreen = () => {
 
   useEffect(() => {
     if (tokens.length && !selectedCoin) {
+      console.log('------------------------------------');
       dispatch(setToken(tokens[0]));
     }
   }, [tokens, selectedCoin]);
