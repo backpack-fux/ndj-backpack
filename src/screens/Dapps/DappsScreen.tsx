@@ -11,6 +11,7 @@ import {
   ScrollView,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import {RNCamera} from 'react-native-camera';
@@ -26,6 +27,7 @@ export const DappsScreen = () => {
   const {sessions, onDisconnect, onPairing} = useWalletConnect();
   const [openScan, setOpenScan] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string>();
+  const {onOpenDeepLink} = useWalletConnect();
 
   const onBarCodeRead = async (uri: string) => {
     if (!uri.startsWith('wc:')) {
@@ -63,6 +65,30 @@ export const DappsScreen = () => {
     if (res) {
       setOpenScan(true);
     }
+  };
+
+  const onOpenPaste = () => {
+    Alert.prompt(
+      'Walletconnect',
+      'Please input walletconnect uri',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Connect',
+          onPress: (value: any) => {
+            if (value) {
+              onOpenDeepLink(value);
+            }
+          },
+        },
+      ],
+      'plain-text',
+      '',
+    );
   };
 
   return (
@@ -116,7 +142,6 @@ export const DappsScreen = () => {
         </ScrollView>
       </View>
       <View>
-        <Button text="New Connection" onPress={() => onOpenScan()} />
         <View style={[t.flexRow, t.mT2]}>
           <View style={[t.flex1]}>
             <Button
@@ -131,6 +156,14 @@ export const DappsScreen = () => {
               onPress={onDetails}
               disabled={!selectedTopic}
             />
+          </View>
+        </View>
+        <View style={[t.flexRow, t.mT2]}>
+          <View style={[t.flex1]}>
+            <Button text="Paste" onPress={() => onOpenPaste()} />
+          </View>
+          <View style={[t.flex1, t.mL2]}>
+            <Button text="Scan" onPress={() => onOpenScan()} />
           </View>
         </View>
       </View>
