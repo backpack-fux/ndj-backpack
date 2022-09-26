@@ -466,7 +466,9 @@ const WalletItem = ({
       <Card borderColor={isSelected ? colors.secondary : colors.primaryLight}>
         <TouchableOpacity onLongPress={onRenameWallet} style={[t.pT1, t.pB2]}>
           <Paragraph
-            text={`${wallet.name}${network === 'testnet' ? ' (Testnet)' : ''}`}
+            text={`${wallet.name}${
+              network === 'testnet' ? ' (Test Money)' : ''
+            }`}
             align="center"
             type="bold"
           />

@@ -90,7 +90,7 @@ export const SettingsScreen = () => {
           <View style={[t.flexRow]}>
             <View style={[t.flex1]}>
               <Button
-                text="Fake Money"
+                text="Test Money"
                 onPress={() => onChangeNetwork('testnet')}
                 disabled={isLoading}
                 color={network === 'testnet' ? colors.secondary : colors.gray}
