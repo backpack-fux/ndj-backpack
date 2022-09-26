@@ -12,6 +12,10 @@ const getNetwork = (state: RootState) => state.wallets.network;
 const getAppReady = (state: RootState) => state.wallets.ready;
 const getSpendWallet = (state: RootState) =>
   state.wallets.wallets.find(w => w.id === 'spend');
+const getInvestWallet = (state: RootState) =>
+  state.wallets.wallets.find(w => w.id === 'invest');
+const getSaveWallet = (state: RootState) =>
+  state.wallets.wallets.find(w => w.id === 'save');
 const getIsReady = (state: RootState) => state.wallets.ready;
 const getIsReadFieldGuide = (state: RootState) =>
   state.wallets.isReadFieldGuide;
@@ -33,6 +37,16 @@ export const selectedWalletSelector = createSelector(
 
 export const spendWalletSelector = createSelector(
   getSpendWallet,
+  wallet => wallet,
+);
+
+export const investWalletSelector = createSelector(
+  getInvestWallet,
+  wallet => wallet,
+);
+
+export const saveWalletSelector = createSelector(
+  getSaveWallet,
   wallet => wallet,
 );
 

@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {t} from 'react-native-tailwindcss';
@@ -28,6 +29,9 @@ import {
 import {StackParams, Wallet, WalletItem} from '@app/models';
 import {useDispatch, useSelector} from 'react-redux';
 import {
+  investWalletSelector,
+  isReadFieldGuideSelector,
+  saveWalletSelector,
   selectedWalletSelector,
   spendWalletSelector,
 } from '@app/store/wallets/walletsSelector';
@@ -388,10 +392,14 @@ export const FieldGuideScreen = () => {
   const carouselRef = useRef<any>();
   const [amount, setAmount] = useState(100);
   const [isImportingWallet, setIsImportingWallet] = useState(false);
-  const [isCreatingWallet, setIsCreateingWallet] = useState(false);
+  const [isCreatingSaveWallet, setIsCreatingSaveWallet] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const wallet = useSelector(selectedWalletSelector);
+  const isReadFieldGuide = useSelector(isReadFieldGuideSelector);
   const spendWallet = useSelector(spendWalletSelector);
+  const investWallet = useSelector(investWalletSelector);
+  const saveWallet = useSelector(saveWalletSelector);
+
   const allowGoBack = route?.params?.allowGoBack;
 
   const fields = useMemo(() => {
@@ -408,14 +416,7 @@ export const FieldGuideScreen = () => {
     ];
   }, [amount, wallet]);
 
-  const onImportWallet = () => {
-    setIsImportingWallet(true);
-    navigation.navigate('ImportWallet');
-  };
-
   const onCreateDefaultWallets = async () => {
-    setIsCreateingWallet(true);
-
     if (Platform.OS === 'android') {
       await createAllWallets();
     } else {
@@ -426,43 +427,71 @@ export const FieldGuideScreen = () => {
   };
 
   const createAllWallets = async () => {
-    const spendMnemonic = await generateMnemonicPhrase();
-    const spendWalletItems = await createNewWallet(spendMnemonic);
+    let newSpendWallet: Wallet;
+    let newSaveWallet: Wallet;
+    let newInvestWallet: Wallet;
 
-    const saveMnemonic = await generateMnemonicPhrase();
-    const saveWalletItems = await createNewWallet(saveMnemonic);
+    if (!spendWallet) {
+      try {
+        setIsCreatingSaveWallet(true);
+        const spendMnemonic = await generateMnemonicPhrase();
+        const spendWalletItems = await createNewWallet(spendMnemonic);
 
-    const investMnemonic = await generateMnemonicPhrase();
-    const investWalletItems = await createNewWallet(investMnemonic);
+        newSpendWallet = {
+          id: 'spend',
+          name: 'Spend',
+          mnemonic: spendMnemonic,
+          wallets: spendWalletItems,
+        };
+      } catch (err) {
+        throw err;
+      } finally {
+        setIsCreatingSaveWallet(false);
+      }
+    }
 
-    const newSpendWallet: Wallet = {
-      id: 'spend',
-      name: 'Spend',
-      mnemonic: spendMnemonic,
-      wallets: spendWalletItems,
-    };
+    if (!saveWallet) {
+      const saveMnemonic = await generateMnemonicPhrase();
+      const saveWalletItems = await createNewWallet(saveMnemonic);
 
-    const newSaveWallet: Wallet = {
-      id: 'save',
-      name: 'Save',
-      mnemonic: saveMnemonic,
-      wallets: saveWalletItems,
-    };
+      newSaveWallet = {
+        id: 'save',
+        name: 'Save',
+        mnemonic: saveMnemonic,
+        wallets: saveWalletItems,
+      };
+    }
 
-    const newInvestWallet: Wallet = {
-      id: 'invest',
-      name: 'Invest',
-      mnemonic: investMnemonic,
-      wallets: investWalletItems,
-    };
+    if (!investWallet) {
+      const investMnemonic = await generateMnemonicPhrase();
+      const investWalletItems = await createNewWallet(investMnemonic);
 
-    dispatch(addWallet(newSpendWallet));
-    dispatch(addWallet(newSaveWallet));
-    dispatch(addWallet(newInvestWallet));
+      newInvestWallet = {
+        id: 'invest',
+        name: 'Invest',
+        mnemonic: investMnemonic,
+        wallets: investWalletItems,
+      };
+    }
+
+    if (newSpendWallet) {
+      dispatch(addWallet(newSpendWallet));
+    }
+    if (newSaveWallet) {
+      dispatch(addWallet(newSaveWallet));
+    }
+    if (newInvestWallet) {
+      dispatch(addWallet(newInvestWallet));
+    }
   };
 
   const onCreateSpendWallet = async () => {
     try {
+      if (spendWallet) {
+        return;
+      }
+
+      setIsCreatingSaveWallet(true);
       const spendMnemonic = await generateMnemonicPhrase();
 
       const res = await createNewWallet(spendMnemonic);
@@ -479,11 +508,16 @@ export const FieldGuideScreen = () => {
         type: 'error',
         text1: err.message,
       });
+    } finally {
+      setIsCreatingSaveWallet(false);
     }
   };
 
   const onCreateSaveWallet = async () => {
     try {
+      if (saveWallet) {
+        return;
+      }
       const saveMnemonic = await generateMnemonicPhrase();
 
       const res = await createNewWallet(saveMnemonic);
@@ -505,6 +539,10 @@ export const FieldGuideScreen = () => {
 
   const onCreateInvestWallet = async () => {
     try {
+      if (investWallet) {
+        return;
+      }
+
       const investMnemonic = await generateMnemonicPhrase();
 
       const res = await createNewWallet(investMnemonic);
@@ -535,8 +573,8 @@ export const FieldGuideScreen = () => {
     setIsLoading(true);
     try {
       const res = await wyreService.reserve(
-        'ETH',
-        spendEthWallet.address,
+        'USDC',
+        `ethereum:${spendEthWallet.address}`,
         amount,
       );
       if (res.url) {
@@ -563,14 +601,17 @@ export const FieldGuideScreen = () => {
   };
 
   useEffect(() => {
-    if (isCreatingWallet && spendWallet) {
-      setIsCreateingWallet(false);
+    if (
+      !isCreatingSaveWallet &&
+      spendWallet &&
+      carouselRef.current.currentIndex === 2
+    ) {
       setTimeout(() => {
         ReactNativeHapticFeedback.trigger('impactHeavy');
         carouselRef?.current?.snapToItem(3);
       }, 500);
     }
-  }, [isCreatingWallet, spendWallet]);
+  }, [isCreatingSaveWallet, spendWallet]);
 
   useEffect(() => {
     if (isImportingWallet && wallet) {
@@ -582,8 +623,14 @@ export const FieldGuideScreen = () => {
     }
   }, [isImportingWallet, wallet]);
 
+  useEffect(() => {
+    if (!isReadFieldGuide) {
+      onCreateDefaultWallets();
+    }
+  }, [isReadFieldGuide]);
+
   return (
-    <BaseScreen noBottom isLoading={isCreatingWallet || isLoading}>
+    <BaseScreen noBottom isLoading={isLoading}>
       <View style={[t.flex1]}>
         <Carousel
           ref={carouselRef}
@@ -623,21 +670,8 @@ export const FieldGuideScreen = () => {
       <View style={[t.h16, t.justifyEnd, t.mB4]}>
         <View />
         {active === 2 && (
-          <View style={[t.flexRow]}>
-            <View style={[t.flex1]}>
-              <Button
-                text="Manual"
-                onPress={onImportWallet}
-                disabled={!!wallet}
-              />
-            </View>
-            <View style={[t.mL2, t.flex1]}>
-              <Button
-                text="3 Wallets"
-                onPress={onCreateDefaultWallets}
-                disabled={!!spendWallet}
-              />
-            </View>
+          <View style={[t.flexRow, t.itemsCenter, t.justifyCenter]}>
+            {isCreatingSaveWallet && <ActivityIndicator size="large" />}
           </View>
         )}
         {active === 3 && (

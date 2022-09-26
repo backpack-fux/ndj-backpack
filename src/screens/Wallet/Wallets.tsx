@@ -132,6 +132,7 @@ export const WalletsScreen = () => {
     selectedCard?.flip();
     setIsBack(true);
     setShowSeed(null);
+    scrollToEnd();
   };
 
   const onCancelBack = () => {
@@ -139,7 +140,7 @@ export const WalletsScreen = () => {
       return;
     }
 
-    scrollToEnd(200);
+    scrollToEnd(400);
     dispatch(
       updateSendTokenInfo({
         token: sendTokenInfo.token,
@@ -161,6 +162,7 @@ export const WalletsScreen = () => {
 
     ReactNativeHapticFeedback.trigger('impactHeavy');
     dispatch(selectWallet(w));
+    scrollToEnd();
   };
 
   const onOpenSelectScreen = () => {
@@ -173,7 +175,9 @@ export const WalletsScreen = () => {
 
   const scrollToEnd = async (timeout: number = 0) => {
     if (!listRef?.current) {
+      return;
     }
+
     await sleep(timeout);
     listRef.current.scrollToEnd({animating: true});
   };
@@ -206,6 +210,10 @@ export const WalletsScreen = () => {
       scrollToEnd();
     }
   }, [wallets, focused]);
+
+  useEffect(() => {
+    scrollToEnd(500);
+  }, []);
 
   return (
     <BaseScreen>
