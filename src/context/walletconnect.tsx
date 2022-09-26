@@ -19,6 +19,7 @@ import {COSMOS_SIGNING_METHODS} from '@app/constants/COSMOSData';
 import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
 import {getSdkError} from '@walletconnect/utils';
 import {getDeepLink} from '@app/utils';
+import {whiteListedDapps} from '@app/constants/whitelistedDapps';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
 
@@ -176,6 +177,14 @@ export const WalletConnectProvider = (props: {
       namespaces,
     });
     await res?.acknowledged();
+
+    const whiteList = whiteListedDapps.find(url =>
+      url.startsWith(proposal.params?.proposer?.metadata?.url),
+    );
+
+    if (res && whiteList) {
+      onToggleTransactionEnable(res?.topic as string, true);
+    }
 
     setSessions(client?.session.values || []);
   };
