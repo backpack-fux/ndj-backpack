@@ -5,9 +5,11 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {t} from 'react-native-tailwindcss';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Paragraph, PasscodeField} from '@app/components';
 import {useKeychain} from '@app/context/keychain';
@@ -22,7 +24,9 @@ export const VerifyPasscodeModal = ({
   onVerified,
   open,
   showVerify,
+  onCancel,
 }: {
+  onCancel?: () => void;
   onVerified: () => void;
   open: boolean;
   showVerify: boolean;
@@ -95,6 +99,13 @@ export const VerifyPasscodeModal = ({
         behavior="padding">
         {showVerify ? (
           <>
+            {!!onCancel && (
+              <TouchableOpacity
+                onPress={onCancel}
+                style={[t.absolute, {top: 20, right: 20}]}>
+                <Icon name="close" color={colors.white} size={30} />
+              </TouchableOpacity>
+            )}
             <Paragraph text="Enter your passcode" marginBottom={10} />
             <PasscodeField
               autoFocus

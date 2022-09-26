@@ -35,6 +35,7 @@ export interface KeychainContextProps {
   onSetAutoLockTime: (value: number) => void;
   verifyPasscode: (callback?: string) => void;
   setNewPasscord: () => void;
+  toggleIsActive: (value: boolean) => void;
 }
 
 export const KeychainContext = createContext<KeychainContextProps>(
@@ -60,6 +61,7 @@ export const KeychainProvider = (props: {
   const [verifyCallback, setVerifyCallback] = useState<string>();
   const [openVerify, setOpenVerify] = useState(false);
   const [showVerify, setShowVerify] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
   const toggleKeychain = useCallback(() => {
     if (enabled) {
@@ -84,6 +86,10 @@ export const KeychainProvider = (props: {
     },
     [biometryType],
   );
+
+  const toggleIsActive = (value: boolean) => {
+    setIsActive(value);
+  };
 
   const turnOffKeychain = () => {
     setEnabled(false);
@@ -142,6 +148,10 @@ export const KeychainProvider = (props: {
   };
 
   const onChangeAppStatus = (nextAppState: AppStateStatus) => {
+    if (!isActive) {
+      return;
+    }
+
     if (
       nextAppState.match(/background|inactive/) &&
       appState.current.match(/active/) &&
@@ -169,6 +179,10 @@ export const KeychainProvider = (props: {
   };
 
   const onBlurAppStatus = () => {
+    if (!isActive) {
+      return;
+    }
+
     if (!openVerify) {
       setOpenVerify(true);
       setShowVerify(false);
@@ -177,6 +191,10 @@ export const KeychainProvider = (props: {
   };
 
   const onFouseAppStatus = () => {
+    if (!isActive) {
+      return;
+    }
+
     if (openVerify) {
       if (enabled) {
         setShowVerify(true);
@@ -224,7 +242,7 @@ export const KeychainProvider = (props: {
     return () => {
       subscription && subscription?.remove();
     };
-  }, [appState, openVerify, showVerify, enabled]);
+  }, [appState, openVerify, showVerify, enabled, isActive]);
 
   useEffect(() => {
     const subscription =
@@ -234,7 +252,7 @@ export const KeychainProvider = (props: {
     return () => {
       subscription && subscription?.remove();
     };
-  }, [appState, openVerify, showVerify, openVerify]);
+  }, [appState, openVerify, showVerify, openVerify, isActive]);
 
   useEffect(() => {
     const subscription =
@@ -244,7 +262,7 @@ export const KeychainProvider = (props: {
     return () => {
       subscription && subscription?.remove();
     };
-  }, [appState, openVerify, showVerify, enabled, openVerify]);
+  }, [appState, openVerify, showVerify, enabled, openVerify, isActive]);
 
   return (
     <KeychainContext.Provider
@@ -260,6 +278,7 @@ export const KeychainProvider = (props: {
         authorizeDeviceBiometry,
         onSetAutoLockTime,
         verifyPasscode,
+        toggleIsActive,
       }}>
       <VerifyPasscodeModal
         open={openVerify}

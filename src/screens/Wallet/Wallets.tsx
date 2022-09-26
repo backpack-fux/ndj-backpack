@@ -174,7 +174,7 @@ export const WalletsScreen = () => {
   };
 
   const scrollToEnd = async (timeout: number = 0) => {
-    if (!listRef?.current) {
+    if (!listRef?.current?.scrollToEnd) {
       return;
     }
 
