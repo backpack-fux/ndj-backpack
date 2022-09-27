@@ -45,6 +45,15 @@ export const DappsScreen = () => {
     onPairing(uri);
   };
 
+  const onDisconnectSession = () => {
+    if (!selectedTopic) {
+      return
+    }
+
+    onDisconnect(selectedTopic);
+    setSelectedTopic(undefined);
+  }
+
   const onDetails = async () => {
     if (!selectedTopic) {
       return;
@@ -69,8 +78,8 @@ export const DappsScreen = () => {
 
   const onOpenPaste = () => {
     Alert.prompt(
-      'Walletconnect',
-      'Please input walletconnect uri',
+      'WalletConnect',
+      'Please input WalletConnect URI',
       [
         {
           text: 'Cancel',
@@ -146,7 +155,7 @@ export const DappsScreen = () => {
           <View style={[t.flex1]}>
             <Button
               text="Disconnect"
-              onPress={() => selectedTopic && onDisconnect(selectedTopic)}
+              onPress={() => selectedTopic && onDisconnectSession()}
               disabled={!selectedTopic}
             />
           </View>
