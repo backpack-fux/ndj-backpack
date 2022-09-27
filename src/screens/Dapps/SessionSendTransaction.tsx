@@ -19,8 +19,6 @@ import {useSelector} from 'react-redux';
 import {Card, DappInfo, RequestDetail} from './components';
 import {colors} from '@app/assets/colors.config';
 import Web3 from 'web3';
-import {VerifyPasscodeModal} from '@app/components/verifyPasscodeModal';
-import {useKeychain} from '@app/context/keychain';
 
 const borderBottomWidth = 0.3;
 
@@ -28,12 +26,10 @@ export const SessionSendTransaction = () => {
   const {client, enabledTransactionTopics} = useWalletConnect();
   const network = useSelector(networkSelector);
   const navigation = useNavigation();
-  const {enabled, toggleIsActive} = useKeychain();
   const route =
     useRoute<RouteProp<StackParams, 'SessionSendTransactionModal'>>();
   const wallets = useSelector(walletsSelector);
   const [isLoading, setIsLoading] = useState(false);
-  const [openVerify, setOpenVerify] = useState(false);
   const {event, session} = route.params;
 
   const onReject = () => {
@@ -45,7 +41,6 @@ export const SessionSendTransaction = () => {
       });
     }
 
-    toggleIsActive(true);
     navigation.goBack();
   };
 
@@ -54,30 +49,6 @@ export const SessionSendTransaction = () => {
       return;
     }
 
-    if (enabled) {
-      toggleIsActive(false);
-      setOpenVerify(true);
-      return;
-    }
-
-    Alert.alert(
-      'Confirm Transaction',
-      'Are you sure you want to confirm transaction?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Yes, Confirm',
-          onPress: () => onVerifiedPasscord(),
-        },
-      ],
-    );
-  };
-
-  const onVerifiedPasscord = async () => {
-    setOpenVerify(false);
     try {
       setIsLoading(true);
       const response = await approveEIP155Request(event, wallets, network);
@@ -93,13 +64,7 @@ export const SessionSendTransaction = () => {
       });
     } finally {
       setIsLoading(false);
-      toggleIsActive(true);
     }
-  };
-
-  const onCancelVerify = () => {
-    toggleIsActive(true);
-    setOpenVerify(false);
   };
 
   useEffect(() => {
@@ -217,12 +182,6 @@ export const SessionSendTransaction = () => {
           <Button text="Confirm" onPress={onConfirm} disabled={isLoading} />
         </View>
       </BaseScreen>
-      <VerifyPasscodeModal
-        open={openVerify}
-        showVerify={true}
-        onCancel={() => onCancelVerify()}
-        onVerified={() => onVerifiedPasscord()}
-      />
     </>
   );
 };
