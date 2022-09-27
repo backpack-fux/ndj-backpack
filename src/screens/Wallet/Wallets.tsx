@@ -52,6 +52,8 @@ import {
   transferTokenRequest,
   updateSendTokenInfo,
 } from '@app/store/coins/actions';
+import {useKeychain} from '@app/context/keychain';
+import {VerifyPasscodeModal} from '@app/components/verifyPasscodeModal';
 
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
@@ -59,6 +61,7 @@ const toggle = require('@app/assets/images/toggle.png');
 export const WalletsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigationProp<StackParams>>();
+  const {enabled, toggleIsActive} = useKeychain();
   const wallets = useSelector(walletsSelector);
   const selectedWallet = useSelector(selectedWalletSelector);
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
@@ -66,6 +69,7 @@ export const WalletsScreen = () => {
   const tokens = useSelector(accountCoinsSelector);
   const selectedCoin = useSelector(tokenSelector);
   const [backScreen, setBackScreen] = useState<'send' | 'receive'>('send');
+  const [openVerify, setOpenVerify] = useState(false);
   const focused = useIsFocused();
   const allTokens = useSelector(tokensSelector);
   const listRef = useRef<any>();
@@ -170,6 +174,38 @@ export const WalletsScreen = () => {
   };
 
   const onSendToken = () => {
+    if (enabled) {
+      toggleIsActive(false);
+      setOpenVerify(true);
+      return;
+    }
+
+    Alert.alert(
+      'Send a Token',
+      `Are you sure you want to send ${
+        sendTokenInfo.amount
+      } ${sendTokenInfo.token?.symbol?.toUpperCase()}?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes, Send',
+          onPress: () => sendToken(),
+        },
+      ],
+    );
+  };
+
+  const onCancelSendToken = () => {
+    toggleIsActive(true);
+    setOpenVerify(false);
+  };
+
+  const sendToken = () => {
+    toggleIsActive(true);
+    setOpenVerify(false);
     dispatch(transferTokenRequest());
   };
 
@@ -216,117 +252,125 @@ export const WalletsScreen = () => {
   }, []);
 
   return (
-    <BaseScreen>
-      <View style={[t.flex1]}>
-        <FlatList
-          data={walletList}
-          ref={listRef}
-          listKey="wallet"
-          keyExtractor={item => `${item.id}`}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          keyboardDismissMode="on-drag"
-          renderItem={({item}) => (
-            <WalletItem
-              wallet={item}
-              showSeed={showSeed === item.id}
-              onSelectWallet={onSelectWallet}
-              onShowSeed={v => setShowSeed(v)}
-              cardRef={ref => {
-                if (selectedWallet?.id === item.id) {
-                  selectedCard = ref;
-                }
-              }}
-              backScreen={backScreen}
-            />
-          )}
-          refreshControl={
-            <RefreshControl
-              refreshing={isLoading && focused}
-              onRefresh={() => !isLoading && dispatch(refreshWallets())}
-              tintColor={colors.white}
-              titleColor={colors.white}
-            />
-          }
-        />
-      </View>
-      {!isBack ? (
-        <>
-          <View style={[t.flexRow, t.mT2]}>
-            <View style={[t.flex1]}>
-              <Button text="Add Wallet" onPress={onAddWallet} />
-            </View>
-            <View style={[t.flex1, t.mL2]}>
-              <Button
-                text="Delete Wallet"
-                onPress={onDelete}
-                disabled={!selectedWallet}
-              />
-            </View>
-          </View>
-          <View style={[t.flexRow, t.mT2]}>
-            <View style={[t.flex1]}>
-              <Button
-                text="Receive"
-                onPress={onPressReceive}
-                disabled={!selectedWallet}
-              />
-            </View>
-            <View style={[t.flex1, t.mL2]}>
-              <Button
-                text="Send"
-                onPress={onPressSend}
-                disabled={!selectedWallet}
-              />
-            </View>
-          </View>
-        </>
-      ) : (
-        <>
-          {backScreen === 'send' && (
-            <View style={[t.mT2]}>
-              <Button
-                text="Change Token"
-                onPress={onOpenSelectScreen}
-                disabled={!selectedWallet || sendTokenInfo.isLoading}
-              />
-            </View>
-          )}
-          <View style={[t.flexRow, t.mT2]}>
-            <View style={[t.flex1]}>
-              <Button
-                text="Cancel"
-                onPress={onCancelBack}
-                disabled={
-                  backScreen === 'send'
-                    ? !selectedWallet || sendTokenInfo.isLoading
-                    : !selectedWallet
-                }
-              />
-            </View>
-            <View style={[t.flex1, t.mL2]}>
-              {backScreen === 'send' ? (
-                <Button
-                  text="Submit"
-                  onPress={onSendToken}
-                  disabled={
-                    !sendTokenInfo.transaction ||
-                    insufficientBalance ||
-                    sendTokenInfo.isLoading
+    <>
+      <BaseScreen>
+        <View style={[t.flex1]}>
+          <FlatList
+            data={walletList}
+            ref={listRef}
+            listKey="wallet"
+            keyExtractor={item => `${item.id}`}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            keyboardDismissMode="on-drag"
+            renderItem={({item}) => (
+              <WalletItem
+                wallet={item}
+                showSeed={showSeed === item.id}
+                onSelectWallet={onSelectWallet}
+                onShowSeed={v => setShowSeed(v)}
+                cardRef={ref => {
+                  if (selectedWallet?.id === item.id) {
+                    selectedCard = ref;
                   }
+                }}
+                backScreen={backScreen}
+              />
+            )}
+            refreshControl={
+              <RefreshControl
+                refreshing={isLoading && focused}
+                onRefresh={() => !isLoading && dispatch(refreshWallets())}
+                tintColor={colors.white}
+                titleColor={colors.white}
+              />
+            }
+          />
+        </View>
+        {!isBack ? (
+          <>
+            <View style={[t.flexRow, t.mT2]}>
+              <View style={[t.flex1]}>
+                <Button text="Add Wallet" onPress={onAddWallet} />
+              </View>
+              <View style={[t.flex1, t.mL2]}>
+                <Button
+                  text="Delete Wallet"
+                  onPress={onDelete}
+                  disabled={!selectedWallet}
                 />
-              ) : (
+              </View>
+            </View>
+            <View style={[t.flexRow, t.mT2]}>
+              <View style={[t.flex1]}>
+                <Button
+                  text="Receive"
+                  onPress={onPressReceive}
+                  disabled={!selectedWallet}
+                />
+              </View>
+              <View style={[t.flex1, t.mL2]}>
+                <Button
+                  text="Send"
+                  onPress={onPressSend}
+                  disabled={!selectedWallet}
+                />
+              </View>
+            </View>
+          </>
+        ) : (
+          <>
+            {backScreen === 'send' && (
+              <View style={[t.mT2]}>
                 <Button
                   text="Change Token"
                   onPress={onOpenSelectScreen}
-                  disabled={!selectedWallet}
+                  disabled={!selectedWallet || sendTokenInfo.isLoading}
                 />
-              )}
+              </View>
+            )}
+            <View style={[t.flexRow, t.mT2]}>
+              <View style={[t.flex1]}>
+                <Button
+                  text="Cancel"
+                  onPress={onCancelBack}
+                  disabled={
+                    backScreen === 'send'
+                      ? !selectedWallet || sendTokenInfo.isLoading
+                      : !selectedWallet
+                  }
+                />
+              </View>
+              <View style={[t.flex1, t.mL2]}>
+                {backScreen === 'send' ? (
+                  <Button
+                    text="Submit"
+                    onPress={onSendToken}
+                    disabled={
+                      !sendTokenInfo.transaction ||
+                      insufficientBalance ||
+                      sendTokenInfo.isLoading
+                    }
+                  />
+                ) : (
+                  <Button
+                    text="Change Token"
+                    onPress={onOpenSelectScreen}
+                    disabled={!selectedWallet}
+                  />
+                )}
+              </View>
             </View>
-          </View>
-        </>
-      )}
-    </BaseScreen>
+          </>
+        )}
+      </BaseScreen>
+      <VerifyPasscodeModal
+        open={openVerify}
+        showVerify={true}
+        onCancel={() => onCancelSendToken()}
+        onVerified={() => sendToken()}
+      />
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {useWalletConnect} from '@app/context/walletconnect';
+import Toast from 'react-native-toast-message';
 import {StackParams} from '@app/models';
 import {
   networkSelector,
@@ -84,17 +85,15 @@ export const SessionSendTransaction = () => {
         topic: event.topic,
         response,
       });
-    } catch (err) {
-      console.log(err);
-      const response = rejectEIP155Request(event);
-      client?.respond({
-        topic: event.topic,
-        response,
+      navigation.goBack();
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
       });
     } finally {
       setIsLoading(false);
       toggleIsActive(true);
-      navigation.goBack();
     }
   };
 

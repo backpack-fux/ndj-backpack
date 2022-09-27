@@ -4,6 +4,7 @@ import {
   Image,
   ImageBackground,
   KeyboardAvoidingView,
+  Modal,
   Platform,
   TouchableOpacity,
   View,
@@ -83,71 +84,73 @@ export const VerifyPasscodeModal = ({
   }
 
   return (
-    <ImageBackground
-      source={background}
-      style={[
-        t.flex1,
-        t.bgPurple500,
-        t.absolute,
-        t.hFull,
-        t.wFull,
-        t.top0,
-        t.z10,
-      ]}>
-      <KeyboardAvoidingView
-        style={[t.flex1, t.itemsCenter, t.justifyCenter]}
-        behavior="padding">
-        {showVerify ? (
-          <>
-            {!!onCancel && (
-              <TouchableOpacity
-                onPress={onCancel}
-                style={[t.absolute, {top: 20, right: 20}]}>
-                <Icon name="close" color={colors.white} size={30} />
-              </TouchableOpacity>
-            )}
-            <Paragraph text="Enter your passcode" marginBottom={10} />
-            <PasscodeField
-              autoFocus
-              value={value}
-              setValue={onChangeValue}
-              editable
-            />
-            <View style={[t.h8]}>
-              {isFailed && (
-                <Paragraph
-                  text="Incorrect passcode, please try again"
-                  marginTop={10}
-                  color={colors.secondary}
-                />
+    <Modal visible={open}>
+      <ImageBackground
+        source={background}
+        style={[
+          t.flex1,
+          t.bgPurple500,
+          t.absolute,
+          t.hFull,
+          t.wFull,
+          t.top0,
+          t.z10,
+        ]}>
+        <KeyboardAvoidingView
+          style={[t.flex1, t.itemsCenter, t.justifyCenter]}
+          behavior="padding">
+          {showVerify ? (
+            <>
+              {!!onCancel && (
+                <TouchableOpacity
+                  onPress={onCancel}
+                  style={[t.absolute, {top: 20, right: 20}]}>
+                  <Icon name="close" color={colors.white} size={30} />
+                </TouchableOpacity>
               )}
-            </View>
-          </>
-        ) : (
-          <>
-            <Paragraph
-              marginTop={30}
-              marginBottom={20}
-              text="Backpack"
-              font={Platform.OS === 'android' ? 'Nicomoji' : 'NicoMoji+'}
-              align="center"
-            />
-            <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
-              <Image
-                source={logo}
-                style={[
-                  {
-                    width: width * 0.7,
-                    height: width * 0.7,
-                    marginBottom: height * 0.05,
-                  },
-                ]}
-                resizeMode="contain"
+              <Paragraph text="Enter your passcode" marginBottom={10} />
+              <PasscodeField
+                autoFocus
+                value={value}
+                setValue={onChangeValue}
+                editable
               />
-            </View>
-          </>
-        )}
-      </KeyboardAvoidingView>
-    </ImageBackground>
+              <View style={[t.h8]}>
+                {isFailed && (
+                  <Paragraph
+                    text="Incorrect passcode, please try again"
+                    marginTop={10}
+                    color={colors.secondary}
+                  />
+                )}
+              </View>
+            </>
+          ) : (
+            <>
+              <Paragraph
+                marginTop={30}
+                marginBottom={20}
+                text="Backpack"
+                font={Platform.OS === 'android' ? 'Nicomoji' : 'NicoMoji+'}
+                align="center"
+              />
+              <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
+                <Image
+                  source={logo}
+                  style={[
+                    {
+                      width: width * 0.7,
+                      height: width * 0.7,
+                      marginBottom: height * 0.05,
+                    },
+                  ]}
+                  resizeMode="contain"
+                />
+              </View>
+            </>
+          )}
+        </KeyboardAvoidingView>
+      </ImageBackground>
+    </Modal>
   );
 };
