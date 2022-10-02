@@ -191,7 +191,10 @@ export const WalletsScreen = () => {
 
   const onShowSeed = (walletId: string | null) => {
     setShowSeed(walletId);
-    if (showSeed === selectedWallet?.id || walletId === selectedWallet?.id) {
+    if (
+      (showSeed === selectedWallet?.id && walletId === null) ||
+      walletId === selectedWallet?.id
+    ) {
       setIsChangedSelectedWallet(true);
     } else {
       setIsChangedSelectedWallet(false);
