@@ -379,7 +379,7 @@ function* getTransferTransaction() {
         sendTokenInfo.token.network,
         sendTokenInfo.toAccount,
         Number(sendTokenInfo.amount),
-        tokenAddress,
+        {...sendTokenInfo.token, contractAddress: tokenAddress},
         sendTokenInfo.isSendMax,
       );
 

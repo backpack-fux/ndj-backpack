@@ -8,7 +8,7 @@ import {NetworkName} from '@app/constants';
 import WalletService from './walletService';
 import BigNumber from 'bignumber.js';
 import {TxStatus} from '@zilliqa-js/account';
-import {ENSInfo, ITransaction} from '@app/models';
+import {ENSInfo, ITransaction, Token} from '@app/models';
 import {AxiosInstance} from '@app/apis/axios';
 
 const MINIMUM_GAS_PRICE = '50';
@@ -105,16 +105,16 @@ export default class ZilliqaService extends WalletService {
     privateKey: string,
     toAccount: string,
     amount: number,
-    address?: string,
+    token: Token,
     sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}> {
     await this.initWallet(privateKey);
 
-    if (!address) {
+    if (!token.contractAddress) {
       return this.transferZil(toAccount, amount, sendMax);
     }
 
-    return this.transferZrc2(toAccount, amount, address, 18, sendMax);
+    return this.transferZrc2(toAccount, amount, token, 18);
   }
 
   async transferZil(toAccount: string, amount: number, sendMax?: boolean) {
@@ -163,21 +163,19 @@ export default class ZilliqaService extends WalletService {
 
     return {
       transaction,
-      fee: gasPrice,
+      fee,
     };
   }
 
   async transferZrc2(
     toAccount: string,
     amount: number,
-    contractAddress: string,
+    token: Token,
     decimals: number = 18,
-    sendMax?: boolean,
   ) {
     const {gasPrice, gasLimit} = await this.getZRC2MinimumGasPrice();
     const fee = gasLimit * gasPrice;
-    const sendAmount = sendMax ? NP.strip(NP.minus(amount, fee)) : amount;
-    const tokenAmount = this.parseUnits(sendAmount.toString(), +decimals);
+    const tokenAmount = this.parseUnits(amount.toString(), +decimals);
     try {
       const data = {
         _tag: 'Transfer',
@@ -195,12 +193,33 @@ export default class ZilliqaService extends WalletService {
         ],
       };
 
+      const balance = await this.getBalance(
+        this.zilliqa.wallet.defaultAccount?.address as string,
+        token.contractAddress,
+      );
+
+      const nativeTokenBalance = await this.getBalance(
+        this.zilliqa.wallet.defaultAccount?.address as string,
+      );
+
+      if (amount > balance) {
+        throw new Error(
+          `Insufficient funds. You need at least ${amount} ${token.symbol.toUpperCase()} to make this transaction. You have ${balance} ${token.symbol.toUpperCase()} on your account.`,
+        );
+      }
+
+      if (fee > nativeTokenBalance) {
+        throw new Error(
+          `Insufficient funds for fee. You need at least ${fee} ZIL to make this transaction. You have ${nativeTokenBalance} ZIL on your account.`,
+        );
+      }
+
       const txPayload = {
         version: this.zilApi,
         amount: '0',
         gasPrice: this.toQaFromZil(gasPrice).toString(), // Minimum gasPrice varies. Check the `GetMinimumGasPrice` on the blockchain
         gasLimit: gasLimit.toString(),
-        toAddr: contractAddress,
+        toAddr: token.contractAddress,
         data: JSON.stringify(data),
         toDs: false, //txParams.toDs || false,
       };
@@ -209,7 +228,7 @@ export default class ZilliqaService extends WalletService {
 
       return {
         transaction,
-        fee: gasPrice,
+        fee,
       };
     } catch (e) {
       console.log('Error at transferZrc2Token:', e);
@@ -272,14 +291,14 @@ export default class ZilliqaService extends WalletService {
   }
 
   async getZRC2MinimumGasPrice() {
-    const gasprice = await this.zilliqa.blockchain.getMinimumGasPrice();
+    const gasPrice = await this.zilliqa.blockchain.getMinimumGasPrice();
     return {
-      gasPrice: Number(this.fromQa(gasprice.result)),
+      gasPrice: Number(this.fromQa(gasPrice.result)),
       gasLimit: 9000,
       gasPriceRates: {
-        average: Number(this.fromQa(gasprice.result)),
-        fast: Number(this.fromQa(gasprice.result)) * 2,
-        fantastic: Number(this.fromQa(gasprice.result)) * 3,
+        average: Number(this.fromQa(gasPrice.result)),
+        fast: Number(this.fromQa(gasPrice.result)) * 2,
+        fantastic: Number(this.fromQa(gasPrice.result)) * 3,
       },
     };
   }

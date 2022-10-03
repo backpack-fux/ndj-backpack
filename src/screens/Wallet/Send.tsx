@@ -167,6 +167,8 @@ export const Send = () => {
     onUpdateSendTokenInfo();
   }, [onUpdateSendTokenInfo]);
 
+  console.log('sendTokenInfo.fee', sendTokenInfo.fee);
+
   return (
     <View>
       <View style={[t.pT1, t.pB4]}>
@@ -247,12 +249,16 @@ export const Send = () => {
           <View style={[t.mT4]}>
             <TouchableOpacity onPress={onPressMax}>
               <Paragraph
-                text={`Max ${token?.symbol.toUpperCase()}`}
+                text={`Fee ${token?.symbol.toUpperCase()}`}
                 size={13}
                 align="center"
               />
               <Paragraph
-                text={normalizeNumber(token?.balance).toString()}
+                text={
+                  sendTokenInfo?.fee === undefined
+                    ? '-'
+                    : normalizeNumber(sendTokenInfo?.fee).toString()
+                }
                 numberOfLines={1}
                 align="center"
               />

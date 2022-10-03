@@ -4,7 +4,7 @@ import {BncClient} from '@binance-chain/javascript-sdk';
 import NP from 'number-precision';
 
 import WalletService from './walletService';
-import {ENSInfo, ITransaction} from '@app/models';
+import {ENSInfo, ITransaction, Token} from '@app/models';
 import moment from 'moment-timezone';
 
 export default class BinanceService extends WalletService {
@@ -73,7 +73,7 @@ export default class BinanceService extends WalletService {
     return this.balance(data);
   }
 
-  async balance(data: {
+  balance(data: {
     free: string;
     frozen: string;
     locked: string;
@@ -90,7 +90,7 @@ export default class BinanceService extends WalletService {
     privateKey: string,
     toAccount: string,
     amount: number,
-    asset?: string,
+    token: Token,
     sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}> {
     this.client.setPrivateKey(privateKey);
@@ -102,16 +102,47 @@ export default class BinanceService extends WalletService {
 
     const fee = 0.000075;
 
-    let sendAmount = sendMax ? NP.strip(NP.minus(amount, fee)) : amount;
+    let sendAmount =
+      sendMax && token.contractAddress
+        ? NP.strip(NP.minus(amount, fee))
+        : amount;
+
     const res = await this.httpClient.get(`/account/${fromAddress}/sequence`);
     const sequence = res.data.sequence || 0;
+
+    const balances = await this.client.getBalance(toAccount);
+    const symbol = token.contractAddress || 'BNB';
+    const nativeToken = balances.find((item: any) => item.symbol === 'BNB');
+    const nativeTokenBalance = this.balance(nativeToken);
+    const sendToken = balances.find((item: any) => item.symbol === symbol);
+    const sendTokenBalance = this.balance(sendToken);
+
+    if (!token.contractAddress) {
+      const totalPrice = NP.strip(NP.plus(amount, fee));
+
+      if (totalPrice > nativeTokenBalance) {
+        throw new Error('Insufficient BNB balance');
+      }
+    } else {
+      if (sendAmount > sendTokenBalance) {
+        throw new Error(
+          `Insufficient funds. You need at least ${sendAmount} ${token.symbol.toUpperCase()} to make this transaction. You have ${sendTokenBalance} ${token.symbol.toUpperCase()} on your account.`,
+        );
+      }
+
+      if (fee > nativeTokenBalance) {
+        throw new Error(
+          `Insufficient funds for fee. You need at least ${fee} BNB to make this transaction. You have ${nativeTokenBalance} BNB on your account.`,
+        );
+      }
+    }
 
     const transaction = {
       fromAddress: fromAddress,
       toAddress: toAccount,
       amount: sendAmount,
       sequence,
-      asset: asset || 'BNB',
+      asset: token.contractAddress || 'BNB',
       memo: '',
     };
 

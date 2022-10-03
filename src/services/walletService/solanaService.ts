@@ -15,7 +15,7 @@ import nacl from 'tweetnacl';
 import * as ed25519 from 'ed25519-hd-key';
 import {Token, TOKEN_PROGRAM_ID} from '@solana/spl-token';
 import * as bip39 from 'bip39';
-import {ENSInfo, ITransaction} from '@app/models';
+import {ENSInfo, ITransaction, Token as BToken} from '@app/models';
 import {AxiosInstance} from '@app/apis/axios';
 import SolanaWallet, {SolanaSignTransaction} from 'solana-wallet';
 import NP from 'number-precision';
@@ -97,17 +97,11 @@ export default class SolanaService extends WalletService {
     privateKey: string,
     toAccount: string,
     amount: number,
-    address?: string,
+    token: BToken,
     sendMax?: boolean,
   ) {
-    if (address) {
-      return this.transferCustomToken(
-        privateKey,
-        toAccount,
-        amount,
-        address,
-        sendMax,
-      );
+    if (token.contractAddress) {
+      return this.transferCustomToken(privateKey, toAccount, amount, token);
     }
 
     const key = privateKey?.split(',').map(v => Number(v)) || [];
@@ -136,6 +130,15 @@ export default class SolanaService extends WalletService {
       sendAmount = NP.strip(NP.minus(sendAmount, fee));
     }
 
+    const total = NP.strip(NP.plus(sendAmount, fee));
+    const balance = await this.getBalance(wallet.publicKey.toString());
+
+    if (total > balance) {
+      throw new Error(
+        `Insufficient funds for fee. You need at least ${total} ${token.symbol.toUpperCase()} to make this transaction. You have ${balance} ${token.symbol.toUpperCase()} on your account.`,
+      );
+    }
+
     transaction.add(
       SystemProgram.transfer({
         fromPubkey: wallet.publicKey,
@@ -154,12 +157,11 @@ export default class SolanaService extends WalletService {
     privateKey: string,
     toAccount: string,
     amount: number,
-    address: string,
-    sendMax?: boolean,
+    token: BToken,
   ) {
     const key = privateKey?.split(',').map(v => Number(v)) || [];
     const wallet = Keypair.fromSecretKey(new Uint8Array(key));
-    const tokenMint = new PublicKey(address);
+    const tokenMint = new PublicKey(token.contractAddress);
     const myToken = new Token(
       this.connection,
       tokenMint,
@@ -183,10 +185,26 @@ export default class SolanaService extends WalletService {
     const fee =
       blockHashInfo.value.feeCalculator.lamportsPerSignature / LAMPORTS_PER_SOL;
 
-    let sendAmount = amount;
+    const balance = await this.getBalance(
+      wallet.publicKey.toString(),
+      token.contractAddress,
+    );
 
-    if (sendMax) {
-      sendAmount = NP.strip(NP.minus(sendAmount, fee));
+    if (amount > balance) {
+      throw new Error(
+        `Insufficient funds for fee. You need at least ${amount} ${token.symbol.toUpperCase()} to make this transaction. You have ${balance} ${token.symbol.toUpperCase()} on your account.`,
+      );
+    }
+
+    const nativeBalance = await this.getBalance(
+      wallet.publicKey.toString(),
+      token.contractAddress,
+    );
+
+    if (fee > nativeBalance) {
+      throw new Error(
+        `Insufficient funds for fee. You need at least ${fee} SOL to make this transaction. You have ${nativeBalance} SOL on your account.`,
+      );
     }
 
     transaction.add(
@@ -196,15 +214,13 @@ export default class SolanaService extends WalletService {
         toTokenAccount.address,
         wallet.publicKey,
         [],
-        sendAmount * Math.pow(10, 6),
+        amount * LAMPORTS_PER_SOL,
       ),
     );
 
     return {
       transaction,
-      fee:
-        blockHashInfo.value.feeCalculator.lamportsPerSignature /
-        LAMPORTS_PER_SOL,
+      fee,
     };
   }
 

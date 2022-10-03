@@ -1,5 +1,5 @@
 import {NetworkName} from '@app/constants';
-import {ENSInfo, ITransaction, WalletItem} from '@app/models';
+import {ENSInfo, ITransaction, Token, WalletItem} from '@app/models';
 const bip39 = require('bip39');
 import * as moment from 'moment-timezone';
 
@@ -121,7 +121,7 @@ abstract class WalletService {
     network: NetworkName,
     toAccount: string,
     amount: number,
-    address?: string,
+    token: Token,
     sendMax?: boolean,
   ) {
     const service = this.getServiceByNetwork(network);
@@ -130,7 +130,7 @@ abstract class WalletService {
       throw new Error(`Can't get service for ${network}`);
     }
 
-    return service.transfer(privateKey, toAccount, amount, address, sendMax);
+    return service.transfer(privateKey, toAccount, amount, token, sendMax);
   }
 
   static sendTransaction(privateKey: string, network: NetworkName, tx: any) {
@@ -193,7 +193,7 @@ abstract class WalletService {
     privateKey: string,
     toAccount: string,
     amount: number,
-    address?: string,
+    token: Token,
     sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}>;
 

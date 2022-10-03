@@ -1,5 +1,5 @@
 import {networkList, networkName, NetworkName} from '@app/constants';
-import {BaseCoin, News, Wallet} from '@app/models';
+import {BaseCoin, News, Token, Wallet} from '@app/models';
 import numeral from 'numeral';
 import {Alert, Dimensions, Platform} from 'react-native';
 import {currencies} from '@app/constants/currencies';
@@ -16,6 +16,7 @@ import Toast from 'react-native-toast-message';
 
 //@ts-ignore
 import bip39 from 'react-native-bip39';
+import {DEFAULT_COINS} from '@app/constants/coins';
 
 export function readableNumString(value: number) {
   const log = Math.log10(value);
@@ -345,4 +346,12 @@ export const getDeepLink = (url: string) => {
   const urlParam = url.replace(urlWithUri, '');
 
   return urlParam;
+};
+
+export const getNativeToken = (token: Token) => {
+  const nativeToken = DEFAULT_COINS.find(
+    coin => coin.contractAddress === token.network,
+  );
+
+  return nativeToken;
 };
