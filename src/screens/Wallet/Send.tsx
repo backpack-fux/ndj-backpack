@@ -28,7 +28,11 @@ import {
 } from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
 import {useDebounce} from '@app/uses';
-import {checkCameraPermission, normalizeNumber} from '@app/utils';
+import {
+  checkCameraPermission,
+  getNativeToken,
+  normalizeNumber,
+} from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 
 export const Send = () => {
@@ -44,6 +48,7 @@ export const Send = () => {
   const token = ((selectedWallet && allTokens[selectedWallet.id]) || []).find(
     a => a.contractAddress === selectedCoin?.contractAddress,
   );
+  const nativeToken = token && getNativeToken(token);
   const [openScan, setOpenScan] = useState(false);
   const [focusSendAddress, setFocusSendAddress] = useState(false);
 
@@ -167,8 +172,6 @@ export const Send = () => {
     onUpdateSendTokenInfo();
   }, [onUpdateSendTokenInfo]);
 
-  console.log('sendTokenInfo.fee', sendTokenInfo.fee);
-
   return (
     <View>
       <View style={[t.pT1, t.pB4]}>
@@ -217,39 +220,49 @@ export const Send = () => {
         </View>
         <View style={[t.flex1, t.mL4, t.itemsCenter, t.wFull]}>
           <Paragraph text="Send Amount" align="center" marginBottom={10} />
-          <View
-            style={[
-              t.wFull,
-              t.bgGray300,
-              t.mL4,
-              t.mR4,
-              t.roundedLg,
-              t.itemsCenter,
-              t.justifyCenter,
-              {height: 30},
-            ]}>
-            <TextInput
-              value={sendTokenInfo.amount}
-              onChangeText={value => onUpdateAmount(value)}
-              placeholder={token?.symbol.toUpperCase()}
-              keyboardType="decimal-pad"
-              editable={!sendTokenInfo.isLoading}
-              placeholderTextColor={colors.textGray}
+          <View style={[t.flexRow, t.itemsCenter, t.justifyCenter]}>
+            <View
               style={[
                 t.flex1,
-                t.p0,
-                t.m0,
-                t.textWhite,
-                t.wFull,
-                t.textCenter,
-                {fontSize: 16},
-              ]}
-            />
-          </View>
-          <View style={[t.mT4]}>
+                t.bgGray300,
+                t.mL4,
+                t.mR4,
+                t.pL2,
+                t.pR2,
+                t.roundedLg,
+                t.itemsCenter,
+                t.justifyCenter,
+                {height: 30},
+              ]}>
+              <TextInput
+                value={sendTokenInfo.amount}
+                onChangeText={value => onUpdateAmount(value)}
+                placeholder={token?.symbol.toUpperCase()}
+                keyboardType="decimal-pad"
+                editable={!sendTokenInfo.isLoading}
+                placeholderTextColor={colors.textGray}
+                style={[
+                  t.flex1,
+                  t.p0,
+                  t.m0,
+                  t.textWhite,
+                  t.wFull,
+                  t.textCenter,
+                  {fontSize: 16},
+                ]}
+              />
+            </View>
             <TouchableOpacity onPress={onPressMax}>
+              <Paragraph text="Max" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={[t.mT4]}>
+            <View>
               <Paragraph
-                text={`Fee ${token?.symbol.toUpperCase()}`}
+                text={`Fee ${
+                  nativeToken ? nativeToken?.symbol.toUpperCase() : ''
+                }`}
                 size={13}
                 align="center"
               />
@@ -262,7 +275,7 @@ export const Send = () => {
                 numberOfLines={1}
                 align="center"
               />
-            </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>

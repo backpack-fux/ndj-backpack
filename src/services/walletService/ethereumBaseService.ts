@@ -170,17 +170,19 @@ export default class EthereumBaseService extends WalletService {
     const estimatedGas = await transferFunc.estimateGas({
       from: account.address,
     });
-
+    console.log(gasPrice);
+    console.log(estimatedGas);
     const estimatedFee = this.web3.utils
       .toBN(gasPrice)
       .mul(this.web3.utils.toBN(estimatedGas))
-      .mul(this.web3.utils.toBN(2));
-
+      .mul(this.web3.utils.toBN(2))
+      .toString();
+    console.log('estimatedFee', estimatedFee);
     if (this.web3.utils.toBN(qty).gt(this.web3.utils.toBN(tokenBalance))) {
       throw new Error(
-        `Insufficient funds. You need at least ${this.web3.utils.fromWei(
-          new BigNumber(qty).div(Math.pow(10, decimals)).toString(),
-        )} ${token.symbol.toUpperCase()} to make this transaction. You have ${new BigNumber(
+        `Insufficient funds. You need at least ${new BigNumber(qty)
+          .div(Math.pow(10, decimals))
+          .toString()} ${token.symbol.toUpperCase()} to make this transaction. You have ${new BigNumber(
           tokenBalance,
         )
           .div(Math.pow(10, decimals))
@@ -190,10 +192,18 @@ export default class EthereumBaseService extends WalletService {
 
     const nativeTokenBalance = await this.web3.eth.getBalance(account.address);
     const nativeToken = getNativeToken(token);
-    if (estimatedFee.gt(this.web3.utils.toBN(nativeTokenBalance))) {
+
+    console.log(nativeTokenBalance);
+
+    if (
+      this.web3.utils
+        .toBN(estimatedFee)
+        .gt(this.web3.utils.toBN(nativeTokenBalance))
+    ) {
+      console.log('----------------------------');
       throw new Error(
         `Insufficient funds for fee. You need at least ${this.web3.utils.fromWei(
-          this.web3.utils.fromWei(estimatedFee),
+          estimatedFee,
         )} ${nativeToken?.symbol.toUpperCase()} to make this transaction. You have ${this.web3.utils.fromWei(
           nativeTokenBalance,
         )} ${nativeToken?.symbol.toUpperCase()} on your account.`,

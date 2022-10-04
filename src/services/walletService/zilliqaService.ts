@@ -208,9 +208,11 @@ export default class ZilliqaService extends WalletService {
         );
       }
 
-      if (fee > nativeTokenBalance) {
+      if (+this.fromQa(fee) > nativeTokenBalance) {
         throw new Error(
-          `Insufficient funds for fee. You need at least ${fee} ZIL to make this transaction. You have ${nativeTokenBalance} ZIL on your account.`,
+          `Insufficient funds for fee. You need at least ${this.fromQa(
+            fee,
+          )} ZIL to make this transaction. You have ${nativeTokenBalance} ZIL on your account.`,
         );
       }
 

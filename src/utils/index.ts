@@ -80,7 +80,7 @@ export const normalizeNumber = (
     return 0;
   }
 
-  return value.toFixed(d + 2);
+  return Number(value.toFixed(d + 2));
 };
 
 export const formatNumber = (value: Number, format = '0,0.00') => {

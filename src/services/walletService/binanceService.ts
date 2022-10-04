@@ -79,6 +79,9 @@ export default class BinanceService extends WalletService {
     locked: string;
     symbol: string;
   }) {
+    if (!data) {
+      return 0;
+    }
     return (
       Number(data.free || 0) +
       Number(data.frozen || 0) +
@@ -103,14 +106,14 @@ export default class BinanceService extends WalletService {
     const fee = 0.000075;
 
     let sendAmount =
-      sendMax && token.contractAddress
+      sendMax && !token.contractAddress
         ? NP.strip(NP.minus(amount, fee))
         : amount;
 
     const res = await this.httpClient.get(`/account/${fromAddress}/sequence`);
     const sequence = res.data.sequence || 0;
 
-    const balances = await this.client.getBalance(toAccount);
+    const balances = await this.client.getBalance(fromAddress);
     const symbol = token.contractAddress || 'BNB';
     const nativeToken = balances.find((item: any) => item.symbol === 'BNB');
     const nativeTokenBalance = this.balance(nativeToken);
@@ -118,10 +121,12 @@ export default class BinanceService extends WalletService {
     const sendTokenBalance = this.balance(sendToken);
 
     if (!token.contractAddress) {
-      const totalPrice = NP.strip(NP.plus(amount, fee));
+      const totalPrice = NP.strip(NP.plus(sendAmount, fee));
 
       if (totalPrice > nativeTokenBalance) {
-        throw new Error('Insufficient BNB balance');
+        throw new Error(
+          `Insufficient funds for fee. You need at least ${totalPrice} BNB to make this transaction. You have ${nativeTokenBalance} BNB on your account.`,
+        );
       }
     } else {
       if (sendAmount > sendTokenBalance) {

@@ -169,6 +169,8 @@ export default class SolanaService extends WalletService {
       wallet,
     );
 
+    const mintInfo = await myToken.getMintInfo();
+
     const fromTokenAccount = await myToken.getOrCreateAssociatedAccountInfo(
       wallet.publicKey,
     );
@@ -192,14 +194,11 @@ export default class SolanaService extends WalletService {
 
     if (amount > balance) {
       throw new Error(
-        `Insufficient funds for fee. You need at least ${amount} ${token.symbol.toUpperCase()} to make this transaction. You have ${balance} ${token.symbol.toUpperCase()} on your account.`,
+        `Insufficient funds. You need at least ${amount} ${token.symbol.toUpperCase()} to make this transaction. You have ${balance} ${token.symbol.toUpperCase()} on your account.`,
       );
     }
 
-    const nativeBalance = await this.getBalance(
-      wallet.publicKey.toString(),
-      token.contractAddress,
-    );
+    const nativeBalance = await this.getBalance(wallet.publicKey.toString());
 
     if (fee > nativeBalance) {
       throw new Error(
@@ -214,7 +213,7 @@ export default class SolanaService extends WalletService {
         toTokenAccount.address,
         wallet.publicKey,
         [],
-        amount * LAMPORTS_PER_SOL,
+        amount * Math.pow(10, mintInfo.decimals),
       ),
     );
 

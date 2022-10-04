@@ -5,7 +5,6 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import * as _ from 'lodash';
 import {BaseScreen, Button} from '@app/components';
 import {useDispatch, useSelector} from 'react-redux';
-import Toast from 'react-native-toast-message';
 import {
   selectedWalletSelector,
   walletsSelector,
@@ -22,7 +21,6 @@ import {
   isLoadingTokensSelector,
   sendTokenInfoSelector,
   tokenSelector,
-  tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {deleteWallet, refreshWallets} from '@app/store/wallets/actions';
 
@@ -50,18 +48,11 @@ export const WalletsScreen = () => {
   const [backScreen, setBackScreen] = useState<'send' | 'receive'>('send');
   const [openVerify, setOpenVerify] = useState(false);
   const focused = useIsFocused();
-  const allTokens = useSelector(tokensSelector);
   const listRef = useRef<any>();
-  const token = ((selectedWallet && allTokens[selectedWallet.id]) || []).find(
-    a => a.contractAddress === selectedCoin?.contractAddress,
-  );
 
   const [isBack, setIsBack] = useState(false);
   const [showSeed, setShowSeed] = useState<string | null>(null);
   const [isChangedSelectedWallet, setIsChangedSelectedWallet] = useState(false);
-
-  const insufficientBalance =
-    Number(sendTokenInfo.amount || 0) > (token?.balance || 0);
 
   let selectedCard: any;
 
@@ -217,23 +208,6 @@ export const WalletsScreen = () => {
   }, [tokens, selectedCoin]);
 
   useEffect(() => {
-    if (
-      insufficientBalance &&
-      isBack &&
-      backScreen === 'send' &&
-      sendTokenInfo.transaction &&
-      !sendTokenInfo.isLoading
-    ) {
-      Toast.show({
-        type: 'error',
-        text1: `Insufficient ${
-          sendTokenInfo?.token?.name
-        }(${sendTokenInfo?.token?.symbol.toUpperCase()}) balance`,
-      });
-    }
-  }, [insufficientBalance, isBack, backScreen, sendTokenInfo]);
-
-  useEffect(() => {
     if (focused) {
       scrollToEnd();
     }
@@ -344,9 +318,7 @@ export const WalletsScreen = () => {
                     text="Submit"
                     onPress={onSendToken}
                     disabled={
-                      !sendTokenInfo.transaction ||
-                      insufficientBalance ||
-                      sendTokenInfo.isLoading
+                      !sendTokenInfo.transaction || sendTokenInfo.isLoading
                     }
                   />
                 ) : (
