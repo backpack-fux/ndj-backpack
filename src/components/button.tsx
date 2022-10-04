@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import {TouchableOpacity} from 'react-native';
+import {ActivityIndicator, TouchableOpacity} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 
 import {colors} from '@app/assets/colors.config';
@@ -12,9 +12,11 @@ export const Button = ({
   text,
   color,
   onPress = () => {},
+  loading,
 }: {
   text: string;
   disabled?: boolean;
+  loading?: boolean;
   color?: string;
   onPress?: () => void;
 }) => {
@@ -25,19 +27,33 @@ export const Button = ({
 
   return (
     <TouchableOpacity
-      disabled={disabled}
+      disabled={disabled || loading}
       onPress={onPressButton}
       style={[
         {
-          backgroundColor: disabled ? colors.transparent : color || colors.gray,
+          backgroundColor:
+            disabled || loading ? colors.transparent : color || colors.gray,
         },
-        disabled && {borderWidth, borderColor: color || colors.gray},
+        (disabled || loading) && {
+          borderWidth,
+          borderColor: color || colors.gray,
+        },
         t.h10,
+        t.flexRow,
         t.alignCenter,
+        t.itemsCenter,
         t.justifyCenter,
         t.roundedLg,
       ]}>
-      <Paragraph text={text} align="center" color={colors.white} size={16} />
+      <Paragraph
+        text={text}
+        align="center"
+        color={loading || disabled ? colors.textGray : colors.white}
+        size={16}
+      />
+      {loading && (
+        <ActivityIndicator style={[t.mL1, t.mT1]} color={colors.white} />
+      )}
     </TouchableOpacity>
   );
 };

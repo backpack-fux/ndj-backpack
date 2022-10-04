@@ -92,14 +92,16 @@ export const SettingsScreen = () => {
               <Button
                 text="Test Money"
                 onPress={() => onChangeNetwork('testnet')}
-                disabled={isLoading}
+                disabled={network !== 'testnet' && isLoading}
+                loading={network === 'testnet' && isLoading}
                 color={network === 'testnet' ? colors.secondary : colors.gray}
               />
             </View>
             <View style={[t.flex1, t.mL2]}>
               <Button
                 text="Real Money"
-                disabled={isLoading}
+                disabled={network !== 'mainnet' && isLoading}
+                loading={network === 'mainnet' && isLoading}
                 onPress={() => onChangeNetwork('mainnet')}
                 color={network === 'mainnet' ? colors.secondary : colors.gray}
               />
