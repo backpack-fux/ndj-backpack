@@ -68,7 +68,7 @@ export const TokensScreen = () => {
   return (
     <BaseScreen
       noPadding
-      title="Add a Custom Token"
+      title="Add Custom Token"
       noBottom
       showToast
       onBack={() => navigation.goBack()}>

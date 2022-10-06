@@ -196,14 +196,14 @@ export const AssetsScreen = () => {
       <View>
         <View style={[t.mT2]}>
           <Button
-            text="Buy a Token"
+            text="Buy"
             disabled={!wyreToken || loadingWyre}
             onPress={() => onBuyToken()}
           />
         </View>
         <View style={[t.flexRow, t.mT2]}>
           <View style={[t.flex1]}>
-            <Button text="Add a Token" onPress={onOpenAddToken} />
+            <Button text="Add Token" onPress={onOpenAddToken} />
           </View>
           <View style={[t.flex1, t.mL2]}>
             <Button
