@@ -8,6 +8,7 @@ import {
 } from '@app/models';
 import moment from 'moment-timezone';
 import {CoinsReducerType} from '../coinsReducer';
+import * as _ from 'lodash';
 
 export function setTokenReducer(
   state: CoinsReducerType,
@@ -217,5 +218,16 @@ export function getBaseTokenSuccessReducer(
     baseCoinExpiresAt: payload
       ? moment().add(1, 'week').toDate()
       : state.baseCoinExpiresAt,
+  };
+}
+
+export function getTransferTransactionReducer(state: CoinsReducerType) {
+  const sendTokenInfo = _.cloneDeep(state.sendTokenInfo);
+  delete sendTokenInfo.fee;
+  delete sendTokenInfo.transaction;
+
+  return {
+    ...state,
+    sendTokenInfo,
   };
 }

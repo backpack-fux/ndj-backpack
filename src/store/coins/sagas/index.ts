@@ -488,6 +488,10 @@ export function* accountCoinsWatcher() {
   yield takeLatest(ActionType.ADD_WALLET as any, accountCoins);
 }
 
+function* clearSendToken() {
+  yield put(updateSendTokenInfo({}));
+}
+
 export function* getTokensWatcher() {
   yield takeLatest(ActionType.INIT_STORE as any, getTokens);
   yield takeLatest(ActionType.SET_CURRENCY as any, getTokens);
@@ -510,6 +514,7 @@ export function* transferTokenWatcher() {
 }
 
 export function* getTransferTransactionWatcher() {
+  yield takeLatest(ActionType.INIT_STORE as any, clearSendToken);
   yield takeLatest(
     ActionType.GET_TRANSFER_TRANSACTION as any,
     getTransferTransaction,

@@ -89,6 +89,10 @@ export default class EthereumBaseService extends WalletService {
     token: Token,
     sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}> {
+    if (!this.web3.utils.isAddress(toAccount)) {
+      throw new Error('Invalid address');
+    }
+
     if (token.contractAddress) {
       return this.transferERC20(privateKey, toAccount, amount, token);
     }
@@ -161,6 +165,18 @@ export default class EthereumBaseService extends WalletService {
       .balanceOf(account.address)
       .call();
 
+    if (this.web3.utils.toBN(qty).gt(this.web3.utils.toBN(tokenBalance))) {
+      throw new Error(
+        `Insufficient funds. You need at least ${new BigNumber(qty)
+          .div(Math.pow(10, decimals))
+          .toString()} ${token.symbol.toUpperCase()} to make this transaction. You have ${new BigNumber(
+          tokenBalance,
+        )
+          .div(Math.pow(10, decimals))
+          .toString()} ${token.symbol.toUpperCase()} on your account.`,
+      );
+    }
+
     const transferFunc = contract.methods.transfer(
       toAccount,
       this.web3.utils.toHex(qty),
@@ -175,18 +191,6 @@ export default class EthereumBaseService extends WalletService {
       .mul(this.web3.utils.toBN(estimatedGas))
       .mul(this.web3.utils.toBN(2))
       .toString();
-
-    if (this.web3.utils.toBN(qty).gt(this.web3.utils.toBN(tokenBalance))) {
-      throw new Error(
-        `Insufficient funds. You need at least ${new BigNumber(qty)
-          .div(Math.pow(10, decimals))
-          .toString()} ${token.symbol.toUpperCase()} to make this transaction. You have ${new BigNumber(
-          tokenBalance,
-        )
-          .div(Math.pow(10, decimals))
-          .toString()} ${token.symbol.toUpperCase()} on your account.`,
-      );
-    }
 
     const nativeTokenBalance = await this.web3.eth.getBalance(account.address);
     const nativeToken = getNativeToken(token);

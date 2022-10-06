@@ -35,6 +35,9 @@ import {
 } from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 
+const fontSize = 16;
+const inputHeight = 30;
+
 export const Send = () => {
   const dispatch = useDispatch();
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
@@ -151,6 +154,7 @@ export const Send = () => {
   };
 
   const onUpdateSendTokenInfo = useCallback(() => {
+    console.log(debouncedToAddress, debouncedToAmount);
     if (
       debouncedToAddress &&
       debouncedToAmount &&
@@ -172,6 +176,16 @@ export const Send = () => {
     onUpdateSendTokenInfo();
   }, [onUpdateSendTokenInfo]);
 
+  useEffect(() => {
+    if (!sendTokenInfo.token && selectedCoin) {
+      dispatch(
+        updateSendTokenInfo({
+          token: selectedCoin,
+        }),
+      );
+    }
+  }, [sendTokenInfo, selectedCoin]);
+
   return (
     <View>
       <View style={[t.pT1, t.pB4]}>
@@ -181,7 +195,7 @@ export const Send = () => {
         <View style={[t.flex1, t.mL4, t.itemsCenter]}>
           <Paragraph text="Send To" align="center" marginBottom={10} />
           {focusSendAddress ? (
-            <View style={[{height: 30}, t.justifyCenter]}>
+            <View style={[{height: inputHeight}, t.justifyCenter]}>
               <TextInput
                 placeholder="Send to address"
                 autoFocus
@@ -190,12 +204,12 @@ export const Send = () => {
                 placeholderTextColor={colors.textGray}
                 value={sendTokenInfo.toAccount}
                 onChangeText={value => onUpdateToAccount(value)}
-                style={[t.flex1, t.textWhite, {fontSize: 16}]}
+                style={[t.flex1, t.textWhite, {fontSize}]}
               />
             </View>
           ) : (
             <TouchableOpacity
-              style={[{height: 30}, t.justifyCenter]}
+              style={[{height: inputHeight}, t.justifyCenter]}
               onPress={() => setFocusSendAddress(true)}>
               <Paragraph
                 text={sendTokenInfo.toAccount || 'Send to address'}
@@ -232,7 +246,7 @@ export const Send = () => {
                 t.roundedLg,
                 t.itemsCenter,
                 t.justifyCenter,
-                {height: 30},
+                {height: inputHeight},
               ]}>
               <TextInput
                 value={sendTokenInfo.amount}
@@ -245,10 +259,17 @@ export const Send = () => {
                   t.flex1,
                   t.p0,
                   t.m0,
+                  {},
                   t.textWhite,
                   t.wFull,
                   t.textCenter,
-                  {fontSize: 16},
+                  {
+                    fontSize,
+                    color:
+                      Number(sendTokenInfo.amount || 0) > (token?.balance || 0)
+                        ? colors.secondary
+                        : colors.white,
+                  },
                 ]}
               />
             </View>
