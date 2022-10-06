@@ -197,6 +197,8 @@ export const WalletsScreen = () => {
       return;
     }
 
+    console.log('scroll end', timeout);
+
     await sleep(timeout);
     listRef.current.scrollToEnd({animating: true});
   };
@@ -209,12 +211,12 @@ export const WalletsScreen = () => {
 
   useEffect(() => {
     if (focused) {
-      scrollToEnd();
+      scrollToEnd(100);
     }
   }, [focused]);
 
   useEffect(() => {
-    scrollToEnd(500);
+    scrollToEnd(200);
   }, []);
 
   return (
