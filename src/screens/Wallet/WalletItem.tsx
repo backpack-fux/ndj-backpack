@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, Image, TouchableOpacity, View, Animated} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import Clipboard from '@react-native-community/clipboard';
@@ -26,9 +26,6 @@ import {Receive} from './Receive';
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
 
-const expandCardHeight = 455;
-const normalCardHeight = 200;
-
 const shadow = {
   shadowColor: '#fff',
   shadowOffset: {
@@ -40,6 +37,8 @@ const shadow = {
 
   elevation: 5,
 };
+
+const cardContainerHeight = 200;
 
 export const WalletItem = ({
   wallet,
@@ -62,9 +61,13 @@ export const WalletItem = ({
   const tokens = useSelector(tokensSelector);
   const currency = useSelector(currencySelector);
   const network = useSelector(networkSelector);
+  const [seedHeight, setSeedHeight] = useState(0);
 
-  const seedHeight = useRef(new Animated.Value(0)).current;
-  const cardHeight = useRef(new Animated.Value(normalCardHeight)).current;
+  const cardHeight = useRef(new Animated.Value(cardContainerHeight)).current;
+  const flipHeight = useMemo(
+    () => (showSeed ? cardContainerHeight + seedHeight : cardContainerHeight),
+    [showSeed, seedHeight],
+  );
 
   const tokenList = tokens[wallet.id] || [];
 
@@ -174,204 +177,212 @@ export const WalletItem = ({
   };
 
   useEffect(() => {
-    Animated.timing(seedHeight, {
-      toValue: showSeed ? 255 : 0,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
+    // Animated.timing(seedHeight, {
+    //   toValue: showSeed ? 255 : 0,
+    //   duration: 300,
+    //   useNativeDriver: false,
+    // }).start();
 
     Animated.timing(cardHeight, {
-      toValue: showSeed ? expandCardHeight : normalCardHeight,
+      toValue: flipHeight,
       duration: 300,
       useNativeDriver: false,
     }).start();
-  }, [showSeed]);
+  }, [flipHeight]);
 
   return (
     <Animated.View style={[t.mB4, {height: cardHeight}]}>
       <CardFlip
-        style={{height: showSeed ? expandCardHeight : normalCardHeight}}
+        style={{height: flipHeight}}
         ref={ref => cardRef && cardRef(ref)}>
-        <View
+        <Animated.View
           style={[
             t.bgPurple500,
             t.border2,
-            t.p4,
             t.roundedXl,
             isSelected ? t.borderPink500 : t.borderPurple200,
-            shadow,
+            t.overflowHidden,
+            {height: cardHeight},
           ]}>
-          <TouchableOpacity onLongPress={onRenameWallet} style={[t.pT1, t.pB2]}>
-            <Paragraph
-              text={`${wallet.name}${
-                network === 'testnet' ? ' (Test Money)' : ''
-              }`}
-              align="center"
-              type="bold"
-            />
-          </TouchableOpacity>
-          <View style={[t.flexRow, t.mT2, t.itemsCenter]}>
-            <View style={[t.mR10, t.itemsCenter]}>
-              <View
-                style={[
-                  t.h16,
-                  t.flexRow,
-                  t.mB1,
-                  t.itemsCenter,
-                  t.justifyCenter,
-                ]}>
-                {ensAvatar ? (
-                  <Image
-                    source={{uri: ensAvatar}}
-                    style={[t.w16, t.h16, t.selfCenter, t.flex1]}
-                    resizeMode="contain"
+          <View style={[{height: cardContainerHeight}, t.p4]}>
+            <TouchableOpacity
+              onLongPress={onRenameWallet}
+              style={[t.pT1, t.pB2]}>
+              <Paragraph
+                text={`${wallet.name}${
+                  network === 'testnet' ? ' (Test Money)' : ''
+                }`}
+                align="center"
+                type="bold"
+              />
+            </TouchableOpacity>
+            <View style={[t.flexRow, t.mT2, t.itemsCenter]}>
+              <View style={[t.mR10, t.itemsCenter]}>
+                <View
+                  style={[
+                    t.h16,
+                    t.flexRow,
+                    t.mB1,
+                    t.itemsCenter,
+                    t.justifyCenter,
+                  ]}>
+                  {ensAvatar ? (
+                    <Image
+                      source={{uri: ensAvatar}}
+                      style={[t.w16, t.h16, t.selfCenter, t.flex1]}
+                      resizeMode="contain"
+                    />
+                  ) : topTokens.length ? (
+                    <View
+                      style={[
+                        t.h16,
+                        {width: 64 + (topTokens.length - 1) * 25},
+                      ]}>
+                      {topTokens.map((token, index) => (
+                        <Image
+                          key={token.id + token.network}
+                          source={{uri: token.image}}
+                          style={[
+                            {right: index * 25},
+                            t.absolute,
+                            t.w16,
+                            t.h16,
+                            t.selfCenter,
+                            t.flex1,
+                            t.roundedFull,
+                            t.bgWhite,
+                          ]}
+                          resizeMode="contain"
+                        />
+                      ))}
+                    </View>
+                  ) : (
+                    <Image
+                      source={logo}
+                      style={[t.w16, t.h16]}
+                      resizeMode="contain"
+                    />
+                  )}
+                </View>
+                <View style={[{width: 100}, t.selfCenter]}>
+                  <Paragraph
+                    text={ensName || ethAddress}
+                    numberOfLines={1}
+                    ellipsizeMode="middle"
                   />
-                ) : topTokens.length ? (
-                  <View
-                    style={[t.h16, {width: 64 + (topTokens.length - 1) * 25}]}>
-                    {topTokens.map((token, index) => (
+                </View>
+                <TouchableOpacity
+                  onPress={() => onSelectWallet(wallet)}
+                  style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT2]}>
+                  {isSelected && (
+                    <View style={[t.w4, t.h4]}>
                       <Image
-                        key={token.id + token.network}
-                        source={{uri: token.image}}
+                        source={toggle}
                         style={[
-                          {right: index * 25},
-                          t.absolute,
-                          t.w16,
-                          t.h16,
+                          t.w4,
+                          t.h4,
                           t.selfCenter,
                           t.flex1,
-                          t.roundedFull,
-                          t.bgWhite,
+                          isSelected ? t.opacity100 : t.opacity50,
                         ]}
                         resizeMode="contain"
                       />
-                    ))}
-                  </View>
-                ) : (
-                  <Image
-                    source={logo}
-                    style={[t.w16, t.h16]}
-                    resizeMode="contain"
-                  />
-                )}
-              </View>
-              <View style={[{width: 100}, t.selfCenter]}>
-                <Paragraph
-                  text={ensName || ethAddress}
-                  numberOfLines={1}
-                  ellipsizeMode="middle"
-                />
-              </View>
-              <TouchableOpacity
-                onPress={() => onSelectWallet(wallet)}
-                style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT2]}>
-                {isSelected && (
-                  <View style={[t.w4, t.h4]}>
-                    <Image
-                      source={toggle}
-                      style={[
-                        t.w4,
-                        t.h4,
-                        t.selfCenter,
-                        t.flex1,
-                        isSelected ? t.opacity100 : t.opacity50,
-                      ]}
-                      resizeMode="contain"
-                    />
-                  </View>
-                )}
-                <Paragraph
-                  text={isSelected ? 'default' : 'set default'}
-                  size={12}
-                  marginLeft={10}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={[t.flex1, t.justifyBetween]}>
-              <View
-                style={[
-                  t.bgGray300,
-                  t.mL4,
-                  t.mR4,
-                  t.roundedLg,
-                  t.itemsCenter,
-                  t.justifyCenter,
-                  {height: 30},
-                ]}>
-                <Paragraph text={formatCurrency(totalBalance, currency)} />
-              </View>
-              <View style={[t.flexRow, t.mT4, t.justifyAround]}>
-                <TouchableOpacity
-                  style={[t.itemsCenter]}
-                  onPress={() => onShowSeed(showSeed ? null : wallet.id)}>
-                  <Paragraph text="Seed" align="center" marginRight={5} />
+                    </View>
+                  )}
                   <Paragraph
-                    text={`${wallet.mnemonic.split(' ').length} W`}
-                    type="bold"
+                    text={isSelected ? 'default' : 'set default'}
+                    size={12}
+                    marginLeft={10}
                   />
                 </TouchableOpacity>
-                <View style={[t.itemsCenter]}>
-                  <Paragraph text="Apps" align="center" />
-                  <View style={[t.flexRow, t.itemsCenter]}>
+              </View>
+              <View style={[t.flex1, t.justifyBetween]}>
+                <View
+                  style={[
+                    t.bgGray300,
+                    t.mL4,
+                    t.mR4,
+                    t.roundedLg,
+                    t.itemsCenter,
+                    t.justifyCenter,
+                    {height: 30},
+                  ]}>
+                  <Paragraph text={formatCurrency(totalBalance, currency)} />
+                </View>
+                <View style={[t.flexRow, t.mT4, t.justifyAround]}>
+                  <TouchableOpacity
+                    style={[t.itemsCenter]}
+                    onPress={() => onShowSeed(showSeed ? null : wallet.id)}>
+                    <Paragraph text="Seed" align="center" marginRight={5} />
                     <Paragraph
-                      text={walletSessions.length.toString()}
+                      text={`${wallet.mnemonic.split(' ').length} W`}
                       type="bold"
-                      align="center"
                     />
+                  </TouchableOpacity>
+                  <View style={[t.itemsCenter]}>
+                    <Paragraph text="Apps" align="center" />
+                    <View style={[t.flexRow, t.itemsCenter]}>
+                      <Paragraph
+                        text={walletSessions.length.toString()}
+                        type="bold"
+                        align="center"
+                      />
+                    </View>
                   </View>
                 </View>
               </View>
             </View>
           </View>
-          <Animated.View style={[{height: seedHeight}, t.overflowHidden]}>
-            <TouchableOpacity
-              style={[t.mT4]}
-              onPress={() => onShowSeed(showSeed ? null : wallet.id)}
-              onLongPress={onCopySeed}>
-              <View
-                style={[
-                  t.p2,
-                  t.roundedLg,
-                  t.borderYellow200,
-                  t.bgGray300,
-                  {borderWidth},
-                ]}>
-                <Paragraph
-                  text="Seeds are private use them wisely, like you would with any other personal data"
-                  align="center"
-                  marginBottom={5}
-                />
-                <View style={[t.flexRow, t.justifyCenter]}>
-                  <Paragraph text="tap" type="bold" marginRight={5} />
-                  <Paragraph text="to close seed" />
-                </View>
-                <View style={[t.flexRow, t.justifyCenter]}>
-                  <Paragraph text="long press" type="bold" marginRight={5} />
-                  <Paragraph text="to copy your seed phrase" />
-                </View>
+          <TouchableOpacity
+            onLayout={e => {
+              setSeedHeight(e.nativeEvent.layout.height);
+            }}
+            style={[t.p4]}
+            onPress={() => onShowSeed(showSeed ? null : wallet.id)}
+            onLongPress={onCopySeed}>
+            <View
+              style={[
+                t.p2,
+                t.roundedLg,
+                t.borderYellow200,
+                t.bgGray300,
+                {borderWidth},
+              ]}>
+              <Paragraph
+                text="Seeds are private use them wisely, like you would with any other personal data"
+                align="center"
+                marginBottom={5}
+              />
+              <View style={[t.flexRow, t.justifyCenter]}>
+                <Paragraph text="tap" type="bold" marginRight={5} />
+                <Paragraph text="to close seed" />
               </View>
-              <View
-                style={[
-                  t.p2,
-                  t.mT2,
-                  t.roundedLg,
-                  t.borderPink500,
-                  t.itemsCenter,
-                  t.justifyCenter,
-                  {borderWidth},
-                  {height: 120},
-                ]}>
-                <Paragraph
-                  text={wallet.mnemonic}
-                  font="Montserrat"
-                  letterSpacing={3.5}
-                  align="center"
-                  lineHeight={24}
-                />
+              <View style={[t.flexRow, t.justifyCenter]}>
+                <Paragraph text="long press" type="bold" marginRight={5} />
+                <Paragraph text="to copy your seed phrase" />
               </View>
-            </TouchableOpacity>
-          </Animated.View>
-        </View>
+            </View>
+            <View
+              style={[
+                t.p2,
+                t.mT2,
+                t.roundedLg,
+                t.borderPink500,
+                t.itemsCenter,
+                t.justifyCenter,
+                {borderWidth},
+                {height: 120},
+              ]}>
+              <Paragraph
+                text={wallet.mnemonic}
+                font="Montserrat"
+                letterSpacing={3.5}
+                align="center"
+                lineHeight={24}
+              />
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
         <View
           style={[
             t.bgPurple500,
@@ -379,7 +390,7 @@ export const WalletItem = ({
             t.p4,
             t.roundedXl,
             isSelected ? t.borderPink500 : t.borderPurple200,
-            shadow,
+            {height: cardContainerHeight},
           ]}>
           {isSelected ? (
             <>{backScreen === 'send' ? <Send /> : <Receive />}</>
