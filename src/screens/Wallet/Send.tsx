@@ -259,18 +259,14 @@ export const Send = () => {
 
           <View style={[t.mT4]}>
             <View>
-              <Paragraph
-                text={`Fee ${
-                  nativeToken ? nativeToken?.symbol.toUpperCase() : ''
-                }`}
-                size={13}
-                align="center"
-              />
+              <Paragraph text={'Fee'} size={13} align="center" />
               <Paragraph
                 text={
                   sendTokenInfo?.fee === undefined
                     ? '-'
-                    : normalizeNumber(sendTokenInfo?.fee).toString()
+                    : `${normalizeNumber(sendTokenInfo?.fee).toString()} ${
+                        nativeToken ? nativeToken?.symbol.toUpperCase() : ''
+                      }`
                 }
                 numberOfLines={1}
                 align="center"
