@@ -7,6 +7,7 @@ import Toast from 'react-native-toast-message';
 import {
   ActivityIndicator,
   Modal,
+  Platform,
   SafeAreaView,
   TextInput,
   TouchableOpacity,
@@ -28,12 +29,9 @@ import {
 } from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
 import {useDebounce} from '@app/uses';
-import {
-  checkCameraPermission,
-  getNativeToken,
-  normalizeNumber,
-} from '@app/utils';
+import {checkPermission, getNativeToken, normalizeNumber} from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
+import {PERMISSIONS} from 'react-native-permissions';
 
 const fontSize = 16;
 const inputHeight = 30;
@@ -146,7 +144,11 @@ export const Send = () => {
   };
 
   const onOpenScan = async () => {
-    const res = await checkCameraPermission();
+    const res = await checkPermission(
+      Platform.OS === 'android'
+        ? PERMISSIONS.ANDROID.CAMERA
+        : PERMISSIONS.IOS.CAMERA,
+    );
 
     if (res) {
       setOpenScan(true);

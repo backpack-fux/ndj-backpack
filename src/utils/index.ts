@@ -11,12 +11,14 @@ import {
   RESULTS,
   request,
   openSettings,
+  Permission,
 } from 'react-native-permissions';
 import Toast from 'react-native-toast-message';
 
 //@ts-ignore
 import bip39 from 'react-native-bip39';
 import {DEFAULT_COINS} from '@app/constants/coins';
+import {permissionName} from '@app/constants/permission';
 
 export function readableNumString(value: number) {
   const log = Math.log10(value);
@@ -285,12 +287,7 @@ export const closeetBaseCoins = (baseCoins: BaseCoin[], str: string) => {
   });
 };
 
-export const checkCameraPermission = async () => {
-  const permission =
-    Platform.OS === 'android'
-      ? PERMISSIONS.ANDROID.CAMERA
-      : PERMISSIONS.IOS.CAMERA;
-
+export const checkPermission = async (permission: Permission) => {
   try {
     let result = await check(permission);
 
@@ -306,7 +303,7 @@ export const checkCameraPermission = async () => {
 
     Alert.alert(
       'Permission Denied',
-      'Go to the settings and allow camera access?',
+      `Go to the settings and allow ${permissionName[permission]} access?`,
       [
         {
           text: 'Cancel',
@@ -321,6 +318,7 @@ export const checkCameraPermission = async () => {
 
     return false;
   } catch (err: any) {
+    console.log(err);
     Toast.show({
       type: 'error',
       text1: err.message,

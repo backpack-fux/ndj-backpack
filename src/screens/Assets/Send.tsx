@@ -7,6 +7,7 @@ import queryString from 'querystring';
 
 import {
   Modal,
+  Platform,
   SafeAreaView,
   ScrollView,
   TextInput,
@@ -26,10 +27,11 @@ import {
 } from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
 import {useDebounce} from '@app/uses';
-import {checkCameraPermission, normalizeNumber} from '@app/utils';
+import {checkPermission, normalizeNumber} from '@app/utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {StackParams} from '@app/models';
 import moment from 'moment-timezone';
+import {PERMISSIONS} from 'react-native-permissions';
 
 export const SendScreen = () => {
   const dispatch = useDispatch();
@@ -160,7 +162,11 @@ export const SendScreen = () => {
   }, [debouncedToAddress, debouncedToAmount]);
 
   const onOpenScan = async () => {
-    const res = await checkCameraPermission();
+    const res = await checkPermission(
+      Platform.OS === 'android'
+        ? PERMISSIONS.ANDROID.CAMERA
+        : PERMISSIONS.IOS.CAMERA,
+    );
 
     if (res) {
       setOpenScan(true);

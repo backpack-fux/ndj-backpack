@@ -12,13 +12,15 @@ import {
   View,
   TouchableOpacity,
   Alert,
+  Platform,
 } from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import {RNCamera} from 'react-native-camera';
 import Toast from 'react-native-toast-message';
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {checkCameraPermission} from '@app/utils';
+import {checkPermission} from '@app/utils';
+import {PERMISSIONS} from 'react-native-permissions';
 
 const logo = require('@app/assets/images/logo.png');
 
@@ -47,12 +49,12 @@ export const DappsScreen = () => {
 
   const onDisconnectSession = () => {
     if (!selectedTopic) {
-      return
+      return;
     }
 
     onDisconnect(selectedTopic);
     setSelectedTopic(undefined);
-  }
+  };
 
   const onDetails = async () => {
     if (!selectedTopic) {
@@ -69,7 +71,11 @@ export const DappsScreen = () => {
   };
 
   const onOpenScan = async () => {
-    const res = await checkCameraPermission();
+    const res = await checkPermission(
+      Platform.OS === 'android'
+        ? PERMISSIONS.ANDROID.CAMERA
+        : PERMISSIONS.IOS.CAMERA,
+    );
 
     if (res) {
       setOpenScan(true);

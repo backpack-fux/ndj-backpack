@@ -62,6 +62,8 @@
 	<string>We used camera for scaning qr code for ETH wallet account</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Enabling Face ID allows you quick and secure access to your account.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We used it for saving QR code image to photos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
