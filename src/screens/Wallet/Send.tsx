@@ -1,7 +1,6 @@
 import {Paragraph} from '@app/components';
 import React, {useCallback, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import IIcon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import RNQRGenerator from 'rn-qr-generator';
 import {useDispatch, useSelector} from 'react-redux';
@@ -56,6 +55,7 @@ export const Send = () => {
   const nativeToken = token && getNativeToken(token);
   const [openScan, setOpenScan] = useState(false);
   const [focusSendAddress, setFocusSendAddress] = useState(false);
+  const [isDetectingQrCode, setIsDetectingQrCode] = useState(false);
 
   const debouncedToAddress = useDebounce(sendTokenInfo.toAccount, 500);
   const debouncedToAmount = useDebounce(sendTokenInfo.amount, 500);
@@ -175,25 +175,28 @@ export const Send = () => {
         return;
       }
 
+      setIsDetectingQrCode(true);
+
       const qrcode = await RNQRGenerator.detect({
         uri: res?.sourceURL,
       })
         .then(response => response.values[0])
         .catch(() => {
-          throw new Error('Cannot detect QR code in image');
+          throw new Error("Can't detect QR code in image");
         });
 
       if (!qrcode) {
-        throw new Error('Cannot detect QR code in image');
+        throw new Error("Can't detect QR code in image");
       }
 
-      setOpenScan(false);
       onBarCodeRead(qrcode);
     } catch (err: any) {
       Toast.show({
         type: 'error',
         text1: err.message,
       });
+    } finally {
+      setIsDetectingQrCode(false);
     }
   };
 
@@ -357,6 +360,11 @@ export const Send = () => {
                   <Icon name="close" color={colors.white} size={30} />
                 </TouchableOpacity>
               </View>
+              {isDetectingQrCode && (
+                <View style={[t.mT4]}>
+                  <ActivityIndicator size="large" color={colors.white} />
+                </View>
+              )}
               <TouchableOpacity
                 style={[t.selfEnd, t.mR4, t.mB4]}
                 onPress={() => onOpenPhotos()}>
