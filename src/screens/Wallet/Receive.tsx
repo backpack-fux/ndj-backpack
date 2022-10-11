@@ -52,14 +52,14 @@ export const Receive = () => {
 
   const onCaptureQRCode = async () => {
     try {
-      if (Platform.OS === 'android') {
-        const access = await checkPermission(
-          PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-        );
+      const access = await checkPermission(
+        Platform.OS === 'android'
+          ? PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+          : PERMISSIONS.IOS.PHOTO_LIBRARY,
+      );
 
-        if (!access) {
-          return;
-        }
+      if (!access) {
+        return;
       }
 
       const uri = await viewShot.current.capture();

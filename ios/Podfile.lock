@@ -18,7 +18,13 @@ PODS:
     - RNPermissions
   - Permission-FaceID (3.6.1):
     - RNPermissions
+  - Permission-MediaLibrary (3.6.1):
+    - RNPermissions
   - Permission-Microphone (3.6.1):
+    - RNPermissions
+  - Permission-PhotoLibrary (3.6.1):
+    - RNPermissions
+  - Permission-PhotoLibraryAddOnly (3.6.1):
     - RNPermissions
   - RCT-Folly (2021.04.26.00):
     - boost-for-react-native
@@ -313,12 +319,24 @@ PODS:
     - React-Core
   - RNGestureHandler (2.3.1):
     - React-Core
+  - RNImageCropPicker (0.38.0):
+    - React-Core
+    - React-RCTImage
+    - RNImageCropPicker/QBImagePickerController (= 0.38.0)
+    - TOCropViewController
+  - RNImageCropPicker/QBImagePickerController (0.38.0):
+    - React-Core
+    - React-RCTImage
+    - TOCropViewController
   - RNKeychain (8.0.0):
     - React-Core
   - RNOS (1.2.6):
     - React
   - RNPermissions (3.6.1):
     - React-Core
+  - RNQrGenerator (1.2.1):
+    - React
+    - ZXingObjC
   - RNReactNativeHapticFeedback (1.13.1):
     - React-Core
   - RNReanimated (2.5.0):
@@ -362,7 +380,11 @@ PODS:
     - React-Core
   - SRSRadialGradient (1.0.9):
     - React
+  - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
+  - ZXingObjC (3.6.5):
+    - ZXingObjC/All (= 3.6.5)
+  - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
@@ -372,7 +394,10 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
   - Permission-FaceID (from `../node_modules/react-native-permissions/ios/FaceID`)
+  - Permission-MediaLibrary (from `../node_modules/react-native-permissions/ios/MediaLibrary`)
   - Permission-Microphone (from `../node_modules/react-native-permissions/ios/Microphone`)
+  - Permission-PhotoLibrary (from `../node_modules/react-native-permissions/ios/PhotoLibrary`)
+  - Permission-PhotoLibraryAddOnly (from `../node_modules/react-native-permissions/ios/PhotoLibraryAddOnly`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -411,9 +436,11 @@ DEPENDENCIES:
   - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
   - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNOS (from `../node_modules/react-native-os`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
+  - RNQrGenerator (from `../node_modules/rn-qr-generator`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -429,6 +456,8 @@ SPEC REPOS:
     - boost-for-react-native
     - CocoaAsyncSocket
     - fmt
+    - TOCropViewController
+    - ZXingObjC
 
 EXTERNAL SOURCES:
   BVLinearGradient:
@@ -445,8 +474,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-permissions/ios/Camera"
   Permission-FaceID:
     :path: "../node_modules/react-native-permissions/ios/FaceID"
+  Permission-MediaLibrary:
+    :path: "../node_modules/react-native-permissions/ios/MediaLibrary"
   Permission-Microphone:
     :path: "../node_modules/react-native-permissions/ios/Microphone"
+  Permission-PhotoLibrary:
+    :path: "../node_modules/react-native-permissions/ios/PhotoLibrary"
+  Permission-PhotoLibraryAddOnly:
+    :path: "../node_modules/react-native-permissions/ios/PhotoLibraryAddOnly"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -519,12 +554,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/clipboard"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
   RNOS:
     :path: "../node_modules/react-native-os"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
+  RNQrGenerator:
+    :path: "../node_modules/rn-qr-generator"
   RNReactNativeHapticFeedback:
     :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
@@ -555,7 +594,10 @@ SPEC CHECKSUMS:
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6
   Permission-FaceID: e70223280292a1a5e4b8ad943b70cd9229a7d2c3
+  Permission-MediaLibrary: a994236bae41b3597a376ff08298fb1c6d84729b
   Permission-Microphone: 48212dd4d28025d9930d583e3c7a56da7268665c
+  Permission-PhotoLibrary: 5b34ca67279f7201ae109cef36f9806a6596002d
+  Permission-PhotoLibraryAddOnly: 6dba8924024e239af2e282daa8a88967679b4983
   RCT-Folly: 0dd9e1eb86348ecab5ba76f910b56f4b5fef3c46
   RCTRequired: 6cf071ab2adfd769014b3d94373744ee6e789530
   RCTTypeSafety: b829c59453478bb5b02487b8de3336386ab93ab1
@@ -592,9 +634,11 @@ SPEC CHECKSUMS:
   RNCCheckbox: ed1b4ca295475b41e7251ebae046360a703b6eb5
   RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNGestureHandler: 68f660f1080d3300936a67ce5c6879bd8f26ecc2
+  RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
   RNKeychain: 4f63aada75ebafd26f4bc2c670199461eab85d94
   RNOS: 6f2f9a70895bbbfbdad7196abd952e7b01d45027
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
+  RNQrGenerator: 0aa6c40e3f2e15a9cbaec9480b7028c339f89b66
   RNReactNativeHapticFeedback: 4085973f5a38b40d3c6793a3ee5724773eae045e
   RNReanimated: e2aa4bd584ae7be93469c98ef8ac5f2a0d5146d1
   RNScreens: aa12070b21c1d6011b3627a0b1d09b627232b070
@@ -603,8 +647,10 @@ SPEC CHECKSUMS:
   RNThread: dfc202533c6687316c2f026820c791a8bc2a5042
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SRSRadialGradient: 49ba49a7a8f257c3fe785c250867b07185d1d01e
+  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4
+  ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 9b9593de12db939a4a59c9ef4a634c353caff1c9
+PODFILE CHECKSUM: 459685c434eb033f5978e20a4cc5c8645f171b10
 
 COCOAPODS: 1.11.3

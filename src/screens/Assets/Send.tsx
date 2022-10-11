@@ -331,7 +331,7 @@ export const SendScreen = () => {
             <SafeAreaView>
               <TouchableOpacity
                 onPress={() => setOpenScan(false)}
-                style={[t.selfEnd, t.mR4]}>
+                style={[t.mL4]}>
                 <Icon name="close" color={colors.white} size={30} />
               </TouchableOpacity>
             </SafeAreaView>

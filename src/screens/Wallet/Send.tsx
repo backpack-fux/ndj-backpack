@@ -1,6 +1,9 @@
 import {Paragraph} from '@app/components';
 import React, {useCallback, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IIcon from 'react-native-vector-icons/Ionicons';
+import ImagePicker from 'react-native-image-crop-picker';
+import RNQRGenerator from 'rn-qr-generator';
 import {useDispatch, useSelector} from 'react-redux';
 import * as queryString from 'query-string';
 import Toast from 'react-native-toast-message';
@@ -32,6 +35,7 @@ import {useDebounce} from '@app/uses';
 import {checkPermission, getNativeToken, normalizeNumber} from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {PERMISSIONS} from 'react-native-permissions';
+import {ToastContainer} from '@app/components/toast';
 
 const fontSize = 16;
 const inputHeight = 30;
@@ -56,7 +60,7 @@ export const Send = () => {
   const debouncedToAddress = useDebounce(sendTokenInfo.toAccount, 500);
   const debouncedToAmount = useDebounce(sendTokenInfo.amount, 500);
 
-  const onBarCodeRead = (data: any) => {
+  const onBarCodeRead = (data: string) => {
     const dataArray = data.split('?');
     const addressData = dataArray[0];
     const query = dataArray[1];
@@ -73,13 +77,7 @@ export const Send = () => {
       }
     }
 
-    if (address && sendAmount) {
-      onUpdateAccountWithAmount(address, sendAmount);
-    } else if (address) {
-      onUpdateToAccount(address);
-    } else if (sendAmount) {
-      onUpdateAmount(sendAmount);
-    }
+    onUpdateAccountWithAmount(address, sendAmount);
 
     setOpenScan(false);
   };
@@ -155,8 +153,51 @@ export const Send = () => {
     }
   };
 
+  const onOpenPhotos = async () => {
+    try {
+      const access = await checkPermission(
+        Platform.OS === 'android'
+          ? PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+          : PERMISSIONS.IOS.PHOTO_LIBRARY,
+      );
+
+      if (!access) {
+        return;
+      }
+
+      const res = await ImagePicker.openPicker({
+        multiple: false,
+      }).catch(() => {
+        //
+      });
+
+      if (!res) {
+        return;
+      }
+
+      const qrcode = await RNQRGenerator.detect({
+        uri: res?.sourceURL,
+      })
+        .then(response => response.values[0])
+        .catch(() => {
+          throw new Error('Cannot detect QR code in image');
+        });
+
+      if (!qrcode) {
+        throw new Error('Cannot detect QR code in image');
+      }
+
+      setOpenScan(false);
+      onBarCodeRead(qrcode);
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+    }
+  };
+
   const onUpdateSendTokenInfo = useCallback(() => {
-    console.log(debouncedToAddress, debouncedToAmount);
     if (
       debouncedToAddress &&
       debouncedToAmount &&
@@ -308,15 +349,27 @@ export const Send = () => {
             type={RNCamera.Constants.Type.back}
             flashMode={RNCamera.Constants.FlashMode.on}>
             <BarcodeMask showAnimatedLine={false} />
-            <SafeAreaView>
+            <SafeAreaView style={[t.flex1]}>
+              <View style={[t.flex1]}>
+                <TouchableOpacity
+                  onPress={() => setOpenScan(false)}
+                  style={[t.mL4]}>
+                  <Icon name="close" color={colors.white} size={30} />
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
-                onPress={() => setOpenScan(false)}
-                style={[t.selfEnd, t.mR4]}>
-                <Icon name="close" color={colors.white} size={30} />
+                style={[t.selfEnd, t.mR4, t.mB4]}
+                onPress={() => onOpenPhotos()}>
+                <Icon
+                  name="image-multiple-outline"
+                  color={colors.white}
+                  size={30}
+                />
               </TouchableOpacity>
             </SafeAreaView>
           </RNCamera>
         </View>
+        <ToastContainer />
       </Modal>
       {sendTokenInfo.isLoading && (
         <View
