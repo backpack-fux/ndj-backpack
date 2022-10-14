@@ -226,22 +226,32 @@ export default class EthereumBaseService extends WalletService {
     };
   }
 
-  async sendTransaction(privateKey: string, tx: any): Promise<string> {
+  async sendTransaction(
+    privateKey: string,
+    tx: any,
+    waitReceipt?: boolean,
+  ): Promise<string> {
     const rawTransaction = await this.signTransaction(privateKey, tx);
 
     if (!rawTransaction) {
       throw new Error('Can not sign transaction');
     }
 
-    const receipt: TransactionReceipt = await new Promise((resolve, reject) => {
+    const transactionHash: string = await new Promise((resolve, reject) => {
       this.web3.eth
         .sendSignedTransaction(rawTransaction)
         .on('transactionHash', function (txHash) {
+          console.log('transactionHash', txHash);
+          if (!waitReceipt) {
+            resolve(txHash);
+          }
           console.log(txHash);
         })
         .on('receipt', function (res) {
           console.log('receipt:' + res);
-          resolve(res);
+          if (waitReceipt) {
+            resolve(res.transactionHash);
+          }
         })
         .on('error', function (error) {
           console.log('err', error);
@@ -249,7 +259,7 @@ export default class EthereumBaseService extends WalletService {
         });
     });
 
-    return receipt.transactionHash;
+    return transactionHash;
   }
 
   async sign(privateKey: string, message: string) {

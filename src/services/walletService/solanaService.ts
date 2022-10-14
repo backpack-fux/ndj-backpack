@@ -239,7 +239,7 @@ export default class SolanaService extends WalletService {
     return Number(amount) / Math.pow(10, decimals);
   }
 
-  async sendTransaction(privateKey: string, tx: any): Promise<void> {
+  async sendTransaction(privateKey: string, tx: any): Promise<string> {
     const key = privateKey?.split(',').map(v => Number(v)) || [];
     const wallet = Keypair.fromSecretKey(new Uint8Array(key));
 
@@ -247,7 +247,7 @@ export default class SolanaService extends WalletService {
       wallet,
     ]);
 
-    console.log('Success', signature);
+    return signature;
   }
 
   async sign(privateKey: string, message: string): Promise<any> {

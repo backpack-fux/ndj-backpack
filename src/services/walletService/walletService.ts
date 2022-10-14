@@ -133,14 +133,19 @@ abstract class WalletService {
     return service.transfer(privateKey, toAccount, amount, token, sendMax);
   }
 
-  static sendTransaction(privateKey: string, network: NetworkName, tx: any) {
+  static sendTransaction(
+    privateKey: string,
+    network: NetworkName,
+    tx: any,
+    waitReceipt = true,
+  ) {
     const service = this.getServiceByNetwork(network);
 
     if (!service) {
       throw new Error(`Can't get service for ${network}`);
     }
 
-    return service.sendTransaction(privateKey, tx);
+    return service.sendTransaction(privateKey, tx, waitReceipt);
   }
 
   static getTransactions(
@@ -197,7 +202,11 @@ abstract class WalletService {
     sendMax?: boolean,
   ): Promise<{transaction: any; fee: number}>;
 
-  abstract sendTransaction(privateKey: string, tx: any): Promise<any>;
+  abstract sendTransaction(
+    privateKey: string,
+    tx: any,
+    waitReceipt?: boolean,
+  ): Promise<any>;
   abstract sign(privateKey: string, message: string): Promise<any>;
   abstract signTypedData(
     privateKey: string,

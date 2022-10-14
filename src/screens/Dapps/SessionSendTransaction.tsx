@@ -13,7 +13,7 @@ import {
 import {convertHexToUtf8} from '@app/utils/HelperUtil';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {Alert, ScrollView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {useSelector} from 'react-redux';
 import {Card, DappInfo, RequestDetail} from './components';
