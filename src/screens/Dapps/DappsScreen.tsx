@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import {RNCamera} from 'react-native-camera';
@@ -26,7 +27,8 @@ const logo = require('@app/assets/images/logo.png');
 
 export const DappsScreen = () => {
   const navigation = useNavigation<NavigationProp<StackParams>>();
-  const {sessions, onDisconnect, onPairing} = useWalletConnect();
+  const {isInitializingWc, client, sessions, onDisconnect, onPairing} =
+    useWalletConnect();
   const [openScan, setOpenScan] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string>();
   const {onOpenDeepLink} = useWalletConnect();
@@ -113,6 +115,7 @@ export const DappsScreen = () => {
           showsVerticalScrollIndicator={false}
           keyboardDismissMode="on-drag">
           <Card>
+            {isInitializingWc && <ActivityIndicator size={'large'} />}
             {sessions.length ? (
               <>
                 {sessions.map(session => {
@@ -162,23 +165,31 @@ export const DappsScreen = () => {
             <Button
               text="Disconnect"
               onPress={() => selectedTopic && onDisconnectSession()}
-              disabled={!selectedTopic}
+              disabled={!selectedTopic || !client}
             />
           </View>
           <View style={[t.flex1, t.mL2]}>
             <Button
               text="Details"
               onPress={onDetails}
-              disabled={!selectedTopic}
+              disabled={!selectedTopic || !client}
             />
           </View>
         </View>
         <View style={[t.flexRow, t.mT2]}>
           <View style={[t.flex1]}>
-            <Button text="Paste" onPress={() => onOpenPaste()} />
+            <Button
+              disabled={!client}
+              text="Paste"
+              onPress={() => onOpenPaste()}
+            />
           </View>
           <View style={[t.flex1, t.mL2]}>
-            <Button text="Scan" onPress={() => onOpenScan()} />
+            <Button
+              disabled={!client}
+              text="Scan"
+              onPress={() => onOpenScan()}
+            />
           </View>
         </View>
       </View>

@@ -24,6 +24,7 @@ import {whiteListedDapps} from '@app/constants/whitelistedDapps';
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
 
 export interface WalletConnectContextProps {
+  isInitializingWc: boolean;
   client?: SignClient;
   sessions: any[];
   enabledTransactionTopics: {[topic: string]: boolean};
@@ -37,6 +38,7 @@ export interface WalletConnectContextProps {
 }
 
 export const WalletConnectContext = createContext<WalletConnectContextProps>({
+  isInitializingWc: false,
   sessions: [],
   enabledTransactionTopics: {},
   onAcceptSessionProposal: () => {},
@@ -60,6 +62,7 @@ export const WalletConnectProvider = (props: {
   const navigation = useNavigation<NavigationProp<StackParams>>();
   const [client, setClient] = useState<SignClient>();
   const [sessions, setSessions] = useState<any[]>([]);
+  const [isInitializingWc, setIsInitializingWc] = useState(false);
   const [enabledTransactionTopics, setEnabledTransactionTopics] = useState<{
     [topic: string]: boolean;
   }>({});
@@ -67,18 +70,29 @@ export const WalletConnectProvider = (props: {
   const [pairingTopic, setParingTopic] = useState<string>();
 
   const initClient = async () => {
-    const wClient = await SignClient.init({
-      projectId: '6deff5a02e50ce1ec41397b27b372189',
-      relayUrl: 'wss://relay.walletconnect.com',
-      metadata: {
-        name: 'NDJ Wallet',
-        description: 'NDJ Wallet',
-        url: 'https://jxndao.com',
-        icons: ['https://walletconnect.com/walletconnect-logo.png'],
-      },
-    });
-
-    setClient(wClient);
+    setIsInitializingWc(true);
+    try {
+      console.log('----------333');
+      const wClient = await SignClient.init({
+        projectId: '6deff5a02e50ce1ec41397b27b372189',
+        relayUrl: 'wss://relay.walletconnect.com',
+        metadata: {
+          name: 'NDJ Wallet',
+          description: 'NDJ Wallet',
+          url: 'https://jxndao.com',
+          icons: ['https://walletconnect.com/walletconnect-logo.png'],
+        },
+      });
+      console.log('----------');
+      setClient(wClient);
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+    } finally {
+      setIsInitializingWc(false);
+    }
   };
 
   useEffect(() => {
@@ -336,6 +350,7 @@ export const WalletConnectProvider = (props: {
   return (
     <WalletConnectContext.Provider
       value={{
+        isInitializingWc,
         client,
         sessions,
         enabledTransactionTopics,
