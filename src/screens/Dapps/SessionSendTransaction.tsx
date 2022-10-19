@@ -2,6 +2,7 @@ import {BaseScreen, Button, Paragraph} from '@app/components';
 import {useWalletConnect} from '@app/context/walletconnect';
 import Toast from 'react-native-toast-message';
 import {StackParams} from '@app/models';
+
 import {
   networkSelector,
   walletsSelector,
@@ -89,12 +90,13 @@ export const SessionSendTransaction = () => {
 
   const transaction = request.params[0];
   const fee = Web3.utils
-    .toBN(Web3.utils.hexToNumber(transaction.gasPrice))
-    .mul(Web3.utils.toBN(Web3.utils.hexToNumber(transaction.gasLimit)));
+    .toBN(transaction.gasPrice)
+    .mul(Web3.utils.toBN(transaction.gasLimit));
   const feeEther = Web3.utils.fromWei(fee);
-  const value = Web3.utils.toBN(Web3.utils.hexToNumber(transaction.value));
+  const value = Web3.utils.toBN(transaction.value);
   const total = fee.add(value);
   const totalEther = Web3.utils.fromWei(total);
+  const valueEther = Web3.utils.fromWei(value);
   const data = convertHexToUtf8(transaction.data);
 
   return (
@@ -150,6 +152,19 @@ export const SessionSendTransaction = () => {
                   text={transaction.nonce}
                 />
               </View>
+            </View>
+            <View
+              style={[
+                t.flexRow,
+                t.pB2,
+                t.pT2,
+                t.borderGray200,
+                {borderBottomWidth},
+              ]}>
+              <View style={[t.flex1]}>
+                <Paragraph text="Value:" marginRight={10} />
+              </View>
+              <Paragraph align="right" text={valueEther} />
             </View>
             <View
               style={[

@@ -72,7 +72,6 @@ export const WalletConnectProvider = (props: {
   const initClient = async () => {
     setIsInitializingWc(true);
     try {
-      console.log('----------333');
       const wClient = await SignClient.init({
         projectId: '6deff5a02e50ce1ec41397b27b372189',
         relayUrl: 'wss://relay.walletconnect.com',
@@ -83,7 +82,6 @@ export const WalletConnectProvider = (props: {
           icons: ['https://walletconnect.com/walletconnect-logo.png'],
         },
       });
-      console.log('----------');
       setClient(wClient);
     } catch (err: any) {
       Toast.show({
@@ -242,6 +240,8 @@ export const WalletConnectProvider = (props: {
 
   const onSessionRequest = useCallback(
     async (event: SignClientTypes.EventArguments['session_request']) => {
+      console.log('-----------------------');
+      console.log(JSON.stringify(event));
       const {topic, params} = event;
       const {request} = params;
       const session = client?.session.get(topic);
