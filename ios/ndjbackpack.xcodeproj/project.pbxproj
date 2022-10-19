@@ -528,7 +528,7 @@
 				CODE_SIGN_ENTITLEMENTS = ndjbackpack/ndjbackpack.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = FWJ939Z7T9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ndjbackpack/Info.plist;
@@ -560,7 +560,7 @@
 				CODE_SIGN_ENTITLEMENTS = ndjbackpack/ndjbackpack.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = FWJ939Z7T9;
 				INFOPLIST_FILE = ndjbackpack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
