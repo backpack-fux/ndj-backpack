@@ -146,8 +146,24 @@ export const WalletConnectProvider = (props: {
 
   const onPairing = useCallback(
     async (uri: string) => {
-      const res = await client?.pair({uri});
-      setParingTopic(res?.topic);
+      try {
+        if (!client) {
+          throw new Error('WalletConnect client is not initialized');
+        }
+
+        const res = await client.pair({uri});
+
+        if (!res?.topic) {
+          throw new Error('Failed paring');
+        }
+
+        setParingTopic(res?.topic);
+      } catch (err: any) {
+        Toast.show({
+          type: 'error',
+          text1: err.message,
+        });
+      }
     },
     [client],
   );
@@ -171,49 +187,94 @@ export const WalletConnectProvider = (props: {
     proposal: SignClientTypes.EventArguments['session_proposal'],
     accounts: string[],
   ) => {
-    const {id, params} = proposal;
-    const {requiredNamespaces, relays} = params;
+    try {
+      const {id, params} = proposal;
+      const {requiredNamespaces, relays} = params;
 
-    const namespaces: SessionTypes.Namespaces = {};
-    Object.keys(requiredNamespaces).forEach(key => {
-      namespaces[key] = {
-        accounts: accounts.filter(account => account.startsWith(key)),
-        methods: requiredNamespaces[key].methods,
-        events: requiredNamespaces[key].events,
-      };
-    });
+      const namespaces: SessionTypes.Namespaces = {};
+      Object.keys(requiredNamespaces).forEach(key => {
+        namespaces[key] = {
+          accounts: accounts.filter(account => account.startsWith(key)),
+          methods: requiredNamespaces[key].methods,
+          events: requiredNamespaces[key].events,
+        };
+      });
 
-    const res = await client?.approve({
-      id,
-      relayProtocol: relays[0].protocol,
-      namespaces,
-    });
-    await res?.acknowledged();
+      if (!client) {
+        throw new Error('WalletConnect client is not initialized');
+      }
 
-    const whiteList = whiteListedDapps.find(url =>
-      url.startsWith(proposal.params?.proposer?.metadata?.url),
-    );
+      const res = await client.approve({
+        id,
+        relayProtocol: relays[0].protocol,
+        namespaces,
+      });
 
-    if (res && whiteList) {
-      onToggleTransactionEnable(res?.topic as string, true);
+      if (!res) {
+        throw new Error('Failed approving session connection');
+      }
+
+      await res.acknowledged();
+
+      const whiteList = whiteListedDapps.find(url =>
+        url.startsWith(proposal.params?.proposer?.metadata?.url),
+      );
+
+      if (!res.topic) {
+        throw new Error('Can not find approved session topic');
+      }
+
+      if (whiteList) {
+        onToggleTransactionEnable(res.topic as string, true);
+      }
+
+      setSessions(client.session.values || []);
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
     }
-
-    setSessions(client?.session.values || []);
   };
 
   const onRejectSessionProposal = useCallback(() => {
     async (proposal: SignClientTypes.EventArguments['session_proposal']) => {
-      await client?.reject({
-        id: proposal.id,
-        reason: getSdkError('USER_REJECTED_METHODS'),
-      });
+      try {
+        if (!client) {
+          throw new Error('WalletConnect client is not initialized');
+        }
+
+        await client.reject({
+          id: proposal.id,
+          reason: getSdkError('USER_REJECTED_METHODS'),
+        });
+      } catch (err: any) {
+        Toast.show({
+          type: 'error',
+          text1: err.message,
+        });
+      }
     };
-  }, []);
+  }, [client]);
 
   const onDisconnect = async (topic: string) => {
-    await client?.disconnect({topic, reason: getSdkError('USER_DISCONNECTED')});
+    try {
+      if (!client) {
+        throw new Error('WalletConnect client is not initialized');
+      }
 
-    setSessions(client?.session.values || []);
+      await client.disconnect({
+        topic,
+        reason: getSdkError('USER_DISCONNECTED'),
+      });
+
+      setSessions(client.session.values || []);
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+    }
   };
 
   const onToggleTransactionEnable = (topic: string, value: boolean) => {
@@ -240,8 +301,6 @@ export const WalletConnectProvider = (props: {
 
   const onSessionRequest = useCallback(
     async (event: SignClientTypes.EventArguments['session_request']) => {
-      console.log('-----------------------');
-      console.log(JSON.stringify(event));
       const {topic, params} = event;
       const {request} = params;
       const session = client?.session.get(topic);
@@ -332,6 +391,10 @@ export const WalletConnectProvider = (props: {
   }, [client, onSessionRequest]);
 
   useEffect(() => {
+    client?.on('session_extend', e => {
+      console.log('----------------------');
+      console.log(e);
+    });
     client?.on('session_delete', () => {
       setSessions(client?.session.values || []);
     });

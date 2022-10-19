@@ -1,6 +1,6 @@
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {useWalletConnect} from '@app/context/walletconnect';
-import {MainStackParamList} from '@app/models';
+import {StackParams} from '@app/models';
 import {walletsSelector} from '@app/store/wallets/walletsSelector';
 import {getAddressByParams} from '@app/utils/HelperUtil';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -18,7 +18,7 @@ import {
 export const SessionSignSolana = () => {
   const {client} = useWalletConnect();
   const navigation = useNavigation();
-  const route = useRoute<RouteProp<MainStackParamList, 'SessionSignModal'>>();
+  const route = useRoute<RouteProp<StackParams, 'SessionSignModal'>>();
   const wallets = useSelector(walletsSelector);
 
   const {event, session} = route.params;
@@ -38,8 +38,12 @@ export const SessionSignSolana = () => {
     if (event) {
       try {
         const response = await approveSolanaRequest(event, wallets);
-        console.log('confi', response);
-        await client?.respond({
+
+        if (!client) {
+          throw new Error('WalletConnect client is not initialized');
+        }
+
+        await client.respond({
           topic: event.topic,
           response,
         });

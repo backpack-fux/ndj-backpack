@@ -53,7 +53,12 @@ export const SessionSendTransaction = () => {
     try {
       setIsLoading(true);
       const response = await approveEIP155Request(event, wallets, network);
-      await client?.respond({
+
+      if (!client) {
+        throw new Error('WalletConnect client is not initialized');
+      }
+
+      await client.respond({
         topic: event.topic,
         response,
       });

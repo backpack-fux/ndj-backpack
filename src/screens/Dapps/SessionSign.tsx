@@ -1,6 +1,6 @@
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import {useWalletConnect} from '@app/context/walletconnect';
-import {MainStackParamList} from '@app/models';
+import {StackParams} from '@app/models';
 import {
   networkSelector,
   walletsSelector,
@@ -24,7 +24,7 @@ import {colors} from '@app/assets/colors.config';
 export const SessionSign = () => {
   const {client} = useWalletConnect();
   const navigation = useNavigation();
-  const route = useRoute<RouteProp<MainStackParamList, 'SessionSignModal'>>();
+  const route = useRoute<RouteProp<StackParams, 'SessionSignModal'>>();
   const wallets = useSelector(walletsSelector);
   const network = useSelector(networkSelector);
 
@@ -45,7 +45,12 @@ export const SessionSign = () => {
     if (event) {
       try {
         const response = await approveEIP155Request(event, wallets, network);
-        await client?.respond({
+
+        if (!client) {
+          throw new Error('WalletConnect client is not initialized');
+        }
+
+        await client.respond({
           topic: event.topic,
           response,
         });
