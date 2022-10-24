@@ -207,7 +207,7 @@ export const AssetsScreen = () => {
           </View>
           <View style={[t.flex1, t.mL2]}>
             <Button
-              text="Tx Details"
+              text="History"
               onPress={onPressToken}
               disabled={!selectedCoin}
             />

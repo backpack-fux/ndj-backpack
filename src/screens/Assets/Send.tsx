@@ -304,7 +304,7 @@ export const SendScreen = () => {
             }(${token?.symbol.toUpperCase()}) balance`}
           />
         )}
-        <Button text="Tx Details" onPress={onTransaction} />
+        <Button text="History" onPress={onTransaction} />
         <View style={[t.flexRow, t.mT2]}>
           <View style={[t.flex1]}>
             <Button text="Cancel" onPress={() => navigation.goBack()} />
