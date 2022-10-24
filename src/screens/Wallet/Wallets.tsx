@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Alert, FlatList, RefreshControl, View} from 'react-native';
+import {Alert, FlatList, RefreshControl, View, Animated} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import * as _ from 'lodash';
@@ -49,6 +49,7 @@ export const WalletsScreen = () => {
   const [openVerify, setOpenVerify] = useState(false);
   const focused = useIsFocused();
   const listRef = useRef<any>();
+  const buttonContainerHeight = useRef(new Animated.Value(100)).current;
 
   const [isBack, setIsBack] = useState(false);
   const [showSeed, setShowSeed] = useState<string | null>(null);
@@ -219,6 +220,14 @@ export const WalletsScreen = () => {
     scrollToEnd(200);
   }, []);
 
+  useEffect(() => {
+    Animated.timing(buttonContainerHeight, {
+      toValue: isBack && backScreen === 'receive' ? 50 : 100,
+      duration: isBack && backScreen === 'receive' ? 300 : 0,
+      useNativeDriver: false,
+    }).start();
+  }, [isBack, backScreen]);
+
   return (
     <>
       <BaseScreen>
@@ -260,80 +269,85 @@ export const WalletsScreen = () => {
             }
           />
         </View>
-        {!isBack ? (
-          <>
-            <View style={[t.flexRow, t.mT2]}>
-              <View style={[t.flex1]}>
-                <Button text="Add Wallet" onPress={onAddWallet} />
-              </View>
-              <View style={[t.flex1, t.mL2]}>
-                <Button
-                  text="Delete Wallet"
-                  onPress={onDelete}
-                  disabled={!selectedWallet}
-                />
-              </View>
-            </View>
-            <View style={[t.flexRow, t.mT2]}>
-              <View style={[t.flex1]}>
-                <Button
-                  text="Receive"
-                  onPress={onPressReceive}
-                  disabled={!selectedWallet}
-                />
-              </View>
-              <View style={[t.flex1, t.mL2]}>
-                <Button
-                  text="Send"
-                  onPress={onPressSend}
-                  disabled={!selectedWallet}
-                />
-              </View>
-            </View>
-          </>
-        ) : (
-          <>
-            {backScreen === 'send' && (
-              <View style={[t.mT2]}>
-                <Button
-                  text="Change Token"
-                  onPress={onOpenSelectScreen}
-                  disabled={!selectedWallet || sendTokenInfo.isLoading}
-                />
-              </View>
-            )}
-            <View style={[t.flexRow, t.mT2]}>
-              <View style={[t.flex1]}>
-                <Button
-                  text="Cancel"
-                  onPress={onCancelBack}
-                  disabled={
-                    backScreen === 'send'
-                      ? !selectedWallet || sendTokenInfo.isLoading
-                      : !selectedWallet
-                  }
-                />
-              </View>
-              <View style={[t.flex1, t.mL2]}>
-                {backScreen === 'send' ? (
+        <Animated.View
+          style={{
+            height: buttonContainerHeight,
+          }}>
+          {!isBack ? (
+            <>
+              <View style={[t.flexRow, t.mT2]}>
+                <View style={[t.flex1]}>
+                  <Button text="Add Wallet" onPress={onAddWallet} />
+                </View>
+                <View style={[t.flex1, t.mL2]}>
                   <Button
-                    text="Submit"
-                    onPress={onSendToken}
-                    disabled={
-                      !sendTokenInfo.transaction || sendTokenInfo.isLoading
-                    }
+                    text="Delete Wallet"
+                    onPress={onDelete}
+                    disabled={!selectedWallet}
                   />
-                ) : (
+                </View>
+              </View>
+              <View style={[t.flexRow, t.mT2]}>
+                <View style={[t.flex1]}>
+                  <Button
+                    text="Receive"
+                    onPress={onPressReceive}
+                    disabled={!selectedWallet}
+                  />
+                </View>
+                <View style={[t.flex1, t.mL2]}>
+                  <Button
+                    text="Send"
+                    onPress={onPressSend}
+                    disabled={!selectedWallet}
+                  />
+                </View>
+              </View>
+            </>
+          ) : (
+            <>
+              {backScreen === 'send' && (
+                <View style={[t.mT2]}>
                   <Button
                     text="Change Token"
                     onPress={onOpenSelectScreen}
-                    disabled={!selectedWallet}
+                    disabled={!selectedWallet || sendTokenInfo.isLoading}
                   />
-                )}
+                </View>
+              )}
+              <View style={[t.flexRow, t.mT2]}>
+                <View style={[t.flex1]}>
+                  <Button
+                    text="Cancel"
+                    onPress={onCancelBack}
+                    disabled={
+                      backScreen === 'send'
+                        ? !selectedWallet || sendTokenInfo.isLoading
+                        : !selectedWallet
+                    }
+                  />
+                </View>
+                <View style={[t.flex1, t.mL2]}>
+                  {backScreen === 'send' ? (
+                    <Button
+                      text="Submit"
+                      onPress={onSendToken}
+                      disabled={
+                        !sendTokenInfo.transaction || sendTokenInfo.isLoading
+                      }
+                    />
+                  ) : (
+                    <Button
+                      text="Change Token"
+                      onPress={onOpenSelectScreen}
+                      disabled={!selectedWallet}
+                    />
+                  )}
+                </View>
               </View>
-            </View>
-          </>
-        )}
+            </>
+          )}
+        </Animated.View>
       </BaseScreen>
       <VerifyPasscodeModal
         open={openVerify}
