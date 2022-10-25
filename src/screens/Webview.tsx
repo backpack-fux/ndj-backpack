@@ -55,7 +55,9 @@ export const WebviewScreen = () => {
       <WebView
         source={{uri: url}}
         style={[t.bgTransparent]}
+        allowsInlineMediaPlayback={true}
         onShouldStartLoadWithRequest={openExternalLink}
+        mediaCapturePermissionGrantType={'grantIfSameHostElsePrompt'}
       />
     </BaseScreen>
   );
