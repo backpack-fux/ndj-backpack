@@ -198,8 +198,6 @@ export const WalletsScreen = () => {
       return;
     }
 
-    console.log('scroll end', timeout);
-
     await sleep(timeout);
     listRef.current.scrollToEnd({animating: true});
   };

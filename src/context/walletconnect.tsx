@@ -18,10 +18,12 @@ import {SessionTypes, SignClientTypes} from '@walletconnect/types';
 import {COSMOS_SIGNING_METHODS} from '@app/constants/COSMOSData';
 import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
 import {getSdkError} from '@walletconnect/utils';
-import {getDeepLink} from '@app/utils';
+import {getDeepLink, getDomainName, sleep} from '@app/utils';
 import {whiteListedDapps} from '@app/constants/whitelistedDapps';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
+let connectSessionInterval: any = null;
+let disconnectSessionInterval: any = null;
 
 export interface WalletConnectContextProps {
   isInitializingWc: boolean;
@@ -183,6 +185,45 @@ export const WalletConnectProvider = (props: {
     [pairingTopic, navigation],
   );
 
+  const retryConnectSession = (
+    originSessions: SessionTypes.Struct[],
+    retry: number,
+  ) => {
+    const sessionValues = client?.session.values || [];
+    const originSessionTopics = originSessions.map(session => session.topic);
+    const newSessions = sessionValues?.filter(
+      session => !originSessionTopics.includes(session.topic),
+    );
+
+    if (newSessions?.length) {
+      clearTimeout(connectSessionInterval);
+      connectSessionInterval = null;
+      for (const newSession of newSessions) {
+        const whiteList = whiteListedDapps.find(
+          url => url === getDomainName(newSession.peer.metadata.url),
+        );
+
+        if (whiteList && !enabledTransactionTopics[newSession.topic]) {
+          onToggleTransactionEnable(newSession.topic as string, true);
+        }
+      }
+
+      setSessions(sessionValues);
+    } else if (retry === 3) {
+      clearTimeout(connectSessionInterval);
+      connectSessionInterval = null;
+      Toast.show({
+        type: 'error',
+        text1: 'WalletConnect: connection timed out',
+      });
+    } else {
+      connectSessionInterval = setTimeout(
+        () => retryConnectSession(originSessions, retry + 1),
+        5000,
+      );
+    }
+  };
+
   const onAcceptSessionProposal = async (
     proposal: SignClientTypes.EventArguments['session_proposal'],
     accounts: string[],
@@ -204,6 +245,11 @@ export const WalletConnectProvider = (props: {
         throw new Error('WalletConnect client is not initialized');
       }
 
+      connectSessionInterval = setTimeout(
+        () => retryConnectSession(sessions, 1),
+        5000,
+      );
+
       const res = await client.approve({
         id,
         relayProtocol: relays[0].protocol,
@@ -216,16 +262,21 @@ export const WalletConnectProvider = (props: {
 
       await res.acknowledged();
 
-      const whiteList = whiteListedDapps.find(url =>
-        url.startsWith(proposal.params?.proposer?.metadata?.url),
+      const whiteList = whiteListedDapps.find(
+        url => url === getDomainName(proposal.params?.proposer?.metadata?.url),
       );
 
       if (!res.topic) {
         throw new Error('Can not find approved session topic');
       }
 
-      if (whiteList) {
+      if (whiteList && !enabledTransactionTopics[res.topic]) {
         onToggleTransactionEnable(res.topic as string, true);
+      }
+
+      if (connectSessionInterval) {
+        clearTimeout(connectSessionInterval);
+        connectSessionInterval = null;
       }
 
       setSessions(client.session.values || []);
@@ -257,6 +308,29 @@ export const WalletConnectProvider = (props: {
     };
   }, [client]);
 
+  const retryDisconnectSession = (topic: string, retry: number) => {
+    const sessionValues = client?.session.values || [];
+    const session = sessionValues.find(entry => entry.topic === topic);
+
+    if (!session) {
+      setSessions(sessionValues);
+      clearTimeout(disconnectSessionInterval);
+      disconnectSessionInterval = null;
+    } else if (retry >= 3) {
+      clearTimeout(disconnectSessionInterval);
+      disconnectSessionInterval = null;
+      Toast.show({
+        type: 'error',
+        text1: 'WalletConnect: connection timed out',
+      });
+    } else {
+      disconnectSessionInterval = setTimeout(
+        () => retryDisconnectSession(topic, retry + 1),
+        5000,
+      );
+    }
+  };
+
   const onDisconnect = async (topic: string) => {
     try {
       if (!client) {
@@ -268,7 +342,19 @@ export const WalletConnectProvider = (props: {
         reason: getSdkError('USER_DISCONNECTED'),
       });
 
-      setSessions(client.session.values || []);
+      const newSessions = client.session.values || [];
+      const disconnectedSession = newSessions.find(
+        session => session.topic === topic,
+      );
+
+      if (!disconnectedSession) {
+        setSessions(newSessions);
+      } else {
+        disconnectSessionInterval = setTimeout(
+          () => retryDisconnectSession(topic, 1),
+          5000,
+        );
+      }
     } catch (err: any) {
       Toast.show({
         type: 'error',
