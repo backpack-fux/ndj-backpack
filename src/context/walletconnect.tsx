@@ -285,6 +285,11 @@ export const WalletConnectProvider = (props: {
         type: 'error',
         text1: err.message,
       });
+
+      if (connectSessionInterval) {
+        clearTimeout(connectSessionInterval);
+        connectSessionInterval = null;
+      }
     }
   };
 
