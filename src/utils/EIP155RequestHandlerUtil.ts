@@ -50,7 +50,6 @@ export async function approveEIP155Request(
       );
       return formatJsonRpcResult(id, signedData);
     case EIP155_SIGNING_METHODS.ETH_SEND_TRANSACTION:
-      console.log(JSON.stringify(request));
       const hash = await service.sendTransaction(
         privateKey,
         request.params[0],

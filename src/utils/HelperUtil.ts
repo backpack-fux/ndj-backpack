@@ -25,11 +25,15 @@ export function truncate(value: string, length: number) {
  * Converts hex to utf8 string if it is valid bytes
  */
 export function convertHexToUtf8(value: string) {
-  if (utils.isHexString(value)) {
-    return utils.toUtf8String(value);
-  }
+  try {
+    if (utils.isHexString(value)) {
+      return utils.toUtf8String(value);
+    }
 
-  return value;
+    return value;
+  } catch (err) {
+    return value;
+  }
 }
 
 /**
@@ -80,12 +84,20 @@ export function getWalletAddressFromParams(addresses: string[], params: any) {
 }
 
 export function getPrivateKeyByParams(wallets: Wallet[], params: any) {
+  const request = params[0];
+  const fromAddress = request?.from;
   const paramsString = JSON.stringify(params);
 
   for (const account of wallets) {
     for (const wallet of account.wallets) {
-      if (paramsString.includes(wallet.address)) {
-        return wallet.privateKey;
+      if (fromAddress) {
+        if (fromAddress === wallet.address) {
+          return wallet.privateKey;
+        }
+      } else {
+        if (paramsString.includes(wallet.address)) {
+          return wallet.privateKey;
+        }
       }
     }
   }

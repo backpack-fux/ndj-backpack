@@ -4,7 +4,7 @@ import * as bip39 from 'bip39';
 import {hdkey} from 'ethereumjs-wallet';
 import WalletService from './walletService';
 import Web3 from 'web3';
-import {TransactionConfig, TransactionReceipt} from 'web3-core';
+import {TransactionConfig} from 'web3-core';
 import {ENSInfo, ITransaction, Token} from '@app/models';
 import {JsonRpcProvider} from '@ethersproject/providers';
 import BigNumber from 'bignumber.js';
