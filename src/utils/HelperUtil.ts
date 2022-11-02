@@ -114,11 +114,11 @@ export function getAddressByParams(wallets: Wallet[], params: any) {
     for (const wallet of account.wallets) {
       if (fromAddress) {
         if (fromAddress === wallet.address) {
-          return wallet.privateKey;
+          return wallet.address;
         }
       } else {
         if (paramsString.includes(wallet.address)) {
-          return wallet.privateKey;
+          return wallet.address;
         }
       }
     }
