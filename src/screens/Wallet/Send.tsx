@@ -331,7 +331,7 @@ export const Send = () => {
                 text={
                   sendTokenInfo?.fee === undefined
                     ? '-'
-                    : `${normalizeNumber(sendTokenInfo?.fee).toString()} ${
+                    : `${normalizeNumber(sendTokenInfo?.fee)} ${
                         nativeToken ? nativeToken?.symbol.toUpperCase() : ''
                       }`
                 }

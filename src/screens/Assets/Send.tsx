@@ -261,7 +261,7 @@ export const SendScreen = () => {
                       align="center"
                     />
                     <Paragraph
-                      text={normalizeNumber(token?.balance).toString()}
+                      text={normalizeNumber(token?.balance)}
                       numberOfLines={1}
                       align="center"
                     />

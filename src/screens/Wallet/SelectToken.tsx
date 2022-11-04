@@ -70,7 +70,7 @@ export const SelectTokenScreen = () => {
               </View>
               <View>
                 <Paragraph
-                  text={normalizeNumber(token.balance || 0).toString()}
+                  text={normalizeNumber(token.balance || 0)}
                   align="right"
                 />
                 <Paragraph

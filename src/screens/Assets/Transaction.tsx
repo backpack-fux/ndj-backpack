@@ -119,9 +119,7 @@ const Transaction = ({item, token}: {item: ITransaction; token?: BaseCoin}) => {
       <Paragraph
         text={`${
           item.label ? item.label : item.type === 'in' ? 'Received' : 'Sent'
-        }: ${Number(
-          normalizeNumber(item.value),
-        )} ${token?.symbol.toUpperCase()}`}
+        }: ${normalizeNumber(item.value)} ${token?.symbol.toUpperCase()}`}
         size={16}
         align={
           item.type === 'in' ? 'left' : item.type === 'out' ? 'right' : 'center'

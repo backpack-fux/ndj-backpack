@@ -1,13 +1,12 @@
 import {networkList, networkName, NetworkName} from '@app/constants';
 import {BaseCoin, News, Token, Wallet} from '@app/models';
 import numeral from 'numeral';
-import {Alert, Dimensions, Platform} from 'react-native';
+import {Alert, Dimensions} from 'react-native';
 import {currencies} from '@app/constants/currencies';
 import * as _ from 'lodash';
 import * as queryString from 'query-string';
 import {
   check,
-  PERMISSIONS,
   RESULTS,
   request,
   openSettings,
@@ -79,10 +78,10 @@ export const normalizeNumber = (
   const d = Math.floor(log * -1);
 
   if (d > 10 && d > defaultDecimal) {
-    return 0;
+    return '0';
   }
 
-  return Number(value.toFixed(d + 2));
+  return Number(value.toFixed(d + 2)).toString();
 };
 
 export const formatNumber = (value: Number, format = '0,0.00') => {
