@@ -6,7 +6,9 @@ import EthereumBaseService from './ethereumBaseService';
 import BigNumber from 'bignumber.js';
 
 const provider =
-  'https://matic.getblock.io/mainnet/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3';
+  'https://polygon-mainnet.g.alchemy.com/v2/ZIH9nuSJ4fJlc-ltqCtBg0yZKtzD5_Ac';
+const testnetProvider =
+  'https://polygon-mumbai.g.alchemy.com/v2/RkSCfHKQSfOLLReyGAW9mFZSqhvOer9M';
 
 const polygonScanApiKey = 'RZ1XJFWNRYS1I89VDZFEFD8DHM32YS273X';
 
@@ -19,7 +21,7 @@ export default class PolygonService extends EthereumBaseService {
   switchNetwork(chain: 'mainnet' | 'testnet') {
     this.polygonScanApi =
       chain === 'mainnet' ? POLYGONSCAN.mainnet : POLYGONSCAN.testnet;
-    const web3Provider = `https://matic.getblock.io/${chain}/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3`;
+    const web3Provider = chain === 'mainnet' ? provider : testnetProvider;
 
     this.chain = chain;
     this.web3 = new Web3(web3Provider);

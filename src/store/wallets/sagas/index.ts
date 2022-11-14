@@ -33,7 +33,7 @@ function* reload() {
         try {
           const ensInfo: ENSInfo = yield WalletService.getENSInfo(
             wallet.network,
-            wallet.address,
+            wallet.liveAddress,
           );
           wallet.ensInfo = ensInfo;
         } catch (err) {

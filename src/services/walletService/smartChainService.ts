@@ -5,8 +5,8 @@ import Web3 from 'web3';
 import EthereumBaseService from './ethereumBaseService';
 import BigNumber from 'bignumber.js';
 
-const provider =
-  'https://bsc.getblock.io/mainnet/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3';
+const provider = 'https://bsc-dataseed1.binance.org/';
+const testnetProvider = 'https://data-seed-prebsc-2-s1.binance.org:8545/';
 
 const bscScanApiKey = 'SCSVGE76D5BYC94RI6F6AA3B8FPR5371RN';
 
@@ -18,7 +18,7 @@ export default class SmartChainService extends EthereumBaseService {
 
   switchNetwork(chain: 'mainnet' | 'testnet') {
     this.bscScanApi = chain === 'mainnet' ? BSCSCAN.mainnet : BSCSCAN.testnet;
-    const web3Provider = `https://bsc.getblock.io/${chain}/?api_key=16ffb800-e93c-43f4-be85-5946f8072ca3`;
+    const web3Provider = chain === 'mainnet' ? provider : testnetProvider;
 
     this.chain = chain;
     this.web3 = new Web3(web3Provider);
