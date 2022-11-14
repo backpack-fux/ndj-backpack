@@ -1,9 +1,15 @@
 import {BaseCoin} from '@app/models';
 import axios from 'axios';
-
+import {setupCache} from 'axios-cache-adapter';
+const cache = setupCache({
+  maxAge: 2 * 60 * 1000,
+  exclude: {query: false},
+});
 const Axios = axios.create({
   baseURL: 'https://api.coingecko.com/api/v3',
+  adapter: cache.adapter,
 });
+
 export const getCoinGeckoCoinList = async () => {
   const {data} = await Axios.get('/coins/list', {
     params: {

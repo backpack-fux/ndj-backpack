@@ -42,6 +42,7 @@
     "assert": "^1.5.0",
     "asyncstorage-down": "^4.2.0",
     "axios": "^0.21.4",
+    "axios-cache-adapter": "^2.7.3",
     "base-64": "^1.0.0",
     "bignumber.js": "^9.0.1",
     "bip32": "^3.0.1",
