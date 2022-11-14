@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 
 import {colors} from '@app/assets/colors.config';
 import {useWalletConnect} from '@app/context/walletconnect';
-import {MainStackParamList, StackParams, Wallet} from '@app/models';
+import {StackParams, Wallet} from '@app/models';
 import {BaseScreen, Button, Paragraph} from '@app/components';
 import _ from 'lodash';
 import {
@@ -166,11 +166,13 @@ export const SessionApproval = () => {
   useEffect(() => {
     if (!availableWallets.length) {
       onRejectSessionProposal(proposal, 'No available accounts');
-      Toast.show({
-        type: 'error',
-        text1: 'No available accounts',
-      });
       navigation.goBack();
+      setTimeout(() => {
+        Toast.show({
+          type: 'error',
+          text1: 'No available accounts',
+        });
+      }, 500);
     }
   }, [availableWallets]);
 

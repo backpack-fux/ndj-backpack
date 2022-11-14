@@ -18,7 +18,7 @@ import {SessionTypes, SignClientTypes} from '@walletconnect/types';
 import {COSMOS_SIGNING_METHODS} from '@app/constants/COSMOSData';
 import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
 import {getSdkError} from '@walletconnect/utils';
-import {getDeepLink, getDomainName, sleep} from '@app/utils';
+import {getDeepLink, getDomainName} from '@app/utils';
 import {whiteListedDapps} from '@app/constants/whitelistedDapps';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
@@ -86,6 +86,7 @@ export const WalletConnectProvider = (props: {
       });
       setClient(wClient);
     } catch (err: any) {
+      console.log(err);
       Toast.show({
         type: 'error',
         text1: err.message,
