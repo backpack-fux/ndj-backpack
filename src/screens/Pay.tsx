@@ -12,7 +12,7 @@ import {useSelector} from 'react-redux';
 import {BaseScreen, Paragraph} from '@app/components';
 import {networkSelector} from '@app/store/wallets/walletsSelector';
 import {StackParams} from '@app/models';
-import {storefrontUrl} from '@app/constants/storefront';
+import {payApps} from '@app/constants/storefront';
 import {useWalletConnect} from '@app/context/walletconnect';
 
 const logo = require('@app/assets/images/logo.png');
@@ -39,29 +39,34 @@ export const PayScreen = () => {
       <ScrollView>
         {isInitializingWc && <ActivityIndicator size={'large'} />}
         {!!client && (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('Webwiew', {
-                title: 'Storefront',
-                url: storefrontUrl[network],
-              })
-            }
-            style={[
-              t.bgPurple500,
-              t.pT2,
-              t.pB2,
-              t.pL4,
-              t.pR4,
-              t.border2,
-              t.borderPurple200,
-              t.roundedXl,
-              t.flexRow,
-              t.itemsCenter,
-              shadow,
-            ]}>
-            <Image source={logo} style={[t.w8, t.h8, t.mR4]} />
-            <Paragraph text="Storefront" />
-          </TouchableOpacity>
+          <>
+            {payApps.map(app => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Webwiew', {
+                    title: app.name,
+                    url: app[network],
+                  })
+                }
+                style={[
+                  t.bgPurple500,
+                  t.pT2,
+                  t.pB2,
+                  t.pL4,
+                  t.pR4,
+                  t.border2,
+                  t.borderPurple200,
+                  t.roundedXl,
+                  t.flexRow,
+                  t.itemsCenter,
+                  t.mB4,
+                  shadow,
+                ]}>
+                <Image source={logo} style={[t.w8, t.h8, t.mR4]} />
+                <Paragraph text={app.name} />
+              </TouchableOpacity>
+            ))}
+          </>
         )}
       </ScrollView>
     </BaseScreen>
