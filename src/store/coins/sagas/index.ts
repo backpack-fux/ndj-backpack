@@ -151,9 +151,10 @@ function* getBalances(
       priceChangePercent: detail?.price_change_percentage_24h,
     };
     const contractAddress = getTokenContractAddress(token, isTest);
-    const accountAddress = wallet.wallets.find(
-      w => w.network === token.network,
-    )?.address;
+    const walletItem = wallet.wallets.find(w => w.network === token.network);
+    const accountAddress = isTest
+      ? walletItem?.testAddress
+      : walletItem?.liveAddress;
 
     if (accountAddress) {
       try {
