@@ -17,7 +17,7 @@ import SignClient from '@walletconnect/sign-client';
 import {SessionTypes, SignClientTypes} from '@walletconnect/types';
 import {COSMOS_SIGNING_METHODS} from '@app/constants/COSMOSData';
 import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
-import {getSdkError} from '@walletconnect/utils';
+import {getSdkError, parseUri} from '@walletconnect/utils';
 import {getDeepLink, getDomainName} from '@app/utils';
 import {whiteListedDapps} from '@app/constants/whitelistedDapps';
 
@@ -113,15 +113,6 @@ export const WalletConnectProvider = (props: {
   const onOpenDeepLink = (url: string) => {
     const deepLink = getDeepLink(url);
 
-    if (!deepLink?.startsWith('wc:')) {
-      Toast.show({
-        type: 'error',
-        text1: 'WalletConnect: invalid QR code',
-      });
-
-      return;
-    }
-
     if (deepLink) {
       setDeepLinkUri(deepLink);
     }
@@ -136,15 +127,31 @@ export const WalletConnectProvider = (props: {
       return;
     }
 
-    if (!deepLinkUri.startsWith('wc:')) {
+    const {version} = parseUri(deepLinkUri);
+
+    if (isNaN(version)) {
       Toast.show({
         type: 'error',
         text1: 'WalletConnect: invalid QR code',
       });
-    } else {
-      client?.pair({uri: deepLinkUri});
       setDeepLinkUri('');
+
+      return;
     }
+
+    if (version === 1) {
+      Toast.show({
+        type: 'error',
+        text1: "We don't support WalletConnect v1",
+      });
+      setDeepLinkUri('');
+
+      return;
+    }
+
+    client?.pair({uri: deepLinkUri});
+
+    setDeepLinkUri('');
   }, [deepLinkUri, client]);
 
   const onPairing = useCallback(

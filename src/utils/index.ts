@@ -329,20 +329,21 @@ export const checkPermission = async (permission: Permission) => {
 const linkingURLs = ['wc://wc', 'ndj-backpack://wc', 'https://jxndao.com/wc'];
 
 export const getDeepLink = (url: string) => {
-  if (url.startsWith('wc:')) {
+  if (!url.startsWith('wc://wc') && url.startsWith('wc:')) {
     return url;
   }
 
   const data = queryString.parseUrl(url);
   const urlWithUri = `${data.url}?uri=`;
+  const linkingURL = linkingURLs.find(entry => data.url.startsWith(entry));
 
-  if (!linkingURLs.includes(data.url)) {
+  if (!linkingURL) {
     return;
   }
 
   const urlParam = url.replace(urlWithUri, '');
 
-  return urlParam;
+  return decodeURIComponent(urlParam);
 };
 
 export const getNativeToken = (token: Token) => {
