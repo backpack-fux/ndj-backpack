@@ -22,9 +22,9 @@ export default class EthereumBaseService extends WalletService {
     super(network);
     WalletService.add(this);
     this.web3 = new Web3(provider);
-    this.ethers = new ethers.providers.InfuraProvider(
+    this.ethers = new ethers.providers.AlchemyProvider(
       'homestead',
-      'cd5b0778994b4e34b166f2569a1166c0',
+      'kBcC8Z-BvucnXj214rdY6L8FCzBZf_Y0',
     );
   }
 

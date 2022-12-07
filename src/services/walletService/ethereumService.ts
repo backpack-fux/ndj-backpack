@@ -6,9 +6,9 @@ import EthereumBaseService from './ethereumBaseService';
 import BigNumber from 'bignumber.js';
 
 const provider =
-  'https://eth-mainnet.g.alchemy.com/v2/gVvuMQjjUokNQyjraxhSui-74blv9kaD';
+  'https://eth-mainnet.g.alchemy.com/v2/kBcC8Z-BvucnXj214rdY6L8FCzBZf_Y0';
 const testnetProvider =
-  'https://eth-goerli.g.alchemy.com/v2/xu496Mr3YYdix1a_UKTGqKW2O8a-Jflv';
+  'https://eth-goerli.g.alchemy.com/v2/CLAjd7FD3JAHPZwBfVDHrGc6lF_czNWu';
 
 const etherscanApiKey = 'I39JN6BK9Q2FDWZIG3U5EDF2XDI12X97M4';
 

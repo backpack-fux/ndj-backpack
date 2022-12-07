@@ -6,9 +6,9 @@ import EthereumBaseService from './ethereumBaseService';
 import BigNumber from 'bignumber.js';
 
 const provider =
-  'https://polygon-mainnet.g.alchemy.com/v2/ZIH9nuSJ4fJlc-ltqCtBg0yZKtzD5_Ac';
+  'https://polygon-mainnet.g.alchemy.com/v2/x1H0fwRdSlnzqXHcio6LF3zQP6kK1fk5';
 const testnetProvider =
-  'https://polygon-mumbai.g.alchemy.com/v2/RkSCfHKQSfOLLReyGAW9mFZSqhvOer9M';
+  'https://polygon-mumbai.g.alchemy.com/v2/ZvYDLoMGpRw9OVSL7-xYVj-0nMWF4_dk';
 
 const polygonScanApiKey = 'RZ1XJFWNRYS1I89VDZFEFD8DHM32YS273X';
 
