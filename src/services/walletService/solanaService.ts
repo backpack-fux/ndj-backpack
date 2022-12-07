@@ -3,7 +3,6 @@ import WalletService from './walletService';
 import {
   Keypair,
   Connection,
-  clusterApiUrl,
   PublicKey,
   LAMPORTS_PER_SOL,
   Transaction,
@@ -23,6 +22,11 @@ import NP from 'number-precision';
 const solscanApi = 'https://public-api.solscan.io';
 const solscanDevApi = 'https://public-api-test.solscan.io';
 
+const provider =
+  'https://solana-mainnet.g.alchemy.com/v2/t2Dr1PBNMZlmEig8IdHcI_E5km9fTVny';
+const providerDev =
+  'https://solana-devnet.g.alchemy.com/v2/ixygs7hUe-2zBtbEXjuEWs-kylEe92oG';
+
 export default class SolanaService extends WalletService {
   chain: 'mainnet' | 'testnet' = 'mainnet';
   decimals = 9;
@@ -30,10 +34,7 @@ export default class SolanaService extends WalletService {
   constructor() {
     super(NetworkName.solana);
     WalletService.add(this);
-    this.connection = new Connection(
-      clusterApiUrl('mainnet-beta'),
-      'confirmed',
-    );
+    this.connection = new Connection(provider, 'confirmed');
   }
 
   get apiURI() {
@@ -47,7 +48,7 @@ export default class SolanaService extends WalletService {
   switchNetwork(chain: 'mainnet' | 'testnet') {
     this.chain = chain;
     this.connection = new Connection(
-      clusterApiUrl(chain === 'mainnet' ? 'mainnet-beta' : 'devnet'),
+      chain === 'mainnet' ? provider : providerDev,
       'confirmed',
     );
   }

@@ -166,10 +166,9 @@ function* getBalances(
 
         token.balance = balance;
       } catch (err: any) {
-        console.log(err, token.symbol, contractAddress);
         Toast.show({
           type: 'error',
-          text1: err.message,
+          text1: `${token.name} ${token.network}: ${err.message}`,
         });
       }
     }
