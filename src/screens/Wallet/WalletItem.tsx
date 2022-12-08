@@ -128,18 +128,14 @@ export const WalletItem = ({
     [wallet],
   );
 
-  const walletSessions = useMemo(
-    () =>
-      sessions.filter((session: any) => {
-        const sessionAccounts = (Object.values(session.namespaces) as any)
-          .reduce((a: string, p: any) => {
-            return [...a, ...p.accounts];
-          }, [])
-          .filter((d: string) => accounts.includes(d));
-        return sessionAccounts?.length > 0;
-      }),
-    [sessions],
-  );
+  const walletSessions = sessions.filter((session: any) => {
+    const sessionAccounts = (Object.values(session.namespaces) as any)
+      .reduce((a: string, p: any) => {
+        return [...a, ...p.accounts];
+      }, [])
+      .filter((d: string) => accounts.includes(d));
+    return sessionAccounts?.length > 0;
+  });
 
   const onCopySeed = () => {
     ReactNativeHapticFeedback.trigger('impactHeavy');

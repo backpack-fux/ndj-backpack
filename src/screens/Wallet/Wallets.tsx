@@ -57,10 +57,8 @@ export const WalletsScreen = () => {
 
   let selectedCard: any;
 
-  const walletList = useMemo(
-    () =>
-      _.cloneDeep(wallets).sort(a => (a.id === selectedWallet?.id ? 1 : -1)),
-    [wallets, selectedWallet],
+  const walletList = _.cloneDeep(wallets).sort(a =>
+    a.id === selectedWallet?.id ? 1 : -1,
   );
 
   const onDelete = () => {
