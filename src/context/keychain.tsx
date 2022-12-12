@@ -57,7 +57,7 @@ export const KeychainProvider = (props: {
   const [enabledBiometry, setEnabledBiometry] = useState(false);
   const [passcode, setPasscode] = useState<string>();
   const [autoLockTime, setAutoLockTime] = useState(0);
-  const [biometryType, setBiometryType] = useState<BIOMETRY_TYPE>();
+  const [biometryType, setBiometryType] = useState<BIOMETRY_TYPE | null>();
   const [verifyCallback, setVerifyCallback] = useState<string>();
   const [openVerify, setOpenVerify] = useState(false);
   const [showVerify, setShowVerify] = useState(false);
@@ -148,6 +148,7 @@ export const KeychainProvider = (props: {
   };
 
   const onChangeAppStatus = (nextAppState: AppStateStatus) => {
+    console.log('nextAppState==============', nextAppState, appState.current);
     if (!isActive) {
       return;
     }
@@ -178,6 +179,7 @@ export const KeychainProvider = (props: {
     appState.current = nextAppState;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onBlurAppStatus = () => {
     if (!isActive) {
       return;
@@ -190,6 +192,7 @@ export const KeychainProvider = (props: {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onFouseAppStatus = () => {
     if (!isActive) {
       return;
@@ -235,34 +238,32 @@ export const KeychainProvider = (props: {
   }, []);
 
   useEffect(() => {
-    const subscription =
-      Platform.OS === 'ios' &&
-      AppState.addEventListener('change', onChangeAppStatus);
+    const subscription = AppState.addEventListener('change', onChangeAppStatus);
 
     return () => {
       subscription && subscription?.remove();
     };
   }, [appState, openVerify, showVerify, enabled, isActive]);
 
-  useEffect(() => {
-    const subscription =
-      Platform.OS === 'android' &&
-      AppState.addEventListener('blur', onBlurAppStatus);
+  // useEffect(() => {
+  //   const subscription =
+  //     Platform.OS === 'android' &&
+  //     AppState.addEventListener('blur', onBlurAppStatus);
 
-    return () => {
-      subscription && subscription?.remove();
-    };
-  }, [appState, openVerify, showVerify, openVerify, isActive]);
+  //   return () => {
+  //     subscription && subscription?.remove();
+  //   };
+  // }, [appState, openVerify, showVerify, openVerify, isActive]);
 
-  useEffect(() => {
-    const subscription =
-      Platform.OS === 'android' &&
-      AppState.addEventListener('focus', onFouseAppStatus);
+  // useEffect(() => {
+  //   const subscription =
+  //     Platform.OS === 'android' &&
+  //     AppState.addEventListener('focus', onFouseAppStatus);
 
-    return () => {
-      subscription && subscription?.remove();
-    };
-  }, [appState, openVerify, showVerify, enabled, openVerify, isActive]);
+  //   return () => {
+  //     subscription && subscription?.remove();
+  //   };
+  // }, [appState, openVerify, showVerify, enabled, openVerify, isActive]);
 
   return (
     <KeychainContext.Provider
