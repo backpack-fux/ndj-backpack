@@ -1,19 +1,82 @@
-diff --git a/node_modules/react-native-threads/android/build/.transforms/16db154af5a3760022c5d163c66b5ff8/results.bin b/node_modules/react-native-threads/android/build/.transforms/16db154af5a3760022c5d163c66b5ff8/results.bin
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/results.bin b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/results.bin
 new file mode 100644
-index 0000000..0d259dd
+index 0000000..5ff383e
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/.transforms/16db154af5a3760022c5d163c66b5ff8/results.bin
++++ b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/results.bin
 @@ -0,0 +1 @@
-+o/classes
-diff --git a/node_modules/react-native-threads/android/build/.transforms/16db154af5a3760022c5d163c66b5ff8/transformed/classes/classes.dex b/node_modules/react-native-threads/android/build/.transforms/16db154af5a3760022c5d163c66b5ff8/transformed/classes/classes.dex
++o/debug
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/BuildConfig.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/BuildConfig.dex
 new file mode 100644
-index 0000000..750a9cf
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/16db154af5a3760022c5d163c66b5ff8/transformed/classes/classes.dex differ
-diff --git a/node_modules/react-native-threads/android/build/generated/source/buildConfig/release/com/reactlibrary/BuildConfig.java b/node_modules/react-native-threads/android/build/generated/source/buildConfig/release/com/reactlibrary/BuildConfig.java
+index 0000000..2b0e790
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/BuildConfig.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/JSThread.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/JSThread.dex
 new file mode 100644
-index 0000000..db9d3fc
+index 0000000..c3a146e
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/JSThread.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$1.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$1.dex
+new file mode 100644
+index 0000000..1050404
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$1.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$2.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$2.dex
+new file mode 100644
+index 0000000..ef556a1
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$2.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$3.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$3.dex
+new file mode 100644
+index 0000000..fb5f1ba
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$3.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$4.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$4.dex
+new file mode 100644
+index 0000000..40d6543
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule$4.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule.dex
+new file mode 100644
+index 0000000..a077312
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadModule.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadPackage.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadPackage.dex
+new file mode 100644
+index 0000000..8e98755
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/RNThreadPackage.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ReactContextBuilder$1.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ReactContextBuilder$1.dex
+new file mode 100644
+index 0000000..c1d55b2
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ReactContextBuilder$1.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ReactContextBuilder$2.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ReactContextBuilder$2.dex
+new file mode 100644
+index 0000000..ec1ff62
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ReactContextBuilder$2.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ReactContextBuilder.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ReactContextBuilder.dex
+new file mode 100644
+index 0000000..e39f4cd
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ReactContextBuilder.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ThreadBaseReactPackage.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ThreadBaseReactPackage.dex
+new file mode 100644
+index 0000000..9e3f1fc
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ThreadBaseReactPackage.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ThreadSelfModule.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ThreadSelfModule.dex
+new file mode 100644
+index 0000000..3f9564a
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/ThreadSelfModule.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/UIManagerStubModule.dex b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/UIManagerStubModule.dex
+new file mode 100644
+index 0000000..0936576
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/debug/com/reactlibrary/UIManagerStubModule.dex differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/desugar_graph.bin b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/desugar_graph.bin
+new file mode 100644
+index 0000000..601f245
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/40d9ea927e1fe6b383c81c9537e3de4f/transformed/desugar_graph.bin differ
+diff --git a/node_modules/react-native-threads/android/build/.transforms/515e169c62bd6b6ad2b4b65aa9d9f736/results.bin b/node_modules/react-native-threads/android/build/.transforms/515e169c62bd6b6ad2b4b65aa9d9f736/results.bin
+new file mode 100644
+index 0000000..1ed65e0
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/generated/source/buildConfig/release/com/reactlibrary/BuildConfig.java
++++ b/node_modules/react-native-threads/android/build/.transforms/515e169c62bd6b6ad2b4b65aa9d9f736/results.bin
+@@ -0,0 +1 @@
++i/
+diff --git a/node_modules/react-native-threads/android/build/generated/source/buildConfig/debug/com/reactlibrary/BuildConfig.java b/node_modules/react-native-threads/android/build/generated/source/buildConfig/debug/com/reactlibrary/BuildConfig.java
+new file mode 100644
+index 0000000..4381f65
+--- /dev/null
++++ b/node_modules/react-native-threads/android/build/generated/source/buildConfig/debug/com/reactlibrary/BuildConfig.java
 @@ -0,0 +1,10 @@
 +/**
 + * Automatically generated file. DO NOT MODIFY
@@ -21,15 +84,15 @@ index 0000000..db9d3fc
 +package com.reactlibrary;
 +
 +public final class BuildConfig {
-+  public static final boolean DEBUG = false;
++  public static final boolean DEBUG = Boolean.parseBoolean("true");
 +  public static final String LIBRARY_PACKAGE_NAME = "com.reactlibrary";
-+  public static final String BUILD_TYPE = "release";
++  public static final String BUILD_TYPE = "debug";
 +}
-diff --git a/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/AndroidManifest.xml b/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/AndroidManifest.xml
+diff --git a/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml b/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
 new file mode 100644
 index 0000000..b181eb1
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/AndroidManifest.xml
++++ b/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
 @@ -0,0 +1,9 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,11 +104,11 @@ index 0000000..b181eb1
 +
 +</manifest>
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/output-metadata.json b/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/output-metadata.json
+diff --git a/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output-metadata.json b/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output-metadata.json
 new file mode 100644
-index 0000000..527d18f
+index 0000000..c063601
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/release/aapt/output-metadata.json
++++ b/node_modules/react-native-threads/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output-metadata.json
 @@ -0,0 +1,16 @@
 +{
 +  "version": 2,
@@ -54,7 +117,7 @@ index 0000000..527d18f
 +    "kind": "Directory"
 +  },
 +  "applicationId": "com.reactlibrary",
-+  "variantName": "release",
++  "variantName": "debug",
 +  "elements": [
 +    {
 +      "type": "SINGLE",
@@ -64,36 +127,36 @@ index 0000000..527d18f
 +  ]
 +}
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/aar_metadata/release/aar-metadata.properties b/node_modules/react-native-threads/android/build/intermediates/aar_metadata/release/aar-metadata.properties
+diff --git a/node_modules/react-native-threads/android/build/intermediates/aar_metadata/debug/aar-metadata.properties b/node_modules/react-native-threads/android/build/intermediates/aar_metadata/debug/aar-metadata.properties
 new file mode 100644
 index 0000000..d8560bd
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/aar_metadata/release/aar-metadata.properties
++++ b/node_modules/react-native-threads/android/build/intermediates/aar_metadata/debug/aar-metadata.properties
 @@ -0,0 +1,2 @@
 +aarFormatVersion=1.0
 +aarMetadataVersion=1.0
-diff --git a/node_modules/react-native-threads/android/build/intermediates/annotation_processor_list/release/annotationProcessors.json b/node_modules/react-native-threads/android/build/intermediates/annotation_processor_list/release/annotationProcessors.json
+diff --git a/node_modules/react-native-threads/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json b/node_modules/react-native-threads/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
 new file mode 100644
 index 0000000..9e26dfe
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/annotation_processor_list/release/annotationProcessors.json
++++ b/node_modules/react-native-threads/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
 @@ -0,0 +1 @@
 +{}
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/compile_library_classes_jar/release/classes.jar b/node_modules/react-native-threads/android/build/intermediates/compile_library_classes_jar/release/classes.jar
+diff --git a/node_modules/react-native-threads/android/build/intermediates/compile_library_classes_jar/debug/classes.jar b/node_modules/react-native-threads/android/build/intermediates/compile_library_classes_jar/debug/classes.jar
 new file mode 100644
-index 0000000..8d1f7de
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/compile_library_classes_jar/release/classes.jar differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/compile_r_class_jar/release/R.jar b/node_modules/react-native-threads/android/build/intermediates/compile_r_class_jar/release/R.jar
+index 0000000..5caf4eb
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/compile_library_classes_jar/debug/classes.jar differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/compile_r_class_jar/debug/R.jar b/node_modules/react-native-threads/android/build/intermediates/compile_r_class_jar/debug/R.jar
 new file mode 100644
-index 0000000..5876e7e
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/compile_r_class_jar/release/R.jar differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/compile_symbol_list/release/R.txt b/node_modules/react-native-threads/android/build/intermediates/compile_symbol_list/release/R.txt
+index 0000000..88f85ee
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/compile_r_class_jar/debug/R.jar differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/compile_symbol_list/debug/R.txt b/node_modules/react-native-threads/android/build/intermediates/compile_symbol_list/debug/R.txt
 new file mode 100644
-index 0000000..05fba27
+index 0000000..321fb8c
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/compile_symbol_list/release/R.txt
-@@ -0,0 +1,1790 @@
++++ b/node_modules/react-native-threads/android/build/intermediates/compile_symbol_list/debug/R.txt
+@@ -0,0 +1,1953 @@
 +int anim abc_fade_in 0x0
 +int anim abc_fade_out 0x0
 +int anim abc_grow_fade_in_from_bottom 0x0
@@ -106,12 +169,31 @@ index 0000000..05fba27
 +int anim abc_slide_out_top 0x0
 +int anim abc_tooltip_enter 0x0
 +int anim abc_tooltip_exit 0x0
++int anim btn_checkbox_to_checked_box_inner_merged_animation 0x0
++int anim btn_checkbox_to_checked_box_outer_merged_animation 0x0
++int anim btn_checkbox_to_checked_icon_null_animation 0x0
++int anim btn_checkbox_to_unchecked_box_inner_merged_animation 0x0
++int anim btn_checkbox_to_unchecked_check_path_merged_animation 0x0
++int anim btn_checkbox_to_unchecked_icon_null_animation 0x0
++int anim btn_radio_to_off_mtrl_dot_group_animation 0x0
++int anim btn_radio_to_off_mtrl_ring_outer_animation 0x0
++int anim btn_radio_to_off_mtrl_ring_outer_path_animation 0x0
++int anim btn_radio_to_on_mtrl_dot_group_animation 0x0
++int anim btn_radio_to_on_mtrl_ring_outer_animation 0x0
++int anim btn_radio_to_on_mtrl_ring_outer_path_animation 0x0
 +int anim catalyst_fade_in 0x0
 +int anim catalyst_fade_out 0x0
 +int anim catalyst_push_up_in 0x0
 +int anim catalyst_push_up_out 0x0
 +int anim catalyst_slide_down 0x0
 +int anim catalyst_slide_up 0x0
++int anim fragment_fast_out_extra_slow_in 0x0
++int animator fragment_close_enter 0x0
++int animator fragment_close_exit 0x0
++int animator fragment_fade_enter 0x0
++int animator fragment_fade_exit 0x0
++int animator fragment_open_enter 0x0
++int animator fragment_open_exit 0x0
 +int attr actionBarDivider 0x0
 +int attr actionBarItemBackground 0x0
 +int attr actionBarPopupTheme 0x0
@@ -130,6 +212,7 @@ index 0000000..05fba27
 +int attr actionMenuTextColor 0x0
 +int attr actionModeBackground 0x0
 +int attr actionModeCloseButtonStyle 0x0
++int attr actionModeCloseContentDescription 0x0
 +int attr actionModeCloseDrawable 0x0
 +int attr actionModeCopyDrawable 0x0
 +int attr actionModeCutDrawable 0x0
@@ -140,6 +223,7 @@ index 0000000..05fba27
 +int attr actionModeShareDrawable 0x0
 +int attr actionModeSplitBackground 0x0
 +int attr actionModeStyle 0x0
++int attr actionModeTheme 0x0
 +int attr actionModeWebSearchDrawable 0x0
 +int attr actionOverflowButtonStyle 0x0
 +int attr actionOverflowMenuStyle 0x0
@@ -164,6 +248,11 @@ index 0000000..05fba27
 +int attr autoSizePresetSizes 0x0
 +int attr autoSizeStepGranularity 0x0
 +int attr autoSizeTextType 0x0
++int attr autofillInlineSuggestionChip 0x0
++int attr autofillInlineSuggestionEndIconStyle 0x0
++int attr autofillInlineSuggestionStartIconStyle 0x0
++int attr autofillInlineSuggestionSubtitle 0x0
++int attr autofillInlineSuggestionTitle 0x0
 +int attr background 0x0
 +int attr backgroundImage 0x0
 +int attr backgroundSplit 0x0
@@ -177,6 +266,7 @@ index 0000000..05fba27
 +int attr buttonBarNeutralButtonStyle 0x0
 +int attr buttonBarPositiveButtonStyle 0x0
 +int attr buttonBarStyle 0x0
++int attr buttonCompat 0x0
 +int attr buttonGravity 0x0
 +int attr buttonIconDimen 0x0
 +int attr buttonPanelSideLayout 0x0
@@ -184,6 +274,9 @@ index 0000000..05fba27
 +int attr buttonStyleSmall 0x0
 +int attr buttonTint 0x0
 +int attr buttonTintMode 0x0
++int attr checkMarkCompat 0x0
++int attr checkMarkTint 0x0
++int attr checkMarkTintMode 0x0
 +int attr checkboxStyle 0x0
 +int attr checkedTextViewStyle 0x0
 +int attr closeIcon 0x0
@@ -210,7 +303,6 @@ index 0000000..05fba27
 +int attr contentInsetStart 0x0
 +int attr contentInsetStartWithNavigation 0x0
 +int attr controlBackground 0x0
-+int attr coordinatorLayoutStyle 0x0
 +int attr customNavigationLayout 0x0
 +int attr defaultQueryHint 0x0
 +int attr dialogCornerRadius 0x0
@@ -221,7 +313,15 @@ index 0000000..05fba27
 +int attr dividerHorizontal 0x0
 +int attr dividerPadding 0x0
 +int attr dividerVertical 0x0
++int attr drawableBottomCompat 0x0
++int attr drawableEndCompat 0x0
++int attr drawableLeftCompat 0x0
++int attr drawableRightCompat 0x0
 +int attr drawableSize 0x0
++int attr drawableStartCompat 0x0
++int attr drawableTint 0x0
++int attr drawableTintMode 0x0
++int attr drawableTopCompat 0x0
 +int attr drawerArrowStyle 0x0
 +int attr dropDownListViewStyle 0x0
 +int attr dropdownListPreferredItemHeight 0x0
@@ -229,6 +329,7 @@ index 0000000..05fba27
 +int attr editTextColor 0x0
 +int attr editTextStyle 0x0
 +int attr elevation 0x0
++int attr emojiCompatEnabled 0x0
 +int attr expandActivityOverflowButtonDrawable 0x0
 +int attr fadeDuration 0x0
 +int attr failureImage 0x0
@@ -242,6 +343,7 @@ index 0000000..05fba27
 +int attr fontProviderFetchTimeout 0x0
 +int attr fontProviderPackage 0x0
 +int attr fontProviderQuery 0x0
++int attr fontProviderSystemFontFamily 0x0
 +int attr fontStyle 0x0
 +int attr fontVariationSettings 0x0
 +int attr fontWeight 0x0
@@ -258,19 +360,16 @@ index 0000000..05fba27
 +int attr imageButtonStyle 0x0
 +int attr indeterminateProgressStyle 0x0
 +int attr initialActivityCount 0x0
++int attr isAutofillInlineSuggestionTheme 0x0
 +int attr isLightTheme 0x0
 +int attr itemPadding 0x0
-+int attr keylines 0x0
++int attr lStar 0x0
 +int attr lastBaselineToBottomHeight 0x0
 +int attr layout 0x0
-+int attr layout_anchor 0x0
-+int attr layout_anchorGravity 0x0
-+int attr layout_behavior 0x0
-+int attr layout_dodgeInsetEdges 0x0
-+int attr layout_insetEdge 0x0
-+int attr layout_keyline 0x0
 +int attr lineHeight 0x0
 +int attr listChoiceBackgroundIndicator 0x0
++int attr listChoiceIndicatorMultipleAnimated 0x0
++int attr listChoiceIndicatorSingleAnimated 0x0
 +int attr listDividerAlertDialog 0x0
 +int attr listItemLayout 0x0
 +int attr listLayout 0x0
@@ -279,16 +378,20 @@ index 0000000..05fba27
 +int attr listPreferredItemHeight 0x0
 +int attr listPreferredItemHeightLarge 0x0
 +int attr listPreferredItemHeightSmall 0x0
++int attr listPreferredItemPaddingEnd 0x0
 +int attr listPreferredItemPaddingLeft 0x0
 +int attr listPreferredItemPaddingRight 0x0
++int attr listPreferredItemPaddingStart 0x0
 +int attr logo 0x0
 +int attr logoDescription 0x0
 +int attr maxButtonHeight 0x0
 +int attr measureWithLargestChild 0x0
++int attr menu 0x0
 +int attr multiChoiceItemLayout 0x0
 +int attr navigationContentDescription 0x0
 +int attr navigationIcon 0x0
 +int attr navigationMode 0x0
++int attr nestedScrollViewStyle 0x0
 +int attr numericModifiers 0x0
 +int attr overlapAnchor 0x0
 +int attr overlayImage 0x0
@@ -313,6 +416,7 @@ index 0000000..05fba27
 +int attr progressBarStyle 0x0
 +int attr queryBackground 0x0
 +int attr queryHint 0x0
++int attr queryPatterns 0x0
 +int attr radioButtonStyle 0x0
 +int attr ratingBarStyle 0x0
 +int attr ratingBarStyleIndicator 0x0
@@ -339,6 +443,7 @@ index 0000000..05fba27
 +int attr seekBarStyle 0x0
 +int attr selectableItemBackground 0x0
 +int attr selectableItemBackgroundBorderless 0x0
++int attr shortcutMatchRequired 0x0
 +int attr showAsAction 0x0
 +int attr showDividers 0x0
 +int attr showText 0x0
@@ -350,7 +455,6 @@ index 0000000..05fba27
 +int attr splitTrack 0x0
 +int attr srcCompat 0x0
 +int attr state_above_anchor 0x0
-+int attr statusBarBackground 0x0
 +int attr subMenuArrow 0x0
 +int attr submitBackground 0x0
 +int attr subtitle 0x0
@@ -373,6 +477,7 @@ index 0000000..05fba27
 +int attr textAppearanceSmallPopupMenu 0x0
 +int attr textColorAlertDialogListItem 0x0
 +int attr textColorSearchUrl 0x0
++int attr textLocale 0x0
 +int attr theme 0x0
 +int attr thickness 0x0
 +int attr thumbTextPadding 0x0
@@ -416,16 +521,16 @@ index 0000000..05fba27
 +int attr windowMinWidthMinor 0x0
 +int attr windowNoTitle 0x0
 +int bool abc_action_bar_embed_tabs 0x0
-+int bool abc_allow_stacked_button_bar 0x0
 +int bool abc_config_actionMenuItemAllCaps 0x0
 +int color abc_background_cache_hint_selector_material_dark 0x0
 +int color abc_background_cache_hint_selector_material_light 0x0
 +int color abc_btn_colored_borderless_text_material 0x0
 +int color abc_btn_colored_text_material 0x0
 +int color abc_color_highlight_material 0x0
++int color abc_decor_view_status_guard 0x0
++int color abc_decor_view_status_guard_light 0x0
 +int color abc_hint_foreground_material_dark 0x0
 +int color abc_hint_foreground_material_light 0x0
-+int color abc_input_method_navigation_guard 0x0
 +int color abc_primary_text_disable_only_material_dark 0x0
 +int color abc_primary_text_disable_only_material_light 0x0
 +int color abc_primary_text_material_dark 0x0
@@ -444,6 +549,8 @@ index 0000000..05fba27
 +int color abc_tint_switch_track 0x0
 +int color accent_material_dark 0x0
 +int color accent_material_light 0x0
++int color androidx_core_ripple_material_light 0x0
++int color androidx_core_secondary_text_default_material_light 0x0
 +int color background_floating_material_dark 0x0
 +int color background_floating_material_light 0x0
 +int color background_material_dark 0x0
@@ -552,6 +659,9 @@ index 0000000..05fba27
 +int dimen abc_edit_text_inset_horizontal_material 0x0
 +int dimen abc_edit_text_inset_top_material 0x0
 +int dimen abc_floating_window_z 0x0
++int dimen abc_list_item_height_large_material 0x0
++int dimen abc_list_item_height_material 0x0
++int dimen abc_list_item_height_small_material 0x0
 +int dimen abc_list_item_padding_horizontal_material 0x0
 +int dimen abc_panel_menu_list_width 0x0
 +int dimen abc_progress_bar_height_material 0x0
@@ -560,6 +670,9 @@ index 0000000..05fba27
 +int dimen abc_seekbar_track_background_height_material 0x0
 +int dimen abc_seekbar_track_progress_height_material 0x0
 +int dimen abc_select_dialog_padding_start_material 0x0
++int dimen abc_star_big 0x0
++int dimen abc_star_medium 0x0
++int dimen abc_star_small 0x0
 +int dimen abc_switch_padding 0x0
 +int dimen abc_text_size_body_1_material 0x0
 +int dimen abc_text_size_body_2_material 0x0
@@ -579,6 +692,7 @@ index 0000000..05fba27
 +int dimen abc_text_size_subtitle_material_toolbar 0x0
 +int dimen abc_text_size_title_material 0x0
 +int dimen abc_text_size_title_material_toolbar 0x0
++int dimen autofill_inline_suggestion_icon_size 0x0
 +int dimen compat_button_inset_horizontal_material 0x0
 +int dimen compat_button_inset_vertical_material 0x0
 +int dimen compat_button_padding_horizontal_material 0x0
@@ -622,11 +736,13 @@ index 0000000..05fba27
 +int drawable abc_action_bar_item_background_material 0x0
 +int drawable abc_btn_borderless_material 0x0
 +int drawable abc_btn_check_material 0x0
++int drawable abc_btn_check_material_anim 0x0
 +int drawable abc_btn_check_to_on_mtrl_000 0x0
 +int drawable abc_btn_check_to_on_mtrl_015 0x0
 +int drawable abc_btn_colored_material 0x0
 +int drawable abc_btn_default_mtrl_shape 0x0
 +int drawable abc_btn_radio_material 0x0
++int drawable abc_btn_radio_material_anim 0x0
 +int drawable abc_btn_radio_to_on_mtrl_000 0x0
 +int drawable abc_btn_radio_to_on_mtrl_015 0x0
 +int drawable abc_btn_switch_to_on_mtrl_00001 0x0
@@ -649,12 +765,6 @@ index 0000000..05fba27
 +int drawable abc_ic_menu_selectall_mtrl_alpha 0x0
 +int drawable abc_ic_menu_share_mtrl_alpha 0x0
 +int drawable abc_ic_search_api_material 0x0
-+int drawable abc_ic_star_black_16dp 0x0
-+int drawable abc_ic_star_black_36dp 0x0
-+int drawable abc_ic_star_black_48dp 0x0
-+int drawable abc_ic_star_half_black_16dp 0x0
-+int drawable abc_ic_star_half_black_36dp 0x0
-+int drawable abc_ic_star_half_black_48dp 0x0
 +int drawable abc_ic_voice_search_api_material 0x0
 +int drawable abc_item_background_holo_dark 0x0
 +int drawable abc_item_background_holo_light 0x0
@@ -685,23 +795,31 @@ index 0000000..05fba27
 +int drawable abc_seekbar_track_material 0x0
 +int drawable abc_spinner_mtrl_am_alpha 0x0
 +int drawable abc_spinner_textfield_background_material 0x0
++int drawable abc_star_black_48dp 0x0
++int drawable abc_star_half_black_48dp 0x0
 +int drawable abc_switch_thumb_material 0x0
 +int drawable abc_switch_track_mtrl_alpha 0x0
 +int drawable abc_tab_indicator_material 0x0
 +int drawable abc_tab_indicator_mtrl_alpha 0x0
 +int drawable abc_text_cursor_material 0x0
-+int drawable abc_text_select_handle_left_mtrl_dark 0x0
-+int drawable abc_text_select_handle_left_mtrl_light 0x0
-+int drawable abc_text_select_handle_middle_mtrl_dark 0x0
-+int drawable abc_text_select_handle_middle_mtrl_light 0x0
-+int drawable abc_text_select_handle_right_mtrl_dark 0x0
-+int drawable abc_text_select_handle_right_mtrl_light 0x0
++int drawable abc_text_select_handle_left_mtrl 0x0
++int drawable abc_text_select_handle_middle_mtrl 0x0
++int drawable abc_text_select_handle_right_mtrl 0x0
 +int drawable abc_textfield_activated_mtrl_alpha 0x0
 +int drawable abc_textfield_default_mtrl_alpha 0x0
 +int drawable abc_textfield_search_activated_mtrl_alpha 0x0
 +int drawable abc_textfield_search_default_mtrl_alpha 0x0
 +int drawable abc_textfield_search_material 0x0
 +int drawable abc_vector_test 0x0
++int drawable autofill_inline_suggestion_chip_background 0x0
++int drawable btn_checkbox_checked_mtrl 0x0
++int drawable btn_checkbox_checked_to_unchecked_mtrl_animation 0x0
++int drawable btn_checkbox_unchecked_mtrl 0x0
++int drawable btn_checkbox_unchecked_to_checked_mtrl_animation 0x0
++int drawable btn_radio_off_mtrl 0x0
++int drawable btn_radio_off_to_on_mtrl_animation 0x0
++int drawable btn_radio_on_mtrl 0x0
++int drawable btn_radio_on_to_off_mtrl_animation 0x0
 +int drawable notification_action_background 0x0
 +int drawable notification_bg 0x0
 +int drawable notification_bg_low 0x0
@@ -715,11 +833,48 @@ index 0000000..05fba27
 +int drawable notification_tile_bg 0x0
 +int drawable notify_panel_notification_icon_bg 0x0
 +int drawable redbox_top_border_background 0x0
++int drawable test_level_drawable 0x0
 +int drawable tooltip_frame_dark 0x0
 +int drawable tooltip_frame_light 0x0
++int id accessibility_action_clickable_span 0x0
 +int id accessibility_actions 0x0
++int id accessibility_collection 0x0
++int id accessibility_collection_item 0x0
++int id accessibility_custom_action_0 0x0
++int id accessibility_custom_action_1 0x0
++int id accessibility_custom_action_10 0x0
++int id accessibility_custom_action_11 0x0
++int id accessibility_custom_action_12 0x0
++int id accessibility_custom_action_13 0x0
++int id accessibility_custom_action_14 0x0
++int id accessibility_custom_action_15 0x0
++int id accessibility_custom_action_16 0x0
++int id accessibility_custom_action_17 0x0
++int id accessibility_custom_action_18 0x0
++int id accessibility_custom_action_19 0x0
++int id accessibility_custom_action_2 0x0
++int id accessibility_custom_action_20 0x0
++int id accessibility_custom_action_21 0x0
++int id accessibility_custom_action_22 0x0
++int id accessibility_custom_action_23 0x0
++int id accessibility_custom_action_24 0x0
++int id accessibility_custom_action_25 0x0
++int id accessibility_custom_action_26 0x0
++int id accessibility_custom_action_27 0x0
++int id accessibility_custom_action_28 0x0
++int id accessibility_custom_action_29 0x0
++int id accessibility_custom_action_3 0x0
++int id accessibility_custom_action_30 0x0
++int id accessibility_custom_action_31 0x0
++int id accessibility_custom_action_4 0x0
++int id accessibility_custom_action_5 0x0
++int id accessibility_custom_action_6 0x0
++int id accessibility_custom_action_7 0x0
++int id accessibility_custom_action_8 0x0
++int id accessibility_custom_action_9 0x0
 +int id accessibility_hint 0x0
 +int id accessibility_label 0x0
++int id accessibility_links 0x0
 +int id accessibility_role 0x0
 +int id accessibility_state 0x0
 +int id accessibility_value 0x0
@@ -745,14 +900,18 @@ index 0000000..05fba27
 +int id add 0x0
 +int id alertTitle 0x0
 +int id async 0x0
++int id autofill_inline_suggestion_end_icon 0x0
++int id autofill_inline_suggestion_start_icon 0x0
++int id autofill_inline_suggestion_subtitle 0x0
++int id autofill_inline_suggestion_title 0x0
 +int id blocking 0x0
-+int id bottom 0x0
 +int id buttonPanel 0x0
 +int id catalyst_redbox_title 0x0
 +int id center 0x0
 +int id centerCrop 0x0
 +int id centerInside 0x0
 +int id checkbox 0x0
++int id checked 0x0
 +int id chronometer 0x0
 +int id content 0x0
 +int id contentPanel 0x0
@@ -760,8 +919,8 @@ index 0000000..05fba27
 +int id customPanel 0x0
 +int id decor_content_parent 0x0
 +int id default_activity_button 0x0
++int id dialog_button 0x0
 +int id edit_query 0x0
-+int id end 0x0
 +int id expand_activities_button 0x0
 +int id expanded_menu 0x0
 +int id fitBottomStart 0x0
@@ -772,6 +931,7 @@ index 0000000..05fba27
 +int id focusCrop 0x0
 +int id forever 0x0
 +int id fps_text 0x0
++int id fragment_container_view_tag 0x0
 +int id group_divider 0x0
 +int id home 0x0
 +int id icon 0x0
@@ -779,7 +939,11 @@ index 0000000..05fba27
 +int id image 0x0
 +int id info 0x0
 +int id italic 0x0
-+int id left 0x0
++int id item1 0x0
++int id item2 0x0
++int id item3 0x0
++int id item4 0x0
++int id labelled_by 0x0
 +int id line1 0x0
 +int id line3 0x0
 +int id listMode 0x0
@@ -791,12 +955,14 @@ index 0000000..05fba27
 +int id notification_background 0x0
 +int id notification_main_column 0x0
 +int id notification_main_column_container 0x0
++int id off 0x0
++int id on 0x0
 +int id parentPanel 0x0
++int id pointer_events 0x0
 +int id progress_circular 0x0
 +int id progress_horizontal 0x0
 +int id radio 0x0
 +int id react_test_id 0x0
-+int id right 0x0
 +int id right_icon 0x0
 +int id right_side 0x0
 +int id rn_frame_file 0x0
@@ -825,17 +991,27 @@ index 0000000..05fba27
 +int id select_dialog_listview 0x0
 +int id shortcut 0x0
 +int id spacer 0x0
++int id special_effects_controller_view_tag 0x0
 +int id split_action_bar 0x0
 +int id src_atop 0x0
 +int id src_in 0x0
 +int id src_over 0x0
-+int id start 0x0
 +int id submenuarrow 0x0
 +int id submit_area 0x0
 +int id tabMode 0x0
++int id tag_accessibility_actions 0x0
++int id tag_accessibility_clickable_spans 0x0
++int id tag_accessibility_heading 0x0
++int id tag_accessibility_pane_title 0x0
++int id tag_on_apply_window_listener 0x0
++int id tag_on_receive_content_listener 0x0
++int id tag_on_receive_content_mime_types 0x0
++int id tag_screen_reader_focusable 0x0
++int id tag_state_description 0x0
 +int id tag_transition_group 0x0
 +int id tag_unhandled_key_event_manager 0x0
 +int id tag_unhandled_key_listeners 0x0
++int id tag_window_insets_animation_callback 0x0
 +int id text 0x0
 +int id text2 0x0
 +int id textSpacerNoButtons 0x0
@@ -844,12 +1020,16 @@ index 0000000..05fba27
 +int id title 0x0
 +int id titleDividerNoCustom 0x0
 +int id title_template 0x0
-+int id top 0x0
 +int id topPanel 0x0
++int id unchecked 0x0
 +int id uniform 0x0
 +int id up 0x0
 +int id view_tag_instance_handle 0x0
 +int id view_tag_native_id 0x0
++int id view_tree_lifecycle_owner 0x0
++int id view_tree_saved_state_registry_owner 0x0
++int id view_tree_view_model_store_owner 0x0
++int id visible_removing_fragment_view_tag 0x0
 +int id wrap_content 0x0
 +int integer abc_config_activityDefaultDur 0x0
 +int integer abc_config_activityShortDur 0x0
@@ -858,6 +1038,13 @@ index 0000000..05fba27
 +int integer react_native_dev_server_port 0x0
 +int integer react_native_inspector_proxy_port 0x0
 +int integer status_bar_notification_info_maxnum 0x0
++int interpolator btn_checkbox_checked_mtrl_animation_interpolator_0 0x0
++int interpolator btn_checkbox_checked_mtrl_animation_interpolator_1 0x0
++int interpolator btn_checkbox_unchecked_mtrl_animation_interpolator_0 0x0
++int interpolator btn_checkbox_unchecked_mtrl_animation_interpolator_1 0x0
++int interpolator btn_radio_to_off_mtrl_animation_interpolator_0 0x0
++int interpolator btn_radio_to_on_mtrl_animation_interpolator_0 0x0
++int interpolator fast_out_slow_in 0x0
 +int layout abc_action_bar_title_item 0x0
 +int layout abc_action_bar_up_container 0x0
 +int layout abc_action_menu_item_layout 0x0
@@ -886,6 +1073,8 @@ index 0000000..05fba27
 +int layout abc_search_view 0x0
 +int layout abc_select_dialog_material 0x0
 +int layout abc_tooltip 0x0
++int layout autofill_inline_suggestion 0x0
++int layout custom_dialog 0x0
 +int layout dev_loading_view 0x0
 +int layout fps_view 0x0
 +int layout notification_action 0x0
@@ -901,6 +1090,8 @@ index 0000000..05fba27
 +int layout select_dialog_multichoice_material 0x0
 +int layout select_dialog_singlechoice_material 0x0
 +int layout support_simple_spinner_dropdown_item 0x0
++int menu example_menu 0x0
++int menu example_menu2 0x0
 +int string abc_action_bar_home_description 0x0
 +int string abc_action_bar_up_description 0x0
 +int string abc_action_menu_overflow_description 0x0
@@ -909,18 +1100,6 @@ index 0000000..05fba27
 +int string abc_activitychooserview_choose_application 0x0
 +int string abc_capital_off 0x0
 +int string abc_capital_on 0x0
-+int string abc_font_family_body_1_material 0x0
-+int string abc_font_family_body_2_material 0x0
-+int string abc_font_family_button_material 0x0
-+int string abc_font_family_caption_material 0x0
-+int string abc_font_family_display_1_material 0x0
-+int string abc_font_family_display_2_material 0x0
-+int string abc_font_family_display_3_material 0x0
-+int string abc_font_family_display_4_material 0x0
-+int string abc_font_family_headline_material 0x0
-+int string abc_font_family_menu_material 0x0
-+int string abc_font_family_subhead_material 0x0
-+int string abc_font_family_title_material 0x0
 +int string abc_menu_alt_shortcut_label 0x0
 +int string abc_menu_ctrl_shortcut_label 0x0
 +int string abc_menu_delete_shortcut_label 0x0
@@ -941,7 +1120,6 @@ index 0000000..05fba27
 +int string abc_shareactionprovider_share_with_application 0x0
 +int string abc_toolbar_collapse_description 0x0
 +int string alert_description 0x0
-+int string button_description 0x0
 +int string catalyst_change_bundle_location 0x0
 +int string catalyst_copy_button 0x0
 +int string catalyst_debug 0x0
@@ -959,6 +1137,7 @@ index 0000000..05fba27
 +int string catalyst_hot_reloading_auto_enable 0x0
 +int string catalyst_hot_reloading_stop 0x0
 +int string catalyst_inspector 0x0
++int string catalyst_inspector_stop 0x0
 +int string catalyst_loading_from_url 0x0
 +int string catalyst_open_flipper_error 0x0
 +int string catalyst_perf_monitor 0x0
@@ -983,7 +1162,6 @@ index 0000000..05fba27
 +int string radiogroup_description 0x0
 +int string rn_tab_description 0x0
 +int string scrollbar_description 0x0
-+int string search_description 0x0
 +int string search_menu_title 0x0
 +int string spinbutton_description 0x0
 +int string state_busy_description 0x0
@@ -1157,6 +1335,7 @@ index 0000000..05fba27
 +int style Base_Widget_AppCompat_SeekBar_Discrete 0x0
 +int style Base_Widget_AppCompat_Spinner 0x0
 +int style Base_Widget_AppCompat_Spinner_Underlined 0x0
++int style Base_Widget_AppCompat_TextView 0x0
 +int style Base_Widget_AppCompat_TextView_SpinnerItem 0x0
 +int style Base_Widget_AppCompat_Toolbar 0x0
 +int style Base_Widget_AppCompat_Toolbar_Button_Navigation 0x0
@@ -1254,6 +1433,8 @@ index 0000000..05fba27
 +int style ThemeOverlay_AppCompat_ActionBar 0x0
 +int style ThemeOverlay_AppCompat_Dark 0x0
 +int style ThemeOverlay_AppCompat_Dark_ActionBar 0x0
++int style ThemeOverlay_AppCompat_DayNight 0x0
++int style ThemeOverlay_AppCompat_DayNight_ActionBar 0x0
 +int style ThemeOverlay_AppCompat_Dialog 0x0
 +int style ThemeOverlay_AppCompat_Dialog_Alert 0x0
 +int style ThemeOverlay_AppCompat_Light 0x0
@@ -1270,6 +1451,7 @@ index 0000000..05fba27
 +int style Theme_AppCompat_DialogWhenLarge 0x0
 +int style Theme_AppCompat_Dialog_Alert 0x0
 +int style Theme_AppCompat_Dialog_MinWidth 0x0
++int style Theme_AppCompat_Empty 0x0
 +int style Theme_AppCompat_Light 0x0
 +int style Theme_AppCompat_Light_DarkActionBar 0x0
 +int style Theme_AppCompat_Light_Dialog 0x0
@@ -1278,6 +1460,7 @@ index 0000000..05fba27
 +int style Theme_AppCompat_Light_Dialog_MinWidth 0x0
 +int style Theme_AppCompat_Light_NoActionBar 0x0
 +int style Theme_AppCompat_NoActionBar 0x0
++int style Theme_AutofillInlineSuggestion 0x0
 +int style Theme_Catalyst 0x0
 +int style Theme_Catalyst_LogBox 0x0
 +int style Theme_Catalyst_RedBox 0x0
@@ -1355,12 +1538,18 @@ index 0000000..05fba27
 +int style Widget_AppCompat_Spinner_DropDown 0x0
 +int style Widget_AppCompat_Spinner_DropDown_ActionBar 0x0
 +int style Widget_AppCompat_Spinner_Underlined 0x0
++int style Widget_AppCompat_TextView 0x0
 +int style Widget_AppCompat_TextView_SpinnerItem 0x0
 +int style Widget_AppCompat_Toolbar 0x0
 +int style Widget_AppCompat_Toolbar_Button_Navigation 0x0
++int style Widget_Autofill 0x0
++int style Widget_Autofill_InlineSuggestionChip 0x0
++int style Widget_Autofill_InlineSuggestionEndIconStyle 0x0
++int style Widget_Autofill_InlineSuggestionStartIconStyle 0x0
++int style Widget_Autofill_InlineSuggestionSubtitle 0x0
++int style Widget_Autofill_InlineSuggestionTitle 0x0
 +int style Widget_Compat_NotificationActionContainer 0x0
 +int style Widget_Compat_NotificationActionText 0x0
-+int style Widget_Support_CoordinatorLayout 0x0
 +int style redboxButton 0x0
 +int[] styleable ActionBar { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable ActionBar_background 0
@@ -1431,6 +1620,7 @@ index 0000000..05fba27
 +int styleable AnimatedStateListDrawableTransition_android_fromId 1
 +int styleable AnimatedStateListDrawableTransition_android_reversible 2
 +int styleable AnimatedStateListDrawableTransition_android_toId 3
++int[] styleable AppCompatEmojiHelper {  }
 +int[] styleable AppCompatImageView { 0x1010119, 0x0, 0x0, 0x0 }
 +int styleable AppCompatImageView_android_src 0
 +int styleable AppCompatImageView_srcCompat 1
@@ -1449,19 +1639,30 @@ index 0000000..05fba27
 +int styleable AppCompatTextHelper_android_drawableStart 4
 +int styleable AppCompatTextHelper_android_drawableTop 5
 +int styleable AppCompatTextHelper_android_textAppearance 6
-+int[] styleable AppCompatTextView { 0x1010034, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int[] styleable AppCompatTextView { 0x1010034, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable AppCompatTextView_android_textAppearance 0
 +int styleable AppCompatTextView_autoSizeMaxTextSize 1
 +int styleable AppCompatTextView_autoSizeMinTextSize 2
 +int styleable AppCompatTextView_autoSizePresetSizes 3
 +int styleable AppCompatTextView_autoSizeStepGranularity 4
 +int styleable AppCompatTextView_autoSizeTextType 5
-+int styleable AppCompatTextView_firstBaselineToTopHeight 6
-+int styleable AppCompatTextView_fontFamily 7
-+int styleable AppCompatTextView_lastBaselineToBottomHeight 8
-+int styleable AppCompatTextView_lineHeight 9
-+int styleable AppCompatTextView_textAllCaps 10
-+int[] styleable AppCompatTheme { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x10100ae, 0x1010057, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int styleable AppCompatTextView_drawableBottomCompat 6
++int styleable AppCompatTextView_drawableEndCompat 7
++int styleable AppCompatTextView_drawableLeftCompat 8
++int styleable AppCompatTextView_drawableRightCompat 9
++int styleable AppCompatTextView_drawableStartCompat 10
++int styleable AppCompatTextView_drawableTint 11
++int styleable AppCompatTextView_drawableTintMode 12
++int styleable AppCompatTextView_drawableTopCompat 13
++int styleable AppCompatTextView_emojiCompatEnabled 14
++int styleable AppCompatTextView_firstBaselineToTopHeight 15
++int styleable AppCompatTextView_fontFamily 16
++int styleable AppCompatTextView_fontVariationSettings 17
++int styleable AppCompatTextView_lastBaselineToBottomHeight 18
++int styleable AppCompatTextView_lineHeight 19
++int styleable AppCompatTextView_textAllCaps 20
++int styleable AppCompatTextView_textLocale 21
++int[] styleable AppCompatTheme { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x10100ae, 0x1010057, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable AppCompatTheme_actionBarDivider 0
 +int styleable AppCompatTheme_actionBarItemBackground 1
 +int styleable AppCompatTheme_actionBarPopupTheme 2
@@ -1479,131 +1680,144 @@ index 0000000..05fba27
 +int styleable AppCompatTheme_actionMenuTextColor 14
 +int styleable AppCompatTheme_actionModeBackground 15
 +int styleable AppCompatTheme_actionModeCloseButtonStyle 16
-+int styleable AppCompatTheme_actionModeCloseDrawable 17
-+int styleable AppCompatTheme_actionModeCopyDrawable 18
-+int styleable AppCompatTheme_actionModeCutDrawable 19
-+int styleable AppCompatTheme_actionModeFindDrawable 20
-+int styleable AppCompatTheme_actionModePasteDrawable 21
-+int styleable AppCompatTheme_actionModePopupWindowStyle 22
-+int styleable AppCompatTheme_actionModeSelectAllDrawable 23
-+int styleable AppCompatTheme_actionModeShareDrawable 24
-+int styleable AppCompatTheme_actionModeSplitBackground 25
-+int styleable AppCompatTheme_actionModeStyle 26
-+int styleable AppCompatTheme_actionModeWebSearchDrawable 27
-+int styleable AppCompatTheme_actionOverflowButtonStyle 28
-+int styleable AppCompatTheme_actionOverflowMenuStyle 29
-+int styleable AppCompatTheme_activityChooserViewStyle 30
-+int styleable AppCompatTheme_alertDialogButtonGroupStyle 31
-+int styleable AppCompatTheme_alertDialogCenterButtons 32
-+int styleable AppCompatTheme_alertDialogStyle 33
-+int styleable AppCompatTheme_alertDialogTheme 34
-+int styleable AppCompatTheme_android_windowAnimationStyle 35
-+int styleable AppCompatTheme_android_windowIsFloating 36
-+int styleable AppCompatTheme_autoCompleteTextViewStyle 37
-+int styleable AppCompatTheme_borderlessButtonStyle 38
-+int styleable AppCompatTheme_buttonBarButtonStyle 39
-+int styleable AppCompatTheme_buttonBarNegativeButtonStyle 40
-+int styleable AppCompatTheme_buttonBarNeutralButtonStyle 41
-+int styleable AppCompatTheme_buttonBarPositiveButtonStyle 42
-+int styleable AppCompatTheme_buttonBarStyle 43
-+int styleable AppCompatTheme_buttonStyle 44
-+int styleable AppCompatTheme_buttonStyleSmall 45
-+int styleable AppCompatTheme_checkboxStyle 46
-+int styleable AppCompatTheme_checkedTextViewStyle 47
-+int styleable AppCompatTheme_colorAccent 48
-+int styleable AppCompatTheme_colorBackgroundFloating 49
-+int styleable AppCompatTheme_colorButtonNormal 50
-+int styleable AppCompatTheme_colorControlActivated 51
-+int styleable AppCompatTheme_colorControlHighlight 52
-+int styleable AppCompatTheme_colorControlNormal 53
-+int styleable AppCompatTheme_colorError 54
-+int styleable AppCompatTheme_colorPrimary 55
-+int styleable AppCompatTheme_colorPrimaryDark 56
-+int styleable AppCompatTheme_colorSwitchThumbNormal 57
-+int styleable AppCompatTheme_controlBackground 58
-+int styleable AppCompatTheme_dialogCornerRadius 59
-+int styleable AppCompatTheme_dialogPreferredPadding 60
-+int styleable AppCompatTheme_dialogTheme 61
-+int styleable AppCompatTheme_dividerHorizontal 62
-+int styleable AppCompatTheme_dividerVertical 63
-+int styleable AppCompatTheme_dropDownListViewStyle 64
-+int styleable AppCompatTheme_dropdownListPreferredItemHeight 65
-+int styleable AppCompatTheme_editTextBackground 66
-+int styleable AppCompatTheme_editTextColor 67
-+int styleable AppCompatTheme_editTextStyle 68
-+int styleable AppCompatTheme_homeAsUpIndicator 69
-+int styleable AppCompatTheme_imageButtonStyle 70
-+int styleable AppCompatTheme_listChoiceBackgroundIndicator 71
-+int styleable AppCompatTheme_listDividerAlertDialog 72
-+int styleable AppCompatTheme_listMenuViewStyle 73
-+int styleable AppCompatTheme_listPopupWindowStyle 74
-+int styleable AppCompatTheme_listPreferredItemHeight 75
-+int styleable AppCompatTheme_listPreferredItemHeightLarge 76
-+int styleable AppCompatTheme_listPreferredItemHeightSmall 77
-+int styleable AppCompatTheme_listPreferredItemPaddingLeft 78
-+int styleable AppCompatTheme_listPreferredItemPaddingRight 79
-+int styleable AppCompatTheme_panelBackground 80
-+int styleable AppCompatTheme_panelMenuListTheme 81
-+int styleable AppCompatTheme_panelMenuListWidth 82
-+int styleable AppCompatTheme_popupMenuStyle 83
-+int styleable AppCompatTheme_popupWindowStyle 84
-+int styleable AppCompatTheme_radioButtonStyle 85
-+int styleable AppCompatTheme_ratingBarStyle 86
-+int styleable AppCompatTheme_ratingBarStyleIndicator 87
-+int styleable AppCompatTheme_ratingBarStyleSmall 88
-+int styleable AppCompatTheme_searchViewStyle 89
-+int styleable AppCompatTheme_seekBarStyle 90
-+int styleable AppCompatTheme_selectableItemBackground 91
-+int styleable AppCompatTheme_selectableItemBackgroundBorderless 92
-+int styleable AppCompatTheme_spinnerDropDownItemStyle 93
-+int styleable AppCompatTheme_spinnerStyle 94
-+int styleable AppCompatTheme_switchStyle 95
-+int styleable AppCompatTheme_textAppearanceLargePopupMenu 96
-+int styleable AppCompatTheme_textAppearanceListItem 97
-+int styleable AppCompatTheme_textAppearanceListItemSecondary 98
-+int styleable AppCompatTheme_textAppearanceListItemSmall 99
-+int styleable AppCompatTheme_textAppearancePopupMenuHeader 100
-+int styleable AppCompatTheme_textAppearanceSearchResultSubtitle 101
-+int styleable AppCompatTheme_textAppearanceSearchResultTitle 102
-+int styleable AppCompatTheme_textAppearanceSmallPopupMenu 103
-+int styleable AppCompatTheme_textColorAlertDialogListItem 104
-+int styleable AppCompatTheme_textColorSearchUrl 105
-+int styleable AppCompatTheme_toolbarNavigationButtonStyle 106
-+int styleable AppCompatTheme_toolbarStyle 107
-+int styleable AppCompatTheme_tooltipForegroundColor 108
-+int styleable AppCompatTheme_tooltipFrameBackground 109
-+int styleable AppCompatTheme_viewInflaterClass 110
-+int styleable AppCompatTheme_windowActionBar 111
-+int styleable AppCompatTheme_windowActionBarOverlay 112
-+int styleable AppCompatTheme_windowActionModeOverlay 113
-+int styleable AppCompatTheme_windowFixedHeightMajor 114
-+int styleable AppCompatTheme_windowFixedHeightMinor 115
-+int styleable AppCompatTheme_windowFixedWidthMajor 116
-+int styleable AppCompatTheme_windowFixedWidthMinor 117
-+int styleable AppCompatTheme_windowMinWidthMajor 118
-+int styleable AppCompatTheme_windowMinWidthMinor 119
-+int styleable AppCompatTheme_windowNoTitle 120
++int styleable AppCompatTheme_actionModeCloseContentDescription 17
++int styleable AppCompatTheme_actionModeCloseDrawable 18
++int styleable AppCompatTheme_actionModeCopyDrawable 19
++int styleable AppCompatTheme_actionModeCutDrawable 20
++int styleable AppCompatTheme_actionModeFindDrawable 21
++int styleable AppCompatTheme_actionModePasteDrawable 22
++int styleable AppCompatTheme_actionModePopupWindowStyle 23
++int styleable AppCompatTheme_actionModeSelectAllDrawable 24
++int styleable AppCompatTheme_actionModeShareDrawable 25
++int styleable AppCompatTheme_actionModeSplitBackground 26
++int styleable AppCompatTheme_actionModeStyle 27
++int styleable AppCompatTheme_actionModeTheme 28
++int styleable AppCompatTheme_actionModeWebSearchDrawable 29
++int styleable AppCompatTheme_actionOverflowButtonStyle 30
++int styleable AppCompatTheme_actionOverflowMenuStyle 31
++int styleable AppCompatTheme_activityChooserViewStyle 32
++int styleable AppCompatTheme_alertDialogButtonGroupStyle 33
++int styleable AppCompatTheme_alertDialogCenterButtons 34
++int styleable AppCompatTheme_alertDialogStyle 35
++int styleable AppCompatTheme_alertDialogTheme 36
++int styleable AppCompatTheme_android_windowAnimationStyle 37
++int styleable AppCompatTheme_android_windowIsFloating 38
++int styleable AppCompatTheme_autoCompleteTextViewStyle 39
++int styleable AppCompatTheme_borderlessButtonStyle 40
++int styleable AppCompatTheme_buttonBarButtonStyle 41
++int styleable AppCompatTheme_buttonBarNegativeButtonStyle 42
++int styleable AppCompatTheme_buttonBarNeutralButtonStyle 43
++int styleable AppCompatTheme_buttonBarPositiveButtonStyle 44
++int styleable AppCompatTheme_buttonBarStyle 45
++int styleable AppCompatTheme_buttonStyle 46
++int styleable AppCompatTheme_buttonStyleSmall 47
++int styleable AppCompatTheme_checkboxStyle 48
++int styleable AppCompatTheme_checkedTextViewStyle 49
++int styleable AppCompatTheme_colorAccent 50
++int styleable AppCompatTheme_colorBackgroundFloating 51
++int styleable AppCompatTheme_colorButtonNormal 52
++int styleable AppCompatTheme_colorControlActivated 53
++int styleable AppCompatTheme_colorControlHighlight 54
++int styleable AppCompatTheme_colorControlNormal 55
++int styleable AppCompatTheme_colorError 56
++int styleable AppCompatTheme_colorPrimary 57
++int styleable AppCompatTheme_colorPrimaryDark 58
++int styleable AppCompatTheme_colorSwitchThumbNormal 59
++int styleable AppCompatTheme_controlBackground 60
++int styleable AppCompatTheme_dialogCornerRadius 61
++int styleable AppCompatTheme_dialogPreferredPadding 62
++int styleable AppCompatTheme_dialogTheme 63
++int styleable AppCompatTheme_dividerHorizontal 64
++int styleable AppCompatTheme_dividerVertical 65
++int styleable AppCompatTheme_dropDownListViewStyle 66
++int styleable AppCompatTheme_dropdownListPreferredItemHeight 67
++int styleable AppCompatTheme_editTextBackground 68
++int styleable AppCompatTheme_editTextColor 69
++int styleable AppCompatTheme_editTextStyle 70
++int styleable AppCompatTheme_homeAsUpIndicator 71
++int styleable AppCompatTheme_imageButtonStyle 72
++int styleable AppCompatTheme_listChoiceBackgroundIndicator 73
++int styleable AppCompatTheme_listChoiceIndicatorMultipleAnimated 74
++int styleable AppCompatTheme_listChoiceIndicatorSingleAnimated 75
++int styleable AppCompatTheme_listDividerAlertDialog 76
++int styleable AppCompatTheme_listMenuViewStyle 77
++int styleable AppCompatTheme_listPopupWindowStyle 78
++int styleable AppCompatTheme_listPreferredItemHeight 79
++int styleable AppCompatTheme_listPreferredItemHeightLarge 80
++int styleable AppCompatTheme_listPreferredItemHeightSmall 81
++int styleable AppCompatTheme_listPreferredItemPaddingEnd 82
++int styleable AppCompatTheme_listPreferredItemPaddingLeft 83
++int styleable AppCompatTheme_listPreferredItemPaddingRight 84
++int styleable AppCompatTheme_listPreferredItemPaddingStart 85
++int styleable AppCompatTheme_panelBackground 86
++int styleable AppCompatTheme_panelMenuListTheme 87
++int styleable AppCompatTheme_panelMenuListWidth 88
++int styleable AppCompatTheme_popupMenuStyle 89
++int styleable AppCompatTheme_popupWindowStyle 90
++int styleable AppCompatTheme_radioButtonStyle 91
++int styleable AppCompatTheme_ratingBarStyle 92
++int styleable AppCompatTheme_ratingBarStyleIndicator 93
++int styleable AppCompatTheme_ratingBarStyleSmall 94
++int styleable AppCompatTheme_searchViewStyle 95
++int styleable AppCompatTheme_seekBarStyle 96
++int styleable AppCompatTheme_selectableItemBackground 97
++int styleable AppCompatTheme_selectableItemBackgroundBorderless 98
++int styleable AppCompatTheme_spinnerDropDownItemStyle 99
++int styleable AppCompatTheme_spinnerStyle 100
++int styleable AppCompatTheme_switchStyle 101
++int styleable AppCompatTheme_textAppearanceLargePopupMenu 102
++int styleable AppCompatTheme_textAppearanceListItem 103
++int styleable AppCompatTheme_textAppearanceListItemSecondary 104
++int styleable AppCompatTheme_textAppearanceListItemSmall 105
++int styleable AppCompatTheme_textAppearancePopupMenuHeader 106
++int styleable AppCompatTheme_textAppearanceSearchResultSubtitle 107
++int styleable AppCompatTheme_textAppearanceSearchResultTitle 108
++int styleable AppCompatTheme_textAppearanceSmallPopupMenu 109
++int styleable AppCompatTheme_textColorAlertDialogListItem 110
++int styleable AppCompatTheme_textColorSearchUrl 111
++int styleable AppCompatTheme_toolbarNavigationButtonStyle 112
++int styleable AppCompatTheme_toolbarStyle 113
++int styleable AppCompatTheme_tooltipForegroundColor 114
++int styleable AppCompatTheme_tooltipFrameBackground 115
++int styleable AppCompatTheme_viewInflaterClass 116
++int styleable AppCompatTheme_windowActionBar 117
++int styleable AppCompatTheme_windowActionBarOverlay 118
++int styleable AppCompatTheme_windowActionModeOverlay 119
++int styleable AppCompatTheme_windowFixedHeightMajor 120
++int styleable AppCompatTheme_windowFixedHeightMinor 121
++int styleable AppCompatTheme_windowFixedWidthMajor 122
++int styleable AppCompatTheme_windowFixedWidthMinor 123
++int styleable AppCompatTheme_windowMinWidthMajor 124
++int styleable AppCompatTheme_windowMinWidthMinor 125
++int styleable AppCompatTheme_windowNoTitle 126
++int[] styleable Autofill_InlineSuggestion { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionChip 0
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionEndIconStyle 1
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionStartIconStyle 2
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionSubtitle 3
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionTitle 4
++int styleable Autofill_InlineSuggestion_isAutofillInlineSuggestionTheme 5
 +int[] styleable ButtonBarLayout { 0x0 }
 +int styleable ButtonBarLayout_allowStacking 0
-+int[] styleable ColorStateListItem { 0x0, 0x101031f, 0x10101a5 }
++int[] styleable Capability { 0x0, 0x0 }
++int styleable Capability_queryPatterns 0
++int styleable Capability_shortcutMatchRequired 1
++int[] styleable CheckedTextView { 0x1010108, 0x0, 0x0, 0x0 }
++int styleable CheckedTextView_android_checkMark 0
++int styleable CheckedTextView_checkMarkCompat 1
++int styleable CheckedTextView_checkMarkTint 2
++int styleable CheckedTextView_checkMarkTintMode 3
++int[] styleable ColorStateListItem { 0x0, 0x101031f, 0x10101a5, 0x0, 0x0 }
 +int styleable ColorStateListItem_alpha 0
 +int styleable ColorStateListItem_android_alpha 1
 +int styleable ColorStateListItem_android_color 2
-+int[] styleable CompoundButton { 0x1010107, 0x0, 0x0 }
++int styleable ColorStateListItem_android_lStar 3
++int styleable ColorStateListItem_lStar 4
++int[] styleable CompoundButton { 0x1010107, 0x0, 0x0, 0x0 }
 +int styleable CompoundButton_android_button 0
-+int styleable CompoundButton_buttonTint 1
-+int styleable CompoundButton_buttonTintMode 2
-+int[] styleable CoordinatorLayout { 0x0, 0x0 }
-+int styleable CoordinatorLayout_keylines 0
-+int styleable CoordinatorLayout_statusBarBackground 1
-+int[] styleable CoordinatorLayout_Layout { 0x10100b3, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
-+int styleable CoordinatorLayout_Layout_android_layout_gravity 0
-+int styleable CoordinatorLayout_Layout_layout_anchor 1
-+int styleable CoordinatorLayout_Layout_layout_anchorGravity 2
-+int styleable CoordinatorLayout_Layout_layout_behavior 3
-+int styleable CoordinatorLayout_Layout_layout_dodgeInsetEdges 4
-+int styleable CoordinatorLayout_Layout_layout_insetEdge 5
-+int styleable CoordinatorLayout_Layout_layout_keyline 6
++int styleable CompoundButton_buttonCompat 1
++int styleable CompoundButton_buttonTint 2
++int styleable CompoundButton_buttonTintMode 3
 +int[] styleable DrawerArrowToggle { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable DrawerArrowToggle_arrowHeadLength 0
 +int styleable DrawerArrowToggle_arrowShaftLength 1
@@ -1613,13 +1827,14 @@ index 0000000..05fba27
 +int styleable DrawerArrowToggle_gapBetweenBars 5
 +int styleable DrawerArrowToggle_spinBars 6
 +int styleable DrawerArrowToggle_thickness 7
-+int[] styleable FontFamily { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int[] styleable FontFamily { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable FontFamily_fontProviderAuthority 0
 +int styleable FontFamily_fontProviderCerts 1
 +int styleable FontFamily_fontProviderFetchStrategy 2
 +int styleable FontFamily_fontProviderFetchTimeout 3
 +int styleable FontFamily_fontProviderPackage 4
 +int styleable FontFamily_fontProviderQuery 5
++int styleable FontFamily_fontProviderSystemFontFamily 6
 +int[] styleable FontFamilyFont { 0x1010532, 0x101053f, 0x1010570, 0x1010533, 0x101056f, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable FontFamilyFont_android_font 0
 +int styleable FontFamilyFont_android_fontStyle 1
@@ -1631,6 +1846,13 @@ index 0000000..05fba27
 +int styleable FontFamilyFont_fontVariationSettings 7
 +int styleable FontFamilyFont_fontWeight 8
 +int styleable FontFamilyFont_ttcIndex 9
++int[] styleable Fragment { 0x10100d0, 0x1010003, 0x10100d1 }
++int styleable Fragment_android_id 0
++int styleable Fragment_android_name 1
++int styleable Fragment_android_tag 2
++int[] styleable FragmentContainerView { 0x1010003, 0x10100d1 }
++int styleable FragmentContainerView_android_name 0
++int styleable FragmentContainerView_android_tag 1
 +int[] styleable GenericDraweeHierarchy { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable GenericDraweeHierarchy_actualImageScaleType 0
 +int styleable GenericDraweeHierarchy_backgroundImage 1
@@ -1825,7 +2047,7 @@ index 0000000..05fba27
 +int styleable SwitchCompat_track 11
 +int styleable SwitchCompat_trackTint 12
 +int styleable SwitchCompat_trackTintMode 13
-+int[] styleable TextAppearance { 0x10103ac, 0x1010161, 0x1010162, 0x1010163, 0x1010164, 0x1010098, 0x101009a, 0x101009b, 0x1010095, 0x1010097, 0x1010096, 0x0, 0x0 }
++int[] styleable TextAppearance { 0x10103ac, 0x1010161, 0x1010162, 0x1010163, 0x1010164, 0x1010098, 0x101009a, 0x101009b, 0x1010585, 0x1010095, 0x1010097, 0x1010096, 0x0, 0x0, 0x0, 0x0 }
 +int styleable TextAppearance_android_fontFamily 0
 +int styleable TextAppearance_android_shadowColor 1
 +int styleable TextAppearance_android_shadowDx 2
@@ -1834,12 +2056,15 @@ index 0000000..05fba27
 +int styleable TextAppearance_android_textColor 5
 +int styleable TextAppearance_android_textColorHint 6
 +int styleable TextAppearance_android_textColorLink 7
-+int styleable TextAppearance_android_textSize 8
-+int styleable TextAppearance_android_textStyle 9
-+int styleable TextAppearance_android_typeface 10
-+int styleable TextAppearance_fontFamily 11
-+int styleable TextAppearance_textAllCaps 12
-+int[] styleable Toolbar { 0x10100af, 0x1010140, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int styleable TextAppearance_android_textFontWeight 8
++int styleable TextAppearance_android_textSize 9
++int styleable TextAppearance_android_textStyle 10
++int styleable TextAppearance_android_typeface 11
++int styleable TextAppearance_fontFamily 12
++int styleable TextAppearance_fontVariationSettings 13
++int styleable TextAppearance_textAllCaps 14
++int styleable TextAppearance_textLocale 15
++int[] styleable Toolbar { 0x10100af, 0x1010140, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable Toolbar_android_gravity 0
 +int styleable Toolbar_android_minHeight 1
 +int styleable Toolbar_buttonGravity 2
@@ -1854,21 +2079,22 @@ index 0000000..05fba27
 +int styleable Toolbar_logo 11
 +int styleable Toolbar_logoDescription 12
 +int styleable Toolbar_maxButtonHeight 13
-+int styleable Toolbar_navigationContentDescription 14
-+int styleable Toolbar_navigationIcon 15
-+int styleable Toolbar_popupTheme 16
-+int styleable Toolbar_subtitle 17
-+int styleable Toolbar_subtitleTextAppearance 18
-+int styleable Toolbar_subtitleTextColor 19
-+int styleable Toolbar_title 20
-+int styleable Toolbar_titleMargin 21
-+int styleable Toolbar_titleMarginBottom 22
-+int styleable Toolbar_titleMarginEnd 23
-+int styleable Toolbar_titleMarginStart 24
-+int styleable Toolbar_titleMarginTop 25
-+int styleable Toolbar_titleMargins 26
-+int styleable Toolbar_titleTextAppearance 27
-+int styleable Toolbar_titleTextColor 28
++int styleable Toolbar_menu 14
++int styleable Toolbar_navigationContentDescription 15
++int styleable Toolbar_navigationIcon 16
++int styleable Toolbar_popupTheme 17
++int styleable Toolbar_subtitle 18
++int styleable Toolbar_subtitleTextAppearance 19
++int styleable Toolbar_subtitleTextColor 20
++int styleable Toolbar_title 21
++int styleable Toolbar_titleMargin 22
++int styleable Toolbar_titleMarginBottom 23
++int styleable Toolbar_titleMarginEnd 24
++int styleable Toolbar_titleMarginStart 25
++int styleable Toolbar_titleMarginTop 26
++int styleable Toolbar_titleMargins 27
++int styleable Toolbar_titleTextAppearance 28
++int styleable Toolbar_titleTextColor 29
 +int[] styleable View { 0x10100da, 0x1010000, 0x0, 0x0, 0x0 }
 +int styleable View_android_focusable 0
 +int styleable View_android_theme 1
@@ -1884,122 +2110,118 @@ index 0000000..05fba27
 +int styleable ViewStubCompat_android_inflatedId 1
 +int styleable ViewStubCompat_android_layout 2
 +int xml rn_dev_preferences 0x0
-diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml b/node_modules/react-native-threads/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml
+diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/react-native-threads/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 new file mode 100644
-index 0000000..bb60ee3
+index 0000000..becafdf
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml
++++ b/node_modules/react-native-threads/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/jniLibs"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/release/jniLibs"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/debug/jniLibs"/></dataSet></merger>
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml b/node_modules/react-native-threads/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
+diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/react-native-threads/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 new file mode 100644
-index 0000000..7a7eca2
+index 0000000..eaccb33
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
++++ b/node_modules/react-native-threads/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/shaders"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/release/shaders"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/debug/shaders"/></dataSet></merger>
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/packageReleaseAssets/merger.xml b/node_modules/react-native-threads/android/build/intermediates/incremental/packageReleaseAssets/merger.xml
+diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/react-native-threads/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 new file mode 100644
-index 0000000..baab248
+index 0000000..45c96c9
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/incremental/packageReleaseAssets/merger.xml
++++ b/node_modules/react-native-threads/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/assets"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/intermediates/shader_assets/release/out"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/release/assets"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/assets"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/debug/assets"/></dataSet></merger>
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties b/node_modules/react-native-threads/android/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
+diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties b/node_modules/react-native-threads/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 new file mode 100644
-index 0000000..0208715
+index 0000000..6354278
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/incremental/packageReleaseResources/compile-file-map.properties
++++ b/node_modules/react-native-threads/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 @@ -0,0 +1 @@
-+#Wed Aug 31 23:58:41 EDT 2022
-diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/packageReleaseResources/merger.xml b/node_modules/react-native-threads/android/build/intermediates/incremental/packageReleaseResources/merger.xml
++#Sun Dec 11 21:44:41 EST 2022
+diff --git a/node_modules/react-native-threads/android/build/intermediates/incremental/packageDebugResources/merger.xml b/node_modules/react-native-threads/android/build/intermediates/incremental/packageDebugResources/merger.xml
 new file mode 100644
-index 0000000..79979c9
+index 0000000..974838f
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/incremental/packageReleaseResources/merger.xml
++++ b/node_modules/react-native-threads/android/build/intermediates/incremental/packageDebugResources/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/res"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/generated/res/rs/release"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/res"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/generated/res/rs/release"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/release/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release" generated-set="release$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/release/res"/></dataSet><mergedItems/></merger>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/res"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/generated/res/rs/debug"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/res"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/generated/res/rs/debug"/><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/debug/res"/></dataSet><mergedItems/></merger>
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/BuildConfig.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/BuildConfig.class
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/BuildConfig.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/BuildConfig.class
 new file mode 100644
-index 0000000..a598016
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/BuildConfig.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/JSThread.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/JSThread.class
+index 0000000..da93742
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/BuildConfig.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/JSThread.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/JSThread.class
 new file mode 100644
 index 0000000..880af18
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/JSThread.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$1.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$1.class
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/JSThread.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$1.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$1.class
 new file mode 100644
 index 0000000..52b5bef
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$1.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$2.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$2.class
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$1.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$2.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$2.class
 new file mode 100644
 index 0000000..8ec4bbd
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$2.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$3.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$3.class
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$2.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$3.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$3.class
 new file mode 100644
 index 0000000..2635b8e
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$3.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$4.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$4.class
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$3.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$4.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$4.class
 new file mode 100644
 index 0000000..6ecd325
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule$4.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule.class
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$4.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule.class
 new file mode 100644
 index 0000000..f73e666
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadModule.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadPackage.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadPackage.class
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadPackage.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadPackage.class
 new file mode 100644
 index 0000000..7d985af
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/RNThreadPackage.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder$1.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder$1.class
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadPackage.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$1.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$1.class
 new file mode 100644
-index 0000000..78acdbf
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder$1.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder$2.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder$2.class
+index 0000000..45fc511
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$1.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$2.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$2.class
 new file mode 100644
-index 0000000..bc838f3
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder$2.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder$3.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder$3.class
+index 0000000..b2e1b67
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$2.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder.class
 new file mode 100644
-index 0000000..139ef20
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder$3.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder.class
+index 0000000..4294de3
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadBaseReactPackage.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadBaseReactPackage.class
 new file mode 100644
-index 0000000..12187a1
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ReactContextBuilder.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ThreadBaseReactPackage.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ThreadBaseReactPackage.class
-new file mode 100644
-index 0000000..c1d68b6
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ThreadBaseReactPackage.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ThreadSelfModule.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ThreadSelfModule.class
+index 0000000..2085595
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadBaseReactPackage.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadSelfModule.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadSelfModule.class
 new file mode 100644
 index 0000000..809c90e
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/ThreadSelfModule.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/UIManagerStubModule.class b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/UIManagerStubModule.class
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadSelfModule.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/UIManagerStubModule.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/UIManagerStubModule.class
 new file mode 100644
 index 0000000..dfe1257
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/release/classes/com/reactlibrary/UIManagerStubModule.class differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/local_only_symbol_list/release/R-def.txt b/node_modules/react-native-threads/android/build/intermediates/local_only_symbol_list/release/R-def.txt
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/UIManagerStubModule.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/local_only_symbol_list/debug/R-def.txt b/node_modules/react-native-threads/android/build/intermediates/local_only_symbol_list/debug/R-def.txt
 new file mode 100644
 index 0000000..78ac5b8
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/local_only_symbol_list/release/R-def.txt
++++ b/node_modules/react-native-threads/android/build/intermediates/local_only_symbol_list/debug/R-def.txt
 @@ -0,0 +1,2 @@
 +R_DEF: Internal format may change without notice
 +local
-diff --git a/node_modules/react-native-threads/android/build/intermediates/manifest_merge_blame_file/release/manifest-merger-blame-release-report.txt b/node_modules/react-native-threads/android/build/intermediates/manifest_merge_blame_file/release/manifest-merger-blame-release-report.txt
+diff --git a/node_modules/react-native-threads/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt b/node_modules/react-native-threads/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
 new file mode 100644
 index 0000000..7775d2b
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/manifest_merge_blame_file/release/manifest-merger-blame-release-report.txt
++++ b/node_modules/react-native-threads/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
 @@ -0,0 +1,11 @@
 +1<?xml version="1.0" encoding="utf-8"?>
 +2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -2012,11 +2234,11 @@ index 0000000..7775d2b
 +7-->/Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/AndroidManifest.xml
 +8
 +9</manifest>
-diff --git a/node_modules/react-native-threads/android/build/intermediates/merged_manifest/release/AndroidManifest.xml b/node_modules/react-native-threads/android/build/intermediates/merged_manifest/release/AndroidManifest.xml
+diff --git a/node_modules/react-native-threads/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml b/node_modules/react-native-threads/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml
 new file mode 100644
 index 0000000..b181eb1
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/merged_manifest/release/AndroidManifest.xml
++++ b/node_modules/react-native-threads/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml
 @@ -0,0 +1,9 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -2028,19 +2250,19 @@ index 0000000..b181eb1
 +
 +</manifest>
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/navigation_json/release/navigation.json b/node_modules/react-native-threads/android/build/intermediates/navigation_json/release/navigation.json
+diff --git a/node_modules/react-native-threads/android/build/intermediates/navigation_json/debug/navigation.json b/node_modules/react-native-threads/android/build/intermediates/navigation_json/debug/navigation.json
 new file mode 100644
 index 0000000..0637a08
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/navigation_json/release/navigation.json
++++ b/node_modules/react-native-threads/android/build/intermediates/navigation_json/debug/navigation.json
 @@ -0,0 +1 @@
 +[]
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/packaged_manifests/release/output-metadata.json b/node_modules/react-native-threads/android/build/intermediates/packaged_manifests/release/output-metadata.json
+diff --git a/node_modules/react-native-threads/android/build/intermediates/packaged_manifests/debug/output-metadata.json b/node_modules/react-native-threads/android/build/intermediates/packaged_manifests/debug/output-metadata.json
 new file mode 100644
-index 0000000..fb57766
+index 0000000..92d5a39
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/packaged_manifests/release/output-metadata.json
++++ b/node_modules/react-native-threads/android/build/intermediates/packaged_manifests/debug/output-metadata.json
 @@ -0,0 +1,16 @@
 +{
 +  "version": 2,
@@ -2049,26 +2271,78 @@ index 0000000..fb57766
 +    "kind": "Directory"
 +  },
 +  "applicationId": "com.reactlibrary",
-+  "variantName": "release",
++  "variantName": "debug",
 +  "elements": [
 +    {
 +      "type": "SINGLE",
 +      "filters": [],
-+      "outputFile": "../../merged_manifest/release/AndroidManifest.xml"
++      "outputFile": "../../merged_manifest/debug/AndroidManifest.xml"
 +    }
 +  ]
 +}
 \ No newline at end of file
-diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_jar/release/classes.jar b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_jar/release/classes.jar
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/BuildConfig.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/BuildConfig.class
 new file mode 100644
-index 0000000..3a823a3
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_jar/release/classes.jar differ
-diff --git a/node_modules/react-native-threads/android/build/intermediates/symbol_list_with_package_name/release/package-aware-r.txt b/node_modules/react-native-threads/android/build/intermediates/symbol_list_with_package_name/release/package-aware-r.txt
+index 0000000..da93742
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/BuildConfig.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/JSThread.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/JSThread.class
 new file mode 100644
-index 0000000..9a629c2
+index 0000000..880af18
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/JSThread.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$1.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$1.class
+new file mode 100644
+index 0000000..52b5bef
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$1.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$2.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$2.class
+new file mode 100644
+index 0000000..8ec4bbd
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$2.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$3.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$3.class
+new file mode 100644
+index 0000000..2635b8e
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$3.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$4.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$4.class
+new file mode 100644
+index 0000000..6ecd325
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$4.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule.class
+new file mode 100644
+index 0000000..f73e666
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadPackage.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadPackage.class
+new file mode 100644
+index 0000000..7d985af
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadPackage.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$1.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$1.class
+new file mode 100644
+index 0000000..45fc511
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$1.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$2.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$2.class
+new file mode 100644
+index 0000000..b2e1b67
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$2.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder.class
+new file mode 100644
+index 0000000..4294de3
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadBaseReactPackage.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadBaseReactPackage.class
+new file mode 100644
+index 0000000..2085595
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadBaseReactPackage.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadSelfModule.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadSelfModule.class
+new file mode 100644
+index 0000000..809c90e
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadSelfModule.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/UIManagerStubModule.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/UIManagerStubModule.class
+new file mode 100644
+index 0000000..dfe1257
+Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/UIManagerStubModule.class differ
+diff --git a/node_modules/react-native-threads/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt b/node_modules/react-native-threads/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
+new file mode 100644
+index 0000000..4930081
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/intermediates/symbol_list_with_package_name/release/package-aware-r.txt
-@@ -0,0 +1,1316 @@
++++ b/node_modules/react-native-threads/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
+@@ -0,0 +1,1446 @@
 +com.reactlibrary
 +anim abc_fade_in
 +anim abc_fade_out
@@ -2082,12 +2356,31 @@ index 0000000..9a629c2
 +anim abc_slide_out_top
 +anim abc_tooltip_enter
 +anim abc_tooltip_exit
++anim btn_checkbox_to_checked_box_inner_merged_animation
++anim btn_checkbox_to_checked_box_outer_merged_animation
++anim btn_checkbox_to_checked_icon_null_animation
++anim btn_checkbox_to_unchecked_box_inner_merged_animation
++anim btn_checkbox_to_unchecked_check_path_merged_animation
++anim btn_checkbox_to_unchecked_icon_null_animation
++anim btn_radio_to_off_mtrl_dot_group_animation
++anim btn_radio_to_off_mtrl_ring_outer_animation
++anim btn_radio_to_off_mtrl_ring_outer_path_animation
++anim btn_radio_to_on_mtrl_dot_group_animation
++anim btn_radio_to_on_mtrl_ring_outer_animation
++anim btn_radio_to_on_mtrl_ring_outer_path_animation
 +anim catalyst_fade_in
 +anim catalyst_fade_out
 +anim catalyst_push_up_in
 +anim catalyst_push_up_out
 +anim catalyst_slide_down
 +anim catalyst_slide_up
++anim fragment_fast_out_extra_slow_in
++animator fragment_close_enter
++animator fragment_close_exit
++animator fragment_fade_enter
++animator fragment_fade_exit
++animator fragment_open_enter
++animator fragment_open_exit
 +attr actionBarDivider
 +attr actionBarItemBackground
 +attr actionBarPopupTheme
@@ -2106,6 +2399,7 @@ index 0000000..9a629c2
 +attr actionMenuTextColor
 +attr actionModeBackground
 +attr actionModeCloseButtonStyle
++attr actionModeCloseContentDescription
 +attr actionModeCloseDrawable
 +attr actionModeCopyDrawable
 +attr actionModeCutDrawable
@@ -2116,6 +2410,7 @@ index 0000000..9a629c2
 +attr actionModeShareDrawable
 +attr actionModeSplitBackground
 +attr actionModeStyle
++attr actionModeTheme
 +attr actionModeWebSearchDrawable
 +attr actionOverflowButtonStyle
 +attr actionOverflowMenuStyle
@@ -2140,6 +2435,11 @@ index 0000000..9a629c2
 +attr autoSizePresetSizes
 +attr autoSizeStepGranularity
 +attr autoSizeTextType
++attr autofillInlineSuggestionChip
++attr autofillInlineSuggestionEndIconStyle
++attr autofillInlineSuggestionStartIconStyle
++attr autofillInlineSuggestionSubtitle
++attr autofillInlineSuggestionTitle
 +attr background
 +attr backgroundImage
 +attr backgroundSplit
@@ -2153,6 +2453,7 @@ index 0000000..9a629c2
 +attr buttonBarNeutralButtonStyle
 +attr buttonBarPositiveButtonStyle
 +attr buttonBarStyle
++attr buttonCompat
 +attr buttonGravity
 +attr buttonIconDimen
 +attr buttonPanelSideLayout
@@ -2160,6 +2461,9 @@ index 0000000..9a629c2
 +attr buttonStyleSmall
 +attr buttonTint
 +attr buttonTintMode
++attr checkMarkCompat
++attr checkMarkTint
++attr checkMarkTintMode
 +attr checkboxStyle
 +attr checkedTextViewStyle
 +attr closeIcon
@@ -2186,7 +2490,6 @@ index 0000000..9a629c2
 +attr contentInsetStart
 +attr contentInsetStartWithNavigation
 +attr controlBackground
-+attr coordinatorLayoutStyle
 +attr customNavigationLayout
 +attr defaultQueryHint
 +attr dialogCornerRadius
@@ -2197,7 +2500,15 @@ index 0000000..9a629c2
 +attr dividerHorizontal
 +attr dividerPadding
 +attr dividerVertical
++attr drawableBottomCompat
++attr drawableEndCompat
++attr drawableLeftCompat
++attr drawableRightCompat
 +attr drawableSize
++attr drawableStartCompat
++attr drawableTint
++attr drawableTintMode
++attr drawableTopCompat
 +attr drawerArrowStyle
 +attr dropDownListViewStyle
 +attr dropdownListPreferredItemHeight
@@ -2205,6 +2516,7 @@ index 0000000..9a629c2
 +attr editTextColor
 +attr editTextStyle
 +attr elevation
++attr emojiCompatEnabled
 +attr expandActivityOverflowButtonDrawable
 +attr fadeDuration
 +attr failureImage
@@ -2218,6 +2530,7 @@ index 0000000..9a629c2
 +attr fontProviderFetchTimeout
 +attr fontProviderPackage
 +attr fontProviderQuery
++attr fontProviderSystemFontFamily
 +attr fontStyle
 +attr fontVariationSettings
 +attr fontWeight
@@ -2234,19 +2547,16 @@ index 0000000..9a629c2
 +attr imageButtonStyle
 +attr indeterminateProgressStyle
 +attr initialActivityCount
++attr isAutofillInlineSuggestionTheme
 +attr isLightTheme
 +attr itemPadding
-+attr keylines
++attr lStar
 +attr lastBaselineToBottomHeight
 +attr layout
-+attr layout_anchor
-+attr layout_anchorGravity
-+attr layout_behavior
-+attr layout_dodgeInsetEdges
-+attr layout_insetEdge
-+attr layout_keyline
 +attr lineHeight
 +attr listChoiceBackgroundIndicator
++attr listChoiceIndicatorMultipleAnimated
++attr listChoiceIndicatorSingleAnimated
 +attr listDividerAlertDialog
 +attr listItemLayout
 +attr listLayout
@@ -2255,16 +2565,20 @@ index 0000000..9a629c2
 +attr listPreferredItemHeight
 +attr listPreferredItemHeightLarge
 +attr listPreferredItemHeightSmall
++attr listPreferredItemPaddingEnd
 +attr listPreferredItemPaddingLeft
 +attr listPreferredItemPaddingRight
++attr listPreferredItemPaddingStart
 +attr logo
 +attr logoDescription
 +attr maxButtonHeight
 +attr measureWithLargestChild
++attr menu
 +attr multiChoiceItemLayout
 +attr navigationContentDescription
 +attr navigationIcon
 +attr navigationMode
++attr nestedScrollViewStyle
 +attr numericModifiers
 +attr overlapAnchor
 +attr overlayImage
@@ -2289,6 +2603,7 @@ index 0000000..9a629c2
 +attr progressBarStyle
 +attr queryBackground
 +attr queryHint
++attr queryPatterns
 +attr radioButtonStyle
 +attr ratingBarStyle
 +attr ratingBarStyleIndicator
@@ -2315,6 +2630,7 @@ index 0000000..9a629c2
 +attr seekBarStyle
 +attr selectableItemBackground
 +attr selectableItemBackgroundBorderless
++attr shortcutMatchRequired
 +attr showAsAction
 +attr showDividers
 +attr showText
@@ -2326,7 +2642,6 @@ index 0000000..9a629c2
 +attr splitTrack
 +attr srcCompat
 +attr state_above_anchor
-+attr statusBarBackground
 +attr subMenuArrow
 +attr submitBackground
 +attr subtitle
@@ -2349,6 +2664,7 @@ index 0000000..9a629c2
 +attr textAppearanceSmallPopupMenu
 +attr textColorAlertDialogListItem
 +attr textColorSearchUrl
++attr textLocale
 +attr theme
 +attr thickness
 +attr thumbTextPadding
@@ -2392,16 +2708,16 @@ index 0000000..9a629c2
 +attr windowMinWidthMinor
 +attr windowNoTitle
 +bool abc_action_bar_embed_tabs
-+bool abc_allow_stacked_button_bar
 +bool abc_config_actionMenuItemAllCaps
 +color abc_background_cache_hint_selector_material_dark
 +color abc_background_cache_hint_selector_material_light
 +color abc_btn_colored_borderless_text_material
 +color abc_btn_colored_text_material
 +color abc_color_highlight_material
++color abc_decor_view_status_guard
++color abc_decor_view_status_guard_light
 +color abc_hint_foreground_material_dark
 +color abc_hint_foreground_material_light
-+color abc_input_method_navigation_guard
 +color abc_primary_text_disable_only_material_dark
 +color abc_primary_text_disable_only_material_light
 +color abc_primary_text_material_dark
@@ -2420,6 +2736,8 @@ index 0000000..9a629c2
 +color abc_tint_switch_track
 +color accent_material_dark
 +color accent_material_light
++color androidx_core_ripple_material_light
++color androidx_core_secondary_text_default_material_light
 +color background_floating_material_dark
 +color background_floating_material_light
 +color background_material_dark
@@ -2528,6 +2846,9 @@ index 0000000..9a629c2
 +dimen abc_edit_text_inset_horizontal_material
 +dimen abc_edit_text_inset_top_material
 +dimen abc_floating_window_z
++dimen abc_list_item_height_large_material
++dimen abc_list_item_height_material
++dimen abc_list_item_height_small_material
 +dimen abc_list_item_padding_horizontal_material
 +dimen abc_panel_menu_list_width
 +dimen abc_progress_bar_height_material
@@ -2536,6 +2857,9 @@ index 0000000..9a629c2
 +dimen abc_seekbar_track_background_height_material
 +dimen abc_seekbar_track_progress_height_material
 +dimen abc_select_dialog_padding_start_material
++dimen abc_star_big
++dimen abc_star_medium
++dimen abc_star_small
 +dimen abc_switch_padding
 +dimen abc_text_size_body_1_material
 +dimen abc_text_size_body_2_material
@@ -2555,6 +2879,7 @@ index 0000000..9a629c2
 +dimen abc_text_size_subtitle_material_toolbar
 +dimen abc_text_size_title_material
 +dimen abc_text_size_title_material_toolbar
++dimen autofill_inline_suggestion_icon_size
 +dimen compat_button_inset_horizontal_material
 +dimen compat_button_inset_vertical_material
 +dimen compat_button_padding_horizontal_material
@@ -2598,11 +2923,13 @@ index 0000000..9a629c2
 +drawable abc_action_bar_item_background_material
 +drawable abc_btn_borderless_material
 +drawable abc_btn_check_material
++drawable abc_btn_check_material_anim
 +drawable abc_btn_check_to_on_mtrl_000
 +drawable abc_btn_check_to_on_mtrl_015
 +drawable abc_btn_colored_material
 +drawable abc_btn_default_mtrl_shape
 +drawable abc_btn_radio_material
++drawable abc_btn_radio_material_anim
 +drawable abc_btn_radio_to_on_mtrl_000
 +drawable abc_btn_radio_to_on_mtrl_015
 +drawable abc_btn_switch_to_on_mtrl_00001
@@ -2625,12 +2952,6 @@ index 0000000..9a629c2
 +drawable abc_ic_menu_selectall_mtrl_alpha
 +drawable abc_ic_menu_share_mtrl_alpha
 +drawable abc_ic_search_api_material
-+drawable abc_ic_star_black_16dp
-+drawable abc_ic_star_black_36dp
-+drawable abc_ic_star_black_48dp
-+drawable abc_ic_star_half_black_16dp
-+drawable abc_ic_star_half_black_36dp
-+drawable abc_ic_star_half_black_48dp
 +drawable abc_ic_voice_search_api_material
 +drawable abc_item_background_holo_dark
 +drawable abc_item_background_holo_light
@@ -2661,23 +2982,31 @@ index 0000000..9a629c2
 +drawable abc_seekbar_track_material
 +drawable abc_spinner_mtrl_am_alpha
 +drawable abc_spinner_textfield_background_material
++drawable abc_star_black_48dp
++drawable abc_star_half_black_48dp
 +drawable abc_switch_thumb_material
 +drawable abc_switch_track_mtrl_alpha
 +drawable abc_tab_indicator_material
 +drawable abc_tab_indicator_mtrl_alpha
 +drawable abc_text_cursor_material
-+drawable abc_text_select_handle_left_mtrl_dark
-+drawable abc_text_select_handle_left_mtrl_light
-+drawable abc_text_select_handle_middle_mtrl_dark
-+drawable abc_text_select_handle_middle_mtrl_light
-+drawable abc_text_select_handle_right_mtrl_dark
-+drawable abc_text_select_handle_right_mtrl_light
++drawable abc_text_select_handle_left_mtrl
++drawable abc_text_select_handle_middle_mtrl
++drawable abc_text_select_handle_right_mtrl
 +drawable abc_textfield_activated_mtrl_alpha
 +drawable abc_textfield_default_mtrl_alpha
 +drawable abc_textfield_search_activated_mtrl_alpha
 +drawable abc_textfield_search_default_mtrl_alpha
 +drawable abc_textfield_search_material
 +drawable abc_vector_test
++drawable autofill_inline_suggestion_chip_background
++drawable btn_checkbox_checked_mtrl
++drawable btn_checkbox_checked_to_unchecked_mtrl_animation
++drawable btn_checkbox_unchecked_mtrl
++drawable btn_checkbox_unchecked_to_checked_mtrl_animation
++drawable btn_radio_off_mtrl
++drawable btn_radio_off_to_on_mtrl_animation
++drawable btn_radio_on_mtrl
++drawable btn_radio_on_to_off_mtrl_animation
 +drawable notification_action_background
 +drawable notification_bg
 +drawable notification_bg_low
@@ -2691,11 +3020,48 @@ index 0000000..9a629c2
 +drawable notification_tile_bg
 +drawable notify_panel_notification_icon_bg
 +drawable redbox_top_border_background
++drawable test_level_drawable
 +drawable tooltip_frame_dark
 +drawable tooltip_frame_light
++id accessibility_action_clickable_span
 +id accessibility_actions
++id accessibility_collection
++id accessibility_collection_item
++id accessibility_custom_action_0
++id accessibility_custom_action_1
++id accessibility_custom_action_10
++id accessibility_custom_action_11
++id accessibility_custom_action_12
++id accessibility_custom_action_13
++id accessibility_custom_action_14
++id accessibility_custom_action_15
++id accessibility_custom_action_16
++id accessibility_custom_action_17
++id accessibility_custom_action_18
++id accessibility_custom_action_19
++id accessibility_custom_action_2
++id accessibility_custom_action_20
++id accessibility_custom_action_21
++id accessibility_custom_action_22
++id accessibility_custom_action_23
++id accessibility_custom_action_24
++id accessibility_custom_action_25
++id accessibility_custom_action_26
++id accessibility_custom_action_27
++id accessibility_custom_action_28
++id accessibility_custom_action_29
++id accessibility_custom_action_3
++id accessibility_custom_action_30
++id accessibility_custom_action_31
++id accessibility_custom_action_4
++id accessibility_custom_action_5
++id accessibility_custom_action_6
++id accessibility_custom_action_7
++id accessibility_custom_action_8
++id accessibility_custom_action_9
 +id accessibility_hint
 +id accessibility_label
++id accessibility_links
 +id accessibility_role
 +id accessibility_state
 +id accessibility_value
@@ -2721,14 +3087,18 @@ index 0000000..9a629c2
 +id add
 +id alertTitle
 +id async
++id autofill_inline_suggestion_end_icon
++id autofill_inline_suggestion_start_icon
++id autofill_inline_suggestion_subtitle
++id autofill_inline_suggestion_title
 +id blocking
-+id bottom
 +id buttonPanel
 +id catalyst_redbox_title
 +id center
 +id centerCrop
 +id centerInside
 +id checkbox
++id checked
 +id chronometer
 +id content
 +id contentPanel
@@ -2736,8 +3106,8 @@ index 0000000..9a629c2
 +id customPanel
 +id decor_content_parent
 +id default_activity_button
++id dialog_button
 +id edit_query
-+id end
 +id expand_activities_button
 +id expanded_menu
 +id fitBottomStart
@@ -2748,6 +3118,7 @@ index 0000000..9a629c2
 +id focusCrop
 +id forever
 +id fps_text
++id fragment_container_view_tag
 +id group_divider
 +id home
 +id icon
@@ -2755,7 +3126,11 @@ index 0000000..9a629c2
 +id image
 +id info
 +id italic
-+id left
++id item1
++id item2
++id item3
++id item4
++id labelled_by
 +id line1
 +id line3
 +id listMode
@@ -2767,12 +3142,14 @@ index 0000000..9a629c2
 +id notification_background
 +id notification_main_column
 +id notification_main_column_container
++id off
++id on
 +id parentPanel
++id pointer_events
 +id progress_circular
 +id progress_horizontal
 +id radio
 +id react_test_id
-+id right
 +id right_icon
 +id right_side
 +id rn_frame_file
@@ -2801,17 +3178,27 @@ index 0000000..9a629c2
 +id select_dialog_listview
 +id shortcut
 +id spacer
++id special_effects_controller_view_tag
 +id split_action_bar
 +id src_atop
 +id src_in
 +id src_over
-+id start
 +id submenuarrow
 +id submit_area
 +id tabMode
++id tag_accessibility_actions
++id tag_accessibility_clickable_spans
++id tag_accessibility_heading
++id tag_accessibility_pane_title
++id tag_on_apply_window_listener
++id tag_on_receive_content_listener
++id tag_on_receive_content_mime_types
++id tag_screen_reader_focusable
++id tag_state_description
 +id tag_transition_group
 +id tag_unhandled_key_event_manager
 +id tag_unhandled_key_listeners
++id tag_window_insets_animation_callback
 +id text
 +id text2
 +id textSpacerNoButtons
@@ -2820,12 +3207,16 @@ index 0000000..9a629c2
 +id title
 +id titleDividerNoCustom
 +id title_template
-+id top
 +id topPanel
++id unchecked
 +id uniform
 +id up
 +id view_tag_instance_handle
 +id view_tag_native_id
++id view_tree_lifecycle_owner
++id view_tree_saved_state_registry_owner
++id view_tree_view_model_store_owner
++id visible_removing_fragment_view_tag
 +id wrap_content
 +integer abc_config_activityDefaultDur
 +integer abc_config_activityShortDur
@@ -2834,6 +3225,13 @@ index 0000000..9a629c2
 +integer react_native_dev_server_port
 +integer react_native_inspector_proxy_port
 +integer status_bar_notification_info_maxnum
++interpolator btn_checkbox_checked_mtrl_animation_interpolator_0
++interpolator btn_checkbox_checked_mtrl_animation_interpolator_1
++interpolator btn_checkbox_unchecked_mtrl_animation_interpolator_0
++interpolator btn_checkbox_unchecked_mtrl_animation_interpolator_1
++interpolator btn_radio_to_off_mtrl_animation_interpolator_0
++interpolator btn_radio_to_on_mtrl_animation_interpolator_0
++interpolator fast_out_slow_in
 +layout abc_action_bar_title_item
 +layout abc_action_bar_up_container
 +layout abc_action_menu_item_layout
@@ -2862,6 +3260,8 @@ index 0000000..9a629c2
 +layout abc_search_view
 +layout abc_select_dialog_material
 +layout abc_tooltip
++layout autofill_inline_suggestion
++layout custom_dialog
 +layout dev_loading_view
 +layout fps_view
 +layout notification_action
@@ -2877,6 +3277,8 @@ index 0000000..9a629c2
 +layout select_dialog_multichoice_material
 +layout select_dialog_singlechoice_material
 +layout support_simple_spinner_dropdown_item
++menu example_menu
++menu example_menu2
 +string abc_action_bar_home_description
 +string abc_action_bar_up_description
 +string abc_action_menu_overflow_description
@@ -2885,18 +3287,6 @@ index 0000000..9a629c2
 +string abc_activitychooserview_choose_application
 +string abc_capital_off
 +string abc_capital_on
-+string abc_font_family_body_1_material
-+string abc_font_family_body_2_material
-+string abc_font_family_button_material
-+string abc_font_family_caption_material
-+string abc_font_family_display_1_material
-+string abc_font_family_display_2_material
-+string abc_font_family_display_3_material
-+string abc_font_family_display_4_material
-+string abc_font_family_headline_material
-+string abc_font_family_menu_material
-+string abc_font_family_subhead_material
-+string abc_font_family_title_material
 +string abc_menu_alt_shortcut_label
 +string abc_menu_ctrl_shortcut_label
 +string abc_menu_delete_shortcut_label
@@ -2917,7 +3307,6 @@ index 0000000..9a629c2
 +string abc_shareactionprovider_share_with_application
 +string abc_toolbar_collapse_description
 +string alert_description
-+string button_description
 +string catalyst_change_bundle_location
 +string catalyst_copy_button
 +string catalyst_debug
@@ -2935,6 +3324,7 @@ index 0000000..9a629c2
 +string catalyst_hot_reloading_auto_enable
 +string catalyst_hot_reloading_stop
 +string catalyst_inspector
++string catalyst_inspector_stop
 +string catalyst_loading_from_url
 +string catalyst_open_flipper_error
 +string catalyst_perf_monitor
@@ -2959,7 +3349,6 @@ index 0000000..9a629c2
 +string radiogroup_description
 +string rn_tab_description
 +string scrollbar_description
-+string search_description
 +string search_menu_title
 +string spinbutton_description
 +string state_busy_description
@@ -3133,6 +3522,7 @@ index 0000000..9a629c2
 +style Base_Widget_AppCompat_SeekBar_Discrete
 +style Base_Widget_AppCompat_Spinner
 +style Base_Widget_AppCompat_Spinner_Underlined
++style Base_Widget_AppCompat_TextView
 +style Base_Widget_AppCompat_TextView_SpinnerItem
 +style Base_Widget_AppCompat_Toolbar
 +style Base_Widget_AppCompat_Toolbar_Button_Navigation
@@ -3230,6 +3620,8 @@ index 0000000..9a629c2
 +style ThemeOverlay_AppCompat_ActionBar
 +style ThemeOverlay_AppCompat_Dark
 +style ThemeOverlay_AppCompat_Dark_ActionBar
++style ThemeOverlay_AppCompat_DayNight
++style ThemeOverlay_AppCompat_DayNight_ActionBar
 +style ThemeOverlay_AppCompat_Dialog
 +style ThemeOverlay_AppCompat_Dialog_Alert
 +style ThemeOverlay_AppCompat_Light
@@ -3246,6 +3638,7 @@ index 0000000..9a629c2
 +style Theme_AppCompat_DialogWhenLarge
 +style Theme_AppCompat_Dialog_Alert
 +style Theme_AppCompat_Dialog_MinWidth
++style Theme_AppCompat_Empty
 +style Theme_AppCompat_Light
 +style Theme_AppCompat_Light_DarkActionBar
 +style Theme_AppCompat_Light_Dialog
@@ -3254,6 +3647,7 @@ index 0000000..9a629c2
 +style Theme_AppCompat_Light_Dialog_MinWidth
 +style Theme_AppCompat_Light_NoActionBar
 +style Theme_AppCompat_NoActionBar
++style Theme_AutofillInlineSuggestion
 +style Theme_Catalyst
 +style Theme_Catalyst_LogBox
 +style Theme_Catalyst_RedBox
@@ -3331,12 +3725,18 @@ index 0000000..9a629c2
 +style Widget_AppCompat_Spinner_DropDown
 +style Widget_AppCompat_Spinner_DropDown_ActionBar
 +style Widget_AppCompat_Spinner_Underlined
++style Widget_AppCompat_TextView
 +style Widget_AppCompat_TextView_SpinnerItem
 +style Widget_AppCompat_Toolbar
 +style Widget_AppCompat_Toolbar_Button_Navigation
++style Widget_Autofill
++style Widget_Autofill_InlineSuggestionChip
++style Widget_Autofill_InlineSuggestionEndIconStyle
++style Widget_Autofill_InlineSuggestionStartIconStyle
++style Widget_Autofill_InlineSuggestionSubtitle
++style Widget_Autofill_InlineSuggestionTitle
 +style Widget_Compat_NotificationActionContainer
 +style Widget_Compat_NotificationActionText
-+style Widget_Support_CoordinatorLayout
 +style redboxButton
 +styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 +styleable ActionBarLayout android_layout_gravity
@@ -3348,19 +3748,23 @@ index 0000000..9a629c2
 +styleable AnimatedStateListDrawableCompat android_constantSize android_dither android_enterFadeDuration android_exitFadeDuration android_variablePadding android_visible
 +styleable AnimatedStateListDrawableItem android_drawable android_id
 +styleable AnimatedStateListDrawableTransition android_drawable android_fromId android_reversible android_toId
++styleable AppCompatEmojiHelper
 +styleable AppCompatImageView android_src srcCompat tint tintMode
 +styleable AppCompatSeekBar android_thumb tickMark tickMarkTint tickMarkTintMode
 +styleable AppCompatTextHelper android_drawableBottom android_drawableEnd android_drawableLeft android_drawableRight android_drawableStart android_drawableTop android_textAppearance
-+styleable AppCompatTextView android_textAppearance autoSizeMaxTextSize autoSizeMinTextSize autoSizePresetSizes autoSizeStepGranularity autoSizeTextType firstBaselineToTopHeight fontFamily lastBaselineToBottomHeight lineHeight textAllCaps
-+styleable AppCompatTheme actionBarDivider actionBarItemBackground actionBarPopupTheme actionBarSize actionBarSplitStyle actionBarStyle actionBarTabBarStyle actionBarTabStyle actionBarTabTextStyle actionBarTheme actionBarWidgetTheme actionButtonStyle actionDropDownStyle actionMenuTextAppearance actionMenuTextColor actionModeBackground actionModeCloseButtonStyle actionModeCloseDrawable actionModeCopyDrawable actionModeCutDrawable actionModeFindDrawable actionModePasteDrawable actionModePopupWindowStyle actionModeSelectAllDrawable actionModeShareDrawable actionModeSplitBackground actionModeStyle actionModeWebSearchDrawable actionOverflowButtonStyle actionOverflowMenuStyle activityChooserViewStyle alertDialogButtonGroupStyle alertDialogCenterButtons alertDialogStyle alertDialogTheme android_windowAnimationStyle android_windowIsFloating autoCompleteTextViewStyle borderlessButtonStyle buttonBarButtonStyle buttonBarNegativeButtonStyle buttonBarNeutralButtonStyle buttonBarPositiveButtonStyle buttonBarStyle buttonStyle buttonStyleSmall checkboxStyle checkedTextViewStyle colorAccent colorBackgroundFloating colorButtonNormal colorControlActivated colorControlHighlight colorControlNormal colorError colorPrimary colorPrimaryDark colorSwitchThumbNormal controlBackground dialogCornerRadius dialogPreferredPadding dialogTheme dividerHorizontal dividerVertical dropDownListViewStyle dropdownListPreferredItemHeight editTextBackground editTextColor editTextStyle homeAsUpIndicator imageButtonStyle listChoiceBackgroundIndicator listDividerAlertDialog listMenuViewStyle listPopupWindowStyle listPreferredItemHeight listPreferredItemHeightLarge listPreferredItemHeightSmall listPreferredItemPaddingLeft listPreferredItemPaddingRight panelBackground panelMenuListTheme panelMenuListWidth popupMenuStyle popupWindowStyle radioButtonStyle ratingBarStyle ratingBarStyleIndicator ratingBarStyleSmall searchViewStyle seekBarStyle selectableItemBackground selectableItemBackgroundBorderless spinnerDropDownItemStyle spinnerStyle switchStyle textAppearanceLargePopupMenu textAppearanceListItem textAppearanceListItemSecondary textAppearanceListItemSmall textAppearancePopupMenuHeader textAppearanceSearchResultSubtitle textAppearanceSearchResultTitle textAppearanceSmallPopupMenu textColorAlertDialogListItem textColorSearchUrl toolbarNavigationButtonStyle toolbarStyle tooltipForegroundColor tooltipFrameBackground viewInflaterClass windowActionBar windowActionBarOverlay windowActionModeOverlay windowFixedHeightMajor windowFixedHeightMinor windowFixedWidthMajor windowFixedWidthMinor windowMinWidthMajor windowMinWidthMinor windowNoTitle
++styleable AppCompatTextView android_textAppearance autoSizeMaxTextSize autoSizeMinTextSize autoSizePresetSizes autoSizeStepGranularity autoSizeTextType drawableBottomCompat drawableEndCompat drawableLeftCompat drawableRightCompat drawableStartCompat drawableTint drawableTintMode drawableTopCompat emojiCompatEnabled firstBaselineToTopHeight fontFamily fontVariationSettings lastBaselineToBottomHeight lineHeight textAllCaps textLocale
++styleable AppCompatTheme actionBarDivider actionBarItemBackground actionBarPopupTheme actionBarSize actionBarSplitStyle actionBarStyle actionBarTabBarStyle actionBarTabStyle actionBarTabTextStyle actionBarTheme actionBarWidgetTheme actionButtonStyle actionDropDownStyle actionMenuTextAppearance actionMenuTextColor actionModeBackground actionModeCloseButtonStyle actionModeCloseContentDescription actionModeCloseDrawable actionModeCopyDrawable actionModeCutDrawable actionModeFindDrawable actionModePasteDrawable actionModePopupWindowStyle actionModeSelectAllDrawable actionModeShareDrawable actionModeSplitBackground actionModeStyle actionModeTheme actionModeWebSearchDrawable actionOverflowButtonStyle actionOverflowMenuStyle activityChooserViewStyle alertDialogButtonGroupStyle alertDialogCenterButtons alertDialogStyle alertDialogTheme android_windowAnimationStyle android_windowIsFloating autoCompleteTextViewStyle borderlessButtonStyle buttonBarButtonStyle buttonBarNegativeButtonStyle buttonBarNeutralButtonStyle buttonBarPositiveButtonStyle buttonBarStyle buttonStyle buttonStyleSmall checkboxStyle checkedTextViewStyle colorAccent colorBackgroundFloating colorButtonNormal colorControlActivated colorControlHighlight colorControlNormal colorError colorPrimary colorPrimaryDark colorSwitchThumbNormal controlBackground dialogCornerRadius dialogPreferredPadding dialogTheme dividerHorizontal dividerVertical dropDownListViewStyle dropdownListPreferredItemHeight editTextBackground editTextColor editTextStyle homeAsUpIndicator imageButtonStyle listChoiceBackgroundIndicator listChoiceIndicatorMultipleAnimated listChoiceIndicatorSingleAnimated listDividerAlertDialog listMenuViewStyle listPopupWindowStyle listPreferredItemHeight listPreferredItemHeightLarge listPreferredItemHeightSmall listPreferredItemPaddingEnd listPreferredItemPaddingLeft listPreferredItemPaddingRight listPreferredItemPaddingStart panelBackground panelMenuListTheme panelMenuListWidth popupMenuStyle popupWindowStyle radioButtonStyle ratingBarStyle ratingBarStyleIndicator ratingBarStyleSmall searchViewStyle seekBarStyle selectableItemBackground selectableItemBackgroundBorderless spinnerDropDownItemStyle spinnerStyle switchStyle textAppearanceLargePopupMenu textAppearanceListItem textAppearanceListItemSecondary textAppearanceListItemSmall textAppearancePopupMenuHeader textAppearanceSearchResultSubtitle textAppearanceSearchResultTitle textAppearanceSmallPopupMenu textColorAlertDialogListItem textColorSearchUrl toolbarNavigationButtonStyle toolbarStyle tooltipForegroundColor tooltipFrameBackground viewInflaterClass windowActionBar windowActionBarOverlay windowActionModeOverlay windowFixedHeightMajor windowFixedHeightMinor windowFixedWidthMajor windowFixedWidthMinor windowMinWidthMajor windowMinWidthMinor windowNoTitle
++styleable Autofill_InlineSuggestion autofillInlineSuggestionChip autofillInlineSuggestionEndIconStyle autofillInlineSuggestionStartIconStyle autofillInlineSuggestionSubtitle autofillInlineSuggestionTitle isAutofillInlineSuggestionTheme
 +styleable ButtonBarLayout allowStacking
-+styleable ColorStateListItem alpha android_alpha android_color
-+styleable CompoundButton android_button buttonTint buttonTintMode
-+styleable CoordinatorLayout keylines statusBarBackground
-+styleable CoordinatorLayout_Layout android_layout_gravity layout_anchor layout_anchorGravity layout_behavior layout_dodgeInsetEdges layout_insetEdge layout_keyline
++styleable Capability queryPatterns shortcutMatchRequired
++styleable CheckedTextView android_checkMark checkMarkCompat checkMarkTint checkMarkTintMode
++styleable ColorStateListItem alpha android_alpha android_color android_lStar lStar
++styleable CompoundButton android_button buttonCompat buttonTint buttonTintMode
 +styleable DrawerArrowToggle arrowHeadLength arrowShaftLength barLength color drawableSize gapBetweenBars spinBars thickness
-+styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery
++styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
 +styleable FontFamilyFont android_font android_fontStyle android_fontVariationSettings android_fontWeight android_ttcIndex font fontStyle fontVariationSettings fontWeight ttcIndex
++styleable Fragment android_id android_name android_tag
++styleable FragmentContainerView android_name android_tag
 +styleable GenericDraweeHierarchy actualImageScaleType backgroundImage fadeDuration failureImage failureImageScaleType overlayImage placeholderImage placeholderImageScaleType pressedStateOverlayImage progressBarAutoRotateInterval progressBarImage progressBarImageScaleType retryImage retryImageScaleType roundAsCircle roundBottomEnd roundBottomLeft roundBottomRight roundBottomStart roundTopEnd roundTopLeft roundTopRight roundTopStart roundWithOverlayColor roundedCornerRadius roundingBorderColor roundingBorderPadding roundingBorderWidth viewAspectRatio
 +styleable GradientColor android_centerColor android_centerX android_centerY android_endColor android_endX android_endY android_gradientRadius android_startColor android_startX android_startY android_tileMode android_type
 +styleable GradientColorItem android_color android_offset
@@ -3379,17 +3783,17 @@ index 0000000..9a629c2
 +styleable StateListDrawable android_constantSize android_dither android_enterFadeDuration android_exitFadeDuration android_variablePadding android_visible
 +styleable StateListDrawableItem android_drawable
 +styleable SwitchCompat android_textOff android_textOn android_thumb showText splitTrack switchMinWidth switchPadding switchTextAppearance thumbTextPadding thumbTint thumbTintMode track trackTint trackTintMode
-+styleable TextAppearance android_fontFamily android_shadowColor android_shadowDx android_shadowDy android_shadowRadius android_textColor android_textColorHint android_textColorLink android_textSize android_textStyle android_typeface fontFamily textAllCaps
-+styleable Toolbar android_gravity android_minHeight buttonGravity collapseContentDescription collapseIcon contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation logo logoDescription maxButtonHeight navigationContentDescription navigationIcon popupTheme subtitle subtitleTextAppearance subtitleTextColor title titleMargin titleMarginBottom titleMarginEnd titleMarginStart titleMarginTop titleMargins titleTextAppearance titleTextColor
++styleable TextAppearance android_fontFamily android_shadowColor android_shadowDx android_shadowDy android_shadowRadius android_textColor android_textColorHint android_textColorLink android_textFontWeight android_textSize android_textStyle android_typeface fontFamily fontVariationSettings textAllCaps textLocale
++styleable Toolbar android_gravity android_minHeight buttonGravity collapseContentDescription collapseIcon contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation logo logoDescription maxButtonHeight menu navigationContentDescription navigationIcon popupTheme subtitle subtitleTextAppearance subtitleTextColor title titleMargin titleMarginBottom titleMarginEnd titleMarginStart titleMarginTop titleMargins titleTextAppearance titleTextColor
 +styleable View android_focusable android_theme paddingEnd paddingStart theme
 +styleable ViewBackgroundHelper android_background backgroundTint backgroundTintMode
 +styleable ViewStubCompat android_id android_inflatedId android_layout
 +xml rn_dev_preferences
-diff --git a/node_modules/react-native-threads/android/build/outputs/logs/manifest-merger-release-report.txt b/node_modules/react-native-threads/android/build/outputs/logs/manifest-merger-release-report.txt
+diff --git a/node_modules/react-native-threads/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/react-native-threads/android/build/outputs/logs/manifest-merger-debug-report.txt
 new file mode 100644
 index 0000000..dad0501
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/outputs/logs/manifest-merger-release-report.txt
++++ b/node_modules/react-native-threads/android/build/outputs/logs/manifest-merger-debug-report.txt
 @@ -0,0 +1,25 @@
 +-- Merging decision tree log ---
 +manifest
@@ -3416,40 +3820,94 @@ index 0000000..dad0501
 +		INJECTED from /Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/AndroidManifest.xml
 +		ADDED from /Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/AndroidManifest.xml
 +		INJECTED from /Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/AndroidManifest.xml
-diff --git a/node_modules/react-native-threads/android/build/tmp/compileReleaseJavaWithJavac/source-classes-mapping.txt b/node_modules/react-native-threads/android/build/tmp/compileReleaseJavaWithJavac/source-classes-mapping.txt
+diff --git a/node_modules/react-native-threads/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt b/node_modules/react-native-threads/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt
 new file mode 100644
-index 0000000..96387cf
+index 0000000..4d900bc
 --- /dev/null
-+++ b/node_modules/react-native-threads/android/build/tmp/compileReleaseJavaWithJavac/source-classes-mapping.txt
-@@ -0,0 +1,23 @@
++++ b/node_modules/react-native-threads/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt
+@@ -0,0 +1,22 @@
 +com/reactlibrary/ReactContextBuilder.java
 + com.reactlibrary.ReactContextBuilder
 + com.reactlibrary.ReactContextBuilder$1
 + com.reactlibrary.ReactContextBuilder$2
-+ com.reactlibrary.ReactContextBuilder$3
 +com/reactlibrary/RNThreadPackage.java
 + com.reactlibrary.RNThreadPackage
 +com/reactlibrary/ThreadSelfModule.java
 + com.reactlibrary.ThreadSelfModule
 +com/reactlibrary/JSThread.java
 + com.reactlibrary.JSThread
-+com/reactlibrary/UIManagerStubModule.java
-+ com.reactlibrary.UIManagerStubModule
-+com/reactlibrary/BuildConfig.java
-+ com.reactlibrary.BuildConfig
 +com/reactlibrary/RNThreadModule.java
 + com.reactlibrary.RNThreadModule
 + com.reactlibrary.RNThreadModule$1
 + com.reactlibrary.RNThreadModule$2
 + com.reactlibrary.RNThreadModule$3
 + com.reactlibrary.RNThreadModule$4
++com/reactlibrary/BuildConfig.java
++ com.reactlibrary.BuildConfig
++com/reactlibrary/UIManagerStubModule.java
++ com.reactlibrary.UIManagerStubModule
 +com/reactlibrary/ThreadBaseReactPackage.java
 + com.reactlibrary.ThreadBaseReactPackage
+diff --git a/node_modules/react-native-threads/android/src/main/java/com/reactlibrary/ReactContextBuilder.java b/node_modules/react-native-threads/android/src/main/java/com/reactlibrary/ReactContextBuilder.java
+index d14383c..8e80b73 100644
+--- a/node_modules/react-native-threads/android/src/main/java/com/reactlibrary/ReactContextBuilder.java
++++ b/node_modules/react-native-threads/android/src/main/java/com/reactlibrary/ReactContextBuilder.java
+@@ -12,7 +12,6 @@ import com.facebook.react.bridge.JSBundleLoader;
+ import com.facebook.react.bridge.JavaScriptExecutorFactory;
+ import com.facebook.react.jscexecutor.JSCExecutorFactory;
+ import com.facebook.react.bridge.JavaScriptExecutor;
+-import com.facebook.react.bridge.NativeModuleCallExceptionHandler;
+ import com.facebook.react.bridge.ReactApplicationContext;
+ import com.facebook.react.ReactInstanceManager;
+ import com.facebook.react.bridge.queue.ReactQueueConfigurationSpec;
+@@ -75,9 +74,6 @@ public class ReactContextBuilder {
+ 
+         // fresh new react context
+         final ReactApplicationContext reactContext = new ReactApplicationContext(parentContext);
+-        if (devSupportManager != null) {
+-            reactContext.setNativeModuleCallExceptionHandler(devSupportManager);
+-        }
+ 
+         // load native modules
+         NativeModuleRegistryBuilder nativeRegistryBuilder = new NativeModuleRegistryBuilder(reactContext, this.instanceManager);
+@@ -87,11 +83,7 @@ public class ReactContextBuilder {
+                 .setReactQueueConfigurationSpec(ReactQueueConfigurationSpec.createDefault())
+                 .setJSExecutor(jsExecutor)
+                 .setRegistry(nativeRegistryBuilder.build())
+-                .setJSBundleLoader(jsBundleLoader)
+-                .setNativeModuleCallExceptionHandler(devSupportManager != null
+-                        ? devSupportManager
+-                        : createNativeModuleExceptionHandler()
+-                );
++                .setJSBundleLoader(jsBundleLoader);
+ 
+ 
+         final CatalystInstance catalystInstance;
+@@ -132,15 +124,6 @@ public class ReactContextBuilder {
+         return reactContext;
+     }
+ 
+-    private NativeModuleCallExceptionHandler createNativeModuleExceptionHandler() {
+-        return new NativeModuleCallExceptionHandler() {
+-            @Override
+-            public void handleException(Exception e) {
+-                throw new RuntimeException(e);
+-            }
+-        };
+-    }
+-
+     private void addNativeModules(NativeModuleRegistryBuilder nativeRegistryBuilder) {
+         for (int i = 0; i < reactPackages.size(); i++) {
+             ReactPackage reactPackage = reactPackages.get(i);
 diff --git a/node_modules/react-native-threads/android/src/main/java/com/reactlibrary/ThreadBaseReactPackage.java b/node_modules/react-native-threads/android/src/main/java/com/reactlibrary/ThreadBaseReactPackage.java
-index 353799c..53105a9 100644
+index 353799c..0cb258c 100644
 --- a/node_modules/react-native-threads/android/src/main/java/com/reactlibrary/ThreadBaseReactPackage.java
 +++ b/node_modules/react-native-threads/android/src/main/java/com/reactlibrary/ThreadBaseReactPackage.java
-@@ -15,6 +15,7 @@ import com.facebook.react.modules.storage.AsyncStorageModule;
+@@ -11,10 +11,10 @@ import com.facebook.react.modules.core.TimingModule;
+ import com.facebook.react.modules.debug.SourceCodeModule;
+ import com.facebook.react.modules.intent.IntentModule;
+ import com.facebook.react.modules.network.NetworkingModule;
+-import com.facebook.react.modules.storage.AsyncStorageModule;
  import com.facebook.react.modules.systeminfo.AndroidInfoModule;
  import com.facebook.react.modules.vibration.VibrationModule;
  import com.facebook.react.modules.websocket.WebSocketModule;
@@ -3457,7 +3915,7 @@ index 353799c..53105a9 100644
  import com.facebook.react.uimanager.ViewManager;
  import com.facebook.react.modules.debug.DevSettingsModule;
  
-@@ -38,9 +39,8 @@ public class ThreadBaseReactPackage implements ReactPackage {
+@@ -38,12 +38,10 @@ public class ThreadBaseReactPackage implements ReactPackage {
                  new ExceptionsManagerModule(reactInstanceManager.getDevSupportManager()),
                  new AppStateModule(catalystApplicationContext),
                  new TimingModule(catalystApplicationContext, reactInstanceManager.getDevSupportManager()),
@@ -3468,4 +3926,7 @@ index 353799c..53105a9 100644
 +                new SourceCodeModule(catalystApplicationContext), new JSCHeapCapture(catalystApplicationContext),
  
                  // Main list
-                 new AsyncStorageModule(catalystApplicationContext),
+-                new AsyncStorageModule(catalystApplicationContext),
+                 new IntentModule(catalystApplicationContext),
+                 new NetworkingModule(catalystApplicationContext),
+                 new VibrationModule(catalystApplicationContext),

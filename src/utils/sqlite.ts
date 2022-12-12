@@ -2,8 +2,7 @@ import {BaseCoin} from '@app/models';
 import {sqliteService} from '@app/services/sqllite';
 import {Platform} from 'react-native';
 import {Thread} from 'react-native-threads';
-
-const thread = new Thread('./sqlite.thread.js');
+const thread = Platform.OS === 'ios' ? new Thread('./sqlite.thread.js') : null;
 
 export const saveBaseCoins = (baseCoins: BaseCoin[]) => {
   if (Platform.OS === 'android') {

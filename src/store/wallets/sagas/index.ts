@@ -54,7 +54,7 @@ function* reload() {
 
       account.wallets = walletItems;
     }
-    console.log(JSON.stringify(wallets));
+
     yield put(setWallets(wallets));
   } catch (err: any) {
     Toast.show({

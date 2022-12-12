@@ -2,8 +2,7 @@ import {WalletItem} from '@app/models';
 import {WalletService} from '@app/services';
 import {Platform} from 'react-native';
 import {Thread} from 'react-native-threads';
-
-const thread = new Thread('./wallet.thread.js');
+const thread = Platform.OS === 'ios' ? new Thread('./wallet.thread.js') : null;
 
 export const createNewWallet = async (
   mnemonic: string,
