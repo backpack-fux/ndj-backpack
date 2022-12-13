@@ -57,7 +57,7 @@ export const WebviewScreen = () => {
         style={[t.bgTransparent]}
         allowsInlineMediaPlayback={true}
         onShouldStartLoadWithRequest={openExternalLink}
-        mediaCapturePermissionGrantType={'grantIfSameHostElsePrompt'}
+        mediaCapturePermissionGrantType="grant"
       />
     </BaseScreen>
   );

@@ -148,7 +148,6 @@ export const KeychainProvider = (props: {
   };
 
   const onChangeAppStatus = (nextAppState: AppStateStatus) => {
-    console.log('nextAppState==============', nextAppState, appState.current);
     if (!isActive) {
       return;
     }
