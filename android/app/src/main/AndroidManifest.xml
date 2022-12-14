@@ -30,7 +30,6 @@
           <category android:name="android.intent.category.BROWSABLE" />
           <data android:scheme="ndj-backpack" android:host="wc" />
           <data android:scheme="wc" />
-          <data android:scheme="https" android:host="jxndao.com" android:pathPrefix="/wc" />
         </intent-filter>
         <intent-filter android:autoVerify="true">
           <action android:name="android.intent.action.VIEW" />

@@ -1,5 +1,7 @@
 package com.ndj.wallet;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import android.view.WindowManager;
@@ -17,11 +19,15 @@ public class MainActivity extends ReactActivity {
 
   @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+      super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        );
+      getWindow().setFlags(
+              WindowManager.LayoutParams.FLAG_SECURE,
+              WindowManager.LayoutParams.FLAG_SECURE
+      );
+
+      Intent intent = getIntent();
+      String action = intent.getAction();
+      Uri data = intent.getData();
   }
 }
