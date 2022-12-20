@@ -637,6 +637,7 @@ export const FieldGuideScreen = () => {
           data={fields}
           keyExtractor={(item, index) => `wallet_${index}`}
           renderItem={({item}) => item}
+          containerCustomStyle
           windowSize={screenHeight}
           itemWidth={screenWidth - 60}
           sliderWidth={screenWidth - 30}
