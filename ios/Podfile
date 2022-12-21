@@ -19,6 +19,7 @@ target 'ndjbackpack' do
   pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
   pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
   pod 'Permission-PhotoLibraryAddOnly', :path => "#{permissions_path}/PhotoLibraryAddOnly"
+  pod 'SRSRadialGradient', :path => '../node_modules/react-native-radial-gradient/ios'
 
   target 'ndjbackpackTests' do
     inherit! :complete

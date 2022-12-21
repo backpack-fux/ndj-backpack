@@ -463,7 +463,7 @@ DEPENDENCIES:
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNThread (from `../node_modules/react-native-threads`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
-  - SRSRadialGradient (from `../node_modules/react-native-radial-gradient`)
+  - SRSRadialGradient (from `../node_modules/react-native-radial-gradient/ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -599,7 +599,7 @@ EXTERNAL SOURCES:
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   SRSRadialGradient:
-    :path: "../node_modules/react-native-radial-gradient"
+    :path: "../node_modules/react-native-radial-gradient/ios"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -673,6 +673,6 @@ SPEC CHECKSUMS:
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 3b2a9a3cd9de8bc260c0005c3c5eb4ead40ae691
+PODFILE CHECKSUM: 4140d4bbcfc12b8276518383d350abac242764aa
 
 COCOAPODS: 1.11.3
