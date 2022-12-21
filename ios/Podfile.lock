@@ -387,8 +387,12 @@ PODS:
     - React-Core
   - RNSVG (9.6.4):
     - React
+  - RNThread (0.0.19):
+    - React
   - RNVectorIcons (8.1.0):
     - React-Core
+  - SRSRadialGradient (1.1.2):
+    - React
   - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
   - ZXingObjC (3.6.5):
@@ -457,7 +461,9 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNThread (from `../node_modules/react-native-threads`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - SRSRadialGradient (from `../node_modules/react-native-radial-gradient`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -588,8 +594,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNThread:
+    :path: "../node_modules/react-native-threads"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  SRSRadialGradient:
+    :path: "../node_modules/react-native-radial-gradient"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -656,7 +666,9 @@ SPEC CHECKSUMS:
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNShare: 2074af48908436c310847c6c47ebb6129db1dc89
   RNSVG: a53a5de0d90ec96a6502cc3a4534dfcc0c130622
+  RNThread: dfc202533c6687316c2f026820c791a8bc2a5042
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
+  SRSRadialGradient: f88dfa41215854bfb721dfe926bd9bf09338a602
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb

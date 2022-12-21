@@ -22,8 +22,8 @@ module.exports = {
             currentFile.includes('rn-qr-generator') === false &&
             currentFile.includes('react-native-haptic-feedback') === false &&
             currentFile.includes('react-native-snap-carousel') === false &&
-            currentFile.includes('react-native-snap-carousel') === false &&
             currentFile.includes('react-native-camera') === false &&
+            currentFile.includes('react-native-radial-gradient') === false &&
             currentFile.includes(
               '@react-native-async-storage/async-storage',
             ) === false &&
