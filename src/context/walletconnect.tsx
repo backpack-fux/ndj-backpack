@@ -9,19 +9,22 @@ import {Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import LegacySignClient from '@walletconnect/client';
+import SignClient from '@walletconnect/sign-client';
+import {SessionTypes, SignClientTypes} from '@walletconnect/types';
+import {getSdkError, parseUri} from '@walletconnect/utils';
+import * as _ from 'lodash';
 
 import {StackParams} from '@app/models';
 import {EIP155_SIGNING_METHODS} from '@app/constants/EIP155Data';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import SignClient from '@walletconnect/sign-client';
-import {SessionTypes, SignClientTypes} from '@walletconnect/types';
 import {COSMOS_SIGNING_METHODS} from '@app/constants/COSMOSData';
 import {SOLANA_SIGNING_METHODS} from '@app/constants/SolanaData';
-import {getSdkError, parseUri} from '@walletconnect/utils';
 import {getDeepLink, getDomainName} from '@app/utils';
 import {whiteListedDapps} from '@app/constants/whitelistedDapps';
 
 const ENABLED_TRANSACTION_TOPICS = 'ENABLED_TRANSACTION_TOPICS';
+const WALLET_CONNECT_LEGACY_SESSIONS = 'WALLET_CONNECT_LEGACY_SESSIONS';
 let connectSessionInterval: any = null;
 let disconnectSessionInterval: any = null;
 
@@ -63,6 +66,7 @@ export const WalletConnectProvider = (props: {
 }) => {
   const navigation = useNavigation<NavigationProp<StackParams>>();
   const [client, setClient] = useState<SignClient>();
+  const [legacyClients, setLegacyClients] = useState<LegacySignClient[]>([]);
   const [sessions, setSessions] = useState<any[]>([]);
   const [isInitializingWc, setIsInitializingWc] = useState(false);
   const [enabledTransactionTopics, setEnabledTransactionTopics] = useState<{
@@ -85,6 +89,7 @@ export const WalletConnectProvider = (props: {
         },
       });
       setClient(wClient);
+      await initLegacySignClients();
     } catch (err: any) {
       console.log(err);
       Toast.show({
@@ -118,62 +123,46 @@ export const WalletConnectProvider = (props: {
     }
   };
 
-  useEffect(() => {
+  const onPairDeepLink = useCallback(async () => {
     if (!deepLinkUri) {
-      return;
-    }
-
-    if (!client) {
       return;
     }
 
     const {version} = parseUri(deepLinkUri);
 
     if (isNaN(version)) {
-      Toast.show({
-        type: 'error',
-        text1: 'WalletConnect: invalid QR code',
-      });
       setDeepLinkUri('');
-
-      return;
+      throw new Error('WalletConnect: invalid QR code');
     }
 
     if (version === 1) {
-      Toast.show({
-        type: 'error',
-        text1: "We don't support WalletConnect v1",
-      });
+      createLegacySignClient(deepLinkUri);
       setDeepLinkUri('');
+    } else if (version === 2) {
+      if (!client) {
+        throw new Error('WalletConnect client is not initialized');
+      }
 
-      return;
+      setDeepLinkUri('');
+      const res = await client.pair({uri: deepLinkUri});
+
+      if (!res?.topic) {
+        throw new Error('Failed paring');
+      }
+
+      setParingTopic(res?.topic);
+    } else {
+      throw new Error(`Unknown version of WalletConnect v${version}`);
     }
-
-    client?.pair({uri: deepLinkUri});
-
-    setDeepLinkUri('');
   }, [deepLinkUri, client]);
+
+  useEffect(() => {
+    onPairDeepLink();
+  }, [onPairDeepLink]);
 
   const onPairing = useCallback(
     async (uri: string) => {
-      try {
-        if (!client) {
-          throw new Error('WalletConnect client is not initialized');
-        }
-
-        const res = await client.pair({uri});
-
-        if (!res?.topic) {
-          throw new Error('Failed paring');
-        }
-
-        setParingTopic(res?.topic);
-      } catch (err: any) {
-        Toast.show({
-          type: 'error',
-          text1: err.message,
-        });
-      }
+      setDeepLinkUri(uri);
     },
     [client],
   );
@@ -448,6 +437,181 @@ export const WalletConnectProvider = (props: {
     [client, navigation],
   );
 
+  const createLegacySignClient = async (uri: string) => {
+    const legacyCLient = new LegacySignClient({uri});
+    legacyClientListener(legacyCLient);
+  };
+
+  const onLegacySingClientCallRequest = async (
+    legacyClient: LegacySignClient,
+    payload: {
+      id: number;
+      method: string;
+      params: any[];
+    },
+  ) => {
+    console.log('onLegacySingClientCallRequest');
+    console.log(payload);
+
+    switch (payload.method) {
+      case EIP155_SIGNING_METHODS.ETH_SIGN:
+      case EIP155_SIGNING_METHODS.PERSONAL_SIGN:
+        return navigation.navigate('LegacySessionSignModal', {
+          client: legacyClient,
+          event: payload,
+        });
+
+      case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA:
+      case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V3:
+      case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V4:
+        // return ModalStore.open('LegacySessionSignTypedDataModal', {
+        //   legacyCallRequestEvent: payload,
+        //   legacyRequestSession: legacySignClient.session,
+        // });
+        break;
+
+      case EIP155_SIGNING_METHODS.ETH_SEND_TRANSACTION:
+      case EIP155_SIGNING_METHODS.ETH_SIGN_TRANSACTION:
+        // return ModalStore.open('LegacySessionSendTransactionModal', {
+        //   legacyCallRequestEvent: payload,
+        //   legacyRequestSession: legacySignClient.session,
+        // });
+        break;
+
+      default:
+        console.log(`${payload.method} is not supported for WalletConnect v1`);
+    }
+  };
+
+  const addLegacyClient = async (legacyClient: LegacySignClient) => {
+    const res = await AsyncStorage.getItem(WALLET_CONNECT_LEGACY_SESSIONS);
+    const sessionData = res ? JSON.parse(res) : [];
+
+    if (sessions.findIndex(s => s.key === legacyClient.session.key) > -1) {
+      return;
+    }
+
+    sessionData.push(legacyClient.session);
+
+    await AsyncStorage.setItem(
+      WALLET_CONNECT_LEGACY_SESSIONS,
+      JSON.stringify(sessionData),
+    );
+
+    setLegacyClients([...legacyClients, legacyClient]);
+  };
+
+  const removeLegacyClient = async (legacyClient: LegacySignClient) => {
+    const res = await AsyncStorage.getItem(WALLET_CONNECT_LEGACY_SESSIONS);
+    const sessionData = res ? JSON.parse(res) : [];
+
+    const index = sessionData.findIndex(
+      (item: any) => item.key === legacyClient.session.key,
+    );
+
+    if (index === -1) {
+      return;
+    }
+
+    sessionData.splice(index, 1);
+
+    AsyncStorage.setItem(
+      WALLET_CONNECT_LEGACY_SESSIONS,
+      JSON.stringify(sessionData),
+    );
+
+    const clonedLegacyClients = _.cloneDeep(legacyClients);
+    const clientIndex = clonedLegacyClients.findIndex(
+      c => c.session.key === legacyClient.session.key,
+    );
+
+    if (clientIndex === -1) {
+      return;
+    }
+
+    clonedLegacyClients.splice(clientIndex, 1);
+
+    setLegacyClients(clonedLegacyClients);
+  };
+
+  const initLegacySignClients = async () => {
+    const res = await AsyncStorage.getItem(WALLET_CONNECT_LEGACY_SESSIONS);
+
+    const sessionData = res ? JSON.parse(res) : [];
+    let clients = [];
+    for (const session of sessionData) {
+      const legacyClient = new LegacySignClient({
+        session: session,
+      });
+      clients.push(legacyClient);
+    }
+
+    setLegacyClients(clients);
+  };
+
+  useEffect(() => {
+    for (const legacyClient of legacyClients) {
+      legacyClientListener(legacyClient);
+    }
+
+    return () => {
+      for (const legacyClient of legacyClients) {
+        removeLegacyClientListener(legacyClient);
+      }
+    };
+  }, [legacyClients]);
+
+  const legacyClientListener = (legacyClient: LegacySignClient) => {
+    legacyClient.on('session_request', (error, payload) => {
+      if (error) {
+        return Toast.show({
+          type: 'error',
+          text1: `legacySignClient > session_request failed: ${error.message}`,
+        });
+      }
+
+      ReactNativeHapticFeedback.trigger('impactHeavy');
+      navigation?.navigate('LegacySessionProposalModal', {
+        client: legacyClient,
+        proposal: payload,
+      });
+    });
+
+    legacyClient.on('connect', () => {
+      removeLegacyClientListener(legacyClient);
+      addLegacyClient(legacyClient);
+    });
+
+    legacyClient.on('error', error => {
+      Toast.show({
+        type: 'error',
+        text1: `legacySignClient > on error: ${error?.message}`,
+      });
+    });
+
+    legacyClient.on('call_request', (error, payload) => {
+      if (error) {
+        Toast.show({
+          type: 'error',
+          text1: `legacySignClient > call_request failed: ${error.message}`,
+        });
+      }
+      onLegacySingClientCallRequest(legacyClient, payload);
+    });
+
+    legacyClient.on('disconnect', async () => {
+      removeLegacyClient(legacyClient);
+    });
+  };
+
+  const removeLegacyClientListener = (legacyClient: LegacySignClient) => {
+    legacyClient.off('session_request');
+    legacyClient.off('connect');
+    legacyClient.off('error');
+    legacyClient.off('call_request');
+    legacyClient.off('disconnect');
+  };
+
   useEffect(() => {
     let timeout: any;
     if (pairingTopic) {
@@ -491,7 +655,6 @@ export const WalletConnectProvider = (props: {
 
   useEffect(() => {
     client?.on('session_extend', e => {
-      console.log('----------------------');
       console.log(e);
     });
     client?.on('session_delete', () => {
