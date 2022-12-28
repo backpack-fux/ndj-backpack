@@ -1,5 +1,6 @@
 import {SessionTypes, SignClientTypes} from '@walletconnect/types';
 import {BaseCoin} from './coinTypes';
+import LegacySignClient from '@walletconnect/client';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -16,6 +17,14 @@ export type RootStackParamList = {
   };
   SessionApprovalModal: {
     proposal: SignClientTypes.EventArguments['session_proposal'];
+  };
+  LegacySessionProposalModal: {
+    proposal: any;
+    client: LegacySignClient;
+  };
+  LegacySessionSignModal: {
+    event: any;
+    client: LegacySignClient;
   };
   SessionSignModal: {
     event: SignClientTypes.EventArguments['session_request'];

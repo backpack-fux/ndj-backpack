@@ -85,17 +85,17 @@ export function getWalletAddressFromParams(addresses: string[], params: any) {
 
 export function getPrivateKeyByParams(wallets: Wallet[], params: any) {
   const request = params[0];
-  const fromAddress = request?.from;
+  const fromAddress = request?.from?.toLowerCase();
   const paramsString = JSON.stringify(params);
 
   for (const account of wallets) {
     for (const wallet of account.wallets) {
       if (fromAddress) {
-        if (fromAddress === wallet.address) {
+        if (fromAddress === wallet.address.toLowerCase()) {
           return wallet.privateKey;
         }
       } else {
-        if (paramsString.includes(wallet.address)) {
+        if (paramsString.toLowerCase().includes(wallet.address.toLowerCase())) {
           return wallet.privateKey;
         }
       }

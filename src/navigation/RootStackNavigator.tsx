@@ -22,6 +22,7 @@ import {FieldGuideScreen} from '@app/screens/FieldGuide';
 import {TokensScreen} from '@app/screens/Assets/Tokens';
 import {SetPasscodeScreen} from '@app/screens/SetPasscode';
 import {
+  LegacySessionProposal,
   SessionApproval,
   SessionSendTransaction,
   SessionSign,
@@ -33,6 +34,7 @@ import {BuyTokenScreen} from '@app/screens/BuyToken';
 import {SelectTokenScreen} from '@app/screens/Wallet/SelectToken';
 import {Platform} from 'react-native';
 import {WebviewScreen} from '@app/screens/Webview';
+import {LegacySessionSign} from '@app/screens/Dapps/LegacySessionSign';
 
 const Stack = createNativeStackNavigator();
 
@@ -173,6 +175,26 @@ export const RootStackNavigator = () => {
       <Stack.Screen
         name="SessionUnsuportedMethodModal"
         component={SessionUnsuportedMethod}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="LegacySessionProposalModal"
+        component={LegacySessionProposal}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="LegacySessionSignModal"
+        component={LegacySessionSign}
         options={{
           ...stackOptions,
           headerShown: false,
