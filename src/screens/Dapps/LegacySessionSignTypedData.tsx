@@ -20,12 +20,11 @@ import {useSelector} from 'react-redux';
 import {Card, DappInfo, RequestDetail} from './components';
 import {colors} from '@app/assets/colors.config';
 
-export const LegacySessionSign = () => {
+export const LegacySessionSignTypedData = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<StackParams, 'LegacySessionSignModal'>>();
   const wallets = useSelector(walletsSelector);
   const network = useSelector(networkSelector);
-
   const chainId = network === 'mainnet' ? 1 : 5;
 
   const {event, client} = route.params;
@@ -86,12 +85,16 @@ export const LegacySessionSign = () => {
     }
   }, [wallets, client]);
 
+  if (!client || !event) {
+    return <></>;
+  }
+
   // Get required request data
   const message = getSignParamsMessage(params);
   const address = getSignParamsAddress(params);
 
   return (
-    <BaseScreen noBottom showToast title="Sign Message" onBack={onReject}>
+    <BaseScreen noBottom showToast title="Sign Typed Data" onBack={onReject}>
       <ScrollView keyboardDismissMode="on-drag">
         <DappInfo metadata={client.session?.peerMeta} />
         <RequestDetail
@@ -100,7 +103,7 @@ export const LegacySessionSign = () => {
           protocol={client.protocol}
         />
         <Card>
-          <Paragraph text="Message:" color={colors.textGray} />
+          <Paragraph text="Data:" color={colors.textGray} />
           <Paragraph text={message} />
         </Card>
       </ScrollView>

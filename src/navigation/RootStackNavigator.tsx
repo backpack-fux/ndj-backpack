@@ -35,6 +35,7 @@ import {SelectTokenScreen} from '@app/screens/Wallet/SelectToken';
 import {Platform} from 'react-native';
 import {WebviewScreen} from '@app/screens/Webview';
 import {LegacySessionSign} from '@app/screens/Dapps/LegacySessionSign';
+import {LegacySessionSignTypedData} from '@app/screens/Dapps/LegacySessionSignTypedData';
 
 const Stack = createNativeStackNavigator();
 
@@ -195,6 +196,16 @@ export const RootStackNavigator = () => {
       <Stack.Screen
         name="LegacySessionSignModal"
         component={LegacySessionSign}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="LegacySessionSignTypedDataModal"
+        component={LegacySessionSignTypedData}
         options={{
           ...stackOptions,
           headerShown: false,

@@ -464,11 +464,10 @@ export const WalletConnectProvider = (props: {
       case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA:
       case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V3:
       case EIP155_SIGNING_METHODS.ETH_SIGN_TYPED_DATA_V4:
-        // return ModalStore.open('LegacySessionSignTypedDataModal', {
-        //   legacyCallRequestEvent: payload,
-        //   legacyRequestSession: legacySignClient.session,
-        // });
-        break;
+        return navigation.navigate('LegacySessionSignTypedDataModal', {
+          client: legacyClient,
+          event: payload,
+        });
 
       case EIP155_SIGNING_METHODS.ETH_SEND_TRANSACTION:
       case EIP155_SIGNING_METHODS.ETH_SIGN_TRANSACTION:
