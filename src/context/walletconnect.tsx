@@ -471,11 +471,10 @@ export const WalletConnectProvider = (props: {
 
       case EIP155_SIGNING_METHODS.ETH_SEND_TRANSACTION:
       case EIP155_SIGNING_METHODS.ETH_SIGN_TRANSACTION:
-        // return ModalStore.open('LegacySessionSendTransactionModal', {
-        //   legacyCallRequestEvent: payload,
-        //   legacyRequestSession: legacySignClient.session,
-        // });
-        break;
+        return navigation.navigate('LegacySessionSendTransactionModal', {
+          client: legacyClient,
+          event: payload,
+        });
 
       default:
         console.log(`${payload.method} is not supported for WalletConnect v1`);

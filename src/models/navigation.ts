@@ -30,6 +30,10 @@ export type RootStackParamList = {
     event: any;
     client: LegacySignClient;
   };
+  LegacySessionSendTransactionModal: {
+    event: any;
+    client: LegacySignClient;
+  };
   SessionSignModal: {
     event: SignClientTypes.EventArguments['session_request'];
     session?: SessionTypes.Struct;

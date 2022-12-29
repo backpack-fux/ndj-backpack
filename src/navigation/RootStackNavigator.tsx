@@ -36,6 +36,7 @@ import {Platform} from 'react-native';
 import {WebviewScreen} from '@app/screens/Webview';
 import {LegacySessionSign} from '@app/screens/Dapps/LegacySessionSign';
 import {LegacySessionSignTypedData} from '@app/screens/Dapps/LegacySessionSignTypedData';
+import {LegacySessionSendTransaction} from '@app/screens/Dapps/LegacySessionSendTransaction';
 
 const Stack = createNativeStackNavigator();
 
@@ -206,6 +207,16 @@ export const RootStackNavigator = () => {
       <Stack.Screen
         name="LegacySessionSignTypedDataModal"
         component={LegacySessionSignTypedData}
+        options={{
+          ...stackOptions,
+          headerShown: false,
+          presentation: 'formSheet',
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="LegacySessionSendTransactionModal"
+        component={LegacySessionSendTransaction}
         options={{
           ...stackOptions,
           headerShown: false,
