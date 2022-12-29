@@ -27,8 +27,14 @@ const logo = require('@app/assets/images/logo.png');
 
 export const DappsScreen = () => {
   const navigation = useNavigation<NavigationProp<StackParams>>();
-  const {isInitializingWc, client, sessions, onDisconnect, onPairing} =
-    useWalletConnect();
+  const {
+    isInitializingWc,
+    client,
+    sessions,
+    legacyClients,
+    onDisconnect,
+    onPairing,
+  } = useWalletConnect();
   const [openScan, setOpenScan] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string>();
   const {onOpenDeepLink} = useWalletConnect();
@@ -54,7 +60,16 @@ export const DappsScreen = () => {
       return;
     }
 
-    onDisconnect(selectedTopic);
+    const legacyClient = legacyClients.find(
+      l => l.session.key === selectedTopic,
+    );
+
+    if (legacyClient) {
+      legacyClient.killSession();
+    } else {
+      onDisconnect(selectedTopic);
+    }
+
     setSelectedTopic(undefined);
   };
 
@@ -116,7 +131,7 @@ export const DappsScreen = () => {
           keyboardDismissMode="on-drag">
           <Card>
             {isInitializingWc && <ActivityIndicator size={'large'} />}
-            {sessions.length ? (
+            {sessions.length || legacyClients.length ? (
               <>
                 {sessions.map(session => {
                   const title =
@@ -144,6 +159,42 @@ export const DappsScreen = () => {
                       />
                       <View style={[t.flex1]}>
                         <Paragraph text={title} numberOfLines={1} />
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
+                {legacyClients.map(legacyClient => {
+                  const title =
+                    legacyClient.session.peerMeta?.name ||
+                    legacyClient.session.peerMeta?.url;
+                  const icon = legacyClient.session.peerMeta?.icons[0];
+                  const isSelected =
+                    legacyClient.session.peerId === selectedTopic;
+
+                  return (
+                    <TouchableOpacity
+                      key={legacyClient.session.key}
+                      onPress={() => setSelectedTopic(legacyClient.session.key)}
+                      style={[
+                        t.flexRow,
+                        t.itemsCenter,
+                        t.mT1,
+                        t.mB1,
+                        t.p1,
+                        t.pL2,
+                        t.pR2,
+                        t.roundedLg,
+                        isSelected ? {backgroundColor: colors.secondary} : {},
+                      ]}>
+                      <Image
+                        source={icon ? {uri: icon} : logo}
+                        style={[t.selfCenter, t.w8, t.h8, t.mR2]}
+                      />
+                      <View style={[t.flex1]}>
+                        <Paragraph
+                          text={`${title} (v1/legacy)`}
+                          numberOfLines={2}
+                        />
                       </View>
                     </TouchableOpacity>
                   );

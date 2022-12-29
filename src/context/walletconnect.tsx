@@ -31,6 +31,7 @@ let disconnectSessionInterval: any = null;
 export interface WalletConnectContextProps {
   isInitializingWc: boolean;
   client?: SignClient;
+  legacyClients: LegacySignClient[];
   sessions: any[];
   enabledTransactionTopics: {[topic: string]: boolean};
   onAcceptSessionProposal: (proposal: any, accounts: string[]) => void;
@@ -43,6 +44,7 @@ export interface WalletConnectContextProps {
 }
 
 export const WalletConnectContext = createContext<WalletConnectContextProps>({
+  legacyClients: [],
   isInitializingWc: false,
   sessions: [],
   enabledTransactionTopics: {},
@@ -543,7 +545,7 @@ export const WalletConnectProvider = (props: {
       });
       clients.push(legacyClient);
     }
-
+    console.log('=================', clients);
     setLegacyClients(clients);
   };
 
@@ -675,6 +677,7 @@ export const WalletConnectProvider = (props: {
       value={{
         isInitializingWc,
         client,
+        legacyClients,
         sessions,
         enabledTransactionTopics,
         onPairing,
