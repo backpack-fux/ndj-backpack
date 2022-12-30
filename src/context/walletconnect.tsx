@@ -122,11 +122,17 @@ export const WalletConnectProvider = (props: {
       }
     };
 
-    Linking.addEventListener('url', ({url}: {url: string}) =>
-      onOpenDeepLink(url),
-    );
+    Linking.addEventListener('url', onOpenDappUrl);
     getUrlAsync();
+
+    return () => {
+      Linking.removeEventListener('url', onOpenDappUrl);
+    };
   }, []);
+
+  const onOpenDappUrl = ({url}: {url: string}) => {
+    onOpenDeepLink(url);
+  };
 
   const onOpenDeepLink = (url: string) => {
     const deepLink = getDeepLink(url);

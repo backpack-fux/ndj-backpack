@@ -81,64 +81,49 @@ index 0000000..5ff383e
 +o/debug
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/BuildConfig.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/BuildConfig.dex
 new file mode 100644
-index 0000000..d817601
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/BuildConfig.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/JSThread.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/JSThread.dex
 new file mode 100644
-index 0000000..39e8593
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/JSThread.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$1.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$1.dex
 new file mode 100644
-index 0000000..22ee247
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$1.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$2.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$2.dex
 new file mode 100644
-index 0000000..e121577
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$2.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$3.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$3.dex
 new file mode 100644
-index 0000000..05775c1
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$3.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$4.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$4.dex
 new file mode 100644
-index 0000000..46f722a
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule$4.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule.dex
 new file mode 100644
-index 0000000..8159b17
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadModule.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadPackage.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadPackage.dex
 new file mode 100644
-index 0000000..58f367f
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/RNThreadPackage.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ReactContextBuilder$1.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ReactContextBuilder$1.dex
 new file mode 100644
-index 0000000..8465a0e
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ReactContextBuilder$1.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ReactContextBuilder$2.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ReactContextBuilder$2.dex
 new file mode 100644
-index 0000000..9774a3d
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ReactContextBuilder$2.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ReactContextBuilder.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ReactContextBuilder.dex
 new file mode 100644
-index 0000000..dcb8dbe
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ReactContextBuilder.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ThreadBaseReactPackage.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ThreadBaseReactPackage.dex
 new file mode 100644
-index 0000000..6062d63
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ThreadBaseReactPackage.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ThreadSelfModule.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ThreadSelfModule.dex
 new file mode 100644
-index 0000000..e945930
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/ThreadSelfModule.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/UIManagerStubModule.dex b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/UIManagerStubModule.dex
 new file mode 100644
-index 0000000..5aa4594
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/debug/com/reactlibrary/UIManagerStubModule.dex differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/desugar_graph.bin b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/desugar_graph.bin
 new file mode 100644
-index 0000000..601f245
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/.transforms/9bd029ec805fa437bf824f34652262d1/transformed/desugar_graph.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/.transforms/b8407aa3c9b7ebba8ca4da0f7630957a/results.bin b/node_modules/react-native-threads/android/build/.transforms/b8407aa3c9b7ebba8ca4da0f7630957a/results.bin
 new file mode 100644
 index 0000000..1ed65e0
@@ -223,12 +208,10 @@ index 0000000..9e26dfe
 \ No newline at end of file
 diff --git a/node_modules/react-native-threads/android/build/intermediates/compile_library_classes_jar/debug/classes.jar b/node_modules/react-native-threads/android/build/intermediates/compile_library_classes_jar/debug/classes.jar
 new file mode 100644
-index 0000000..a078eef
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/compile_library_classes_jar/debug/classes.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/compile_r_class_jar/debug/R.jar b/node_modules/react-native-threads/android/build/intermediates/compile_r_class_jar/debug/R.jar
 new file mode 100644
-index 0000000..fd800fa
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/compile_r_class_jar/debug/R.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/compile_symbol_list/debug/R.txt b/node_modules/react-native-threads/android/build/intermediates/compile_symbol_list/debug/R.txt
 new file mode 100644
 index 0000000..611979d
@@ -2254,60 +2237,46 @@ index 0000000..974838f
 \ No newline at end of file
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/BuildConfig.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/BuildConfig.class
 new file mode 100644
-index 0000000..da93742
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/BuildConfig.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/JSThread.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/JSThread.class
 new file mode 100644
-index 0000000..cda5208
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/JSThread.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$1.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$1.class
 new file mode 100644
-index 0000000..10f13f0
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$2.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$2.class
 new file mode 100644
-index 0000000..61f0456
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$3.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$3.class
 new file mode 100644
-index 0000000..748170e
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$3.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$4.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$4.class
 new file mode 100644
-index 0000000..f05d339
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule$4.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule.class
 new file mode 100644
-index 0000000..7fbcdb0
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadPackage.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadPackage.class
 new file mode 100644
-index 0000000..a015656
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/RNThreadPackage.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$1.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$1.class
 new file mode 100644
-index 0000000..44fb52b
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$2.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$2.class
 new file mode 100644
-index 0000000..daabdac
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder.class
 new file mode 100644
-index 0000000..61b0373
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ReactContextBuilder.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadBaseReactPackage.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadBaseReactPackage.class
 new file mode 100644
-index 0000000..09b04db
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadBaseReactPackage.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadSelfModule.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadSelfModule.class
 new file mode 100644
-index 0000000..7077374
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/ThreadSelfModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/UIManagerStubModule.class b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/UIManagerStubModule.class
 new file mode 100644
-index 0000000..86edbaa
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/javac/debug/classes/com/reactlibrary/UIManagerStubModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/local_only_symbol_list/debug/R-def.txt b/node_modules/react-native-threads/android/build/intermediates/local_only_symbol_list/debug/R-def.txt
 new file mode 100644
 index 0000000..78ac5b8
@@ -2384,60 +2353,46 @@ index 0000000..573b536
 \ No newline at end of file
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/BuildConfig.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/BuildConfig.class
 new file mode 100644
-index 0000000..da93742
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/BuildConfig.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/JSThread.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/JSThread.class
 new file mode 100644
-index 0000000..cda5208
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/JSThread.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$1.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$1.class
 new file mode 100644
-index 0000000..10f13f0
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$2.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$2.class
 new file mode 100644
-index 0000000..61f0456
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$3.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$3.class
 new file mode 100644
-index 0000000..748170e
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$3.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$4.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$4.class
 new file mode 100644
-index 0000000..f05d339
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule$4.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule.class
 new file mode 100644
-index 0000000..7fbcdb0
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadPackage.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadPackage.class
 new file mode 100644
-index 0000000..a015656
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/RNThreadPackage.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$1.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$1.class
 new file mode 100644
-index 0000000..44fb52b
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$2.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$2.class
 new file mode 100644
-index 0000000..daabdac
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder.class
 new file mode 100644
-index 0000000..61b0373
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ReactContextBuilder.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadBaseReactPackage.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadBaseReactPackage.class
 new file mode 100644
-index 0000000..09b04db
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadBaseReactPackage.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadSelfModule.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadSelfModule.class
 new file mode 100644
-index 0000000..7077374
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/ThreadSelfModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/UIManagerStubModule.class b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/UIManagerStubModule.class
 new file mode 100644
-index 0000000..86edbaa
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/intermediates/runtime_library_classes_dir/debug/com/reactlibrary/UIManagerStubModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt b/node_modules/react-native-threads/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
 new file mode 100644
 index 0000000..b42ef55
@@ -3928,8 +3883,7 @@ index 0000000..dad0501
 +		INJECTED from /Volumes/Work/Work/wwk/ndj-backpack/node_modules/react-native-threads/android/src/main/AndroidManifest.xml
 diff --git a/node_modules/react-native-threads/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin b/node_modules/react-native-threads/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin
 new file mode 100644
-index 0000000..2d0499d
-Binary files /dev/null and b/node_modules/react-native-threads/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt b/node_modules/react-native-threads/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt
 new file mode 100644
 index 0000000..4d900bc
@@ -4042,8 +3996,7 @@ index 353799c..0cb258c 100644
                  new VibrationModule(catalystApplicationContext),
 diff --git a/node_modules/react-native-threads/ios/.DS_Store b/node_modules/react-native-threads/ios/.DS_Store
 new file mode 100644
-index 0000000..5d39ce8
-Binary files /dev/null and b/node_modules/react-native-threads/ios/.DS_Store differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-threads/ios/RNThread.xcodeproj/xcuserdata/kstar.xcuserdatad/xcschemes/xcschememanagement.plist b/node_modules/react-native-threads/ios/RNThread.xcodeproj/xcuserdata/kstar.xcuserdatad/xcschemes/xcschememanagement.plist
 new file mode 100644
 index 0000000..cb15f2f
@@ -4070,15 +4023,17 @@ index 0000000..cb15f2f
 +</dict>
 +</plist>
 diff --git a/node_modules/react-native-threads/ios/ThreadManager.m b/node_modules/react-native-threads/ios/ThreadManager.m
-index 3aa1bba..e2acf2a 100644
+index 3aa1bba..a600439 100644
 --- a/node_modules/react-native-threads/ios/ThreadManager.m
 +++ b/node_modules/react-native-threads/ios/ThreadManager.m
-@@ -20,7 +20,7 @@ @implementation ThreadManager
+@@ -20,7 +20,9 @@ @implementation ThreadManager
  
    int threadId = abs(arc4random());
  
 -  NSURL *threadURL = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:name fallbackResource:name];
-+  NSURL *threadURL = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:name];
++  NSURL *threadURL = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:name fallbackURLProvider:^NSURL * {
++    return [[NSBundle mainBundle] URLForResource:name withExtension:@"jsbundle"];
++  }];
    NSLog(@"starting Thread %@", [threadURL absoluteString]);
  
  
