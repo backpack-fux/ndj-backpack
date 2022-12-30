@@ -55,7 +55,7 @@ export const WalletItem = ({
   cardRef?: (ref: any) => void;
   onSelectWallet: (wallet: Wallet) => void;
 }) => {
-  const {sessions} = useWalletConnect();
+  const {sessions, legacyClients} = useWalletConnect();
   const dispatch = useDispatch();
   const selectedWallet = useSelector(selectedWalletSelector);
   const tokens = useSelector(tokensSelector);
@@ -136,6 +136,15 @@ export const WalletItem = ({
       .filter((d: string) => accounts.includes(d));
     return sessionAccounts?.length > 0;
   });
+
+  const legacySessions = legacyClients.filter(legacyClient => {
+    const sessionAccounts = legacyClient.accounts
+      .map(address => `eip155:${legacyClient.chainId}:${address}`)
+      .filter(address => accounts.includes(address));
+    return sessionAccounts?.length > 0;
+  });
+
+  const dappCount = walletSessions.length + legacySessions.length;
 
   const onCopySeed = () => {
     ReactNativeHapticFeedback.trigger('impactHeavy');
@@ -319,7 +328,7 @@ export const WalletItem = ({
                       <Paragraph text="Apps" align="center" />
                       <View style={[t.flexRow, t.itemsCenter]}>
                         <Paragraph
-                          text={walletSessions.length.toString()}
+                          text={dappCount.toString()}
                           type="bold"
                           align="center"
                         />

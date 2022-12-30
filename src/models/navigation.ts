@@ -69,7 +69,10 @@ export type MainStackParamList = {
 };
 
 export type DappStackParamList = {
-  DappDetails: {session: SessionTypes.Struct};
+  DappDetails: {
+    session?: SessionTypes.Struct;
+    legacyClient?: LegacySignClient;
+  };
 };
 
 export type WalletStackParamList = {

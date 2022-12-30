@@ -100,9 +100,9 @@ export const LegacySessionSendTransaction = () => {
       return;
     }
 
-    // if (!enabledTransactionTopics[client?.session.key]) {
-    //   onReject();
-    // }
+    if (!enabledTransactionTopics[client?.key]) {
+      onReject();
+    }
   }, [wallets, client, enabledTransactionTopics]);
 
   if (!client || !event) {

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Alert, FlatList, RefreshControl, View, Animated} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';

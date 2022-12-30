@@ -19,6 +19,7 @@ import {
 import {getNetworkByChain, showNetworkName} from '@app/utils';
 import {networkList, NetworkName, networkName} from '@app/constants';
 import {getSdkError} from '@walletconnect/utils';
+import {useWalletConnect} from '@app/context/walletconnect';
 
 const shadow = {
   shadowColor: '#fff',
@@ -33,6 +34,8 @@ const shadow = {
 };
 
 export const LegacySessionProposal = () => {
+  const {onRejectLegacySessionProposal, onAcceptLegacySessionProposal} =
+    useWalletConnect();
   const route =
     useRoute<RouteProp<StackParams, 'LegacySessionProposalModal'>>();
   const wallets = useSelector(walletsSelector);
@@ -50,7 +53,7 @@ export const LegacySessionProposal = () => {
   const navigation = useNavigation();
   const {proposal, client} = route.params;
   const {params} = proposal;
-  console.log(params);
+
   const {chainId, peerMeta} = params[0];
   let methods: string[] = Object.values(EIP155_SIGNING_METHODS);
   const availableChains = [`eip155:${chainId || defaultChainId}`]
@@ -63,7 +66,7 @@ export const LegacySessionProposal = () => {
     () => availableChains.map(c => c.network) as NetworkName[],
     [availableChains],
   );
-  console.log(availableNetworks);
+
   const availableLayers = useMemo(
     () =>
       _.groupBy(
@@ -115,19 +118,16 @@ export const LegacySessionProposal = () => {
   }, [selectedAddresses]);
 
   const onConnect = async () => {
-    const res = await client.approveSession({
-      accounts: selectedAddresses,
-      chainId: chainId || defaultChainId,
-    });
-    console.log(res);
+    onAcceptLegacySessionProposal(
+      client,
+      selectedAddresses,
+      chainId || defaultChainId,
+    );
     navigation.goBack();
   };
 
   const onReject = async () => {
-    const res = await client.rejectSession(
-      getSdkError('USER_REJECTED_METHODS'),
-    );
-    console.log(res);
+    onRejectLegacySessionProposal(client);
     navigation.goBack();
   };
 
@@ -187,7 +187,7 @@ export const LegacySessionProposal = () => {
               <Paragraph text="UI from" marginRight={5} />
               <View style={[t.flex1, t.justifyCenter]}>
                 <Paragraph
-                  text={peerMeta.url}
+                  text={peerMeta?.url}
                   color={colors.blue}
                   numberOfLines={1}
                 />
@@ -323,7 +323,7 @@ export const LegacySessionProposal = () => {
               <Paragraph text="Connect To" marginRight={5} />
               <View style={[t.flex1, t.justifyCenter]}>
                 <Paragraph
-                  text={peerMeta.url}
+                  text={peerMeta?.url}
                   color={colors.blue}
                   numberOfLines={1}
                 />

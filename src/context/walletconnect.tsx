@@ -36,6 +36,14 @@ export interface WalletConnectContextProps {
   enabledTransactionTopics: {[topic: string]: boolean};
   onAcceptSessionProposal: (proposal: any, accounts: string[]) => void;
   onRejectSessionProposal: (proposal: any, message?: string) => void;
+
+  onAcceptLegacySessionProposal: (
+    legacyClient: LegacySignClient,
+    accounts: string[],
+    chainId: number,
+  ) => void;
+  onRejectLegacySessionProposal: (legacyClient: LegacySignClient) => void;
+
   onDisconnect: (topic: string) => void;
   onToggleTransactionEnable: (topic: string, value: boolean) => void;
   onPairing: (uri: string) => void;
@@ -50,6 +58,8 @@ export const WalletConnectContext = createContext<WalletConnectContextProps>({
   enabledTransactionTopics: {},
   onAcceptSessionProposal: () => {},
   onRejectSessionProposal: () => {},
+  onAcceptLegacySessionProposal: () => {},
+  onRejectLegacySessionProposal: () => {},
   onDisconnect: () => {},
   onToggleTransactionEnable: () => {},
   onPairing: () => {},
@@ -76,6 +86,8 @@ export const WalletConnectProvider = (props: {
   }>({});
   const [deepLinkUri, setDeepLinkUri] = useState<string>();
   const [pairingTopic, setParingTopic] = useState<string>();
+  const [paringLegacyClient, setParingLegacyClient] =
+    useState<LegacySignClient | null>();
 
   const initClient = async () => {
     setIsInitializingWc(true);
@@ -87,13 +99,12 @@ export const WalletConnectProvider = (props: {
           name: 'NDJ Wallet',
           description: 'NDJ Wallet',
           url: 'https://jxndao.com',
-          icons: ['https://walletconnect.com/walletconnect-logo.png'],
+          icons: ['https://jxndao.com//logo192.png'],
         },
       });
       setClient(wClient);
       await initLegacySignClients();
     } catch (err: any) {
-      console.log(err);
       Toast.show({
         type: 'error',
         text1: err.message,
@@ -184,7 +195,7 @@ export const WalletConnectProvider = (props: {
     [pairingTopic, navigation],
   );
 
-  const retryConnectSession = (
+  const retryConnectSession = async (
     originSessions: SessionTypes.Struct[],
     retry: number,
   ) => {
@@ -203,7 +214,7 @@ export const WalletConnectProvider = (props: {
         );
 
         if (whiteList && !enabledTransactionTopics[newSession.topic]) {
-          onToggleTransactionEnable(newSession.topic as string, true);
+          await onToggleTransactionEnable(newSession.topic as string, true);
         }
       }
 
@@ -270,7 +281,7 @@ export const WalletConnectProvider = (props: {
       }
 
       if (whiteList && !enabledTransactionTopics[res.topic]) {
-        onToggleTransactionEnable(res.topic as string, true);
+        await onToggleTransactionEnable(res.topic as string, true);
       }
 
       if (connectSessionInterval) {
@@ -289,6 +300,40 @@ export const WalletConnectProvider = (props: {
         clearTimeout(connectSessionInterval);
         connectSessionInterval = null;
       }
+    }
+  };
+
+  const onAcceptLegacySessionProposal = async (
+    legacyClient: LegacySignClient,
+    accounts: string[],
+    chainId: number,
+  ) => {
+    try {
+      await legacyClient.approveSession({
+        accounts,
+        chainId,
+      });
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+      removeLegacyClientListener(legacyClient);
+    }
+  };
+
+  const onRejectLegacySessionProposal = async (
+    legacyClient: LegacySignClient,
+  ) => {
+    try {
+      await legacyClient.rejectSession(getSdkError('USER_REJECTED_METHODS'));
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+    } finally {
+      removeLegacyClientListener(legacyClient);
     }
   };
 
@@ -367,12 +412,15 @@ export const WalletConnectProvider = (props: {
     }
   };
 
-  const onToggleTransactionEnable = (topic: string, value: boolean) => {
+  const onToggleTransactionEnable = async (topic: string, value: boolean) => {
     const data = {
       ...enabledTransactionTopics,
       [topic]: value,
     };
-    AsyncStorage.setItem(ENABLED_TRANSACTION_TOPICS, JSON.stringify(data));
+    await AsyncStorage.setItem(
+      ENABLED_TRANSACTION_TOPICS,
+      JSON.stringify(data),
+    );
     setEnabledTransactionTopics(data);
   };
 
@@ -383,6 +431,10 @@ export const WalletConnectProvider = (props: {
 
     for (const session of sessions) {
       result[session.topic] = data[session.topic] || false;
+    }
+
+    for (const legacyClient of legacyClients) {
+      result[legacyClient.key] = data[legacyClient.key] ?? false;
     }
 
     AsyncStorage.setItem(ENABLED_TRANSACTION_TOPICS, JSON.stringify(data));
@@ -440,8 +492,17 @@ export const WalletConnectProvider = (props: {
   );
 
   const createLegacySignClient = async (uri: string) => {
-    const legacyCLient = new LegacySignClient({uri});
-    legacyClientListener(legacyCLient);
+    const legacyClient = new LegacySignClient({
+      uri,
+      clientMeta: {
+        name: 'NDJ Wallet',
+        description: 'NDJ Wallet',
+        url: 'https://jxndao.com',
+        icons: ['https://jxndao.com//logo192.png'],
+      },
+    });
+    legacyClientListener(legacyClient);
+    setParingLegacyClient(legacyClient);
   };
 
   const onLegacySingClientCallRequest = async (
@@ -452,9 +513,6 @@ export const WalletConnectProvider = (props: {
       params: any[];
     },
   ) => {
-    console.log('onLegacySingClientCallRequest');
-    console.log(payload);
-
     switch (payload.method) {
       case EIP155_SIGNING_METHODS.ETH_SIGN:
       case EIP155_SIGNING_METHODS.PERSONAL_SIGN:
@@ -489,6 +547,16 @@ export const WalletConnectProvider = (props: {
 
     if (sessions.findIndex(s => s.key === legacyClient.session.key) > -1) {
       return;
+    }
+
+    const whiteList = whiteListedDapps.find(
+      url =>
+        legacyClient.peerMeta &&
+        url === getDomainName(legacyClient.peerMeta?.url),
+    );
+
+    if (whiteList && !enabledTransactionTopics[legacyClient.key]) {
+      await onToggleTransactionEnable(legacyClient.key as string, true);
     }
 
     sessionData.push(legacyClient.session);
@@ -536,7 +604,6 @@ export const WalletConnectProvider = (props: {
 
   const initLegacySignClients = async () => {
     const res = await AsyncStorage.getItem(WALLET_CONNECT_LEGACY_SESSIONS);
-
     const sessionData = res ? JSON.parse(res) : [];
     let clients = [];
     for (const session of sessionData) {
@@ -545,7 +612,6 @@ export const WalletConnectProvider = (props: {
       });
       clients.push(legacyClient);
     }
-    console.log('=================', clients);
     setLegacyClients(clients);
   };
 
@@ -570,6 +636,7 @@ export const WalletConnectProvider = (props: {
         });
       }
 
+      setParingLegacyClient(null);
       ReactNativeHapticFeedback.trigger('impactHeavy');
       navigation?.navigate('LegacySessionProposalModal', {
         client: legacyClient,
@@ -578,7 +645,8 @@ export const WalletConnectProvider = (props: {
     });
 
     legacyClient.on('connect', () => {
-      removeLegacyClientListener(legacyClient);
+      setParingLegacyClient(null);
+      removeLegacyClient(legacyClient);
       addLegacyClient(legacyClient);
     });
 
@@ -630,12 +698,31 @@ export const WalletConnectProvider = (props: {
   }, [pairingTopic]);
 
   useEffect(() => {
+    if (!paringLegacyClient) {
+      return;
+    }
+
+    let timeout = setTimeout(() => {
+      Toast.show({
+        type: 'error',
+        text1: 'WalletConnect V1: connection timed out',
+      });
+      setParingLegacyClient(null);
+      removeLegacyClientListener(paringLegacyClient);
+    }, 15000);
+
+    return () => {
+      timeout && clearTimeout(timeout);
+    };
+  }, [paringLegacyClient]);
+
+  useEffect(() => {
     setSessions(client?.session.values || []);
   }, [client]);
 
   useEffect(() => {
     syncTransactionEnableTopics();
-  }, [sessions]);
+  }, [sessions, legacyClients]);
 
   useEffect(() => {
     client?.on('session_proposal', onSessionProposal);
@@ -683,6 +770,8 @@ export const WalletConnectProvider = (props: {
         onPairing,
         onRejectSessionProposal,
         onAcceptSessionProposal,
+        onAcceptLegacySessionProposal,
+        onRejectLegacySessionProposal,
         onDisconnect,
         onToggleTransactionEnable,
         onClearPairingTopic,

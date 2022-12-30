@@ -73,18 +73,26 @@ export const DappsScreen = () => {
     setSelectedTopic(undefined);
   };
 
-  const onDetails = async () => {
+  const onDetails = () => {
     if (!selectedTopic) {
       return;
     }
 
     const session = sessions.find(s => s.topic === selectedTopic);
 
-    if (!session) {
+    if (session) {
+      navigation.navigate('DappDetails', {session});
+
       return;
     }
 
-    navigation.navigate('DappDetails', {session});
+    const legacyClient = legacyClients.find(
+      l => l.session.key === selectedTopic,
+    );
+
+    if (legacyClient) {
+      navigation.navigate('DappDetails', {legacyClient});
+    }
   };
 
   const onOpenScan = async () => {
@@ -168,8 +176,7 @@ export const DappsScreen = () => {
                     legacyClient.session.peerMeta?.name ||
                     legacyClient.session.peerMeta?.url;
                   const icon = legacyClient.session.peerMeta?.icons[0];
-                  const isSelected =
-                    legacyClient.session.peerId === selectedTopic;
+                  const isSelected = legacyClient.session.key === selectedTopic;
 
                   return (
                     <TouchableOpacity

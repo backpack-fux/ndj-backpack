@@ -12,12 +12,25 @@ export const DappDetailScreen = () => {
   const {onDisconnect, enabledTransactionTopics, onToggleTransactionEnable} =
     useWalletConnect();
 
-  const {session} = route.params;
+  const {session, legacyClient} = route.params;
 
-  const disconnect = () => {
-    onDisconnect(session.topic);
+  const disconnect = async () => {
+    if (session) {
+      onDisconnect(session.topic);
+    }
+
+    if (legacyClient) {
+      try {
+        await legacyClient.killSession();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     navigation.goBack();
   };
+
+  const metaData = session?.peer.metadata || legacyClient?.peerMeta;
 
   return (
     <BaseScreen>
@@ -27,12 +40,12 @@ export const DappDetailScreen = () => {
           keyboardDismissMode="on-drag">
           <Card>
             <Paragraph
-              text={session.peer.metadata.name}
+              text={`${metaData?.name}${legacyClient ? '(v1/legacy)' : ''}`}
               align="center"
               size={17}
             />
             <Paragraph
-              text={session.peer.metadata.url}
+              text={metaData?.url}
               align="center"
               size={14}
               marginTop={20}
@@ -40,9 +53,16 @@ export const DappDetailScreen = () => {
             />
             <Toggle
               label="sign transactions enabled"
-              value={!!enabledTransactionTopics[session.topic]}
+              value={
+                !!enabledTransactionTopics[
+                  (session?.topic || legacyClient?.session.key) as string
+                ]
+              }
               onChange={value =>
-                onToggleTransactionEnable(session.topic, value)
+                onToggleTransactionEnable(
+                  (session?.topic || legacyClient?.session.key) as string,
+                  value,
+                )
               }
             />
             <Paragraph
