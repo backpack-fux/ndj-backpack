@@ -1,12 +1,11 @@
 import {Paragraph} from '@app/components';
-import {AppMetadata} from '@walletconnect/types';
 import React from 'react';
 import {Image, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {Card} from './Card';
 
-export const DappInfo = ({metadata}: {metadata: AppMetadata}) => {
-  const icon = metadata.icons[0];
+export const DappInfo = ({metadata}: {metadata: any}) => {
+  const icon = metadata?.icons[0];
 
   return (
     <Card>
@@ -18,8 +17,8 @@ export const DappInfo = ({metadata}: {metadata: AppMetadata}) => {
           />
         )}
         <View>
-          <Paragraph text={metadata.name} />
-          <Paragraph text={metadata.url} />
+          {!!metadata?.name && <Paragraph text={metadata?.name} />}
+          {!!metadata?.uri && <Paragraph text={metadata?.url} />}
         </View>
       </View>
     </Card>
