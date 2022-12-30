@@ -124,10 +124,6 @@ export const WalletConnectProvider = (props: {
 
     Linking.addEventListener('url', onOpenDappUrl);
     getUrlAsync();
-
-    return () => {
-      Linking.removeEventListener('url', onOpenDappUrl);
-    };
   }, []);
 
   const onOpenDappUrl = ({url}: {url: string}) => {
@@ -692,7 +688,7 @@ export const WalletConnectProvider = (props: {
       timeout = setTimeout(() => {
         Toast.show({
           type: 'error',
-          text1: 'WalletConnect: connection timed out',
+          text1: 'WalletConnect: connection timed out. Try refresh paring session in your Dapp',
         });
         setParingTopic('');
       }, 15000);
@@ -711,7 +707,7 @@ export const WalletConnectProvider = (props: {
     let timeout = setTimeout(() => {
       Toast.show({
         type: 'error',
-        text1: 'WalletConnect V1: connection timed out',
+        text1: 'WalletConnect V1: connection timed out. Try refresh paring session in your Dapp',
       });
       setParingLegacyClient(null);
       removeLegacyClientListener(paringLegacyClient);
