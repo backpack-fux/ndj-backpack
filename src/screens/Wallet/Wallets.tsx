@@ -236,6 +236,7 @@ export const WalletsScreen = () => {
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             keyboardDismissMode="on-drag"
+            removeClippedSubviews={false}
             renderItem={({item}) => (
               <WalletItem
                 wallet={item}

@@ -250,12 +250,19 @@ export const Send = () => {
                 placeholderTextColor={colors.textGray}
                 value={sendTokenInfo.toAccount}
                 onChangeText={value => onUpdateToAccount(value)}
-                style={[t.flex1, t.textWhite, {fontSize}]}
+                style={[
+                  t.flex1,
+                  t.textCenter,
+                  t.textWhite,
+                  t.p0,
+                  t.m0,
+                  {fontSize},
+                ]}
               />
             </View>
           ) : (
             <TouchableOpacity
-              style={[{height: inputHeight}, t.justifyCenter]}
+              style={[{height: inputHeight}, t.flex1, t.justifyCenter]}
               onPress={() => setFocusSendAddress(true)}>
               <Paragraph
                 text={sendTokenInfo.toAccount || 'Send to address'}
@@ -305,7 +312,6 @@ export const Send = () => {
                   t.flex1,
                   t.p0,
                   t.m0,
-                  {},
                   t.textWhite,
                   t.wFull,
                   t.textCenter,
