@@ -129,8 +129,8 @@ android {
         applicationId "com.ndj.backpack"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.2.1"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     splits {
@@ -159,6 +159,9 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            ndk {
+                debugSymbolLevel "FULL"
+            }
         }
     }
 
