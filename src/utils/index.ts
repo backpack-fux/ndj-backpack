@@ -335,6 +335,11 @@ export const getDeepLink = (url: string) => {
 
   const data = queryString.parseUrl(url);
   const urlWithUri = `${data.url}?uri=`;
+
+  if (!url.includes(urlWithUri)) {
+    return;
+  }
+
   const linkingURL = linkingURLs.find(entry => data.url.startsWith(entry));
 
   if (!linkingURL) {

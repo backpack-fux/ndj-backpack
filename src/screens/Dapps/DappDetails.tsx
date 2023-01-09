@@ -9,8 +9,12 @@ import {t} from 'react-native-tailwindcss';
 export const DappDetailScreen = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<DappStackParamList, 'DappDetails'>>();
-  const {onDisconnect, enabledTransactionTopics, onToggleTransactionEnable} =
-    useWalletConnect();
+  const {
+    onDisconnect,
+    removeLegacyClient,
+    enabledTransactionTopics,
+    onToggleTransactionEnable,
+  } = useWalletConnect();
 
   const {session, legacyClient} = route.params;
 
@@ -23,7 +27,7 @@ export const DappDetailScreen = () => {
       try {
         await legacyClient.killSession();
       } catch (err) {
-        console.log(err);
+        removeLegacyClient(legacyClient);
       }
     }
 

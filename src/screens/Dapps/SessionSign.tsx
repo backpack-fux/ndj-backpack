@@ -20,6 +20,7 @@ import {t} from 'react-native-tailwindcss';
 import {useSelector} from 'react-redux';
 import {Card, DappInfo, RequestDetail} from './components';
 import {colors} from '@app/assets/colors.config';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
 export const SessionSign = () => {
   const {client} = useWalletConnect();
@@ -54,17 +55,14 @@ export const SessionSign = () => {
           topic: event.topic,
           response,
         });
-      } catch (err) {
-        console.log(err);
-        const response = rejectEIP155Request(event);
-        client?.respond({
-          topic: event.topic,
-          response,
+        navigation.goBack();
+      } catch (err: any) {
+        Toast.show({
+          type: 'error',
+          text1: err.message,
         });
       }
     }
-
-    navigation.goBack();
   };
 
   useEffect(() => {

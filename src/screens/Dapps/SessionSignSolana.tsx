@@ -14,6 +14,7 @@ import {
   approveSolanaRequest,
   rejectSolanaRequest,
 } from '@app/utils/SolanaRequestHandlerUtil';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
 export const SessionSignSolana = () => {
   const {client} = useWalletConnect();
@@ -47,17 +48,14 @@ export const SessionSignSolana = () => {
           topic: event.topic,
           response,
         });
-      } catch (err) {
-        console.log('err', err);
-        const response = rejectSolanaRequest(event);
-        client?.respond({
-          topic: event.topic,
-          response,
+        navigation.goBack();
+      } catch (err: any) {
+        Toast.show({
+          type: 'error',
+          text1: err.message,
         });
       }
     }
-
-    navigation.goBack();
   };
 
   useEffect(() => {

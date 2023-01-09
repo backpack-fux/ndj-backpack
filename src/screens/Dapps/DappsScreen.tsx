@@ -34,6 +34,7 @@ export const DappsScreen = () => {
     legacyClients,
     onDisconnect,
     onPairing,
+    removeLegacyClient,
   } = useWalletConnect();
   const [openScan, setOpenScan] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string>();
@@ -55,7 +56,7 @@ export const DappsScreen = () => {
     onPairing(uri);
   };
 
-  const onDisconnectSession = () => {
+  const onDisconnectSession = async () => {
     if (!selectedTopic) {
       return;
     }
@@ -65,7 +66,11 @@ export const DappsScreen = () => {
     );
 
     if (legacyClient) {
-      legacyClient.killSession();
+      try {
+        await legacyClient.killSession();
+      } catch (err) {
+        removeLegacyClient(legacyClient);
+      }
     } else {
       onDisconnect(selectedTopic);
     }

@@ -43,6 +43,7 @@ export interface WalletConnectContextProps {
     chainId: number,
   ) => void;
   onRejectLegacySessionProposal: (legacyClient: LegacySignClient) => void;
+  removeLegacyClient: (legacyClient: LegacySignClient) => void;
 
   onDisconnect: (topic: string) => void;
   onToggleTransactionEnable: (topic: string, value: boolean) => void;
@@ -65,6 +66,7 @@ export const WalletConnectContext = createContext<WalletConnectContextProps>({
   onPairing: () => {},
   onClearPairingTopic: () => {},
   onOpenDeepLink: () => {},
+  removeLegacyClient: () => {},
 });
 
 export const useWalletConnect = () => {
@@ -139,35 +141,40 @@ export const WalletConnectProvider = (props: {
   };
 
   const onPairDeepLink = useCallback(async () => {
-    if (!deepLinkUri) {
-      return;
-    }
-
-    const {version} = parseUri(deepLinkUri);
-
-    if (isNaN(version)) {
-      setDeepLinkUri('');
-      throw new Error('WalletConnect: invalid QR code');
-    }
-
-    if (version === 1) {
-      createLegacySignClient(deepLinkUri);
-      setDeepLinkUri('');
-    } else if (version === 2) {
-      if (!client) {
-        throw new Error('WalletConnect client is not initialized');
+    try {
+      if (!deepLinkUri) {
+        return;
       }
 
-      setDeepLinkUri('');
-      const res = await client.pair({uri: deepLinkUri});
+      const {version} = parseUri(deepLinkUri);
 
-      if (!res?.topic) {
-        throw new Error('Failed paring');
+      if (isNaN(version)) {
+        throw new Error('WalletConnect: invalid QR code');
       }
 
-      setParingTopic(res?.topic);
-    } else {
-      throw new Error(`Unknown version of WalletConnect v${version}`);
+      if (version === 1) {
+        createLegacySignClient(deepLinkUri);
+      } else if (version === 2) {
+        if (!client) {
+          throw new Error('WalletConnect client is not initialized');
+        }
+        const res = await client.pair({uri: deepLinkUri});
+
+        if (!res?.topic) {
+          throw new Error('Failed paring');
+        }
+
+        setParingTopic(res?.topic);
+      } else {
+        throw new Error(`Unknown version of WalletConnect v${version}`);
+      }
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+    } finally {
+      setDeepLinkUri('');
     }
   }, [deepLinkUri, client]);
 
@@ -688,7 +695,8 @@ export const WalletConnectProvider = (props: {
       timeout = setTimeout(() => {
         Toast.show({
           type: 'error',
-          text1: 'WalletConnect: connection timed out. Try refresh paring session in your Dapp',
+          text1:
+            'WalletConnect: connection timed out. Try refresh paring session in your Dapp',
         });
         setParingTopic('');
       }, 15000);
@@ -707,7 +715,8 @@ export const WalletConnectProvider = (props: {
     let timeout = setTimeout(() => {
       Toast.show({
         type: 'error',
-        text1: 'WalletConnect V1: connection timed out. Try refresh paring session in your Dapp',
+        text1:
+          'WalletConnect V1: connection timed out. Try refresh paring session in your Dapp',
       });
       setParingLegacyClient(null);
       removeLegacyClientListener(paringLegacyClient);
@@ -778,6 +787,7 @@ export const WalletConnectProvider = (props: {
         onToggleTransactionEnable,
         onClearPairingTopic,
         onOpenDeepLink,
+        removeLegacyClient,
       }}>
       {props.children}
     </WalletConnectContext.Provider>

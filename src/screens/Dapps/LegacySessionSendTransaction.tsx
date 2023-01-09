@@ -70,27 +70,16 @@ export const LegacySessionSendTransaction = () => {
         }
 
         await client.approveRequest(res);
+        navigation.goBack();
       } catch (err: any) {
         Toast.show({
           type: 'error',
           text1: err.message,
         });
-
-        const {error} = rejectEIP155Request({
-          id,
-          topic: '',
-          params: {request: {method, params}, chainId: `eip155:${chainId}`},
-        });
-        client?.rejectRequest({
-          id,
-          error,
-        });
       } finally {
-        setIsLoading(true);
+        setIsLoading(false);
       }
     }
-
-    navigation.goBack();
   };
 
   useEffect(() => {
@@ -110,13 +99,12 @@ export const LegacySessionSendTransaction = () => {
   }
 
   // Get required request data
-
   const transaction = params[0];
   const fee = Web3.utils
-    .toBN(transaction.gasPrice)
-    .mul(Web3.utils.toBN(transaction.gasLimit || transaction.gas));
+    .toBN(transaction.gasPrice || 0)
+    .mul(Web3.utils.toBN(transaction.gasLimit || transaction.gas || 0));
   const feeEther = Web3.utils.fromWei(fee);
-  const value = Web3.utils.toBN(transaction.value);
+  const value = Web3.utils.toBN(transaction.value || 0);
   const total = fee.add(value);
   const totalEther = Web3.utils.fromWei(total);
   const valueEther = Web3.utils.fromWei(value);

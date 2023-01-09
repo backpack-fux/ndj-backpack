@@ -19,6 +19,7 @@ import {t} from 'react-native-tailwindcss';
 import {useSelector} from 'react-redux';
 import {Card, DappInfo, RequestDetail} from './components';
 import {colors} from '@app/assets/colors.config';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
 export const LegacySessionSign = () => {
   const navigation = useNavigation();
@@ -64,20 +65,14 @@ export const LegacySessionSign = () => {
         }
 
         await client.approveRequest(res);
-      } catch (err) {
-        const {error} = rejectEIP155Request({
-          id,
-          topic: '',
-          params: {request: {method, params}, chainId: `eip155:${chainId}`},
-        });
-        client?.rejectRequest({
-          id,
-          error,
+        navigation.goBack();
+      } catch (err: any) {
+        Toast.show({
+          type: 'error',
+          text1: err.message,
         });
       }
     }
-
-    navigation.goBack();
   };
 
   useEffect(() => {
