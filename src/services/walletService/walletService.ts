@@ -217,6 +217,11 @@ abstract class WalletService {
   abstract signTransaction(privateKey: string, data: any): Promise<any>;
   abstract getENSInfo(address: string): Promise<ENSInfo | null | undefined>;
   abstract switchNetwork(chain: 'mainnet' | 'testnet'): void;
+
+  abstract getEstimate(tx: any): Promise<{
+    gasPrice: number;
+    gasLimit: number;
+  }>;
 }
 
 export default WalletService;

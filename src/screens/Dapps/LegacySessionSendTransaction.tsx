@@ -13,13 +13,15 @@ import {
 } from '@app/utils/EIP155RequestHandlerUtil';
 import {convertHexToUtf8} from '@app/utils/HelperUtil';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {useSelector} from 'react-redux';
 import {Card, DappInfo, RequestDetail} from './components';
 import {colors} from '@app/assets/colors.config';
 import Web3 from 'web3';
+import {getNetworkByChain} from '@app/utils';
+import {WalletService} from '@app/services';
 
 const borderBottomWidth = 0.3;
 
@@ -32,6 +34,7 @@ export const LegacySessionSendTransaction = () => {
   const wallets = useSelector(walletsSelector);
   const [isLoading, setIsLoading] = useState(false);
   const chainId = network === 'mainnet' ? 1 : 5;
+  const [transaction, setTransaction] = useState<any>(null);
 
   const {event, client} = route.params;
   const {id, method, params} = event;
@@ -52,14 +55,17 @@ export const LegacySessionSendTransaction = () => {
   };
 
   const onConfirm = async () => {
-    if (event) {
+    if (event && transaction) {
       try {
         setIsLoading(true);
         const res = await approveEIP155Request(
           {
             id,
             topic: '',
-            params: {request: {method, params}, chainId: `eip155:${chainId}`},
+            params: {
+              request: {method, params: [transaction]},
+              chainId: `eip155:${chainId}`,
+            },
           },
           wallets,
           network,
@@ -82,6 +88,30 @@ export const LegacySessionSendTransaction = () => {
     }
   };
 
+  const getEstimate = useCallback(async () => {
+    try {
+      if (!params?.length) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      const networkName = getNetworkByChain(`eip155:${chainId}`, network);
+      const service =
+        networkName && WalletService.getServiceByNetwork(networkName);
+      const estimate = await service?.getEstimate(params[0]);
+      setTransaction(estimate);
+    } catch (err: any) {
+      console.log(err);
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [chainId, network, params]);
+
   useEffect(() => {
     if (!client?.session) {
       onReject();
@@ -94,21 +124,24 @@ export const LegacySessionSendTransaction = () => {
     }
   }, [wallets, client, enabledTransactionTopics]);
 
+  useEffect(() => {
+    getEstimate();
+  }, [getEstimate]);
+
   if (!client || !event) {
     return <></>;
   }
 
   // Get required request data
-  const transaction = params[0];
   const fee = Web3.utils
-    .toBN(transaction.gasPrice || 0)
-    .mul(Web3.utils.toBN(transaction.gasLimit || transaction.gas || 0));
+    .toBN(transaction?.gasPrice || 0)
+    .mul(Web3.utils.toBN(transaction?.gasLimit || 0));
   const feeEther = Web3.utils.fromWei(fee);
-  const value = Web3.utils.toBN(transaction.value || 0);
+  const value = Web3.utils.toBN(transaction?.value || 0);
   const total = fee.add(value);
   const totalEther = Web3.utils.fromWei(total);
   const valueEther = Web3.utils.fromWei(value);
-  const data = convertHexToUtf8(transaction.data);
+  const data = convertHexToUtf8(transaction?.data);
 
   return (
     <>
@@ -121,7 +154,7 @@ export const LegacySessionSendTransaction = () => {
         <ScrollView keyboardDismissMode="on-drag">
           <DappInfo metadata={client.session.peerMeta} />
           <RequestDetail
-            address={transaction.from}
+            address={transaction?.from}
             chainId={chainId.toString()}
             protocol={client.protocol}
           />
@@ -141,7 +174,7 @@ export const LegacySessionSendTransaction = () => {
                 <Paragraph
                   align="right"
                   numberOfLines={1}
-                  text={transaction.to}
+                  text={transaction?.to}
                 />
               </View>
             </View>
@@ -160,7 +193,7 @@ export const LegacySessionSendTransaction = () => {
                 <Paragraph
                   align="right"
                   numberOfLines={1}
-                  text={transaction.nonce}
+                  text={transaction?.nonce}
                 />
               </View>
             </View>
@@ -205,7 +238,11 @@ export const LegacySessionSendTransaction = () => {
           )}
         </ScrollView>
         <View style={[t.mB4, t.mT2]}>
-          <Button text="Confirm" onPress={onConfirm} disabled={isLoading} />
+          <Button
+            text="Confirm"
+            onPress={onConfirm}
+            disabled={isLoading || !transaction}
+          />
         </View>
       </BaseScreen>
     </>

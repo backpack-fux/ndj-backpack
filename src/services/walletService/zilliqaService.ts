@@ -381,4 +381,12 @@ export default class ZilliqaService extends WalletService {
       name: address,
     };
   }
+
+  async getEstimate(tx: any) {
+    console.log(tx);
+    return {
+      gasPrice: 0,
+      gasLimit: 0,
+    };
+  }
 }

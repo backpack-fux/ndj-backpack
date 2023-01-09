@@ -13,13 +13,15 @@ import {
 } from '@app/utils/EIP155RequestHandlerUtil';
 import {convertHexToUtf8} from '@app/utils/HelperUtil';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {useSelector} from 'react-redux';
 import {Card, DappInfo, RequestDetail} from './components';
 import {colors} from '@app/assets/colors.config';
 import Web3 from 'web3';
+import {getNetworkByChain} from '@app/utils';
+import {WalletService} from '@app/services';
 
 const borderBottomWidth = 0.3;
 
@@ -31,6 +33,7 @@ export const SessionSendTransaction = () => {
     useRoute<RouteProp<StackParams, 'SessionSendTransactionModal'>>();
   const wallets = useSelector(walletsSelector);
   const [isLoading, setIsLoading] = useState(false);
+  const [transaction, setTransaction] = useState<any>(null);
   const {event, session} = route.params;
 
   const onReject = () => {
@@ -52,6 +55,7 @@ export const SessionSendTransaction = () => {
 
     try {
       setIsLoading(true);
+      event.params.request.params[0] = transaction;
       const response = await approveEIP155Request(event, wallets, network);
 
       if (!client) {
@@ -73,6 +77,36 @@ export const SessionSendTransaction = () => {
     }
   };
 
+  const getEstimate = useCallback(async () => {
+    try {
+      if (!event) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      const networkName = getNetworkByChain(event.params.chainId, network);
+      const service =
+        networkName && WalletService.getServiceByNetwork(networkName);
+      const estimate = await service?.getEstimate(
+        event.params.request.params[0],
+      );
+      setTransaction(estimate);
+    } catch (err: any) {
+      console.log(err);
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [network, event]);
+
+  useEffect(() => {
+    getEstimate();
+  }, [getEstimate]);
+
   useEffect(() => {
     if (!session) {
       onReject();
@@ -91,18 +125,17 @@ export const SessionSendTransaction = () => {
 
   // Get required request data
   const {params} = event;
-  const {request, chainId} = params;
+  const {chainId} = params;
 
-  const transaction = request.params[0];
   const fee = Web3.utils
-    .toBN(transaction.gasPrice || 0)
-    .mul(Web3.utils.toBN(transaction.gasLimit || 0));
+    .toBN(transaction?.gasPrice || 0)
+    .mul(Web3.utils.toBN(transaction?.gasLimit || 0));
   const feeEther = Web3.utils.fromWei(fee);
-  const value = Web3.utils.toBN(transaction.value || 0);
+  const value = Web3.utils.toBN(transaction?.value || 0);
   const total = fee.add(value);
   const totalEther = Web3.utils.fromWei(total);
   const valueEther = Web3.utils.fromWei(value);
-  const data = convertHexToUtf8(transaction.data);
+  const data = convertHexToUtf8(transaction?.data);
 
   return (
     <>
@@ -115,7 +148,7 @@ export const SessionSendTransaction = () => {
         <ScrollView keyboardDismissMode="on-drag">
           <DappInfo metadata={session?.peer.metadata} />
           <RequestDetail
-            address={transaction.from}
+            address={transaction?.from}
             chainId={chainId}
             protocol={session.relay.protocol}
           />
@@ -135,7 +168,7 @@ export const SessionSendTransaction = () => {
                 <Paragraph
                   align="right"
                   numberOfLines={1}
-                  text={transaction.to}
+                  text={transaction?.to}
                 />
               </View>
             </View>
@@ -154,7 +187,7 @@ export const SessionSendTransaction = () => {
                 <Paragraph
                   align="right"
                   numberOfLines={1}
-                  text={transaction.nonce}
+                  text={transaction?.nonce}
                 />
               </View>
             </View>

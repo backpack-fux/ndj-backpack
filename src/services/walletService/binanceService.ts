@@ -245,4 +245,12 @@ export default class BinanceService extends WalletService {
       name: address,
     };
   }
+
+  async getEstimate(tx: any) {
+    console.log(tx);
+    return {
+      gasPrice: 0,
+      gasLimit: 0,
+    };
+  }
 }

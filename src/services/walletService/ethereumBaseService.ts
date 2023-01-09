@@ -103,7 +103,7 @@ export default class EthereumBaseService extends WalletService {
     let hexNonce = this.web3.utils.toHex(nonce);
     const gasPrice = await this.web3.eth.getGasPrice();
 
-    const gasLimit = this.web3.utils.toBN('100000');
+    const gasLimit = this.web3.utils.toBN('21000');
     const estimatedFee = this.web3.utils
       .toBN(gasPrice)
       .mul(gasLimit)
@@ -302,6 +302,28 @@ export default class EthereumBaseService extends WalletService {
   async getENSInfo(address: string): Promise<ENSInfo | null | undefined> {
     return {
       name: address,
+    };
+  }
+
+  async getEstimate(tx: any) {
+    let gasPrice = tx.gasPrice;
+
+    if (!gasPrice) {
+      gasPrice = await this.web3.eth.getGasPrice();
+    }
+
+    let gasLimit = tx.gasLimit || tx.gas;
+
+    if (!gasLimit) {
+      gasLimit = await this.web3.eth.estimateGas(tx);
+    }
+
+    this.web3.utils.toBN(gasPrice);
+
+    return {
+      ...tx,
+      gasPrice: this.web3.utils.toBN(gasPrice).toNumber(),
+      gasLimit: this.web3.utils.toBN(gasLimit).toNumber(),
     };
   }
 }
