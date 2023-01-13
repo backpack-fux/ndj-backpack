@@ -19,8 +19,8 @@ import {Paragraph, QRCode} from '@app/components';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {colors} from '@app/assets/colors.config';
 import {tokenSelector} from '@app/store/coins/coinsSelector';
-import {checkPermission} from '@app/utils';
 import {PERMISSIONS} from 'react-native-permissions';
+import {checkPermission} from '@app/constants/permission';
 
 const logo = require('@app/assets/images/logo.png');
 

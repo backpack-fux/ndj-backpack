@@ -1,5 +1,8 @@
-import {NetworkName} from '@app/constants';
-import {ENSInfo, ITransaction, Token, WalletItem} from '@app/models';
+import {NetworkName} from '@app/constants/enums';
+import {ENSInfo} from '@app/models/ensInfo';
+import {ITransaction} from '@app/models/transaction';
+import {Token} from '@app/models/coinTypes';
+import {WalletItem} from '@app/models/walletsTypes';
 const bip39 = require('bip39');
 import * as moment from 'moment-timezone';
 

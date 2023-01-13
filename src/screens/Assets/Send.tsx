@@ -27,11 +27,12 @@ import {
 } from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
 import {useDebounce} from '@app/uses';
-import {checkPermission, normalizeNumber} from '@app/utils';
+import {normalizeNumber} from '@app/utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {StackParams} from '@app/models';
 import moment from 'moment-timezone';
 import {PERMISSIONS} from 'react-native-permissions';
+import {checkPermission} from '@app/constants/permission';
 
 export const SendScreen = () => {
   const dispatch = useDispatch();

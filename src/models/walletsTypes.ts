@@ -1,4 +1,5 @@
-import {NetworkName} from '@app/constants';
+import {NetworkName} from '@app/constants/enums';
+import {ENSInfo} from './ensInfo';
 
 export enum WalletsActionType {
   INIT_STORE = 'persist/REHYDRATE',
@@ -45,9 +46,4 @@ export class WalletItem {
   setIsTestNet(value: boolean) {
     this.isTestNet = value;
   }
-}
-
-export interface ENSInfo {
-  name: string;
-  avatar?: string | null;
 }

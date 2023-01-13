@@ -1,4 +1,8 @@
-import {NetworkName} from '@app/constants';
+import {NetworkName} from '@app/constants/enums';
+import {ENSInfo} from '@app/models/ensInfo';
+import {ITransaction} from '@app/models/transaction';
+import {Token as BToken} from '@app/models/coinTypes';
+
 import WalletService from './walletService';
 import {
   Keypair,
@@ -14,7 +18,6 @@ import nacl from 'tweetnacl';
 import * as ed25519 from 'ed25519-hd-key';
 import {Token, TOKEN_PROGRAM_ID} from '@solana/spl-token';
 import * as bip39 from 'bip39';
-import {ENSInfo, ITransaction, Token as BToken} from '@app/models';
 import {AxiosInstance} from '@app/apis/axios';
 import SolanaWallet, {SolanaSignTransaction} from 'solana-wallet';
 import NP from 'number-precision';

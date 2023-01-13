@@ -1,14 +1,13 @@
 import './shim';
 import 'react-native-url-polyfill/auto';
-import {WalletService} from '@app/services';
-import {generateMnemonicPhrase} from '@app/utils';
-import {self} from 'react-native-threads';
+import {WalletService} from './src/services/walletService';
+
+import self from './selfThread';
 
 // listen for messages
 self.onmessage = async message => {
   try {
-    const mnemonic = message || (await generateMnemonicPhrase());
-    const spendWalletItems = await WalletService.createWallets(mnemonic);
+    const spendWalletItems = await WalletService.createWallets(message);
     self.postMessage(JSON.stringify(spendWalletItems));
   } catch (err) {
     console.log(err);

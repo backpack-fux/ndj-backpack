@@ -1,14 +1,17 @@
+import {NetworkName} from '@app/constants/enums';
+import {ENSInfo} from '@app/models/ensInfo';
+import {ITransaction} from '@app/models/transaction';
+import {Token} from '@app/models/coinTypes';
+
 import {Zilliqa} from '@zilliqa-js/zilliqa';
 import * as zilUntils from '@zilliqa-js/util';
 import * as zcrypto from '@zilliqa-js/crypto';
 import {RPCMethod} from '@zilliqa-js/core';
 import NP from 'number-precision';
 
-import {NetworkName} from '@app/constants';
 import WalletService from './walletService';
 import BigNumber from 'bignumber.js';
 import {TxStatus} from '@zilliqa-js/account';
-import {ENSInfo, ITransaction, Token} from '@app/models';
 import {AxiosInstance} from '@app/apis/axios';
 
 const MINIMUM_GAS_PRICE = '50';

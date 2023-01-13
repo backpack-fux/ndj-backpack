@@ -1,6 +1,10 @@
 import {AxiosInstance} from '@app/apis/axios';
-import {ERC20_ABI, ETHERSCAN, NetworkName} from '@app/constants';
-import {ENSInfo, ITransaction} from '@app/models';
+import {NetworkName} from '@app/constants/enums';
+import {ENSInfo} from '@app/models/ensInfo';
+import {ITransaction} from '@app/models/transaction';
+import {ERC20_ABI} from '@app/constants/abis';
+import {ETHERSCAN} from '@app/constants/scanApis';
+
 import Web3 from 'web3';
 import EthereumBaseService from './ethereumBaseService';
 import BigNumber from 'bignumber.js';

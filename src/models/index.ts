@@ -9,3 +9,4 @@ export * from './coinGeckoCoin';
 export * from './sendTokenInfo';
 export * from './transaction';
 export * from './newsType';
+export * from './ensInfo';

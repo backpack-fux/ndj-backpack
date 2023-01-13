@@ -81,7 +81,9 @@ function* getBaseCoins() {
       yield put(getBaseCoinsSuccess(false));
       return;
     }
+
     const baseCoins: BaseCoin[] = yield getCoinGeckoCoins();
+
     yield saveBaseCoins(baseCoins);
     yield put(getBaseCoinsSuccess(true));
   } catch (err) {

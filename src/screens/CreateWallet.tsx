@@ -21,7 +21,7 @@ import {addWallet} from '@app/store/wallets/actions';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {colors} from '@app/assets/colors.config';
 import {Wallet} from '@app/models';
-import {generateMnemonicPhrase} from '@app/utils';
+import {generateMnemonicPhrase} from '@app/utils/web3Util';
 import {createNewWallet} from '@app/utils/wallet';
 
 const logo = require('@app/assets/images/logo.png');

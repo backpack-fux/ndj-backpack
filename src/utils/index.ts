@@ -1,23 +1,10 @@
 import {networkList, networkName, NetworkName} from '@app/constants';
-import {BaseCoin, News, Token, Wallet} from '@app/models';
+import {BaseCoin, News, Wallet} from '@app/models';
 import numeral from 'numeral';
-import {Alert, Dimensions} from 'react-native';
 import {currencies} from '@app/constants/currencies';
-import * as _ from 'lodash';
 import * as queryString from 'query-string';
-import {
-  check,
-  RESULTS,
-  request,
-  openSettings,
-  Permission,
-} from 'react-native-permissions';
-import Toast from 'react-native-toast-message';
 
-//@ts-ignore
-import bip39 from 'react-native-bip39';
-import {DEFAULT_COINS} from '@app/constants/coins';
-import {permissionName} from '@app/constants/permission';
+export * from './token';
 
 export function readableNumString(value: number) {
   const log = Math.log10(value);
@@ -146,11 +133,6 @@ export const getDomainName = (link?: string) => {
   }
 };
 
-export const apx = (size = 0) => {
-  let width = Dimensions.get('window').width;
-  return (width / 750) * size;
-};
-
 export const mapDecryptNews = ({
   id,
   date,
@@ -195,16 +177,6 @@ export const showNetworkName = (
   }
 
   return name;
-};
-
-export const generateMnemonicPhrase = async (): Promise<string> => {
-  const mnemonicString: string = await bip39.generateMnemonic(128);
-  const words = mnemonicString.split(' ');
-  if (words.length !== _.uniq(words).length) {
-    return generateMnemonicPhrase();
-  }
-
-  return mnemonicString;
 };
 
 const levDist = function (s: string, t: string): number {
@@ -286,46 +258,6 @@ export const closeetBaseCoins = (baseCoins: BaseCoin[], str: string) => {
   });
 };
 
-export const checkPermission = async (permission: Permission) => {
-  try {
-    let result = await check(permission);
-
-    if (result === RESULTS.GRANTED) {
-      return true;
-    } else if (result === RESULTS.DENIED) {
-      result = await request(permission);
-
-      if (result === RESULTS.GRANTED) {
-        return true;
-      }
-    }
-
-    Alert.alert(
-      'Permission Denied',
-      `Go to the settings and allow ${permissionName[permission]} access?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Ok',
-          onPress: () => openSettings(),
-        },
-      ],
-    );
-
-    return false;
-  } catch (err: any) {
-    console.log(err);
-    Toast.show({
-      type: 'error',
-      text1: err.message,
-    });
-    return false;
-  }
-};
-
 const linkingURLs = ['wc://wc', 'ndj-backpack://wc', 'https://jxndao.com/wc'];
 
 export const getDeepLink = (url: string) => {
@@ -349,12 +281,4 @@ export const getDeepLink = (url: string) => {
   const urlParam = url.replace(urlWithUri, '');
 
   return decodeURIComponent(urlParam);
-};
-
-export const getNativeToken = (token: Token) => {
-  const nativeToken = DEFAULT_COINS.find(
-    coin => coin.contractAddress === token.network,
-  );
-
-  return nativeToken;
 };

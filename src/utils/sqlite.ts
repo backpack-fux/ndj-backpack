@@ -1,19 +1,21 @@
 import {BaseCoin} from '@app/models';
-import {sqliteService} from '@app/services/sqllite';
-import {Platform} from 'react-native';
+// import {sqliteService} from '@app/services/sqllite';
 import {Thread} from 'react-native-threads';
-const thread = Platform.OS === 'ios' ? new Thread('./sqlite.thread.js') : null;
+const thread = new Thread('./sqlite.thread.js');
 
 export const saveBaseCoins = (baseCoins: BaseCoin[]) => {
-  if (Platform.OS === 'android') {
-    sqliteService.setBaseCoins(baseCoins);
-    return;
-  }
+  // sqliteService.setBaseCoins(baseCoins);
+  // if (Platform.OS === 'android') {
+  //   sqliteService.setBaseCoins(baseCoins);
+  //   return;
+  // }
 
   return new Promise((resolve, reject) => {
+    console.log('send message');
     thread.postMessage(JSON.stringify(baseCoins));
 
     thread.onmessage = (message: string) => {
+      console.log('received message', message);
       if (message === 'success') {
         resolve(message);
       } else {

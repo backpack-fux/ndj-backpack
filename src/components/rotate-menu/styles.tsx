@@ -1,4 +1,8 @@
-import {menuIconSize, menuSize, SQUARE_DIMENSIONS} from '@app/constants';
+import {
+  menuIconSize,
+  menuSize,
+  SQUARE_DIMENSIONS,
+} from '@app/constants/dimension';
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({

@@ -1,10 +1,12 @@
-import {NetworkName} from '@app/constants';
+import {NetworkName} from '@app/constants/enums';
+import {ENSInfo} from '@app/models/ensInfo';
+import {ITransaction} from '@app/models/transaction';
+import {Token} from '@app/models/coinTypes';
+
 import axios, {AxiosInstance} from 'axios';
 import {BncClient} from '@binance-chain/javascript-sdk';
 import NP from 'number-precision';
-
 import WalletService from './walletService';
-import {ENSInfo, ITransaction, Token} from '@app/models';
 import moment from 'moment-timezone';
 
 export default class BinanceService extends WalletService {

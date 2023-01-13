@@ -1,14 +1,18 @@
-import {ERC20_ABI, NetworkName} from '@app/constants';
 import * as ethers from 'ethers';
 import * as bip39 from 'bip39';
 import {hdkey} from 'ethereumjs-wallet';
 import WalletService from './walletService';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
-import {ENSInfo, ITransaction, Token} from '@app/models';
+import {NetworkName} from '@app/constants/enums';
+import {ENSInfo} from '@app/models/ensInfo';
+import {ITransaction} from '@app/models/transaction';
+import {ERC20_ABI} from '@app/constants/abis';
+import {Token} from '@app/models/coinTypes';
+import {getNativeToken} from '@app/utils/token';
+
 import {JsonRpcProvider} from '@ethersproject/providers';
 import BigNumber from 'bignumber.js';
-import {getNativeToken} from '@app/utils';
 
 const generatedKeys: any = {};
 

@@ -2,8 +2,16 @@ package com.ndj.wallet;
 
 import android.app.Application;
 import android.content.Context;
+
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.asterinet.react.tcpsocket.TcpSocketPackage;
+import com.bitgo.randombytes.RandomBytesPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.gevorg.reactlibrary.RNQrGeneratorPackage;
+import com.horcrux.svg.SvgPackage;
+import com.mkuczera.RNReactNativeHapticFeedbackPackage;
+import com.oblador.keychain.KeychainPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -11,7 +19,28 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import com.peel.react.rnos.RNOSModule;
 import com.reactlibrary.RNThreadPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.reactnativecommunity.cameraroll.CameraRollPackage;
+import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
+import com.reactnativecommunity.clipboard.ClipboardPackage;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
+import com.surajit.rnrg.RNRadialGradientPackage;
+import com.swmansion.gesturehandler.RNGestureHandlerPackage;
+import com.swmansion.reanimated.ReanimatedPackage;
+import com.swmansion.rnscreens.RNScreensPackage;
+import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
+import com.tradle.react.UdpSocketsModule;
+import com.zoontek.rnpermissions.RNPermissionsPackage;
+
+import org.pgsqlite.SQLitePluginPackage;
+import org.reactnative.camera.RNCameraPackage;
+
+import cl.json.RNSharePackage;
+import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -27,7 +56,10 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          packages.add(new RNThreadPackage(mReactNativeHost));
+          packages.add(new RNThreadPackage(
+                  mReactNativeHost,
+                  new SQLitePluginPackage()
+          ));
           return packages;
         }
 

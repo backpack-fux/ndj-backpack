@@ -38,7 +38,7 @@ import {
 import {addWallet, setIsReadFieldGuide} from '@app/store/wallets/actions';
 import {NetworkName} from '@app/constants';
 import {wyreService} from '@app/services/wyreService';
-import {generateMnemonicPhrase} from '@app/utils';
+import {generateMnemonicPhrase} from '@app/utils/web3Util';
 import {createNewWallet} from '@app/utils/wallet';
 
 const logo = require('@app/assets/images/logo.png');

@@ -1,4 +1,4 @@
-import {NetworkName} from '@app/constants';
+import {NetworkName} from '@app/constants/enums';
 
 export interface BaseCoin {
   id: string;

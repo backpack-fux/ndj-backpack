@@ -10,7 +10,11 @@ import {
 import {debounce} from 'debounce';
 import RadialGradient from 'react-native-radial-gradient';
 
-import {menuSize, menuIconSize, SQUARE_DIMENSIONS} from '@app/constants';
+import {
+  menuSize,
+  menuIconSize,
+  SQUARE_DIMENSIONS,
+} from '@app/constants/dimension';
 
 import {styles} from './styles';
 import {Icons} from './icons/Icons';

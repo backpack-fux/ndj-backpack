@@ -1,6 +1,6 @@
 import {SessionTypes, SignClientTypes} from '@walletconnect/types';
-import {BaseCoin} from './coinTypes';
 import LegacySignClient from '@walletconnect/client';
+import {BaseCoin} from './coinTypes';
 
 export type RootStackParamList = {
   Splash: undefined;
