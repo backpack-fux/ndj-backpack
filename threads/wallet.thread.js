@@ -1,6 +1,6 @@
-import './shim';
+import '../shim';
 import 'react-native-url-polyfill/auto';
-import {WalletService} from './src/services/walletService';
+import {WalletService} from '../src/services/walletService';
 
 import self from './selfThread';
 

@@ -417,72 +417,9 @@ export const FieldGuideScreen = () => {
   }, [amount, wallet]);
 
   const onCreateDefaultWallets = async () => {
-    if (Platform.OS === 'android') {
-      await createAllWallets();
-    } else {
-      await onCreateSpendWallet();
-      await onCreateSaveWallet();
-      await onCreateInvestWallet();
-    }
-  };
-
-  const createAllWallets = async () => {
-    let newSpendWallet: Wallet;
-    let newSaveWallet: Wallet;
-    let newInvestWallet: Wallet;
-
-    if (!spendWallet) {
-      try {
-        setIsCreatingSaveWallet(true);
-        const spendMnemonic = await generateMnemonicPhrase();
-        const spendWalletItems = await createNewWallet(spendMnemonic);
-
-        newSpendWallet = {
-          id: 'spend',
-          name: 'Spend',
-          mnemonic: spendMnemonic,
-          wallets: spendWalletItems,
-        };
-      } catch (err) {
-        throw err;
-      } finally {
-        setIsCreatingSaveWallet(false);
-      }
-    }
-
-    if (!saveWallet) {
-      const saveMnemonic = await generateMnemonicPhrase();
-      const saveWalletItems = await createNewWallet(saveMnemonic);
-
-      newSaveWallet = {
-        id: 'save',
-        name: 'Save',
-        mnemonic: saveMnemonic,
-        wallets: saveWalletItems,
-      };
-    }
-
-    if (!investWallet) {
-      const investMnemonic = await generateMnemonicPhrase();
-      const investWalletItems = await createNewWallet(investMnemonic);
-
-      newInvestWallet = {
-        id: 'invest',
-        name: 'Invest',
-        mnemonic: investMnemonic,
-        wallets: investWalletItems,
-      };
-    }
-
-    if (newSpendWallet) {
-      dispatch(addWallet(newSpendWallet));
-    }
-    if (newSaveWallet) {
-      dispatch(addWallet(newSaveWallet));
-    }
-    if (newInvestWallet) {
-      dispatch(addWallet(newInvestWallet));
-    }
+    await onCreateSpendWallet();
+    await onCreateSaveWallet();
+    await onCreateInvestWallet();
   };
 
   const onCreateSpendWallet = async () => {
