@@ -1,4 +1,4 @@
-import '../shim';
+import './shim';
 import 'react-native-url-polyfill/auto';
 import self from './selfThread';
 

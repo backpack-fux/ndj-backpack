@@ -1,6 +1,6 @@
 import {BaseCoin} from '@app/models';
 import {Thread} from 'react-native-threads';
-const thread = new Thread('./threads/sqlite.thread.js');
+const thread = new Thread('./sqlite.thread.js');
 
 export const saveBaseCoins = (baseCoins: BaseCoin[]) => {
   return new Promise((resolve, reject) => {
