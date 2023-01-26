@@ -20,7 +20,7 @@ import {RNCamera} from 'react-native-camera';
 import Toast from 'react-native-toast-message';
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {checkPermission} from '@app/utils';
+import {checkPermission} from '@app/constants/permission';
 import {PERMISSIONS} from 'react-native-permissions';
 
 const logo = require('@app/assets/images/logo.png');
