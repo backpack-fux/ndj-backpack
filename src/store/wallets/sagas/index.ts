@@ -12,6 +12,7 @@ import {NetworkName} from '@app/constants';
 import {WalletService} from '@app/services';
 import {wyreService} from '@app/services/wyreService';
 import Toast from 'react-native-toast-message';
+import {Farcaster} from '@app/services/facasterService';
 
 function* reload() {
   try {
@@ -39,6 +40,7 @@ function* reload() {
         } catch (err) {
           console.log(err);
         }
+
         const item = new WalletItem(
           wallet.network,
           wallet.liveAddress,
@@ -50,6 +52,18 @@ function* reload() {
         item.setIsTestNet(network === 'testnet');
 
         walletItems.push(item);
+      }
+
+      const ethWallet = walletItems.find(
+        item => item.network === NetworkName.ethereum,
+      );
+
+      if (ethWallet) {
+        const farcaster: Farcaster = yield Farcaster.init(
+          ethWallet?.privateKey,
+        );
+
+        account.farcaster = farcaster;
       }
 
       account.wallets = walletItems;

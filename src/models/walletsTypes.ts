@@ -1,4 +1,5 @@
 import {NetworkName} from '@app/constants/enums';
+import {Farcaster} from '@app/services/facasterService';
 import {ENSInfo} from './ensInfo';
 
 export enum WalletsActionType {
@@ -27,6 +28,7 @@ export interface Wallet {
   mnemonic: string;
   wallets: WalletItem[];
   network?: NetworkName;
+  farcaster?: Farcaster;
 }
 
 export class WalletItem {
@@ -45,5 +47,25 @@ export class WalletItem {
 
   setIsTestNet(value: boolean) {
     this.isTestNet = value;
+  }
+}
+
+export class NdjWallet {
+  constructor(
+    public id: string,
+    public name: string,
+    public mnemonic: string,
+    public wallets: WalletItem[],
+    public network?: NetworkName,
+  ) {}
+
+  static init(
+    id: string,
+    name: string,
+    mnemonic: string,
+    wallets: WalletItem[],
+    network?: NetworkName,
+  ) {
+    return new NdjWallet(id, name, mnemonic, wallets, network);
   }
 }

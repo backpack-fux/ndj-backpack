@@ -31,10 +31,11 @@ import {
 } from '@app/store/coins/actions';
 import BarcodeMask from 'react-native-barcode-mask';
 import {useDebounce} from '@app/uses';
-import {checkPermission, getNativeToken, normalizeNumber} from '@app/utils';
+import {getNativeToken, normalizeNumber} from '@app/utils';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {PERMISSIONS} from 'react-native-permissions';
 import {ToastContainer} from '@app/components/toast';
+import {checkPermission} from '@app/constants/permission';
 
 const fontSize = 16;
 const inputHeight = 30;

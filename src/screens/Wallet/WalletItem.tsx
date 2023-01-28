@@ -22,6 +22,8 @@ import {borderWidth, networkList, NetworkName} from '@app/constants';
 import {useWalletConnect} from '@app/context/walletconnect';
 import {Send} from './Send';
 import {Receive} from './Receive';
+import {Farcaster} from './Farcaster';
+import {useWallets} from './WalletsContext';
 
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
@@ -40,33 +42,22 @@ const shadow = {
 
 const cardContainerHeight = 200;
 
-export const WalletItem = ({
-  wallet,
-  backScreen,
-  cardRef,
-  showSeed,
-  onShowSeed,
-  onSelectWallet,
-}: {
-  wallet: Wallet;
-  showSeed: boolean;
-  onShowSeed: (val: string | null) => void;
-  backScreen: 'send' | 'receive';
-  cardRef?: (ref: any) => void;
-  onSelectWallet: (wallet: Wallet) => void;
-}) => {
+export const WalletItem = ({wallet}: {wallet: Wallet}) => {
   const {sessions, legacyClients} = useWalletConnect();
+  const {cardType, showSeed, onShowSeed, onSelectWallet, onSetCardRef} =
+    useWallets();
   const dispatch = useDispatch();
   const selectedWallet = useSelector(selectedWalletSelector);
   const tokens = useSelector(tokensSelector);
   const currency = useSelector(currencySelector);
   const network = useSelector(networkSelector);
   const [seedHeight, setSeedHeight] = useState(0);
+  const isShowSeed = useMemo(() => wallet.id === showSeed, [wallet, showSeed]);
 
   const cardHeight = useRef(new Animated.Value(cardContainerHeight)).current;
   const flipHeight = useMemo(
-    () => (showSeed ? cardContainerHeight + seedHeight : cardContainerHeight),
-    [showSeed, seedHeight],
+    () => (isShowSeed ? cardContainerHeight + seedHeight : cardContainerHeight),
+    [isShowSeed, seedHeight],
   );
 
   const tokenList = tokens[wallet.id] || [];
@@ -199,7 +190,7 @@ export const WalletItem = ({
     <Animated.View style={[t.mB5, {height: cardHeight}]}>
       <CardFlip
         style={{height: flipHeight}}
-        ref={ref => cardRef && cardRef(ref)}>
+        ref={ref => isSelected && onSetCardRef(ref)}>
         <View
           style={[
             t.bgPurple500,
@@ -317,7 +308,7 @@ export const WalletItem = ({
                   <View style={[t.flexRow, t.mT4, t.justifyAround]}>
                     <TouchableOpacity
                       style={[t.itemsCenter]}
-                      onPress={() => onShowSeed(showSeed ? null : wallet.id)}>
+                      onPress={() => onShowSeed(isShowSeed ? null : wallet.id)}>
                       <Paragraph text="Seed" align="center" marginRight={5} />
                       <Paragraph
                         text={`${wallet.mnemonic.split(' ').length} W`}
@@ -343,7 +334,7 @@ export const WalletItem = ({
                 setSeedHeight(e.nativeEvent.layout.height);
               }}
               style={[t.p4]}
-              onPress={() => onShowSeed(showSeed ? null : wallet.id)}
+              onPress={() => onShowSeed(isShowSeed ? null : wallet.id)}
               onLongPress={onCopySeed}>
               <View
                 style={[
@@ -400,7 +391,11 @@ export const WalletItem = ({
             {height: cardContainerHeight},
           ]}>
           {isSelected ? (
-            <>{backScreen === 'send' ? <Send /> : <Receive />}</>
+            <>
+              {cardType === 'send' && <Send />}
+              {cardType === 'receive' && <Receive />}
+              {cardType === 'farcaster' && <Farcaster />}
+            </>
           ) : (
             <View style={{height: 160}} />
           )}
