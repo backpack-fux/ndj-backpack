@@ -1,11 +1,14 @@
 import {colors} from '@app/assets/colors.config';
 import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {useKeychain} from '@app/context/keychain';
-import {switchNetwork} from '@app/store/wallets/actions';
-import {networkSelector} from '@app/store/wallets/walletsSelector';
+import {deleteWallet, switchNetwork} from '@app/store/wallets/actions';
+import {
+  networkSelector,
+  selectedWalletSelector,
+} from '@app/store/wallets/walletsSelector';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,12 +21,38 @@ export const SettingsScreen = () => {
   const navigation = useNavigation<NavigationProp<StackParams>>();
   const dispatch = useDispatch();
   const isLoading = useSelector(isLoadingTokensSelector);
+  const wallet = useSelector(selectedWalletSelector);
   const network = useSelector(networkSelector);
   const [selectedSetting, setSelectedSetting] = useState<string>('network');
   const {enabled, toggleKeychain, setNewPasscord} = useKeychain();
 
   const onChangeNetwork = (payload: 'mainnet' | 'testnet') => {
     dispatch(switchNetwork(payload));
+  };
+
+  const onDelete = () => {
+    if (!wallet) {
+      return;
+    }
+
+    Alert.alert(
+      'Delete Wallet',
+      'Are you sure you want to delete the selected wallet?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes, Delete',
+          onPress: () => dispatch(deleteWallet(wallet)),
+        },
+      ],
+    );
+  };
+
+  const onAddWallet = () => {
+    navigation.navigate('AddWallet');
   };
 
   return (
@@ -86,6 +115,18 @@ export const SettingsScreen = () => {
         </Card>
       </View>
       <View style={[t.mT10]}>
+        <View style={[t.flexRow, t.mB2]}>
+          <View style={[t.flex1]}>
+            <Button text="Add Wallet" onPress={onAddWallet} />
+          </View>
+          <View style={[t.flex1, t.mL2]}>
+            <Button
+              text="Delete Wallet"
+              onPress={onDelete}
+              disabled={!wallet}
+            />
+          </View>
+        </View>
         {selectedSetting === 'network' && (
           <View style={[t.flexRow]}>
             <View style={[t.flex1]}>

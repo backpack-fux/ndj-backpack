@@ -40,4 +40,8 @@ export class Farcaster {
   public getAddressForUser(user: User) {
     return this.api.fetchCustodyAddressForUser(user);
   }
+
+  public publishCast(text: string) {
+    return this.api.publishCast(text);
+  }
 }

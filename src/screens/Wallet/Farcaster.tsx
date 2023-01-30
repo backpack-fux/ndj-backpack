@@ -1,6 +1,9 @@
 import {colors} from '@app/assets/colors.config';
 import {Paragraph} from '@app/components';
-import {updateSendTokenInfo} from '@app/store/coins/actions';
+import {
+  getTransferTransaction,
+  updateSendTokenInfo,
+} from '@app/store/coins/actions';
 import {
   sendTokenInfoSelector,
   tokenSelector,
@@ -13,18 +16,25 @@ import {
 } from '@app/store/wallets/walletsSelector';
 import {useDebounce} from '@app/uses';
 import {formatCurrency} from '@app/utils';
-import {User} from '@standard-crypto/farcaster-js';
-import React, {useEffect, useState} from 'react';
-import {Image, TextInput, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import {useDispatch, useSelector} from 'react-redux';
 import {useWallets} from './WalletsContext';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
 const fontSize = 14;
 const inputHeight = 25;
 
 export const Farcaster = () => {
   const dispatch = useDispatch();
+  const farcasterRef = useRef<any>();
   const selectedWallet = useSelector(selectedWalletSelector);
   const tokens = useSelector(tokensSelector);
   const currency = useSelector(currencySelector);
@@ -32,12 +42,16 @@ export const Farcaster = () => {
   const [focusAmount, setFocusAmount] = useState(false);
   const [focusFarcaster, setFocusFarcaster] = useState(false);
   const [amount, setAmount] = useState('');
-  const [user, setUser] = useState<User>();
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
+  const wallet = selectedWallet?.wallets.find(
+    e => e.network === selectedCoin?.network,
+  );
+  const {farcasterSearch, selectedFacarster, onChangeFarcasterSearch} =
+    useWallets();
 
-  const {farcasterSearch, onChangeFarcasterSearch} = useWallets();
-
-  const debouncedToAmount = useDebounce(amount, 500);
+  const debouncedToUSDAmount = useDebounce(amount, 500);
+  const debouncedToAddress = useDebounce(sendTokenInfo.toAccount, 500);
+  const debouncedToAmount = useDebounce(sendTokenInfo.amount, 500);
 
   const tokenList = (selectedWallet && tokens[selectedWallet.id]) || [];
 
@@ -49,29 +63,107 @@ export const Farcaster = () => {
     );
 
   const onChangeFarcasterUserName = (value: string) => {
-    setUser(undefined);
     onChangeFarcasterSearch(value);
   };
 
   const onBlurFarcasterUserName = () => {
     setFocusFarcaster(false);
+    onChangeFarcasterSearch('');
   };
 
-  useEffect(() => {
-    const tokenAmount = _.isNaN(Number(debouncedToAmount))
-      ? Number(debouncedToAmount)
-      : 0;
+  const onFocusFarcasterUserName = () => {
+    onChangeFarcasterSearch(selectedFacarster?.username || '');
+    setFocusFarcaster(true);
+  };
+
+  const getFarcasterAddress = useCallback(async () => {
+    let toAccount;
+    if (selectedFacarster && selectedWallet?.farcaster) {
+      toAccount = await selectedWallet?.farcaster?.getAddressForUser(
+        selectedFacarster,
+      );
+    }
+
     dispatch(
       updateSendTokenInfo({
         ...sendTokenInfo,
-        amount: selectedCoin?.price
-          ? (tokenAmount / selectedCoin.price).toFixed(3)
-          : '',
+        toAccount,
         transaction: undefined,
         isSendMax: false,
       }),
     );
-  }, [debouncedToAmount, selectedCoin]);
+  }, [selectedFacarster]);
+
+  useEffect(() => {
+    const tokenAmountUSD = !_.isNaN(Number(debouncedToUSDAmount))
+      ? Number(debouncedToUSDAmount)
+      : 0;
+    const tokenAmount = selectedCoin?.price
+      ? (tokenAmountUSD / selectedCoin.price).toFixed(3)
+      : '';
+
+    dispatch(
+      updateSendTokenInfo({
+        ...sendTokenInfo,
+        amount: tokenAmount,
+        transaction: undefined,
+        isSendMax: false,
+      }),
+    );
+  }, [debouncedToUSDAmount, selectedCoin]);
+
+  const onUpdateSendTokenInfo = useCallback(() => {
+    console.log(debouncedToAddress, 'debouncedToAmount', debouncedToAmount);
+    if (
+      debouncedToAddress &&
+      debouncedToAmount &&
+      !isNaN(Number(debouncedToAmount)) &&
+      Number(debouncedToAmount) > 0
+    ) {
+      if (debouncedToAddress === wallet?.address) {
+        return Toast.show({
+          type: 'error',
+          text1: 'You cannot pay yourself',
+        });
+      }
+
+      dispatch(getTransferTransaction());
+    }
+  }, [debouncedToAddress, debouncedToAmount]);
+
+  useEffect(() => {
+    getFarcasterAddress();
+  }, [getFarcasterAddress]);
+
+  useEffect(() => {
+    onUpdateSendTokenInfo();
+  }, [onUpdateSendTokenInfo]);
+
+  useEffect(() => {
+    if (!sendTokenInfo.token && selectedCoin) {
+      dispatch(
+        updateSendTokenInfo({
+          token: selectedCoin,
+        }),
+      );
+    }
+  }, [sendTokenInfo, selectedCoin]);
+
+  useEffect(() => {
+    if (farcasterRef.current && selectedFacarster) {
+      farcasterRef.current.blur();
+    }
+  }, [farcasterRef, selectedFacarster]);
+
+  useEffect(() => {
+    return () => {
+      setAmount('');
+    };
+  }, []);
+
+  useEffect(() => {
+    setAmount('');
+  }, [selectedCoin]);
 
   return (
     <View>
@@ -108,8 +200,15 @@ export const Farcaster = () => {
           <Paragraph text="->" />
         </View>
         <View
-          style={[t.w12, t.h12, t.bgGray300, t.roundedFull, t.overflowHidden]}
-        />
+          style={[t.w12, t.h12, t.bgGray300, t.roundedFull, t.overflowHidden]}>
+          {!!selectedFacarster?.pfp?.url && (
+            <Image
+              source={{uri: selectedFacarster?.pfp?.url || ''}}
+              style={[t.w12, t.h12]}
+              resizeMode="cover"
+            />
+          )}
+        </View>
       </View>
       <View style={[t.flex, t.flexRow, t.mT3]}>
         <View style={[t.bgGray300, t.roundedLg, t.flex1]}>
@@ -158,7 +257,7 @@ export const Farcaster = () => {
         <View style={[t.bgGray300, t.roundedLg, t.flex1, t.mL4]}>
           {!focusFarcaster ? (
             <TouchableOpacity
-              onPress={() => setFocusFarcaster(true)}
+              onPress={() => onFocusFarcasterUserName()}
               style={[
                 t.flex,
                 t.flexRow,
@@ -168,7 +267,11 @@ export const Farcaster = () => {
               ]}>
               <Paragraph text="@" size={14} marginRight={2} />
               <Paragraph
-                text={user ? user.username : 'farcaster username'}
+                text={
+                  selectedFacarster
+                    ? selectedFacarster.username
+                    : 'farcaster username'
+                }
                 size={14}
               />
             </TouchableOpacity>
@@ -184,6 +287,7 @@ export const Farcaster = () => {
               <Paragraph text="@" size={14} marginRight={2} />
               <TextInput
                 autoFocus
+                ref={farcasterRef}
                 editable={!sendTokenInfo.isLoading}
                 onBlur={onBlurFarcasterUserName}
                 placeholderTextColor={colors.white}
@@ -196,6 +300,18 @@ export const Farcaster = () => {
           )}
         </View>
       </View>
+      {sendTokenInfo.isLoading && (
+        <View
+          style={[
+            t.hFull,
+            t.wFull,
+            t.absolute,
+            t.itemsCenter,
+            t.justifyCenter,
+          ]}>
+          <ActivityIndicator color={colors.white} size="large" />
+        </View>
+      )}
     </View>
   );
 };

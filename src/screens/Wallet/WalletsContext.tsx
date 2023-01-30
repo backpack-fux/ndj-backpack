@@ -3,10 +3,15 @@ import {VerifyPasscodeModal} from '@app/components/verifyPasscodeModal';
 import {useKeychain} from '@app/context/keychain';
 import {StackParams, Wallet} from '@app/models';
 import {
+  setToken,
   transferTokenRequest,
   updateSendTokenInfo,
 } from '@app/store/coins/actions';
-import {sendTokenInfoSelector} from '@app/store/coins/coinsSelector';
+import {
+  sendTokenInfoSelector,
+  tokenSelector,
+  tokensSelector,
+} from '@app/store/coins/coinsSelector';
 import {selectWallet} from '@app/store/wallets/actions';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
 import {sleep} from '@app/utils';
@@ -29,8 +34,9 @@ import {useDebounce} from '@app/uses';
 type WalletCardType = 'wallet' | 'send' | 'receive' | 'farcaster';
 
 interface WalletsConnect {
+  selectedFacarster?: User;
   farcasters: User[];
-  isSearchFarcasters: boolean;
+  isSearchingFarcasters: boolean;
   farcasterSearch: string;
   cardType: WalletCardType;
   showSeed: string | null;
@@ -41,7 +47,8 @@ interface WalletsConnect {
   onSelectWallet: (wallet: Wallet) => void;
   onShowSeed: (walletId: string | null) => void;
   onChangeFarcasterSearch: (value: string) => void;
-  scrollToEnd: (timeout: number) => void;
+  onSelectFarcaster: (value: User) => void;
+  scrollToEnd: (timeout?: number) => void;
 }
 
 export const WalletsContext = createContext<WalletsConnect>({
@@ -51,13 +58,14 @@ export const WalletsContext = createContext<WalletsConnect>({
   isChangedSelectedWallet: false,
   listRef: null,
   farcasters: [],
-  isSearchFarcasters: false,
+  isSearchingFarcasters: false,
   onSetListRef: () => {},
   onSetCardRef: () => {},
   onSelectWallet: () => {},
   onShowSeed: () => {},
   scrollToEnd: () => {},
   onChangeFarcasterSearch: () => {},
+  onSelectFarcaster: () => {},
 });
 
 export const useWallets = () => {
@@ -75,10 +83,14 @@ export const WalletsProvider = (props: {
 
   const wallet = useSelector(selectedWalletSelector);
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
+  const allTokens = useSelector(tokensSelector);
+  const selectedToken = useSelector(tokenSelector);
 
   const [farcasterSearch, setFarcasterSearch] = useState('');
   const [farcasters, setFarcasters] = useState<User[]>([]);
   const [searchedFarcasters, setSearchedFarcasters] = useState<User[]>([]);
+  const [isSearchingFarcasters, setIsSearchingFarcasters] = useState(false);
+  const [selectedFacarster, setSelectedFarcaster] = useState<User>();
   const [openVerify, setOpenVerify] = useState(false);
   const [listRef, setListRef] = useState<any>();
   const [cardRef, setCardRef] = useState<any>();
@@ -116,33 +128,12 @@ export const WalletsProvider = (props: {
     scrollToEnd(300);
   };
 
-  // const onDelete = () => {
-  //   if (!wallet) {
-  //     return;
-  //   }
-
-  //   Alert.alert(
-  //     'Delete Wallet',
-  //     'Are you sure you want to delete the selected wallet?',
-  //     [
-  //       {
-  //         text: 'Cancel',
-  //         style: 'cancel',
-  //       },
-  //       {
-  //         text: 'Yes, Delete',
-  //         onPress: () => dispatch(deleteWallet(wallet)),
-  //       },
-  //     ],
-  //   );
-  // };
-
-  // const onAddWallet = () => {
-  //   navigation.navigate('AddWallet');
-  // };
-
   const onOpenSelectScreen = () => {
     navigation.navigate('SelectToken');
+  };
+
+  const onSelectFarcaster = (value: User) => {
+    setSelectedFarcaster(value);
   };
 
   const onSendToken = () => {
@@ -215,7 +206,7 @@ export const WalletsProvider = (props: {
 
     ReactNativeHapticFeedback.trigger('impactHeavy');
     dispatch(selectWallet(w));
-    scrollToEnd();
+    scrollToEnd(200);
   };
 
   const onCancelSendToken = () => {
@@ -229,39 +220,96 @@ export const WalletsProvider = (props: {
 
   const onSearchFarcasters = useCallback(async () => {
     if (!debouncedFarcasterSearch) {
-      return [];
+      setSearchedFarcasters([]);
+      return;
     }
 
     let followers = farcasters;
-    if (!farcasters.length && wallet?.farcaster) {
-      followers = await wallet.farcaster.getFollowers();
-      setFarcasters(followers);
-    }
+    setIsSearchingFarcasters(true);
 
-    setSearchedFarcasters(
-      followers.filter(item =>
-        item.username
-          ?.toLowerCase()
-          .includes(debouncedFarcasterSearch.toLowerCase()),
-      ),
-    );
+    try {
+      if (!farcasters.length && wallet?.farcaster) {
+        followers = await wallet.farcaster.getFollowers();
+
+        setFarcasters(followers);
+      }
+
+      const filtered = followers
+        .filter(item =>
+          item.username
+            ?.toLowerCase()
+            .includes(debouncedFarcasterSearch.toLowerCase()),
+        )
+        .slice(0, 5);
+
+      setSearchedFarcasters(filtered);
+    } catch {
+    } finally {
+      setIsSearchingFarcasters(false);
+    }
   }, [farcasters, debouncedFarcasterSearch]);
 
   useEffect(() => {
+    onSearchFarcasters();
+  }, [onSearchFarcasters]);
+
+  useEffect(() => {
+    let height = 100;
+
+    if (
+      cardType === 'receive' ||
+      (cardType === 'wallet' && !wallet?.farcaster?.user)
+    ) {
+      height = 50;
+    }
+
     Animated.timing(buttonContainerHeight, {
-      toValue: cardType === 'receive' ? 50 : 100,
-      duration: cardType === 'receive' ? 300 : 0,
+      toValue: height,
+      duration: height === 50 ? 300 : 0,
       useNativeDriver: false,
     }).start();
+  }, [cardType, wallet]);
+
+  useEffect(() => {
+    if (cardType === 'wallet') {
+      dispatch(
+        updateSendTokenInfo({
+          token: sendTokenInfo.token,
+          transaction: undefined,
+          toAccount: undefined,
+          amount: undefined,
+          isSendMax: false,
+        }),
+      );
+    }
+  }, [dispatch, cardType]);
+
+  useEffect(() => {
+    setFarcasterSearch('');
+    setFarcasters([]);
+  }, [wallet]);
+
+  useEffect(() => {
+    if (cardType !== 'farcaster') {
+      setFarcasterSearch('');
+      setSelectedFarcaster(undefined);
+    }
   }, [cardType]);
 
   useEffect(() => {
-    scrollToEnd(400);
-  }, [listRef]);
+    const tokens = (wallet?.id && allTokens[wallet?.id]) || [];
+
+    const newPriceToken = tokens.find(item => item.id === selectedToken?.id);
+
+    if (newPriceToken && newPriceToken.price !== selectedToken?.price) {
+      dispatch(setToken(newPriceToken));
+    }
+  }, [wallet, allTokens, selectedToken]);
 
   useEffect(() => {
-    setFarcasters([]);
-  }, [wallet]);
+    setFarcasterSearch('');
+    setSelectedFarcaster(undefined);
+  }, [selectedToken]);
 
   return (
     <WalletsContext.Provider
@@ -272,11 +320,15 @@ export const WalletsProvider = (props: {
         onSelectWallet,
         scrollToEnd,
         onChangeFarcasterSearch,
+        onSelectFarcaster,
         listRef,
         isChangedSelectedWallet,
         showSeed,
         cardType,
         farcasterSearch,
+        farcasters: searchedFarcasters,
+        isSearchingFarcasters,
+        selectedFacarster,
       }}>
       {props.children}
       <Animated.View
@@ -379,14 +431,14 @@ export const WalletsProvider = (props: {
                 <Button
                   text="Cancel"
                   onPress={() => onChangeCardType('wallet')}
-                  disabled={!wallet}
+                  disabled={!wallet || sendTokenInfo.isLoading}
                 />
               </View>
               <View style={[t.flex1, t.mL2]}>
                 <Button
                   text="Change Token"
                   onPress={onOpenSelectScreen}
-                  disabled={!wallet}
+                  disabled={!wallet || sendTokenInfo.isLoading}
                 />
               </View>
             </View>
@@ -395,7 +447,7 @@ export const WalletsProvider = (props: {
                 <Button
                   text="Request"
                   onPress={() => onChangeCardType('wallet')}
-                  disabled={!wallet}
+                  disabled={!wallet || sendTokenInfo.isLoading}
                 />
               </View>
               <View style={[t.flex1, t.mL2]}>

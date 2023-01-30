@@ -1,5 +1,12 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Alert, Image, TouchableOpacity, View, Animated} from 'react-native';
+import {
+  Alert,
+  Image,
+  TouchableOpacity,
+  View,
+  Animated,
+  ActivityIndicator,
+} from 'react-native';
 import {t} from 'react-native-tailwindcss';
 import Clipboard from '@react-native-community/clipboard';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
@@ -16,6 +23,7 @@ import {
 import {Wallet} from '@app/models';
 import {tokensSelector} from '@app/store/coins/coinsSelector';
 import {renameWallet} from '@app/store/wallets/actions';
+import {colors} from '@app/assets/colors.config';
 
 import {formatCurrency} from '@app/utils';
 import {borderWidth, networkList, NetworkName} from '@app/constants';
@@ -41,24 +49,62 @@ const shadow = {
 };
 
 const cardContainerHeight = 200;
+const farcasterItemHeight = 40;
 
 export const WalletItem = ({wallet}: {wallet: Wallet}) => {
   const {sessions, legacyClients} = useWalletConnect();
-  const {cardType, showSeed, onShowSeed, onSelectWallet, onSetCardRef} =
-    useWallets();
+  const {
+    cardType,
+    showSeed,
+    onShowSeed,
+    onSelectWallet,
+    onSetCardRef,
+    scrollToEnd,
+    onSelectFarcaster,
+    isSearchingFarcasters,
+    farcasters,
+    selectedFacarster,
+  } = useWallets();
   const dispatch = useDispatch();
   const selectedWallet = useSelector(selectedWalletSelector);
   const tokens = useSelector(tokensSelector);
   const currency = useSelector(currencySelector);
   const network = useSelector(networkSelector);
   const [seedHeight, setSeedHeight] = useState(0);
+  const farcastersHeight = useMemo(
+    () =>
+      isSearchingFarcasters
+        ? farcasterItemHeight
+        : farcasterItemHeight * farcasters.length,
+    [farcasters, isSearchingFarcasters],
+  );
   const isShowSeed = useMemo(() => wallet.id === showSeed, [wallet, showSeed]);
+  const isSelected = useMemo(
+    () => selectedWallet?.id === wallet.id,
+    [selectedWallet, wallet],
+  );
+
+  const isShowFarcasters = useMemo(
+    () =>
+      isSelected &&
+      cardType === 'farcaster' &&
+      (isSearchingFarcasters || farcasters.length > 0),
+    [cardType, isSelected, farcasters, isSearchingFarcasters],
+  );
 
   const cardHeight = useRef(new Animated.Value(cardContainerHeight)).current;
-  const flipHeight = useMemo(
-    () => (isShowSeed ? cardContainerHeight + seedHeight : cardContainerHeight),
-    [isShowSeed, seedHeight],
-  );
+
+  const flipHeight = useMemo(() => {
+    if (isShowSeed) {
+      return cardContainerHeight + seedHeight;
+    }
+
+    if (isShowFarcasters) {
+      return cardContainerHeight + farcastersHeight;
+    }
+
+    return cardContainerHeight;
+  }, [isShowSeed, seedHeight, isShowFarcasters, farcastersHeight]);
 
   const tokenList = tokens[wallet.id] || [];
 
@@ -70,11 +116,6 @@ export const WalletItem = ({wallet}: {wallet: Wallet}) => {
   const ethAddress = useMemo(
     () => wallet.wallets.find(w => w.network === NetworkName.ethereum)?.address,
     [wallet],
-  );
-
-  const isSelected = useMemo(
-    () => selectedWallet?.id === wallet.id,
-    [selectedWallet, wallet],
   );
 
   const topTokens = useMemo(
@@ -173,18 +214,18 @@ export const WalletItem = ({wallet}: {wallet: Wallet}) => {
   };
 
   useEffect(() => {
-    // Animated.timing(seedHeight, {
-    //   toValue: showSeed ? 255 : 0,
-    //   duration: 300,
-    //   useNativeDriver: false,
-    // }).start();
-
     Animated.timing(cardHeight, {
       toValue: flipHeight,
       duration: 300,
       useNativeDriver: false,
     }).start();
   }, [flipHeight]);
+
+  useEffect(() => {
+    if (isSelected && cardType === 'farcaster') {
+      scrollToEnd(350);
+    }
+  }, [farcasters, isSearchingFarcasters, isSelected]);
 
   return (
     <Animated.View style={[t.mB5, {height: cardHeight}]}>
@@ -380,24 +421,79 @@ export const WalletItem = ({wallet}: {wallet: Wallet}) => {
             </TouchableOpacity>
           </Animated.View>
         </View>
-        <View
-          style={[
-            t.bgPurple500,
-            t.border2,
-            t.p4,
-            t.roundedXl,
-            shadow,
-            isSelected ? t.borderPink500 : t.borderPurple200,
-            {height: cardContainerHeight},
-          ]}>
-          {isSelected ? (
-            <>
-              {cardType === 'send' && <Send />}
-              {cardType === 'receive' && <Receive />}
-              {cardType === 'farcaster' && <Farcaster />}
-            </>
-          ) : (
-            <View style={{height: 160}} />
+        <View>
+          <View
+            style={[
+              t.bgPurple500,
+              t.border2,
+              t.p4,
+              t.roundedXl,
+              shadow,
+              isSelected ? t.borderPink500 : t.borderPurple200,
+              {height: cardContainerHeight, zIndex: 1},
+            ]}>
+            {isSelected ? (
+              <>
+                {cardType === 'send' && <Send />}
+                {cardType === 'receive' && <Receive />}
+                {cardType === 'farcaster' && <Farcaster />}
+              </>
+            ) : (
+              <View style={{height: 160}} />
+            )}
+          </View>
+          {isShowFarcasters && (
+            <View
+              style={[
+                t.overflowHidden,
+                t.bgGray300,
+                t.roundedBLg,
+                t.pL2,
+                t.pR2,
+                {marginTop: -10, zIndex: 0, paddingTop: 20, paddingBottom: 5},
+              ]}>
+              {isSearchingFarcasters && (
+                <ActivityIndicator color={colors.white} />
+              )}
+              {farcasters.map(item => (
+                <TouchableOpacity
+                  onPress={() => onSelectFarcaster(item)}
+                  key={item.fid}
+                  style={[
+                    t.flex,
+                    t.flexRow,
+                    t.itemsCenter,
+                    t.p2,
+                    t.pT1,
+                    t.pB1,
+                    t.roundedLg,
+                    item.fid === selectedFacarster?.fid
+                      ? {backgroundColor: colors.secondary}
+                      : {},
+                    {height: farcasterItemHeight},
+                  ]}>
+                  <View
+                    style={[
+                      t.w8,
+                      t.h8,
+                      t.bgGray300,
+                      t.roundedFull,
+                      t.overflowHidden,
+                    ]}>
+                    {item?.pfp?.url && (
+                      <Image
+                        source={{
+                          uri: item?.pfp?.url || '',
+                        }}
+                        style={[t.w8, t.h8]}
+                        resizeMode="cover"
+                      />
+                    )}
+                  </View>
+                  <Paragraph marginLeft={10} text={`@${item.username}`} />
+                </TouchableOpacity>
+              ))}
+            </View>
           )}
         </View>
       </CardFlip>
