@@ -221,12 +221,6 @@ export const WalletItem = ({wallet}: {wallet: Wallet}) => {
     }).start();
   }, [flipHeight]);
 
-  useEffect(() => {
-    if (isSelected && cardType === 'farcaster') {
-      scrollToEnd(350);
-    }
-  }, [farcasters, isSearchingFarcasters, isSelected]);
-
   return (
     <Animated.View style={[t.mB5, {height: cardHeight}]}>
       <CardFlip
