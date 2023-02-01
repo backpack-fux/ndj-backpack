@@ -1,5 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import {FlatList, KeyboardAvoidingView, RefreshControl} from 'react-native';
+import React, {useEffect} from 'react';
+import {RefreshControl} from 'react-native';
 import * as _ from 'lodash';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -61,15 +61,27 @@ export const WalletList = () => {
       listKey="wallet"
       extraScrollHeight={-(menuHeight * 0.5 + 80)}
       enableResetScrollToCoords={false}
-      onKeyboardDidHide={() => listRef.scrollToEnd({animated: false})}
+      onKeyboardDidHide={() => {
+        if (listRef && listRef.scrollToEnd) {
+          listRef.scrollToEnd({animated: false});
+        }
+      }}
       keyExtractor={item => `${item.id}`}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       keyboardDismissMode="on-drag"
       removeClippedSubviews={false}
       renderItem={({item}) => <WalletItem wallet={item} />}
-      onContentSizeChange={() => listRef.scrollToEnd({animated: false})}
-      onLayout={() => listRef.scrollToEnd({animated: false})}
+      onContentSizeChange={() => {
+        if (listRef && listRef.scrollToEnd) {
+          listRef?.scrollToEnd && listRef.scrollToEnd({animated: false});
+        }
+      }}
+      onLayout={() => {
+        if (listRef && listRef.scrollToEnd) {
+          listRef.scrollToEnd({animated: false});
+        }
+      }}
       refreshControl={
         <RefreshControl
           refreshing={isLoading && focused}

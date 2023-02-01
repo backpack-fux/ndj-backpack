@@ -14,7 +14,7 @@ import {
 } from '@app/store/coins/coinsSelector';
 import {selectWallet} from '@app/store/wallets/actions';
 import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
-import {sleep} from '@app/utils';
+import {formatCurrency, sleep} from '@app/utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import React, {
@@ -22,6 +22,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -30,11 +31,13 @@ import {t} from 'react-native-tailwindcss';
 import {useDispatch, useSelector} from 'react-redux';
 import {User} from '@standard-crypto/farcaster-js';
 import {useDebounce} from '@app/uses';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import * as _ from 'lodash';
 
 type WalletCardType = 'wallet' | 'send' | 'receive' | 'farcaster';
 
 interface WalletsConnect {
-  selectedFacarster?: User;
+  selectedFacarster?: User | null;
   farcasters: User[];
   isSearchingFarcasters: boolean;
   farcasterSearch: string;
@@ -47,11 +50,12 @@ interface WalletsConnect {
   onSelectWallet: (wallet: Wallet) => void;
   onShowSeed: (walletId: string | null) => void;
   onChangeFarcasterSearch: (value: string) => void;
-  onSelectFarcaster: (value: User) => void;
+  onSelectFarcaster: (value: User | null) => void;
   scrollToEnd: (timeout?: number) => void;
 }
 
 export const WalletsContext = createContext<WalletsConnect>({
+  selectedFacarster: null,
   showSeed: '',
   cardType: 'wallet',
   farcasterSearch: '',
@@ -90,7 +94,7 @@ export const WalletsProvider = (props: {
   const [farcasters, setFarcasters] = useState<User[]>([]);
   const [searchedFarcasters, setSearchedFarcasters] = useState<User[]>([]);
   const [isSearchingFarcasters, setIsSearchingFarcasters] = useState(false);
-  const [selectedFacarster, setSelectedFarcaster] = useState<User>();
+  const [selectedFacarster, setSelectedFarcaster] = useState<User | null>();
   const [openVerify, setOpenVerify] = useState(false);
   const [listRef, setListRef] = useState<any>();
   const [cardRef, setCardRef] = useState<any>();
@@ -101,7 +105,11 @@ export const WalletsProvider = (props: {
   >('wallet');
 
   const debouncedFarcasterSearch = useDebounce(farcasterSearch, 500);
-
+  const amountUSD = useMemo(
+    () =>
+      _.isNaN(sendTokenInfo.amountUSD) ? 0 : Number(sendTokenInfo.amountUSD),
+    [sendTokenInfo],
+  );
   const buttonContainerHeight = useRef(new Animated.Value(50)).current;
 
   const onSetListRef = (ref: any) => {
@@ -132,7 +140,7 @@ export const WalletsProvider = (props: {
     navigation.navigate('SelectToken');
   };
 
-  const onSelectFarcaster = (value: User) => {
+  const onSelectFarcaster = (value: User | null) => {
     setSelectedFarcaster(value);
   };
 
@@ -190,7 +198,9 @@ export const WalletsProvider = (props: {
         token: sendTokenInfo.token,
         transaction: undefined,
         toAccount: undefined,
+        isSentSuccessFully: false,
         amount: undefined,
+        amountUSD: undefined,
         isSendMax: false,
       }),
     );
@@ -216,6 +226,31 @@ export const WalletsProvider = (props: {
 
   const onChangeFarcasterSearch = (value: string) => {
     setFarcasterSearch(value);
+  };
+
+  const onSendFarcasterRequest = async () => {
+    if (!amountUSD || !selectedFacarster || !wallet?.farcaster?.user) {
+      return;
+    }
+
+    try {
+      await wallet.farcaster.publishCast(
+        ` @${wallet.farcaster.user.username} just requested ${formatCurrency(
+          amountUSD,
+          'USD',
+        )} from @${selectedFacarster.username} #paycaster by #backpack`,
+      );
+
+      Toast.show({
+        type: 'success',
+        text1: `Sent request to @${selectedFacarster.username} successfully.`,
+      });
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: err.message,
+      });
+    }
   };
 
   const onSearchFarcasters = useCallback(async () => {
@@ -278,6 +313,8 @@ export const WalletsProvider = (props: {
           transaction: undefined,
           toAccount: undefined,
           amount: undefined,
+          amountUSD: undefined,
+          isSentSuccessFully: false,
           isSendMax: false,
         }),
       );
@@ -446,8 +483,13 @@ export const WalletsProvider = (props: {
               <View style={[t.flex1]}>
                 <Button
                   text="Request"
-                  onPress={() => onChangeCardType('wallet')}
-                  disabled={!wallet || sendTokenInfo.isLoading}
+                  onPress={() => onSendFarcasterRequest()}
+                  disabled={
+                    !wallet ||
+                    sendTokenInfo.isLoading ||
+                    !amountUSD ||
+                    !selectedFacarster
+                  }
                 />
               </View>
               <View style={[t.flex1, t.mL2]}>

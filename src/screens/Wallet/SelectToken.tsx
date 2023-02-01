@@ -29,9 +29,11 @@ export const SelectTokenScreen = () => {
     dispatch(
       updateSendTokenInfo({
         token: sendTokenInfo.token,
+        isSentSuccessFully: false,
         transaction: undefined,
         toAccount: undefined,
         amount: undefined,
+        amountUSD: undefined,
         isSendMax: false,
       }),
     );

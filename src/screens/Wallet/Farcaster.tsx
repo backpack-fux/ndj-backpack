@@ -16,7 +16,8 @@ import {
 } from '@app/store/wallets/walletsSelector';
 import {useDebounce} from '@app/uses';
 import {formatCurrency} from '@app/utils';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {NetworkName} from '@app/constants';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -38,29 +39,38 @@ export const Farcaster = () => {
   const selectedWallet = useSelector(selectedWalletSelector);
   const tokens = useSelector(tokensSelector);
   const currency = useSelector(currencySelector);
-  const selectedCoin = useSelector(tokenSelector);
+  const selectedToken = useSelector(tokenSelector);
   const [focusAmount, setFocusAmount] = useState(false);
   const [focusFarcaster, setFocusFarcaster] = useState(false);
-  const [amount, setAmount] = useState('');
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const wallet = selectedWallet?.wallets.find(
-    e => e.network === selectedCoin?.network,
+    e => e.network === selectedToken?.network,
   );
   const {
     farcasterSearch,
     selectedFacarster,
     onChangeFarcasterSearch,
     scrollToEnd,
+    onSelectFarcaster,
   } = useWallets();
+  const isNotAllowedToken = useMemo(
+    () =>
+      selectedToken &&
+      ![
+        NetworkName.ethereum,
+        NetworkName.binanceSmartChain,
+        NetworkName.polygon,
+      ].includes(selectedToken?.network),
+    [selectedToken],
+  );
 
-  const debouncedToUSDAmount = useDebounce(amount, 500);
   const debouncedToAddress = useDebounce(sendTokenInfo.toAccount, 500);
   const debouncedToAmount = useDebounce(sendTokenInfo.amount, 500);
 
   const tokenList = (selectedWallet && tokens[selectedWallet.id]) || [];
 
   const totalBalance = tokenList
-    .filter(token => token.id === selectedCoin?.id)
+    .filter(token => token.id === selectedToken?.id)
     .reduce(
       (total, token) => total + (token.price || 0) * (token.balance || 0),
       0,
@@ -85,6 +95,24 @@ export const Farcaster = () => {
     onChangeFarcasterSearch('');
   };
 
+  const onChangeAmount = (value: string) => {
+    const tokenAmountUSD = !_.isNaN(Number(value)) ? Number(value) : 0;
+    const tokenAmount = selectedToken?.price
+      ? (tokenAmountUSD / selectedToken.price).toFixed(3)
+      : '';
+
+    dispatch(
+      updateSendTokenInfo({
+        ...sendTokenInfo,
+        amount: tokenAmount,
+        amountUSD: value,
+        transaction: undefined,
+        isSentSuccessFully: false,
+        isSendMax: false,
+      }),
+    );
+  };
+
   const getFarcasterAddress = useCallback(async () => {
     let toAccount;
     if (selectedFacarster && selectedWallet?.farcaster) {
@@ -98,31 +126,13 @@ export const Farcaster = () => {
         ...sendTokenInfo,
         toAccount,
         transaction: undefined,
+        isSentSuccessFully: false,
         isSendMax: false,
       }),
     );
   }, [selectedFacarster]);
 
-  useEffect(() => {
-    const tokenAmountUSD = !_.isNaN(Number(debouncedToUSDAmount))
-      ? Number(debouncedToUSDAmount)
-      : 0;
-    const tokenAmount = selectedCoin?.price
-      ? (tokenAmountUSD / selectedCoin.price).toFixed(3)
-      : '';
-
-    dispatch(
-      updateSendTokenInfo({
-        ...sendTokenInfo,
-        amount: tokenAmount,
-        transaction: undefined,
-        isSendMax: false,
-      }),
-    );
-  }, [debouncedToUSDAmount, selectedCoin]);
-
   const onUpdateSendTokenInfo = useCallback(() => {
-    console.log(debouncedToAddress, 'debouncedToAmount', debouncedToAmount);
     if (
       debouncedToAddress &&
       debouncedToAmount &&
@@ -149,14 +159,14 @@ export const Farcaster = () => {
   }, [onUpdateSendTokenInfo]);
 
   useEffect(() => {
-    if (!sendTokenInfo.token && selectedCoin) {
+    if (!sendTokenInfo.token && selectedToken) {
       dispatch(
         updateSendTokenInfo({
-          token: selectedCoin,
+          token: selectedToken,
         }),
       );
     }
-  }, [sendTokenInfo, selectedCoin]);
+  }, [sendTokenInfo, selectedToken]);
 
   useEffect(() => {
     if (selectedFacarster) {
@@ -166,14 +176,19 @@ export const Farcaster = () => {
   }, [farcasterRef, selectedFacarster]);
 
   useEffect(() => {
-    return () => {
-      setAmount('');
-    };
-  }, []);
+    if (isNotAllowedToken) {
+      Toast.show({
+        type: 'error',
+        text1: `It's not support to sending ${selectedToken?.name} token on ${selectedToken?.network} network`,
+      });
+    }
+  }, [isNotAllowedToken]);
 
   useEffect(() => {
-    setAmount('');
-  }, [selectedCoin]);
+    if (sendTokenInfo.isSentSuccessFully && selectedFacarster) {
+      onSelectFarcaster(null);
+    }
+  }, [sendTokenInfo, selectedFacarster]);
 
   return (
     <View>
@@ -233,9 +248,14 @@ export const Farcaster = () => {
                 {height: inputHeight},
               ]}>
               <Paragraph text="$" size={14} marginRight={2} />
-              <Paragraph text={amount ? amount : 'amount'} size={14} />
               <Paragraph
-                text={`as ${selectedCoin?.symbol.toUpperCase()}`}
+                text={
+                  sendTokenInfo.amountUSD ? sendTokenInfo.amountUSD : 'amount'
+                }
+                size={14}
+              />
+              <Paragraph
+                text={`as ${selectedToken?.symbol.toUpperCase()}`}
                 size={10}
                 marginLeft={3}
               />
@@ -252,11 +272,11 @@ export const Farcaster = () => {
               <Paragraph text="$" size={14} marginRight={2} />
               <TextInput
                 autoFocus
-                editable={!sendTokenInfo.isLoading}
+                editable={!sendTokenInfo.isLoading && !isNotAllowedToken}
                 onBlur={() => setFocusAmount(false)}
                 placeholderTextColor={colors.white}
-                value={amount}
-                onChangeText={value => setAmount(value)}
+                value={sendTokenInfo.amountUSD}
+                onChangeText={value => onChangeAmount(value)}
                 textAlign="center"
                 keyboardType="decimal-pad"
                 style={[t.textCenter, t.textWhite, t.p0, t.m0, {fontSize}]}
@@ -298,7 +318,7 @@ export const Farcaster = () => {
               <TextInput
                 autoFocus
                 ref={farcasterRef}
-                editable={!sendTokenInfo.isLoading}
+                editable={!sendTokenInfo.isLoading && !isNotAllowedToken}
                 placeholderTextColor={colors.white}
                 onBlur={() => onBlueFarcasterSearach()}
                 value={farcasterSearch}

@@ -6,10 +6,12 @@ export interface SendTokenInfo {
   fromAccount?: string;
   toAccount?: string;
   amount?: string;
+  amountUSD?: string;
   fee?: number;
   balance?: number;
   transaction?: any;
   status?: string;
   date?: Date;
   isSendMax?: boolean;
+  isSentSuccessFully?: boolean;
 }

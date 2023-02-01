@@ -90,6 +90,7 @@ export const Send = () => {
         ...sendTokenInfo,
         isSendMax: true,
         amount: value,
+        isSentSuccessFully: false,
         transaction: undefined,
       }),
     );
@@ -101,6 +102,7 @@ export const Send = () => {
         ...sendTokenInfo,
         toAccount: account,
         amount: amountValue,
+        isSentSuccessFully: false,
         isSendMax: false,
         transaction: undefined,
       }),
@@ -112,6 +114,7 @@ export const Send = () => {
       updateSendTokenInfo({
         ...sendTokenInfo,
         toAccount: account,
+        isSentSuccessFully: false,
         transaction: undefined,
       }),
     );
@@ -122,6 +125,7 @@ export const Send = () => {
       updateSendTokenInfo({
         ...sendTokenInfo,
         amount: value,
+        isSentSuccessFully: false,
         transaction: undefined,
         isSendMax: false,
       }),
@@ -136,6 +140,7 @@ export const Send = () => {
         updateSendTokenInfo({
           ...sendTokenInfo,
           toAccount: content,
+          isSentSuccessFully: false,
           transaction: undefined,
         }),
       );

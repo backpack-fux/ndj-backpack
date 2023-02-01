@@ -347,8 +347,10 @@ function* getPriceOfSendToken({payload}: Action<Token>) {
         fromAccount: wallet?.address,
         balance: token?.balance || 0,
         token: token,
+        isSentSuccessFully: false,
         transaction: undefined,
         amount: undefined,
+        amountUSD: undefined,
         toAccount: undefined,
       }),
     );
@@ -389,6 +391,7 @@ function* getTransferTransaction() {
         updateSendTokenInfo({
           ...sendTokenInfo,
           transaction: res.transaction,
+          isSentSuccessFully: false,
           fee: res.fee,
         }),
       );

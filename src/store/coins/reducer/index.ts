@@ -125,10 +125,12 @@ export function transferTokenSuccessReducer(state: CoinsReducerType) {
     ...state,
     sendTokenInfo: {
       ...state.sendTokenInfo,
+      isSentSuccessFully: true,
       isLoading: false,
       fromAccount: undefined,
       toAccount: undefined,
       amount: undefined,
+      amountUSD: undefined,
       fee: undefined,
       balance: undefined,
       transaction: undefined,
