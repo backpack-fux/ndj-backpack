@@ -238,7 +238,7 @@ export const WalletsProvider = (props: {
         ` @${wallet.farcaster.user.username} just requested ${formatCurrency(
           amountUSD,
           'USD',
-        )} from @${selectedFacarster.username} #paycaster by #backpack`,
+        )} in USDC from @${selectedFacarster.username} #paycaster by #backpack`,
       );
 
       Toast.show({

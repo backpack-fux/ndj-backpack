@@ -1,3 +1,16 @@
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import * as _ from 'lodash';
+import {t} from 'react-native-tailwindcss';
+import {useDispatch, useSelector} from 'react-redux';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
+
 import {colors} from '@app/assets/colors.config';
 import {Paragraph} from '@app/components';
 import {
@@ -9,26 +22,15 @@ import {
   tokenSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
-import * as _ from 'lodash';
 import {
   currencySelector,
   selectedWalletSelector,
 } from '@app/store/wallets/walletsSelector';
+
 import {useDebounce} from '@app/uses';
 import {formatCurrency} from '@app/utils';
 import {NetworkName} from '@app/constants';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {t} from 'react-native-tailwindcss';
-import {useDispatch, useSelector} from 'react-redux';
 import {useWallets} from './WalletsContext';
-import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
 const fontSize = 14;
 const inputHeight = 25;
