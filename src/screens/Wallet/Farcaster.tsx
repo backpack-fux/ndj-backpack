@@ -46,8 +46,12 @@ export const Farcaster = () => {
   const wallet = selectedWallet?.wallets.find(
     e => e.network === selectedCoin?.network,
   );
-  const {farcasterSearch, selectedFacarster, onChangeFarcasterSearch} =
-    useWallets();
+  const {
+    farcasterSearch,
+    selectedFacarster,
+    onChangeFarcasterSearch,
+    scrollToEnd,
+  } = useWallets();
 
   const debouncedToUSDAmount = useDebounce(amount, 500);
   const debouncedToAddress = useDebounce(sendTokenInfo.toAccount, 500);
@@ -66,14 +70,19 @@ export const Farcaster = () => {
     onChangeFarcasterSearch(value);
   };
 
-  const onBlurFarcasterUserName = () => {
-    setFocusFarcaster(false);
-    onChangeFarcasterSearch('');
+  const onBlueFarcasterSearach = () => {
+    scrollToEnd(100);
   };
 
   const onFocusFarcasterUserName = () => {
     onChangeFarcasterSearch(selectedFacarster?.username || '');
     setFocusFarcaster(true);
+  };
+
+  const onFocusAmount = () => {
+    setFocusAmount(true);
+    setFocusFarcaster(false);
+    onChangeFarcasterSearch('');
   };
 
   const getFarcasterAddress = useCallback(async () => {
@@ -150,8 +159,9 @@ export const Farcaster = () => {
   }, [sendTokenInfo, selectedCoin]);
 
   useEffect(() => {
-    if (farcasterRef.current && selectedFacarster) {
-      farcasterRef.current.blur();
+    if (selectedFacarster) {
+      setFocusFarcaster(false);
+      onChangeFarcasterSearch('');
     }
   }, [farcasterRef, selectedFacarster]);
 
@@ -214,7 +224,7 @@ export const Farcaster = () => {
         <View style={[t.bgGray300, t.roundedLg, t.flex1]}>
           {!focusAmount ? (
             <TouchableOpacity
-              onPress={() => setFocusAmount(true)}
+              onPress={() => onFocusAmount()}
               style={[
                 t.flex,
                 t.flexRow,
@@ -289,8 +299,8 @@ export const Farcaster = () => {
                 autoFocus
                 ref={farcasterRef}
                 editable={!sendTokenInfo.isLoading}
-                onBlur={onBlurFarcasterUserName}
                 placeholderTextColor={colors.white}
+                onBlur={() => onBlueFarcasterSearach()}
                 value={farcasterSearch}
                 onChangeText={onChangeFarcasterUserName}
                 textAlign="center"

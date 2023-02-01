@@ -14,12 +14,13 @@ import {
   tokenSelector,
 } from '@app/store/coins/coinsSelector';
 import {refreshWallets} from '@app/store/wallets/actions';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 
 import {setToken} from '@app/store/coins/actions';
 import {WalletItem} from './WalletItem';
 import {useWallets} from './WalletsContext';
 import {sleep} from '@zilliqa-js/account/dist/util';
+import {menuHeight} from '@app/constants/dimension';
 
 export const WalletList = () => {
   const dispatch = useDispatch();
@@ -54,21 +55,19 @@ export const WalletList = () => {
   };
 
   return (
-    <FlatList
+    <KeyboardAwareFlatList
       data={walletList}
       ref={ref => onRef(ref)}
       listKey="wallet"
+      extraScrollHeight={-(menuHeight * 0.5 + 80)}
+      enableResetScrollToCoords={false}
+      onKeyboardDidHide={() => listRef.scrollToEnd({animated: false})}
       keyExtractor={item => `${item.id}`}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       keyboardDismissMode="on-drag"
       removeClippedSubviews={false}
       renderItem={({item}) => <WalletItem wallet={item} />}
-      // onContentSizeChange={() => {
-      //   if (isChangedSelectedWallet) {
-      //     listRef.scrollToEnd({animated: false});
-      //   }
-      // }}
       onContentSizeChange={() => listRef.scrollToEnd({animated: false})}
       onLayout={() => listRef.scrollToEnd({animated: false})}
       refreshControl={
