@@ -50,8 +50,11 @@ export const WalletList = () => {
 
   const onRef = async (ref: any) => {
     onSetListRef(ref);
-    await sleep(100);
-    ref && ref.scrollToEnd({animated: false});
+
+    if (!listRef) {
+      await sleep(100);
+      ref && ref.scrollToEnd({animated: false});
+    }
   };
 
   return (
