@@ -8,6 +8,7 @@ import {
   updateSendTokenInfo,
 } from '@app/store/coins/actions';
 import {
+  isLoadingTokensSelector,
   sendTokenInfoSelector,
   tokenSelector,
   tokensSelector,
@@ -89,6 +90,7 @@ export const WalletsProvider = (props: {
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const allTokens = useSelector(tokensSelector);
   const selectedToken = useSelector(tokenSelector);
+  const isTokenLoading = useSelector(isLoadingTokensSelector);
 
   const [farcasterSearch, setFarcasterSearch] = useState('');
   const [farcasters, setFarcasters] = useState<User[]>([]);
@@ -347,6 +349,12 @@ export const WalletsProvider = (props: {
     setFarcasterSearch('');
     setSelectedFarcaster(undefined);
   }, [selectedToken]);
+
+  useEffect(() => {
+    if (!isTokenLoading) {
+      scrollToEnd();
+    }
+  }, [isTokenLoading]);
 
   return (
     <WalletsContext.Provider
