@@ -27,7 +27,6 @@ import {
   selectedWalletSelector,
 } from '@app/store/wallets/walletsSelector';
 
-import {useDebounce} from '@app/uses';
 import {formatCurrency} from '@app/utils';
 import {NetworkName} from '@app/constants';
 import {useWallets} from './WalletsContext';
@@ -66,9 +65,7 @@ export const Farcaster = () => {
     [selectedToken],
   );
 
-  const debouncedToAddress = useDebounce(sendTokenInfo.toAccount, 500);
-  const debouncedToAmount = useDebounce(sendTokenInfo.amount, 500);
-
+  const toAddress = useMemo(() => sendTokenInfo.toAccount, [sendTokenInfo]);
   const tokenList = (selectedWallet && tokens[selectedWallet.id]) || [];
 
   const totalBalance = tokenList
@@ -95,6 +92,11 @@ export const Farcaster = () => {
     setFocusAmount(true);
     setFocusFarcaster(false);
     onChangeFarcasterSearch('');
+  };
+
+  const onBlurAmount = () => {
+    setFocusAmount(false);
+    sendGetTransactionRequest();
   };
 
   const onChangeAmount = (value: string) => {
@@ -134,31 +136,24 @@ export const Farcaster = () => {
     );
   }, [selectedFacarster]);
 
-  const onUpdateSendTokenInfo = useCallback(() => {
+  const sendGetTransactionRequest = () => {
     if (
-      debouncedToAddress &&
-      debouncedToAmount &&
-      !isNaN(Number(debouncedToAmount)) &&
-      Number(debouncedToAmount) > 0
+      sendTokenInfo.toAccount &&
+      sendTokenInfo.amount &&
+      !isNaN(Number(sendTokenInfo.amount)) &&
+      Number(sendTokenInfo.amount) > 0
     ) {
-      if (debouncedToAddress === wallet?.address) {
-        return Toast.show({
-          type: 'error',
-          text1: 'You cannot pay yourself',
-        });
-      }
-
       dispatch(getTransferTransaction());
     }
-  }, [debouncedToAddress, debouncedToAmount]);
+  };
+
+  useEffect(() => {
+    sendGetTransactionRequest();
+  }, [toAddress]);
 
   useEffect(() => {
     getFarcasterAddress();
   }, [getFarcasterAddress]);
-
-  useEffect(() => {
-    onUpdateSendTokenInfo();
-  }, [onUpdateSendTokenInfo]);
 
   useEffect(() => {
     if (!sendTokenInfo.token && selectedToken) {
@@ -275,7 +270,7 @@ export const Farcaster = () => {
               <TextInput
                 autoFocus
                 editable={!sendTokenInfo.isLoading && !isNotAllowedToken}
-                onBlur={() => setFocusAmount(false)}
+                onBlur={() => onBlurAmount()}
                 placeholderTextColor={colors.white}
                 value={sendTokenInfo.amountUSD}
                 onChangeText={value => onChangeAmount(value)}
