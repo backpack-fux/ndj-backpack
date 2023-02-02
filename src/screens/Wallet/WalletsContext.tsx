@@ -14,8 +14,8 @@ import {
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {selectWallet} from '@app/store/wallets/actions';
-import {selectedWalletSelector} from '@app/store/wallets/walletsSelector';
-import {formatCurrency, sleep} from '@app/utils';
+import {networkSelector, selectedWalletSelector} from '@app/store/wallets/walletsSelector';
+import {formatCurrency, showNetworkName, sleep} from '@app/utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import React, {
@@ -91,6 +91,7 @@ export const WalletsProvider = (props: {
   const allTokens = useSelector(tokensSelector);
   const selectedToken = useSelector(tokenSelector);
   const isTokenLoading = useSelector(isLoadingTokensSelector);
+  const network = useSelector(networkSelector);
 
   const [farcasterSearch, setFarcasterSearch] = useState('');
   const [farcasters, setFarcasters] = useState<User[]>([]);
@@ -231,7 +232,7 @@ export const WalletsProvider = (props: {
   };
 
   const onSendFarcasterRequest = async () => {
-    if (!amountUSD || !selectedFacarster || !wallet?.farcaster?.user) {
+    if (!amountUSD || !selectedFacarster || !wallet?.farcaster?.user || !selectedToken) {
       return;
     }
 
@@ -240,7 +241,7 @@ export const WalletsProvider = (props: {
         ` @${wallet.farcaster.user.username} just requested ${formatCurrency(
           amountUSD,
           'USD',
-        )} in USDC from @${selectedFacarster.username} #paycaster by #backpack`,
+        )} in ${selectedToken?.symbol.toUpperCase()}${network === 'testnet' ? `(${showNetworkName(selectedToken.network, network)})` : ''} from @${selectedFacarster.username} #paycaster by #backpack`,
       );
 
       Toast.show({
@@ -386,7 +387,7 @@ export const WalletsProvider = (props: {
               <View style={[t.flexRow, t.mT2]}>
                 <View style={[t.flex1]}>
                   <Button
-                    text="Paycaster"
+                    text="Paycast"
                     onPress={() => onChangeCardType('farcaster')}
                   />
                 </View>
