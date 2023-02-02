@@ -176,7 +176,7 @@ export const Farcaster = () => {
     if (isNotAllowedToken) {
       Toast.show({
         type: 'error',
-        text1: `It's not support to sending ${selectedToken?.name} token on ${selectedToken?.network} network`,
+        text1: `It's not supported to send ${selectedToken?.name} token on ${selectedToken?.network} network`,
       });
     }
   }, [isNotAllowedToken]);
