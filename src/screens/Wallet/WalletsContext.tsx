@@ -14,7 +14,10 @@ import {
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
 import {selectWallet} from '@app/store/wallets/actions';
-import {networkSelector, selectedWalletSelector} from '@app/store/wallets/walletsSelector';
+import {
+  networkSelector,
+  selectedWalletSelector,
+} from '@app/store/wallets/walletsSelector';
 import {formatCurrency, showNetworkName, sleep} from '@app/utils';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
@@ -232,7 +235,12 @@ export const WalletsProvider = (props: {
   };
 
   const onSendFarcasterRequest = async () => {
-    if (!amountUSD || !selectedFacarster || !wallet?.farcaster?.user || !selectedToken) {
+    if (
+      !amountUSD ||
+      !selectedFacarster ||
+      !wallet?.farcaster?.user ||
+      !selectedToken
+    ) {
       return;
     }
 
@@ -241,7 +249,11 @@ export const WalletsProvider = (props: {
         ` @${wallet.farcaster.user.username} just requested ${formatCurrency(
           amountUSD,
           'USD',
-        )} in ${selectedToken?.symbol.toUpperCase()}${network === 'testnet' ? `(${showNetworkName(selectedToken.network, network)})` : ''} from @${selectedFacarster.username} #paycaster by #backpack`,
+        )} in ${selectedToken?.symbol.toUpperCase()}${
+          network === 'testnet'
+            ? `(${showNetworkName(selectedToken.network, network)})`
+            : ''
+        } from @${selectedFacarster.username} #paycaster by #backpack`,
       );
 
       Toast.show({
@@ -503,7 +515,7 @@ export const WalletsProvider = (props: {
               </View>
               <View style={[t.flex1, t.mL2]}>
                 <Button
-                  text="Pay"
+                  text="Paycast"
                   onPress={onSendToken}
                   disabled={
                     !sendTokenInfo.transaction || sendTokenInfo.isLoading
