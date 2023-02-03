@@ -29,6 +29,7 @@ export const SelectTokenScreen = () => {
     dispatch(
       updateSendTokenInfo({
         token: sendTokenInfo.token,
+        farcaster: undefined,
         isSentSuccessFully: false,
         transaction: undefined,
         toAccount: undefined,

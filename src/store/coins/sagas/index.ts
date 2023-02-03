@@ -13,6 +13,7 @@ import {
 import * as _ from 'lodash';
 import moment from 'moment-timezone';
 import Toast from 'react-native-toast-message';
+import {formatCurrency, showNetworkName} from '@app/utils';
 
 import {getCoinGeckoCoinList, getCoinGeckoDetail} from '@app/apis';
 import {networkList, NetworkName} from '@app/constants';
@@ -411,6 +412,7 @@ function* transferToken() {
     yield put(setSendTokenLoading(true));
     const state: RootState = yield select();
     const sendTokenInfo = state.coins.sendTokenInfo;
+    const network = state.wallets.network;
     const selectedWallet = selectedWalletSelector(state);
     const privateKey = selectedWallet?.wallets.find(
       wallet => wallet.network === sendTokenInfo.token?.network,
@@ -430,6 +432,25 @@ function* transferToken() {
           sendTokenInfo.amount
         } ${sendTokenInfo.token.symbol.toUpperCase()} successfully`,
       });
+
+      if (
+        selectedWallet.farcaster?.user &&
+        sendTokenInfo.farcaster &&
+        sendTokenInfo.amountUSD
+      ) {
+        selectedWallet.farcaster.publishCast(
+          `@${
+            selectedWallet.farcaster.user.username
+          } made a Paycast in the amount of ${formatCurrency(
+            Number(sendTokenInfo.amountUSD),
+            'USD',
+          )} in ${sendTokenInfo.token?.symbol.toUpperCase()} ${
+            network === 'testnet'
+              ? `(${showNetworkName(sendTokenInfo.token.network, network)})`
+              : ''
+          } to @${sendTokenInfo.farcaster.username} #paycaster by #backpack`,
+        );
+      }
     }
   } catch (err: any) {
     Toast.show({

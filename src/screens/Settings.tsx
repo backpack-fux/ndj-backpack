@@ -15,12 +15,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {StackParams} from '@app/models';
 
 import BookIcon from '@app/assets/icons/book.svg';
-import {isLoadingTokensSelector} from '@app/store/coins/coinsSelector';
+import {
+  isLoadingTokensSelector,
+  sendTokenInfoSelector,
+} from '@app/store/coins/coinsSelector';
 
 export const SettingsScreen = () => {
   const navigation = useNavigation<NavigationProp<StackParams>>();
   const dispatch = useDispatch();
   const isLoading = useSelector(isLoadingTokensSelector);
+  const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const wallet = useSelector(selectedWalletSelector);
   const network = useSelector(networkSelector);
   const [selectedSetting, setSelectedSetting] = useState<string>('network');
@@ -133,16 +137,27 @@ export const SettingsScreen = () => {
               <Button
                 text="Test Money"
                 onPress={() => onChangeNetwork('testnet')}
-                disabled={network !== 'testnet' && isLoading}
-                loading={network === 'testnet' && isLoading}
+                disabled={
+                  (network === 'testnet' && isLoading) ||
+                  sendTokenInfo.isLoading
+                }
+                loading={
+                  network === 'testnet' &&
+                  (isLoading || sendTokenInfo.isLoading)
+                }
                 color={network === 'testnet' ? colors.secondary : colors.gray}
               />
             </View>
             <View style={[t.flex1, t.mL2]}>
               <Button
                 text="Real Money"
-                disabled={network !== 'mainnet' && isLoading}
-                loading={network === 'mainnet' && isLoading}
+                disabled={
+                  network === 'mainnet' || isLoading || sendTokenInfo.isLoading
+                }
+                loading={
+                  network === 'mainnet' &&
+                  (isLoading || sendTokenInfo.isLoading)
+                }
                 onPress={() => onChangeNetwork('mainnet')}
                 color={network === 'mainnet' ? colors.secondary : colors.gray}
               />

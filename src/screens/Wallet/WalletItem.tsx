@@ -21,7 +21,10 @@ import {
   selectedWalletSelector,
 } from '@app/store/wallets/walletsSelector';
 import {Wallet} from '@app/models';
-import {tokensSelector} from '@app/store/coins/coinsSelector';
+import {
+  sendTokenInfoSelector,
+  tokensSelector,
+} from '@app/store/coins/coinsSelector';
 import {renameWallet} from '@app/store/wallets/actions';
 import {colors} from '@app/assets/colors.config';
 
@@ -33,6 +36,8 @@ import {Receive} from './Receive';
 import {Farcaster} from './Farcaster';
 import {useWallets} from './WalletsContext';
 import {FarcasterIcon} from './FarcasterIcon';
+import {User} from '@standard-crypto/farcaster-js';
+import {updateSendTokenInfo} from '@app/store/coins/actions';
 
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
@@ -60,14 +65,13 @@ export const WalletItem = ({wallet}: {wallet: Wallet}) => {
     onShowSeed,
     onSelectWallet,
     onSetCardRef,
-    scrollToEnd,
-    onSelectFarcaster,
     isSearchingFarcasters,
     farcasters,
     selectedFacarster,
   } = useWallets();
   const dispatch = useDispatch();
   const selectedWallet = useSelector(selectedWalletSelector);
+  const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const tokens = useSelector(tokensSelector);
   const currency = useSelector(currencySelector);
   const network = useSelector(networkSelector);
@@ -214,6 +218,15 @@ export const WalletItem = ({wallet}: {wallet: Wallet}) => {
     );
   };
 
+  const onSelectFarcaster = (user: User) => {
+    dispatch(
+      updateSendTokenInfo({
+        ...sendTokenInfo,
+        farcaster: user,
+      }),
+    );
+  };
+
   useEffect(() => {
     Animated.timing(cardHeight, {
       toValue: flipHeight,
@@ -305,6 +318,7 @@ export const WalletItem = ({wallet}: {wallet: Wallet}) => {
                   </View>
                   <TouchableOpacity
                     onPress={() => onSelectWallet(wallet)}
+                    disabled={sendTokenInfo.isLoading}
                     style={[t.flexRow, t.itemsCenter, t.justifyCenter, t.mT2]}>
                     {isSelected && (
                       <View style={[t.w4, t.h4]}>

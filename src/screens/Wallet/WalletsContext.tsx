@@ -54,7 +54,6 @@ interface WalletsConnect {
   onSelectWallet: (wallet: Wallet) => void;
   onShowSeed: (walletId: string | null) => void;
   onChangeFarcasterSearch: (value: string) => void;
-  onSelectFarcaster: (value: User | null) => void;
   scrollToEnd: (timeout?: number) => void;
 }
 
@@ -73,7 +72,6 @@ export const WalletsContext = createContext<WalletsConnect>({
   onShowSeed: () => {},
   scrollToEnd: () => {},
   onChangeFarcasterSearch: () => {},
-  onSelectFarcaster: () => {},
 });
 
 export const useWallets = () => {
@@ -100,7 +98,6 @@ export const WalletsProvider = (props: {
   const [farcasters, setFarcasters] = useState<User[]>([]);
   const [searchedFarcasters, setSearchedFarcasters] = useState<User[]>([]);
   const [isSearchingFarcasters, setIsSearchingFarcasters] = useState(false);
-  const [selectedFacarster, setSelectedFarcaster] = useState<User | null>();
   const [openVerify, setOpenVerify] = useState(false);
   const [listRef, setListRef] = useState<any>();
   const [cardRef, setCardRef] = useState<any>();
@@ -110,6 +107,7 @@ export const WalletsProvider = (props: {
     'wallet' | 'send' | 'receive' | 'farcaster'
   >('wallet');
 
+  const farcaster = useMemo(() => sendTokenInfo.farcaster, [sendTokenInfo]);
   const debouncedFarcasterSearch = useDebounce(farcasterSearch, 500);
   const amountUSD = useMemo(
     () =>
@@ -144,10 +142,6 @@ export const WalletsProvider = (props: {
 
   const onOpenSelectScreen = () => {
     navigation.navigate('SelectToken');
-  };
-
-  const onSelectFarcaster = (value: User | null) => {
-    setSelectedFarcaster(value);
   };
 
   const onSendToken = () => {
@@ -202,6 +196,7 @@ export const WalletsProvider = (props: {
     dispatch(
       updateSendTokenInfo({
         token: sendTokenInfo.token,
+        farcaster: undefined,
         transaction: undefined,
         toAccount: undefined,
         isSentSuccessFully: false,
@@ -237,7 +232,7 @@ export const WalletsProvider = (props: {
   const onSendFarcasterRequest = async () => {
     if (
       !amountUSD ||
-      !selectedFacarster ||
+      !farcaster ||
       !wallet?.farcaster?.user ||
       !selectedToken
     ) {
@@ -253,12 +248,12 @@ export const WalletsProvider = (props: {
           network === 'testnet'
             ? `(${showNetworkName(selectedToken.network, network)})`
             : ''
-        } from @${selectedFacarster.username} #paycaster by #backpack`,
+        } from @${farcaster.username} #paycaster by #backpack`,
       );
 
       Toast.show({
         type: 'success',
-        text1: `Sent request to @${selectedFacarster.username} successfully.`,
+        text1: `Sent request to @${farcaster.username} successfully.`,
       });
     } catch (err: any) {
       Toast.show({
@@ -325,6 +320,7 @@ export const WalletsProvider = (props: {
       dispatch(
         updateSendTokenInfo({
           token: sendTokenInfo.token,
+          farcaster: undefined,
           transaction: undefined,
           toAccount: undefined,
           amount: undefined,
@@ -344,7 +340,6 @@ export const WalletsProvider = (props: {
   useEffect(() => {
     if (cardType !== 'farcaster') {
       setFarcasterSearch('');
-      setSelectedFarcaster(undefined);
     }
   }, [cardType]);
 
@@ -360,7 +355,6 @@ export const WalletsProvider = (props: {
 
   useEffect(() => {
     setFarcasterSearch('');
-    setSelectedFarcaster(undefined);
   }, [selectedToken]);
 
   useEffect(() => {
@@ -378,7 +372,6 @@ export const WalletsProvider = (props: {
         onSelectWallet,
         scrollToEnd,
         onChangeFarcasterSearch,
-        onSelectFarcaster,
         listRef,
         isChangedSelectedWallet,
         showSeed,
@@ -386,7 +379,6 @@ export const WalletsProvider = (props: {
         farcasterSearch,
         farcasters: searchedFarcasters,
         isSearchingFarcasters,
-        selectedFacarster,
       }}>
       {props.children}
       <Animated.View
@@ -509,7 +501,7 @@ export const WalletsProvider = (props: {
                     !wallet ||
                     sendTokenInfo.isLoading ||
                     !amountUSD ||
-                    !selectedFacarster
+                    !farcaster
                   }
                 />
               </View>

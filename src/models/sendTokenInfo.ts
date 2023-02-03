@@ -1,3 +1,4 @@
+import {User} from '@standard-crypto/farcaster-js';
 import {Token} from './coinTypes';
 
 export interface SendTokenInfo {
@@ -13,5 +14,6 @@ export interface SendTokenInfo {
   status?: string;
   date?: Date;
   isSendMax?: boolean;
+  farcaster?: User;
   isSentSuccessFully?: boolean;
 }

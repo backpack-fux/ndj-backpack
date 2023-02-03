@@ -125,6 +125,7 @@ export function transferTokenSuccessReducer(state: CoinsReducerType) {
     ...state,
     sendTokenInfo: {
       ...state.sendTokenInfo,
+      farcaster: undefined,
       isSentSuccessFully: true,
       isLoading: false,
       fromAccount: undefined,

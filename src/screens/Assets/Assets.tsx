@@ -23,6 +23,7 @@ import {BaseScreen, Button, Card, Paragraph} from '@app/components';
 import {
   accountCoinsSelector,
   isLoadingTokensSelector,
+  sendTokenInfoSelector,
   tokenSelector,
   tokensSelector,
 } from '@app/store/coins/coinsSelector';
@@ -39,6 +40,7 @@ export const AssetsScreen = () => {
   const navigation = useNavigation<NavigationProp<StackParams>>();
 
   const isLoading = useSelector(isLoadingTokensSelector);
+  const sendTokenInfo = useSelector(sendTokenInfoSelector);
   const tokens = useSelector(tokensSelector);
   const network = useSelector(networkSelector);
   const selectedCoin = useSelector(tokenSelector);
@@ -157,6 +159,7 @@ export const AssetsScreen = () => {
                 selectedCoin.network === coin.network;
               return (
                 <TouchableOpacity
+                  disabled={sendTokenInfo.isLoading}
                   onPress={() => onSelectToken(coin)}
                   key={coin.id + coin.network}
                   style={[

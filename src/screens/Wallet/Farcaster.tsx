@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
-  Image,
   TextInput,
   TouchableOpacity,
   View,
@@ -45,13 +44,8 @@ export const Farcaster = () => {
   const [focusAmount, setFocusAmount] = useState(false);
   const [focusFarcaster, setFocusFarcaster] = useState(false);
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
-  const {
-    farcasterSearch,
-    selectedFacarster,
-    onChangeFarcasterSearch,
-    scrollToEnd,
-    onSelectFarcaster,
-  } = useWallets();
+  const farcaster = useMemo(() => sendTokenInfo.farcaster, [sendTokenInfo]);
+  const {farcasterSearch, onChangeFarcasterSearch, scrollToEnd} = useWallets();
   const isNotAllowedToken = useMemo(
     () =>
       selectedToken &&
@@ -82,7 +76,7 @@ export const Farcaster = () => {
   };
 
   const onFocusFarcasterUserName = () => {
-    onChangeFarcasterSearch(selectedFacarster?.username || '');
+    onChangeFarcasterSearch(farcaster?.username || '');
     setFocusFarcaster(true);
   };
 
@@ -117,10 +111,8 @@ export const Farcaster = () => {
 
   const getFarcasterAddress = useCallback(async () => {
     let toAccount;
-    if (selectedFacarster && selectedWallet?.farcaster) {
-      toAccount = await selectedWallet?.farcaster?.getAddressForUser(
-        selectedFacarster,
-      );
+    if (farcaster && selectedWallet?.farcaster) {
+      toAccount = await selectedWallet?.farcaster?.getAddressForUser(farcaster);
     }
 
     dispatch(
@@ -132,7 +124,7 @@ export const Farcaster = () => {
         isSendMax: false,
       }),
     );
-  }, [selectedFacarster]);
+  }, [farcaster]);
 
   const sendGetTransactionRequest = () => {
     if (
@@ -164,11 +156,11 @@ export const Farcaster = () => {
   }, [sendTokenInfo, selectedToken]);
 
   useEffect(() => {
-    if (selectedFacarster) {
+    if (farcaster) {
       setFocusFarcaster(false);
       onChangeFarcasterSearch('');
     }
-  }, [farcasterRef, selectedFacarster]);
+  }, [farcasterRef, farcaster]);
 
   useEffect(() => {
     if (isNotAllowedToken) {
@@ -178,12 +170,6 @@ export const Farcaster = () => {
       });
     }
   }, [isNotAllowedToken]);
-
-  useEffect(() => {
-    if (sendTokenInfo.isSentSuccessFully && selectedFacarster) {
-      onSelectFarcaster(null);
-    }
-  }, [sendTokenInfo, selectedFacarster]);
 
   return (
     <View>
@@ -213,7 +199,7 @@ export const Farcaster = () => {
         <View>
           <Paragraph text="->" />
         </View>
-        <FarcasterIcon uri={selectedFacarster?.pfp?.url} size={45} />
+        <FarcasterIcon uri={farcaster?.pfp?.url} size={45} />
       </View>
       <View style={[t.flex, t.flexRow, t.mT3]}>
         <View style={[t.bgGray300, t.roundedLg, t.flex1]}>
@@ -277,11 +263,7 @@ export const Farcaster = () => {
               ]}>
               <Paragraph text="@" size={14} marginRight={2} />
               <Paragraph
-                text={
-                  selectedFacarster
-                    ? selectedFacarster.username
-                    : 'farcaster username'
-                }
+                text={farcaster ? farcaster.username : 'farcaster username'}
                 size={14}
               />
             </TouchableOpacity>
