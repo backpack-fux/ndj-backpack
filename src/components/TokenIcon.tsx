@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, View} from 'react-native';
-import SvgUri from 'react-native-svg-uri';
+import {SvgUri} from 'react-native-svg';
 import {t} from 'react-native-tailwindcss';
 
 export const TokenIcon = ({
@@ -19,7 +19,7 @@ export const TokenIcon = ({
       style={[t.roundedFull, t.bgWhite, t.border4, t.borderWhite, t.shadow]}>
       <View style={[t.overflowHidden, t.roundedFull, {width, height}]}>
         {isSvg ? (
-          <SvgUri source={{uri}} width={width} height={height} />
+          <SvgUri uri={uri as string} width={width} height={height} />
         ) : (
           <Image source={{uri}} style={{width, height}} />
         )}

@@ -32,6 +32,7 @@ import {Send} from './Send';
 import {Receive} from './Receive';
 import {Farcaster} from './Farcaster';
 import {useWallets} from './WalletsContext';
+import {FarcasterIcon} from './FarcasterIcon';
 
 const logo = require('@app/assets/images/logo.png');
 const toggle = require('@app/assets/images/toggle.png');
@@ -466,24 +467,7 @@ export const WalletItem = ({wallet}: {wallet: Wallet}) => {
                       : {},
                     {height: farcasterItemHeight},
                   ]}>
-                  <View
-                    style={[
-                      t.w8,
-                      t.h8,
-                      t.bgGray300,
-                      t.roundedFull,
-                      t.overflowHidden,
-                    ]}>
-                    {item?.pfp?.url && (
-                      <Image
-                        source={{
-                          uri: item?.pfp?.url || '',
-                        }}
-                        style={[t.w8, t.h8]}
-                        resizeMode="cover"
-                      />
-                    )}
-                  </View>
+                  <FarcasterIcon uri={item?.pfp?.url} size={30} />
                   <Paragraph marginLeft={10} text={`@${item.username}`} />
                 </TouchableOpacity>
               ))}

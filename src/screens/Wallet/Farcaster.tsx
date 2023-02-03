@@ -30,6 +30,7 @@ import {
 import {formatCurrency} from '@app/utils';
 import {NetworkName} from '@app/constants';
 import {useWallets} from './WalletsContext';
+import {FarcasterIcon} from './FarcasterIcon';
 
 const fontSize = 14;
 const inputHeight = 25;
@@ -44,9 +45,6 @@ export const Farcaster = () => {
   const [focusAmount, setFocusAmount] = useState(false);
   const [focusFarcaster, setFocusFarcaster] = useState(false);
   const sendTokenInfo = useSelector(sendTokenInfoSelector);
-  const wallet = selectedWallet?.wallets.find(
-    e => e.network === selectedToken?.network,
-  );
   const {
     farcasterSearch,
     selectedFacarster,
@@ -208,29 +206,14 @@ export const Farcaster = () => {
         </View>
       </View>
       <View style={[t.flexRow, t.justifyAround, t.itemsCenter]}>
-        <View
-          style={[t.w12, t.h12, t.bgGray300, t.roundedFull, t.overflowHidden]}>
-          {selectedWallet?.farcaster?.user?.pfp?.url && (
-            <Image
-              source={{uri: selectedWallet?.farcaster?.user?.pfp?.url || ''}}
-              style={[t.w12, t.h12]}
-              resizeMode="cover"
-            />
-          )}
-        </View>
+        <FarcasterIcon
+          uri={selectedWallet?.farcaster?.user?.pfp?.url}
+          size={45}
+        />
         <View>
           <Paragraph text="->" />
         </View>
-        <View
-          style={[t.w12, t.h12, t.bgGray300, t.roundedFull, t.overflowHidden]}>
-          {!!selectedFacarster?.pfp?.url && (
-            <Image
-              source={{uri: selectedFacarster?.pfp?.url || ''}}
-              style={[t.w12, t.h12]}
-              resizeMode="cover"
-            />
-          )}
-        </View>
+        <FarcasterIcon uri={selectedFacarster?.pfp?.url} size={45} />
       </View>
       <View style={[t.flex, t.flexRow, t.mT3]}>
         <View style={[t.bgGray300, t.roundedLg, t.flex1]}>
