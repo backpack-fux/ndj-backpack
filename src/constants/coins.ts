@@ -1,5 +1,5 @@
-import { BaseCoin } from '@app/models/coinTypes';
-import { NetworkName } from './enums';
+import {BaseCoin} from '@app/models/coinTypes';
+import {NetworkName} from './enums';
 
 export const DEFAULT_COINS: BaseCoin[] = [
   {

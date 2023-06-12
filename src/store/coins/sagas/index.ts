@@ -69,7 +69,7 @@ async function getCoinGeckoCoins() {
   return baseCoins;
 }
 
-function* getBaseCoins() {
+function* getBaseCoins({payload}: Action<boolean>) {
   try {
     yield delay(1000);
     const state: RootState = yield select();
@@ -78,7 +78,7 @@ function* getBaseCoins() {
 
     const now = moment();
 
-    if (baseCoinExpiresAt && baseCoinExpiresAt.isAfter(now)) {
+    if (!payload && baseCoinExpiresAt && baseCoinExpiresAt.isAfter(now)) {
       yield put(getBaseCoinsSuccess(false));
       return;
     }

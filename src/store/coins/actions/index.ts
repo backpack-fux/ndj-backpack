@@ -142,9 +142,10 @@ export const setBaseCoinsRequest = (payload: BaseCoin[]) => {
   };
 };
 
-export const getBaseCoinsRequest = () => {
+export const getBaseCoinsRequest = (payload = false) => {
   return {
     type: ActionType.GET_BASE_COINS,
+    payload,
   };
 };
 

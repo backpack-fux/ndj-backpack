@@ -13,6 +13,7 @@ import {WalletService} from '@app/services';
 import {wyreService} from '@app/services/wyreService';
 import Toast from 'react-native-toast-message';
 import {Farcaster} from '@app/services/facasterService';
+import {getBaseCoinsRequest} from '@app/store/coins/actions';
 
 function* reload() {
   try {
@@ -28,6 +29,7 @@ function* reload() {
 
     const accounts = state.wallets.wallets;
     const wallets: Wallet[] = [...accounts];
+    let isRefreshCoins = false;
     for (const account of wallets) {
       const walletItems: WalletItem[] = [];
       for (const wallet of account.wallets) {
@@ -61,6 +63,8 @@ function* reload() {
         );
 
         walletItems.push(avaxWallet[0]);
+
+        isRefreshCoins = true;
       }
 
       const ethWallet = walletItems.find(
@@ -76,6 +80,10 @@ function* reload() {
       }
 
       account.wallets = walletItems;
+    }
+
+    if (isRefreshCoins) {
+      yield put(getBaseCoinsRequest(true));
     }
 
     yield put(setWallets(wallets));
