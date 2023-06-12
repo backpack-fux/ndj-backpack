@@ -54,6 +54,15 @@ function* reload() {
         walletItems.push(item);
       }
 
+      if (!walletItems.find(item => item.network === NetworkName.avalanche)) {
+        const avaxWallet: WalletItem[] = yield WalletService.createWallets(
+          account.mnemonic,
+          NetworkName.avalanche,
+        );
+
+        walletItems.push(avaxWallet[0]);
+      }
+
       const ethWallet = walletItems.find(
         item => item.network === NetworkName.ethereum,
       );

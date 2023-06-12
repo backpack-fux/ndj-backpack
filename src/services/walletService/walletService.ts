@@ -88,7 +88,6 @@ abstract class WalletService {
     const wallets: WalletItem[] = [];
 
     for (const service of this.serviceArray) {
-      console.log('==================', service.network);
       const keys = await service.generateKeys(mnemonic);
       wallets.push(
         new WalletItem(
