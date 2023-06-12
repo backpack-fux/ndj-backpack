@@ -20,3 +20,8 @@ export const BNBAPI = {
   testnet: 'https://testnet-dex.binance.org/',
   mainnet: 'https://dex.binance.org/',
 };
+
+export const SNOWTRACEAPI = {
+  testnet: 'https://api-testnet.snowtrace.io/api',
+  mainnet: 'https://api.snowtrace.io/api',
+};

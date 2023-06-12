@@ -1,5 +1,5 @@
-import {BaseCoin} from '@app/models/coinTypes';
-import {NetworkName} from './enums';
+import { BaseCoin } from '@app/models/coinTypes';
+import { NetworkName } from './enums';
 
 export const DEFAULT_COINS: BaseCoin[] = [
   {
@@ -56,6 +56,14 @@ export const DEFAULT_COINS: BaseCoin[] = [
     name: 'Solana',
     contractAddress: NetworkName.solana,
     network: NetworkName.solana,
+    enabled: false,
+  },
+  {
+    id: 'avalanche-2',
+    symbol: 'avax',
+    name: 'Avax',
+    contractAddress: NetworkName.avalanche,
+    network: NetworkName.avalanche,
     enabled: false,
   },
 ];

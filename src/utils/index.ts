@@ -165,6 +165,9 @@ export const showNetworkName = (
     case NetworkName.polygon:
       name = 'Mumbai';
       break;
+    case NetworkName.avalanche:
+      name = 'Fuji';
+      break;
     case NetworkName.binanceSmartChain:
       name = 'BSC Testnet';
       break;

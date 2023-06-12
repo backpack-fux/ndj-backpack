@@ -36,4 +36,7 @@ export const testnetCoins: any = {
   },
   [NetworkName.zilliqa]: {},
   [NetworkName.binance]: {},
+  [NetworkName.avalanche]: {
+    USDC: '0x5425890298aed601595a70ab815c96711a31bc65',
+  },
 };

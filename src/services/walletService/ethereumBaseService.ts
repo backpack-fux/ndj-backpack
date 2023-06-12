@@ -71,6 +71,7 @@ export default class EthereumBaseService extends WalletService {
     if (address) {
       const contract = new this.web3.eth.Contract(ERC20_ABI, address);
       balance = await contract.methods.balanceOf(account).call();
+
       try {
         const decimalsString = await contract.methods.decimals().call();
         if (decimalsString) {

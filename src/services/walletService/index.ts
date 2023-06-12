@@ -5,6 +5,7 @@ import SolanaService from './solanaService';
 import ZilliqaService from './zilliqaService';
 import SmartChainService from './smartChainService';
 import WalletService from './walletService';
+import AvalancheService from './avalancheService';
 
 export {WalletService};
 
@@ -14,3 +15,4 @@ new ZilliqaService();
 new SolanaService();
 new PolygonService();
 new SmartChainService();
+new AvalancheService();

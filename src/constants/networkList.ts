@@ -7,6 +7,7 @@ import EthereumIcon from '@app/assets/images/logos/ethereum.svg';
 import PolygonIcon from '@app/assets/images/logos/polygon.svg';
 import SolanaIcon from '@app/assets/images/logos/solana.svg';
 import ZilliqaIcon from '@app/assets/images/logos/zilliqa.svg';
+import AvalancheIcon from '@app/assets/images/logos/avalanche.svg';
 
 export const networkName = {
   [NetworkName.ethereum]: 'Ethereum',
@@ -15,6 +16,7 @@ export const networkName = {
   [NetworkName.binanceSmartChain]: 'Smart Chain',
   [NetworkName.solana]: 'Solana',
   [NetworkName.zilliqa]: 'Zilliqa',
+  [NetworkName.avalanche]: 'Avalanche',
 };
 
 export const networkList: Network[] = [
@@ -37,6 +39,16 @@ export const networkList: Network[] = [
     chain: 'eip155',
     explorer: 'https://polygonscan.com/address',
     layer: 2,
+  },
+  {
+    name: 'Avalanche',
+    network: NetworkName.avalanche,
+    chainId: {mainnet: 43114, testnet: 43113},
+    currency: 'AVAX',
+    Icon: AvalancheIcon,
+    chain: 'eip155',
+    explorer: 'https://snowtrace.io/address',
+    layer: 1,
   },
   {
     name: 'BNB',

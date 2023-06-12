@@ -5,4 +5,5 @@ export enum NetworkName {
   zilliqa = 'zilliqa',
   solana = 'solana',
   polygon = 'polygon-pos',
+  avalanche = 'avalanche',
 }
