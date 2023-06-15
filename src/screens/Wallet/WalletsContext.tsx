@@ -346,7 +346,10 @@ export const WalletsProvider = (props: {
   useEffect(() => {
     const tokens = (wallet?.id && allTokens[wallet?.id]) || [];
 
-    const newPriceToken = tokens.find(item => item.id === selectedToken?.id);
+    const newPriceToken = tokens.find(
+      item =>
+        item.id === selectedToken?.id && item.network === selectedToken.network,
+    );
 
     if (newPriceToken && newPriceToken.price !== selectedToken?.price) {
       dispatch(setToken(newPriceToken));
