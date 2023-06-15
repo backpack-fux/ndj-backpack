@@ -75,7 +75,7 @@
     "query-string": "^7.1.1",
     "querystring-es3": "^0.2.1",
     "react": "18.1.0",
-    "react-native": "0.70.6",
+    "react-native": "0.70.9",
     "react-native-barcode-mask": "^1.2.4",
     "react-native-bip39": "^2.3.0",
     "react-native-camera": "^4.2.1",
