@@ -19,6 +19,22 @@ export const DEFAULT_COINS: BaseCoin[] = [
     enabled: true,
   },
   {
+    id: 'usd-coin',
+    name: 'USD Coin',
+    symbol: 'usdc',
+    contractAddress: '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359',
+    network: NetworkName.polygon,
+    enabled: false,
+  },
+  {
+    id: 'usd-coin',
+    name: 'USD Coin (PoS)',
+    symbol: 'usdc.e',
+    contractAddress: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+    network: NetworkName.polygon,
+    enabled: false,
+  },
+  {
     id: 'matic-network',
     name: 'Polygon',
     symbol: 'matic',

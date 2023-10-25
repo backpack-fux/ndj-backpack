@@ -236,6 +236,12 @@ function* getTokens({payload}: Action<Wallet>) {
     const newCoins: BaseCoin[] = [];
     for (const coin of walletCoins) {
       const detail = coinDetails.find(c => c.id === coin.id);
+      if (
+        coin.contractAddress === '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
+      ) {
+        coin.name = 'USD Coin (PoS)';
+        coin.symbol = 'usdc.e';
+      }
 
       newCoins.push({
         ...coin,
@@ -281,15 +287,17 @@ function* searchCoins({payload}: Action<string>) {
       );
     }
 
-    const searchedDefaultCoins = DEFAULT_COINS.filter(coin =>
-      coin.name.toLowerCase().includes(searchKey),
+    const searchedDefaultCoins = DEFAULT_COINS.filter(
+      coin =>
+        coin.name.toLowerCase().includes(searchKey) ||
+        coin.symbol.toLowerCase().includes(searchKey),
     );
 
     const searchedCoins = closeetBaseCoins(baseCoins, searchKey)
-      .filter(c => !searchedDefaultCoins.map(d => d.id).includes(c.id))
       .filter(c =>
         networkList.map(network => network.network).includes(c.network),
       )
+      .filter(c => !searchedDefaultCoins.map(d => d.id).includes(c.id))
       .filter(c => {
         if (!isTest) {
           return true;
@@ -304,6 +312,7 @@ function* searchCoins({payload}: Action<string>) {
         return Boolean(testCoins[c.symbol.toUpperCase()]);
       })
       .slice(0, 100);
+
     let result = searchedDefaultCoins.concat(searchedCoins);
 
     if (!result.length) {
