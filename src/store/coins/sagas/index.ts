@@ -236,13 +236,6 @@ function* getTokens({payload}: Action<Wallet>) {
     const newCoins: BaseCoin[] = [];
     for (const coin of walletCoins) {
       const detail = coinDetails.find(c => c.id === coin.id);
-      if (
-        coin.contractAddress === '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
-      ) {
-        coin.name = 'USD Coin (PoS)';
-        coin.symbol = 'usdc.e';
-      }
-
       newCoins.push({
         ...coin,
         image: detail?.image || coin.image,
