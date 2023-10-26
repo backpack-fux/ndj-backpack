@@ -249,7 +249,7 @@ export const WalletConnectProvider = (props: {
   ) => {
     try {
       const {id, params} = proposal;
-      const {requiredNamespaces, relays} = params;
+      const {requiredNamespaces, optionalNamespaces, relays} = params;
 
       const namespaces: SessionTypes.Namespaces = {};
       Object.keys(requiredNamespaces).forEach(key => {
@@ -257,6 +257,14 @@ export const WalletConnectProvider = (props: {
           accounts: accounts.filter(account => account.startsWith(key)),
           methods: requiredNamespaces[key].methods,
           events: requiredNamespaces[key].events,
+        };
+      });
+
+      Object.keys(optionalNamespaces).forEach(key => {
+        namespaces[key] = {
+          accounts: accounts.filter(account => account.startsWith(key)),
+          methods: optionalNamespaces[key].methods,
+          events: optionalNamespaces[key].events,
         };
       });
 

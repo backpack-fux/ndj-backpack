@@ -1,8 +1,10 @@
 import {networkList, networkName, NetworkName} from '@app/constants';
 import {BaseCoin, News, Wallet} from '@app/models';
 import numeral from 'numeral';
+import * as _ from 'lodash';
 import {currencies} from '@app/constants/currencies';
 import * as queryString from 'query-string';
+import {ProposalTypes} from '@walletconnect/types';
 
 export * from './token';
 
@@ -285,3 +287,31 @@ export const getDeepLink = (url: string) => {
 
   return decodeURIComponent(urlParam);
 };
+
+export function getChains(
+  namespaces: ProposalTypes.RequiredNamespaces,
+  network: 'testnet' | 'mainnet',
+) {
+  return Object.values(namespaces)
+    .reduce((chains: string[], values: any) => {
+      return [...chains, ...values.chains];
+    }, [])
+    .map(c => ({
+      network: getNetworkByChain(c, network),
+      chain: c,
+    }))
+    .filter(c => c.network);
+}
+
+export function getMethods(namespaces: ProposalTypes.RequiredNamespaces) {
+  return Object.values(namespaces).reduce((methods: string[], values: any) => {
+    return _.uniq([...methods, ...values.methods]);
+  }, []);
+}
+
+export function getChainId(account: string) {
+  const [namespace, reference] = account.split(':');
+  const chainId = `${namespace}:${reference}`;
+
+  return chainId;
+}

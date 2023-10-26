@@ -16,7 +16,7 @@ import {
   networkSelector,
   walletsSelector,
 } from '@app/store/wallets/walletsSelector';
-import {getNetworkByChain, showNetworkName} from '@app/utils';
+import {getChainId, getChains, getMethods, showNetworkName} from '@app/utils';
 import {networkList, NetworkName, networkName} from '@app/constants';
 
 const shadow = {
@@ -51,23 +51,37 @@ export const SessionApproval = () => {
   };
 
   const navigation = useNavigation();
-  const {proposal} = route.params;
-  const {params} = proposal;
-  const {proposer, requiredNamespaces} = params;
+  const proposal = useMemo(() => route.params.proposal, [route]);
+  const {proposer, requiredNamespaces, optionalNamespaces} = useMemo(
+    () => proposal.params,
+    [proposal],
+  );
+  const metadata = useMemo(() => proposer.metadata, [proposer]);
 
-  const {metadata} = proposer;
-  let methods: string[] = [];
-
-  const availableChains = Object.values(requiredNamespaces)
-    .reduce((chains: string[], values: any) => {
-      methods = _.uniq([...methods, ...values.methods]);
-      return [...chains, ...values.chains];
-    }, [])
-    .map(c => ({
-      network: getNetworkByChain(c, network),
-      chain: c,
-    }))
-    .filter(c => c.network);
+  const requiredChains = useMemo(
+    () => getChains(requiredNamespaces, network),
+    [requiredNamespaces, network],
+  );
+  const requiredMethods = useMemo(
+    () => getMethods(requiredNamespaces),
+    [requiredNamespaces],
+  );
+  const optionalChains = useMemo(
+    () => getChains(optionalNamespaces, network),
+    [optionalNamespaces, network],
+  );
+  const optionalMethods = useMemo(
+    () => getMethods(optionalNamespaces),
+    [optionalNamespaces],
+  );
+  const methods = useMemo(
+    () => _.uniq([...requiredMethods, optionalMethods]),
+    [requiredMethods, optionalMethods],
+  );
+  const availableChains = useMemo(
+    () => _.uniqBy([...requiredChains, ...optionalChains], 'chain'),
+    [requiredChains, optionalChains],
+  );
 
   const availableNetworks = useMemo(
     () => availableChains.map(c => c.network) as NetworkName[],
@@ -121,19 +135,20 @@ export const SessionApproval = () => {
   );
 
   const isDisabled = useMemo(() => {
-    const alChains = Object.values(requiredNamespaces).reduce(
+    const allChains = Object.values(requiredNamespaces).reduce(
       (c: string[], item: any) => {
         return [...c, ...item.chains];
       },
       [],
     );
 
-    const unselectedChians = alChains.filter(
+    const unselectedChains = allChains.filter(
       chain =>
-        selectedAddresses.filter(address => address.startsWith(chain))
+        selectedAddresses.filter(address => getChainId(address) === chain)
           .length === 0,
     );
-    return unselectedChians.length > 0;
+
+    return unselectedChains.length > 0;
   }, [selectedAddresses, requiredNamespaces]);
 
   const onConnect = async () => {
