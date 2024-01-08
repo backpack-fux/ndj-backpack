@@ -12,7 +12,7 @@ import BigNumber from 'bignumber.js';
 const provider =
   'https://eth-mainnet.g.alchemy.com/v2/kBcC8Z-BvucnXj214rdY6L8FCzBZf_Y0';
 const testnetProvider =
-  'https://eth-goerli.g.alchemy.com/v2/CLAjd7FD3JAHPZwBfVDHrGc6lF_czNWu';
+  'https://eth-sepolia.g.alchemy.com/v2/d56i3QLeqObcq0XgjAMhye738nzuI3Bz';
 
 const etherscanApiKey = 'I39JN6BK9Q2FDWZIG3U5EDF2XDI12X97M4';
 
@@ -25,7 +25,7 @@ export default class EthereumService extends EthereumBaseService {
 
   switchNetwork(chain: 'mainnet' | 'testnet') {
     this.etherScanApi =
-      chain === 'mainnet' ? ETHERSCAN.mainnet : ETHERSCAN.goerli;
+      chain === 'mainnet' ? ETHERSCAN.mainnet : ETHERSCAN.sepolia;
     const web3Provider = chain === 'mainnet' ? provider : testnetProvider;
 
     this.chain = chain;
@@ -90,7 +90,7 @@ export default class EthereumService extends EthereumBaseService {
         type: item.from.toLowerCase() === address.toLowerCase() ? 'out' : 'in',
         status: item.status,
         url: `https://${
-          this.chain === 'testnet' ? 'kovan.' : ''
+          this.chain === 'testnet' ? 'sepolia.' : ''
         }etherscan.io/tx/${item.hash}`,
       });
     });

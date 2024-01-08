@@ -12,7 +12,6 @@ import {RotateMenu} from '@app/components';
 import {colors} from '@app/assets/colors.config';
 import {StackParams} from '@app/models';
 import {SettingsScreen} from '@app/screens/Settings';
-import {PayScreen} from '@app/screens/Pay';
 import {useKeychain} from '@app/context/keychain';
 
 import AssetsIcon from '@app/assets/icons/assets.svg';
@@ -57,18 +56,6 @@ export const MainStackNavigator = () => {
           component={DappStackNavigator}
         />
         <Stack.Screen
-          name="PayStack"
-          options={{
-            animation: 'fade',
-            ...stackOptions,
-            headerBackVisible: false,
-            title: 'Backpack Pay',
-            headerTitle: 'Backpack Pay',
-            gestureEnabled: false,
-          }}
-          component={PayScreen}
-        />
-        <Stack.Screen
           name="Settings"
           options={{
             animation: 'fade',
@@ -89,7 +76,6 @@ export const MainStackNavigator = () => {
             <AssetsIcon id="AssetStack" title="Assets" />,
             <WalletsIcon id="WalletStack" title="Wallets" />,
             <DappsIcon id="DappStack" title="Apps" />,
-            <DappsIcon id="PayStack" title="Pay" />,
           ]}
           onSelect={onSelectMenu}
           defaultIconColor={'gray'}

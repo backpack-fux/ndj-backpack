@@ -162,7 +162,7 @@ export const showNetworkName = (
 
   switch (network) {
     case NetworkName.ethereum:
-      name = 'Goerli';
+      name = 'Sepolia';
       break;
     case NetworkName.polygon:
       name = 'Mumbai';

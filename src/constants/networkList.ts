@@ -23,7 +23,7 @@ export const networkList: Network[] = [
   {
     name: 'Ethereum',
     network: NetworkName.ethereum,
-    chainId: {mainnet: 1, testnet: 5},
+    chainId: {mainnet: 1, testnet: 11155111},
     chain: 'eip155',
     currency: 'ETH',
     Icon: EthereumIcon,

@@ -4,6 +4,7 @@ export const ETHERSCAN = {
   rinkeby: 'https://api-rinkeby.etherscan.io/api',
   kovan: 'https://api-kovan.etherscan.io/api',
   goerli: 'https://api-goerli.etherscan.io/api',
+  sepolia: 'https://api-sepolia.etherscan.io/api',
 };
 
 export const POLYGONSCAN = {

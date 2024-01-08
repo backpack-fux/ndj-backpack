@@ -2,13 +2,12 @@ import {NetworkName} from './enums';
 
 export const testnetCoins: any = {
   [NetworkName.ethereum]: {
-    // goerli
-    USDT: '0xe802376580c10fe23f027e1e19ed9d54d4c9311e',
-    USDC: '0x07865c6e87b9f70255377e024ace6630c1eaa37f', //
-    DAI: '0x11fe4b6ae13d2a6055c8d9cf65c55bac32b5d844', //
-    WETH: '0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6', //
-    WBTC: '0xc04b0d3107736c32e19f1c62b2af67be61d63a05',
-    LINK: '0x326c977e6efc84e512bb9c30f76e30c160ed06fb', //
+    // Sepolia
+    USDT: '0x7169d38820dfd117c3fa1f22a697dba58d90ba06',
+    USDC: '0x8267cF9254734C6Eb452a7bb9AAF97B392258b21',
+    DAI: '0x3e622317f8c93f7328350cf0b56d9ed4c620c5d6',
+    WETH: '0xfff9976782d46cc05630d1f6ebab18b2324d6b14',
+    LINK: '0x779877A7B0D9E8603169DdbD7836e478b4624789',
   },
   [NetworkName.polygon]: {
     // mumbai
