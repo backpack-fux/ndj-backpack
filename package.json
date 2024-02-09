@@ -1,5 +1,5 @@
 {
-  "name": "Backpack",
+  "name": "backpack",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "patch-package",
-    "postinstall": "./node_modules/.bin/rn-nodeify --install 'crypto,buffer,react-native-randombytes,vm,stream,http,https,os,url,net,fs' --hack && yarn wallet-thread:ios && yarn sqlite-thread:ios && yarn wallet-thread:android && yarn sqlite-thread:android",
+    "postinstall": "cd ios/Pods/RCT-Folly/folly/portability/ && patch --forward -p1 < ../../../../../patches/time_h.patch || true && cd ../../../../../ && ./node_modules/.bin/rn-nodeify --install 'crypto,buffer,react-native-randombytes,vm,stream,http,https,os,url,net,fs' --hack && yarn wallet-thread:ios && yarn sqlite-thread:ios && yarn wallet-thread:android && yarn sqlite-thread:android && cd ios && pod install",
     "wallet-thread:ios": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./ios --entry-file wallet.thread.js --platform ios --bundle-output ./ios/wallet.thread.jsbundle",
     "wallet-thread:android": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./android/app/src/main/res/ --entry-file wallet.thread.js --platform android --bundle-output ./android/app/src/main/assets/threads/wallet.thread.bundle",
     "sqlite-thread:ios": "node node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./ios --entry-file sqlite.thread.js --platform ios --bundle-output ./ios/sqlite.thread.jsbundle",

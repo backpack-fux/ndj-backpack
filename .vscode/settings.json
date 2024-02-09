@@ -26,5 +26,6 @@
     },
     "cSpell.words": [
         "tailwindcss"
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
 }
