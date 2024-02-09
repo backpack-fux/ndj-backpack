@@ -1,0 +1,209 @@
+
+Showing Recent Issues
+
+Build target ndjbackpack of project ndjbackpack with configuration Debug
+warning: Run script build phase 'Start Packager' will be run during every build because it does not specify any outputs. To address this warning, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'ndjbackpack' from project 'ndjbackpack')
+warning: Run script build phase 'Bundle React Native code and images' will be run during every build because it does not specify any outputs. To address this warning, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'ndjbackpack' from project 'ndjbackpack')
+
+
+Run script build phase 'Start Packager' will be run during every build because it does not specify any outputs. To address this warning, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase.
+
+Run script build phase 'Bundle React Native code and images' will be run during every build because it does not specify any outputs. To address this warning, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase.
+
+Ld /Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/ndjbackpack.app/ndjbackpack normal (in target 'ndjbackpack' from project 'ndjbackpack')
+    cd /Users/devinelliot/_backpack/ndj-backpack/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios13.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.2.sdk -O0 -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.2.sdk/usr/lib/swift -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/BVLinearGradient -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/CocoaAsyncSocket -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/DoubleConversion -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-Camera -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-FaceID -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-Microphone -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-PhotoLibrary -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-PhotoLibraryAddOnly -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RCT-Folly -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RCTTypeSafety -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNCAsyncStorage -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNCCheckbox -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNCClipboard -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNGestureHandler -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNImageCropPicker -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNKeychain -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNOS -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNPermissions -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNQrGenerator -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNReactNativeHapticFeedback -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNReanimated -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNSVG -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNScreens -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNShare -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNThread -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNVectorIcons -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-Codegen -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-Core -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-CoreModules -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTAnimation -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTBlob -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTImage -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTLinking -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTNetwork -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTSettings -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTText -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTVibration -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-bridging -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-cxxreact -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-jsi -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-jsiexecutor -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-jsinspector -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-logger -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-perflogger -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/ReactCommon -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/SRSRadialGradient -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/TOCropViewController -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Yoga -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/ZXingObjC -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/fmt -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/glog -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-camera -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-cameraroll -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-randombytes -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-safe-area-context -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-sqlite-storage -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-tcp-socket -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-udp -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-view-shot -L/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-webview -F/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos -F/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos -filelist /Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Intermediates.noindex/ndjbackpack.build/Debug-iphoneos/ndjbackpack.build/Objects-normal/arm64/ndjbackpack.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Intermediates.noindex/ndjbackpack.build/Debug-iphoneos/ndjbackpack.build/Objects-normal/arm64/ndjbackpack_lto.o -Xlinker -export_dynamic -Xlinker -no_deduplicate -fobjc-arc -fobjc-link-runtime -ObjC -lBVLinearGradient -lCocoaAsyncSocket -lDoubleConversion -lPermission-Camera -lPermission-FaceID -lPermission-Microphone -lPermission-PhotoLibrary -lPermission-PhotoLibraryAddOnly -lRCT-Folly -lRCTTypeSafety -lRNCAsyncStorage -lRNCCheckbox -lRNCClipboard -lRNGestureHandler -lRNImageCropPicker -lRNKeychain -lRNOS -lRNPermissions -lRNQrGenerator -lRNReactNativeHapticFeedback -lRNReanimated -lRNSVG -lRNScreens -lRNShare -lRNThread -lRNVectorIcons -lReact-Codegen -lReact-Core -lReact-CoreModules -lReact-RCTAnimation -lReact-RCTBlob -lReact-RCTImage -lReact-RCTLinking -lReact-RCTNetwork -lReact-RCTSettings -lReact-RCTText -lReact-RCTVibration -lReact-bridging -lReact-cxxreact -lReact-jsi -lReact-jsiexecutor -lReact-jsinspector -lReact-logger -lReact-perflogger -lReactCommon -lSRSRadialGradient -lTOCropViewController -lYoga -lZXingObjC -lc++ -lc++abi -lfmt -lglog -lreact-native-camera -lreact-native-cameraroll -lreact-native-randombytes -lreact-native-safe-area-context -lreact-native-sqlite-storage -lreact-native-tcp-socket -lreact-native-udp -lreact-native-view-shot -lreact-native-webview -lsqlite3 -framework AVFoundation -framework AudioToolbox -framework CFNetwork -framework CoreGraphics -framework CoreMedia -framework CoreVideo -framework Foundation -framework ImageIO -framework JavaScriptCore -framework MobileCoreServices -framework Photos -framework PhotosUI -framework QuartzCore -framework Security -framework UIKit -weak_framework LinkPresentation -ObjC -lc++ -lPods-ndjbackpack -Xlinker -no_adhoc_codesign -Xlinker -dependency_info -Xlinker /Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Intermediates.noindex/ndjbackpack.build/Debug-iphoneos/ndjbackpack.build/Objects-normal/arm64/ndjbackpack_dependency_info.dat -o /Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/ndjbackpack.app/ndjbackpack
+
+ld: warning: ignoring duplicate libraries: '-lc++'
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/BVLinearGradient' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/CocoaAsyncSocket' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/DoubleConversion' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-Camera' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-FaceID' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-Microphone' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-PhotoLibrary' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-PhotoLibraryAddOnly' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RCT-Folly' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RCTTypeSafety' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNCAsyncStorage' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNCCheckbox' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNCClipboard' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNGestureHandler' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNImageCropPicker' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNKeychain' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNOS' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNPermissions' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNQrGenerator' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNReactNativeHapticFeedback' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNReanimated' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNSVG' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNScreens' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNShare' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNThread' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNVectorIcons' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-Codegen' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-Core' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-CoreModules' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTAnimation' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTBlob' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTImage' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTLinking' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTNetwork' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTSettings' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTText' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTVibration' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-bridging' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-cxxreact' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-jsi' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-jsiexecutor' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-jsinspector' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-logger' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-perflogger' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/ReactCommon' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/SRSRadialGradient' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/TOCropViewController' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Yoga' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/ZXingObjC' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/fmt' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/glog' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-camera' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-cameraroll' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-randombytes' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-safe-area-context' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-sqlite-storage' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-tcp-socket' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-udp' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-view-shot' not found
+ld: warning: search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-webview' not found
+ld: library 'BVLinearGradient' not found
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+
+Ignoring duplicate libraries: '-lc++'
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/BVLinearGradient' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/CocoaAsyncSocket' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/DoubleConversion' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-Camera' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-FaceID' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-Microphone' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-PhotoLibrary' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Permission-PhotoLibraryAddOnly' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RCT-Folly' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RCTTypeSafety' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNCAsyncStorage' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNCCheckbox' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNCClipboard' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNGestureHandler' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNImageCropPicker' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNKeychain' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNOS' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNPermissions' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNQrGenerator' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNReactNativeHapticFeedback' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNReanimated' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNSVG' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNScreens' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNShare' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNThread' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/RNVectorIcons' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-Codegen' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-Core' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-CoreModules' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTAnimation' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTBlob' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTImage' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTLinking' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTNetwork' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTSettings' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTText' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-RCTVibration' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-bridging' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-cxxreact' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-jsi' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-jsiexecutor' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-jsinspector' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-logger' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/React-perflogger' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/ReactCommon' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/SRSRadialGradient' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/TOCropViewController' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/Yoga' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/ZXingObjC' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/fmt' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/glog' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-camera' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-cameraroll' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-randombytes' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-safe-area-context' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-sqlite-storage' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-tcp-socket' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-udp' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-view-shot' not found
+
+Search path '/Users/devinelliot/Library/Developer/Xcode/DerivedData/ndjbackpack-ecwiemmxktgdcsebeidlpsghibtt/Build/Products/Debug-iphoneos/react-native-webview' not found
+
+Library 'BVLinearGradient' not found
+
+Linker command failed with exit code 1 (use -v to see invocation)
+
+
+
+Build failed    2/8/24, 8:06 PM    0.1 seconds

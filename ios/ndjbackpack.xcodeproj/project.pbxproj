@@ -14,10 +14,10 @@
 		155B4A0228A1F5D0003427A1 /* sqlite.thread.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 155B4A0128A1F5D0003427A1 /* sqlite.thread.jsbundle */; };
 		15B5E537F72C445681B81DDB /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC9E98404E5541C9A4F65796 /* Montserrat-Thin.ttf */; };
 		2120E9674DD54C9CA2215B9F /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21B21BC489AF4DD2ADE47A68 /* Montserrat-Regular.ttf */; };
+		4147063C3DD5AE182583D4B2 /* libPods-ndjbackpack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 855B1D04B30CFB35BBDDCB09 /* libPods-ndjbackpack.a */; };
 		59BAF82142CC42679055EB8C /* Nicomoji.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F43C47940DDD45EFB11262E3 /* Nicomoji.ttf */; };
 		5E3E928F4C45417EA34CC274 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0A9B399DCFC488C8129A5B1 /* Montserrat-Bold.ttf */; };
-		6172F2D35A4C3AA820D92908 /* libPods-ndjbackpack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6423831EA8574132BED9D8CC /* libPods-ndjbackpack.a */; };
-		7EF68E3733C33B6898317E18 /* libPods-ndjbackpack-ndjbackpackTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-ndjbackpack-ndjbackpackTests.a */; };
+		68B09CBA04687DD1581A514C /* libPods-ndjbackpack-ndjbackpackTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DADE20F4E4BC6EF9A5E97261 /* libPods-ndjbackpack-ndjbackpackTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		BFB2CF70CEB14DE6881AEA0C /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6760A227D58D486ABC66EAAB /* Montserrat-Light.ttf */; };
 		D2118D8D65484A52BB1CA5E3 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0111C39237504E0BACB421F5 /* Montserrat-Italic.ttf */; };
@@ -49,33 +49,33 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ndjbackpack/main.m; sourceTree = "<group>"; };
 		155B4A0128A1F5D0003427A1 /* sqlite.thread.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sqlite.thread.jsbundle; sourceTree = "<group>"; };
 		1C668806834D4568B09BD695 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		1D0AE47A65C8663E3B452821 /* Pods-ndjbackpack-ndjbackpackTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack-ndjbackpackTests.release.xcconfig"; path = "Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests.release.xcconfig"; sourceTree = "<group>"; };
 		1DEDA8BF089B489481997224 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		21B21BC489AF4DD2ADE47A68 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		2BC17D29FB4CFA0AC3BAC3B3 /* Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig"; path = "Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig"; sourceTree = "<group>"; };
 		30A029A6BFD14EA9AA9F23FD /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		30DD4473FDE34AE58117AC8A /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		30EAA16C93894890BAB6475D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		5AAA242BFA684A60B128ED74 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		6423831EA8574132BED9D8CC /* libPods-ndjbackpack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ndjbackpack.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6760A227D58D486ABC66EAAB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../src/assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		6C12867527A348DB99E988EA /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		6C97AB639B58BBB4B15BBE30 /* Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig"; path = "Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7C3BD535B032452F8CCDF27E /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		80122CC952D058616D646673 /* Pods-ndjbackpack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack.release.xcconfig"; path = "Target Support Files/Pods-ndjbackpack/Pods-ndjbackpack.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ndjbackpack/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		855B1D04B30CFB35BBDDCB09 /* libPods-ndjbackpack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ndjbackpack.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94AB34089D5D4DB0A3287A44 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		974B7D64B6B941348954CA8F /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		98DF057B1E4A4580B1B42CF2 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		A0A9B399DCFC488C8129A5B1 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../src/assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
-		ABFE59519B596E51CEFDCCC0 /* libPods-ndjbackpack-ndjbackpackTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ndjbackpack-ndjbackpackTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9E98404E5541C9A4F65796 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Thin.ttf"; path = "../src/assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		AF6336B5284469AF00527645 /* ndjbackpack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ndjbackpack.entitlements; path = ndjbackpack/ndjbackpack.entitlements; sourceTree = "<group>"; };
 		B2A711E483904FAAA7E9EC8B /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		BADCDF65C4F0464B94FDABF6 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		C0A881CF5CF3F2B244570E2A /* Pods-ndjbackpack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack.debug.xcconfig"; path = "Target Support Files/Pods-ndjbackpack/Pods-ndjbackpack.debug.xcconfig"; sourceTree = "<group>"; };
-		D00AAFFCFCFDA5787532823F /* Pods-ndjbackpack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack.release.xcconfig"; path = "Target Support Files/Pods-ndjbackpack/Pods-ndjbackpack.release.xcconfig"; sourceTree = "<group>"; };
 		D52D74D6681F401485F3FC01 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		DADE20F4E4BC6EF9A5E97261 /* libPods-ndjbackpack-ndjbackpackTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ndjbackpack-ndjbackpackTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCEE6E4DD7484DBCB7A29173 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		DE3A76F478434CA4A329619D /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		E48A1B64C568668DBF811B7B /* Pods-ndjbackpack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack.debug.xcconfig"; path = "Target Support Files/Pods-ndjbackpack/Pods-ndjbackpack.debug.xcconfig"; sourceTree = "<group>"; };
+		E54E1FAB230AB90364E4BF5E /* Pods-ndjbackpack-ndjbackpackTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ndjbackpack-ndjbackpackTests.release.xcconfig"; path = "Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F43C47940DDD45EFB11262E3 /* Nicomoji.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Nicomoji.ttf; path = ../src/assets/fonts/Nicomoji.ttf; sourceTree = "<group>"; };
 		FC7AC80E289ADFB600F35454 /* wallet.thread.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wallet.thread.jsbundle; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7EF68E3733C33B6898317E18 /* libPods-ndjbackpack-ndjbackpackTests.a in Frameworks */,
+				68B09CBA04687DD1581A514C /* libPods-ndjbackpack-ndjbackpackTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,7 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6172F2D35A4C3AA820D92908 /* libPods-ndjbackpack.a in Frameworks */,
+				4147063C3DD5AE182583D4B2 /* libPods-ndjbackpack.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,8 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				6423831EA8574132BED9D8CC /* libPods-ndjbackpack.a */,
-				ABFE59519B596E51CEFDCCC0 /* libPods-ndjbackpack-ndjbackpackTests.a */,
+				855B1D04B30CFB35BBDDCB09 /* libPods-ndjbackpack.a */,
+				DADE20F4E4BC6EF9A5E97261 /* libPods-ndjbackpack-ndjbackpackTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -179,10 +179,10 @@
 		E233CBF5F47BEE60B243DCF8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C0A881CF5CF3F2B244570E2A /* Pods-ndjbackpack.debug.xcconfig */,
-				D00AAFFCFCFDA5787532823F /* Pods-ndjbackpack.release.xcconfig */,
-				6C97AB639B58BBB4B15BBE30 /* Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig */,
-				1D0AE47A65C8663E3B452821 /* Pods-ndjbackpack-ndjbackpackTests.release.xcconfig */,
+				E48A1B64C568668DBF811B7B /* Pods-ndjbackpack.debug.xcconfig */,
+				80122CC952D058616D646673 /* Pods-ndjbackpack.release.xcconfig */,
+				2BC17D29FB4CFA0AC3BAC3B3 /* Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig */,
+				E54E1FAB230AB90364E4BF5E /* Pods-ndjbackpack-ndjbackpackTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -224,11 +224,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ndjbackpackTests" */;
 			buildPhases = (
-				A130D646172E58E1D159D8F2 /* [CP] Check Pods Manifest.lock */,
+				A0AC0EEEF60A6D531AE504BE /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				4E62BDF20514810D028A5FBF /* [CP] Copy Pods Resources */,
+				E4A33254DC5B07ABF13ADCA6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,13 +244,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ndjbackpack" */;
 			buildPhases = (
-				3E482C27206C4DEF2FE45063 /* [CP] Check Pods Manifest.lock */,
+				FA3BE2A61B62857D87C04339 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				ADC9DDC32298B72B3CF5DC8E /* [CP] Copy Pods Resources */,
+				E870BDAB1EF60A478C205A46 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -340,46 +340,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		3E482C27206C4DEF2FE45063 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ndjbackpack-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4E62BDF20514810D028A5FBF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A130D646172E58E1D159D8F2 /* [CP] Check Pods Manifest.lock */ = {
+		A0AC0EEEF60A6D531AE504BE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -401,7 +362,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ADC9DDC32298B72B3CF5DC8E /* [CP] Copy Pods Resources */ = {
+		E4A33254DC5B07ABF13ADCA6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ndjbackpack-ndjbackpackTests/Pods-ndjbackpack-ndjbackpackTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E870BDAB1EF60A478C205A46 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -416,6 +394,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ndjbackpack/Pods-ndjbackpack-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FA3BE2A61B62857D87C04339 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ndjbackpack-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -470,7 +470,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C97AB639B58BBB4B15BBE30 /* Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig */;
+			baseConfigurationReference = 2BC17D29FB4CFA0AC3BAC3B3 /* Pods-ndjbackpack-ndjbackpackTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -497,7 +497,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D0AE47A65C8663E3B452821 /* Pods-ndjbackpack-ndjbackpackTests.release.xcconfig */;
+			baseConfigurationReference = E54E1FAB230AB90364E4BF5E /* Pods-ndjbackpack-ndjbackpackTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -521,7 +521,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C0A881CF5CF3F2B244570E2A /* Pods-ndjbackpack.debug.xcconfig */;
+			baseConfigurationReference = E48A1B64C568668DBF811B7B /* Pods-ndjbackpack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -532,7 +532,7 @@
 				DEVELOPMENT_TEAM = FWJ939Z7T9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ndjbackpack/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -554,7 +554,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D00AAFFCFCFDA5787532823F /* Pods-ndjbackpack.release.xcconfig */;
+			baseConfigurationReference = 80122CC952D058616D646673 /* Pods-ndjbackpack.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -564,7 +564,7 @@
 				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_TEAM = FWJ939Z7T9;
 				INFOPLIST_FILE = ndjbackpack/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -632,7 +632,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -691,7 +691,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

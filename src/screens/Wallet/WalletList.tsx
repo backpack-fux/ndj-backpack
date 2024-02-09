@@ -1,26 +1,26 @@
-import React, {useEffect} from 'react';
-import {RefreshControl} from 'react-native';
-import * as _ from 'lodash';
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  selectedWalletSelector,
-  walletsSelector,
-} from '@app/store/wallets/walletsSelector';
-import {colors} from '@app/assets/colors.config';
-import {useIsFocused} from '@react-navigation/native';
+import { colors } from '@app/assets/colors.config';
 import {
   accountCoinsSelector,
   isLoadingTokensSelector,
   tokenSelector,
 } from '@app/store/coins/coinsSelector';
-import {refreshWallets} from '@app/store/wallets/actions';
-import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
+import { refreshWallets } from '@app/store/wallets/actions';
+import {
+  selectedWalletSelector,
+  walletsSelector,
+} from '@app/store/wallets/walletsSelector';
+import { useIsFocused } from '@react-navigation/native';
+import * as _ from 'lodash';
+import React, { useEffect } from 'react';
+import { RefreshControl } from 'react-native';
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {setToken} from '@app/store/coins/actions';
-import {WalletItem} from './WalletItem';
-import {useWallets} from './WalletsContext';
-import {sleep} from '@zilliqa-js/account/dist/util';
-import {menuHeight} from '@app/constants/dimension';
+import { menuHeight } from '@app/constants/dimension';
+import { setToken } from '@app/store/coins/actions';
+import { sleep } from '@app/utils';
+import { WalletItem } from './WalletItem';
+import { useWallets } from './WalletsContext';
 
 export const WalletList = () => {
   const dispatch = useDispatch();
